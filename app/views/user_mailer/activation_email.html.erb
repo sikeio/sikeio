@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>欢迎来到思客教学<%= @user.name %></h1>
+    <div class='content'>
+      <%== @content %>
+    </div>
+    <p>
+      课程邀请了连接 <%= activation_user_path(@user) %>.
+    </p>
+  </body>
+</html>

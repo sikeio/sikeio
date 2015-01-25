@@ -1,0 +1,8 @@
+h1.page-header 思客教学首页
+
+h2 All Courses
+
+- @courses.each do |c|
+  h2
+    a href="#{c.name}/index.html" = c.name
+

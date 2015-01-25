@@ -1,0 +1,30 @@
+h1.page-header 用户列表
+
+table.table.table-bordered.users
+  thead
+    tr
+      th 名称
+      th email
+      th 操作
+
+  tbody
+    - @users.each do |u|
+      tr
+        td = u.name
+        td = u.email
+        td
+          - if u.has_been_activated
+            | Alread Activated
+          - else
+            button.btn.btn-info.activate  data-user-id=u.id Send Activation Email
+
+.email-panel
+  = form_tag send_activation_email_admin_users_path,class:'form',remote:true
+    input type='hidden' name='user_id'
+    textarea.form-control cols=20 rows=10 name='content'
+    .form-grup
+      .btn-group.pull-right
+        button.btn.btn-default.ok type='submit' OK
+        a.btn.btn-default.cancel Cancel
+
+

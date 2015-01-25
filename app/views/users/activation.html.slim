@@ -1,0 +1,53 @@
+h1.page-header Sike User Activation
+
+h2
+- if @user.has_binded_github
+  a.btn.btn-success  disabled=true Has Binded Github
+- else
+  a.btn.btn-primary href="/auth/github?user_id=#{@user.id}" Please bind Github
+
+= form_tag activation_user_path(@user),class: 'form-horizontal'
+  h2 Personal info
+
+  input type="hidden" name="user_id" value=@user.id
+  input type="hidden" name="token" value=@user.activation_token
+
+  .form-group
+    label.col-md-2.control-label Name
+    .col-md-10
+      input.form-control name='name'
+
+  .form-group
+    label.col-md-2.control-label Blog
+    .col-md-10
+      input.form-control name='blog_url'
+
+  .form-group
+    .radio
+      label
+        input type='radio' name='type' value="在职"
+        | Has a job
+    .radio
+      label
+        input type='radio' name='type' value="学生"
+        | just a student
+    .radio
+      label
+        input type='radio' name='type' value="无业游民"
+        | has no job
+
+  .form-group
+    input type='checkbox' name="experience[]" value="前端" 前端
+
+  .form-group
+    input type='checkbox' name="experience[]" value="后端" 后端
+
+  .form-group
+    input type='checkbox' name="experience[]" value="iOS" iOS
+
+  .form-group
+    input type='checkbox' name="experience[]" value="安卓" 安卓
+
+  button.btn.btn-info type='submit' Submit
+
+

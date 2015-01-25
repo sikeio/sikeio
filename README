@@ -1,0 +1,8 @@
+#sike site
+
+##How to run this app
+
+- create config.yml (using config_sample.yml as example)
+- rake db:setup
+- bower install
+- rails server

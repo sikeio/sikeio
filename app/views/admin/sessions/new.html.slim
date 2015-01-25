@@ -1,0 +1,17 @@
+h1.page-header 管理员登陆
+
+= form_tag '/admin/login'
+  form.from-horizontal method='post'
+    .form-group
+      label.col-md-2.control-label Email
+      .col-md-10
+        input.form-control name='email'
+
+    .form-group
+      label.col-md-2.control-label Password
+      .col-md-10
+        input.form-control name='password' type='password'
+
+    button.btn.btn-primary.pull-right type='submit' 提交
+
+

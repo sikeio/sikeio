@@ -1,0 +1,442 @@
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit; }
+
+html {
+  font-size: 14px; }
+
+body {
+  margin: 0;
+  font-family: "robotoregular", sans-serif; }
+
+ul {
+  list-style: none; }
+
+header {
+  background-image: url(../images/header.png);
+  background-size: cover;
+  text-align: center;
+  color: white;
+  padding-top: 138px;
+  padding-bottom: 115px;
+  font-family: "robotolight"; }
+  header h1 {
+    font-size: 4.28571rem; }
+  header p {
+    font-size: 2.57143rem; }
+  header .download-button {
+    font-size: 2.57143rem;
+    text-decoration: none;
+    display: inline-block;
+    width: 80%;
+    max-width: 363.5px;
+    background: #5B99E5;
+    border-radius: 5px;
+    border: 1px solid #979797;
+    color: #FAF5F5;
+    padding-top: 10px;
+    padding-bottom: 10px; }
+
+.motto {
+  font-size: 2.57143rem;
+  margin-top: 68px;
+  margin-bottom: 62px;
+  text-align: center;
+  color: #525252; }
+
+.app-preview {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+  margin: 0 auto 85px;
+  padding: 0; }
+  .app-preview::after {
+    clear: both;
+    content: "";
+    display: table; }
+  .app-preview li {
+    text-align: center;
+    float: left;
+    display: block;
+    margin-right: 2.12766%;
+    width: 23.40426%; }
+    .app-preview li:last-child {
+      margin-right: 0; }
+    .app-preview li:last-child {
+      margin-right: 0; }
+    .app-preview li p {
+      font-family: "robotolight";
+      color: #22AAFF;
+      margin-top: 0;
+      margin-bottom: 10px; }
+
+.brag {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+  margin: 0 auto 72px;
+  padding: 0; }
+  .brag::after {
+    clear: both;
+    content: "";
+    display: table; }
+  .brag li {
+    float: left;
+    display: block;
+    margin-right: 2.12766%;
+    width: 14.89362%;
+    text-align: center; }
+    .brag li:last-child {
+      margin-right: 0; }
+    .brag li:first-child {
+      margin-left: 25.53191%; }
+    .brag li .circle {
+      font-size: 1.71429rem;
+      margin: auto;
+      color: white;
+      background: #22AAFF;
+      width: 60px;
+      height: 60px;
+      border-radius: 100%; }
+      .brag li .circle span {
+        display: block;
+        padding-top: 13px; }
+    .brag li p {
+      text-align: center;
+      color: #22AAFF;
+      margin: 5px 0 0 0; }
+
+.sell-points {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+  margin: 0 auto 61px; }
+  .sell-points::after {
+    clear: both;
+    content: "";
+    display: table; }
+  .sell-points li {
+    float: left;
+    display: block;
+    margin-right: 2.12766%;
+    width: 48.93617%;
+    background-image: url(../images/sell-points.png);
+    margin-bottom: 25px; }
+    .sell-points li:last-child {
+      margin-right: 0; }
+    .sell-points li:nth-child(2) {
+      margin-right: 0; }
+    .sell-points li:nth-child(4) {
+      margin-right: 0; }
+    .sell-points li h2 {
+      font-size: 2.14286rem;
+      margin: 16px 25px 26px;
+      color: #66C2FC; }
+    .sell-points li p {
+      font-family: "robotolight";
+      font-size: 1.42857rem;
+      color: white;
+      margin: 0 20px 45px; }
+
+.toc {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+  margin: 0 auto 88px;
+  padding: 0; }
+  .toc::after {
+    clear: both;
+    content: "";
+    display: table; }
+  .toc::after {
+    clear: both;
+    content: "";
+    display: table; }
+  .toc h2 {
+    font-size: 2.57143rem;
+    color: #525252;
+    text-align: center;
+    margin-bottom: 85px; }
+  .toc ul {
+    float: left;
+    display: block;
+    margin-right: 2.12766%;
+    width: 48.93617%;
+    color: #757575;
+    padding: 0; }
+    .toc ul:last-child {
+      margin-right: 0; }
+    .toc ul li {
+      margin-bottom: 28px; }
+    .toc ul hr {
+      border-top: none;
+      border-bottom: 1px dashed #D1CCCC; }
+  .toc .left {
+    float: left; }
+  .toc span {
+    display: inline-block;
+    float: right; }
+
+.testimonials {
+  margin: 0 auto 86px;
+  padding: 0; }
+  .testimonials h2 {
+    font-size: 2.57143rem;
+    color: #525252;
+    text-align: center;
+    margin-bottom: 59px; }
+  .testimonials ul {
+    max-width: 940px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 10px; }
+    .testimonials ul::after {
+      clear: both;
+      content: "";
+      display: table; }
+    .testimonials ul li {
+      float: left;
+      display: block;
+      margin-right: 2.12766%;
+      width: 31.91489%; }
+      .testimonials ul li:last-child {
+        margin-right: 0; }
+    .testimonials ul .left {
+      float: left;
+      margin-right: 14px; }
+      .testimonials ul .left a {
+        color: #777777;
+        text-decoration: none;
+        text-align: center;
+        display: block; }
+    .testimonials ul p {
+      font-family: "robotoitalic";
+      color: #777777;
+      margin: 0; }
+
+footer {
+  padding: 23px 10px 63px 10px;
+  background-image: url(../images/footer.png);
+  background-size: cover; }
+  footer ul {
+    max-width: 940px;
+    margin-left: auto;
+    margin-right: auto;
+    margin: auto;
+    padding: 0; }
+    footer ul::after {
+      clear: both;
+      content: "";
+      display: table; }
+    footer ul .author {
+      float: left;
+      display: block;
+      margin-right: 2.12766%;
+      width: 48.93617%;
+      float: left;
+      color: white; }
+      footer ul .author:last-child {
+        margin-right: 0; }
+      footer ul .author h2 {
+        font-size: 2.14286rem;
+        margin: 0 0 19px; }
+      footer ul .author img {
+        float: left;
+        width: 120px;
+        margin-right: 19px; }
+      footer ul .author p {
+        font-family: "robotolight";
+        font-size: 1.42857rem; }
+        footer ul .author p span {
+          font-family: "robotobold";
+          color: #FF5050; }
+      footer ul .author .right {
+        margin-top: 0;
+        margin-bottom: 15px; }
+        footer ul .author .right strong {
+          font-family: "robotobold"; }
+      footer ul .author .bottom {
+        margin-bottom: 23px; }
+    footer ul .preview {
+      float: left;
+      display: block;
+      margin-right: 2.12766%;
+      width: 48.93617%;
+      border: 1px solid #C2E2F6;
+      background-color: #F2FAFF; }
+      footer ul .preview:last-child {
+        margin-right: 0; }
+      footer ul .preview h2 {
+        font-size: 2.14286rem;
+        margin: 11px 13px 14px;
+        color: #22AAFF; }
+      footer ul .preview p {
+        font-size: 1.42857rem;
+        font-family: "robotolight";
+        color: #3C3C3C;
+        line-height: 150%;
+        margin: 0 13px 17px; }
+      footer ul .preview form {
+        margin: 0 13px 22px; }
+        footer ul .preview form label {
+          font-size: 1.42857rem;
+          line-height: 200%;
+          color: #777777; }
+        footer ul .preview form input {
+          font-size: 2em;
+          height: 45px;
+          width: 100%;
+          border-radius: 0;
+          border: solid 1px #C2E2F6;
+          box-sizing: border-box;
+          display: block; }
+        footer ul .preview form button {
+          margin-top: 25px;
+          background: #24C970;
+          border-radius: 5px;
+          text-align: center f;
+          color: white;
+          font-family: "robotobold";
+          font-size: 1.42857rem;
+          color: #FAF5F5;
+          padding: 6px 63px 12px;
+          border: none;
+          height: auto; }
+
+@media screen and (max-width: 884px) {
+  .app-preview li {
+    float: left;
+    display: block;
+    margin-right: 4.34783%;
+    width: 47.82609%;
+    margin-top: 20px; }
+    .app-preview li:last-child {
+      margin-right: 0; }
+    .app-preview li:nth-child(2) {
+      margin-right: 0; }
+
+  .sell-points li {
+    float: left;
+    display: block;
+    margin-right: 4.34783%;
+    width: 65.21739%;
+    margin-left: 17.3913%; }
+    .sell-points li:last-child {
+      margin-right: 0; }
+
+  .toc ul {
+    float: left;
+    display: block;
+    margin-right: 4.34783%;
+    width: 65.21739%;
+    margin-left: 17.3913%; }
+    .toc ul:last-child {
+      margin-right: 0; }
+
+  .testimonials ul li {
+    float: left;
+    display: block;
+    margin-right: 4.34783%;
+    width: 65.21739%;
+    margin-left: 17.3913%;
+    margin-bottom: 15px; }
+    .testimonials ul li:last-child {
+      margin-right: 0; }
+    .testimonials ul li p {
+      margin-top: 15px; }
+
+  footer ul .author {
+    float: left;
+    display: block;
+    margin-right: 4.34783%;
+    width: 65.21739%;
+    margin-left: 17.3913%;
+    margin-bottom: 15px; }
+    footer ul .author:last-child {
+      margin-right: 0; }
+  footer ul .preview {
+    float: left;
+    display: block;
+    margin-right: 4.34783%;
+    width: 65.21739%;
+    margin-left: 17.3913%; }
+    footer ul .preview:last-child {
+      margin-right: 0; } }
+@media screen and (max-width: 416px) {
+  .app-preview li {
+    float: left;
+    display: block;
+    margin-right: 9.09091%;
+    width: 100%; }
+    .app-preview li:last-child {
+      margin-right: 0; }
+
+  .brag li {
+    float: left;
+    display: block;
+    margin-right: 9.09091%;
+    width: 27.27273%; }
+    .brag li:last-child {
+      margin-right: 0; }
+    .brag li:first-child {
+      margin-left: 0%; }
+
+  .sell-points li {
+    float: left;
+    display: block;
+    margin-right: 9.09091%;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0; }
+    .sell-points li:last-child {
+      margin-right: 0; }
+
+  .toc {
+    padding: 0 10px; }
+    .toc ul {
+      float: left;
+      display: block;
+      margin-right: 9.09091%;
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0; }
+      .toc ul:last-child {
+        margin-right: 0; }
+
+  .testimonials ul li {
+    float: left;
+    display: block;
+    margin-right: 9.09091%;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0; }
+    .testimonials ul li:last-child {
+      margin-right: 0; }
+
+  footer ul .author {
+    float: left;
+    display: block;
+    margin-right: 9.09091%;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0; }
+    footer ul .author:last-child {
+      margin-right: 0; }
+  footer ul .preview {
+    float: left;
+    display: block;
+    margin-right: 9.09091%;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0; }
+    footer ul .preview:last-child {
+      margin-right: 0; } }
+
+/*# sourceMappingURL=main.css.map */

@@ -1,0 +1,30 @@
+h1.page-header = @course.name
+- if @course.desc.present?
+  h2.well = @course.desc
+
+form.form-horizontal.enroll data-toggle="validator" data-remote=true action="/enroll" method='post'
+
+  .button-grup
+    button.btn.btn-primary.new-user type='button' 我是新用户
+    button.btn.btn-primary.old-user type='button' 我是老用户
+
+  input name='type' type='hidden' value='new_user'
+  input name='course_id' type='hidden' value=@course.id
+
+  .form-group.name
+    label.col-md-2.control-label Name
+    .col-md-10
+      input.form-control required=true name='name'
+      .help-block.with-errors
+
+  .form-group.email
+    label.col-md-2.control-label Email
+    .controls.col-md-10
+      input.form-control type='email' name='email' required=true
+      .help-block.with-errors
+
+
+
+  button.btn.btn-info.pull-right type='submit' data-remote=true data-disable-with='abc' Enroll
+
+

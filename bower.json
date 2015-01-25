@@ -1,0 +1,25 @@
+{
+  "name": "sike",
+  "version": "0.0.0",
+  "authors": [
+    "CJ Ting <fatelovely1128@gmail.com>"
+  ],
+  "keywords": [
+    "sike"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/bower",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.2",
+    "bootstrap-validator": "~0.6.0",
+    "sweetalert": "~0.4.1",
+    "vex": "~2.3.0"
+  }
+}

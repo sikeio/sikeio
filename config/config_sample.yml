@@ -1,0 +1,20 @@
+default: &default
+  mailer:
+    smtp_settings:
+      address: 'smtp.gmail.com'
+      port: 587
+      # user_name:
+      # password:
+      authentication: 'plain'
+    default_options:
+      from: sike@sike.com
+    default_url_options:
+      host: localhost:3000
+  admins:
+    -
+      # email:
+      # password:
+
+
+development:
+  <<: *default

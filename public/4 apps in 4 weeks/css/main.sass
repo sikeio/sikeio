@@ -1,0 +1,269 @@
+@import "../bourbon/bourbon"
+@import "grid-settings"
+@import "../neat/neat"
+
+$main-blue: #22AAFF
+$main-gray: #525252
+
+$default-font-size: 14px
+
+@mixin light
+  font-family: 'robotolight'
+
+@mixin bold
+  font-family: 'robotobold'
+
+@mixin italic
+  font-family: 'robotoitalic'
+
+@mixin L1
+  font-size: (60rem / 14)
+
+@mixin L2
+  font-size: (36rem / 14)
+
+@mixin L3
+  font-size: (30rem / 14)
+
+@mixin L4
+  font-size: (24rem / 14)
+
+@mixin L5
+  font-size: (20rem / 14)
+
+html
+  font-size: $default-font-size
+
+body
+  margin: 0
+  font-family: 'robotoregular', sans-serif
+
+ul
+  list-style: none
+
+header
+  background-image: url(../images/header.png)
+  background-size: cover
+  text-align: center
+  color: white
+  padding-top: 138px
+  padding-bottom: 115px
+  @include light
+
+  h1
+    @include L1
+  p
+    @include L2
+  .download-button 
+    @include L2
+    text-decoration: none
+    display: inline-block
+    width: 80%
+    max-width: 363.5px
+    background: #5B99E5
+    border-radius: 5px
+    border: 1px solid #979797
+    color: #FAF5F5
+    padding-top: 10px
+    padding-bottom: 10px
+
+.motto
+  @include L2
+  margin-top: 68px
+  margin-bottom: 62px
+  text-align: center
+  color: $main-gray
+
+.app-preview
+  @include outer-container
+  margin: 0 auto 85px
+  padding: 0
+  li
+    text-align: center
+    @include span-columns(3)
+    &:last-child
+      @include omega
+    p
+      @include light
+      color: $main-blue
+      margin-top: 0
+      margin-bottom: 10px
+
+.brag
+  @include outer-container
+  margin: 0 auto 72px
+  padding: 0
+  li
+    @include span-columns(2)
+    text-align: center
+    &:first-child
+      @include shift(3)
+    .circle
+      @include L4
+      margin: auto
+      color: white
+      background: $main-blue
+      width: 60px
+      height: 60px
+      border-radius: 100%
+      span
+        display: block
+        padding-top: 13px
+    p
+      text-align: center
+      color: $main-blue
+      margin: 5px 0 0 0
+
+.sell-points
+  @include outer-container
+  padding: 0
+  margin: 0 auto 61px
+  li
+    @include span-columns(6)
+    background-image: url(../images/sell-points.png)
+    margin-bottom: 25px
+    &:nth-child(2)
+      @include omega
+    &:nth-child(4)
+      @include omega
+    h2
+      @include L3
+      margin: 16px 25px 26px
+      color: #66C2FC
+    p
+      @include light
+      @include L5
+      color: white
+      margin: 0 20px 45px
+
+.toc
+  @include outer-container
+  @include clearfix
+  margin: 0 auto 88px
+  padding: 0
+  h2
+    @include L2
+    color: $main-gray
+    text-align: center
+    margin-bottom: 85px
+  ul
+    @include span-columns(6)
+    color: #757575
+    padding: 0
+    li
+      margin-bottom: 28px
+    hr
+      border-top: none 
+      border-bottom: 1px dashed #D1CCCC
+  .left
+    float: left
+  span
+    display: inline-block
+    float: right
+
+.testimonials
+  margin: 0 auto 86px
+  padding: 0
+  h2
+    @include L2
+    color: $main-gray
+    text-align: center
+    margin-bottom: 59px
+  ul
+    @include outer-container
+    padding: 0 10px
+    li
+      @include span-columns(4)
+    .left
+      float: left
+      margin-right: 14px
+      a
+        color: #777777
+        text-decoration: none
+        text-align: center 
+        display: block
+    p
+      @include italic
+      color: #777777
+      margin: 0
+
+footer
+  padding: 23px 10px 63px 10px
+  background-image: url(../images/footer.png)
+  background-size: cover
+  ul
+    @include outer-container
+    margin: auto
+    padding: 0
+    .author
+      @include span-columns(6)
+      float: left
+      color: white
+      h2
+        @include L3
+        margin: 0 0 19px
+      img
+        float: left
+        width: 120px
+        margin-right: 19px
+      p
+        @include light
+        @include L5
+        span
+          @include bold
+          color: #FF5050
+      .right
+        margin-top: 0
+        margin-bottom: 15px
+        strong
+          @include bold
+      .bottom
+        margin-bottom: 23px
+    .preview
+      @include span-columns(6)
+      border: 1px solid #C2E2F6
+      background-color: #F2FAFF
+      h2
+        @include L3
+        margin: 11px 13px 14px
+        color: $main-blue
+      p
+        @include L5
+        @include light
+        color: #3C3C3C
+        line-height: 150%
+        margin: 0 13px 17px
+      form
+        margin: 0 13px 22px
+        label
+          @include L5
+          line-height: 200%
+          color: #777777
+        input
+          font-size: 2em
+          height: 45px
+          width: 100%
+          border-radius: 0
+          border: solid 1px #C2E2F6
+          box-sizing: border-box 
+          display: block
+        button
+          margin-top: 25px 
+          background: #24C970
+          border-radius: 5px 
+          text-align: center f
+          color: white 
+          @include bold 
+          @include L5
+          color: #FAF5F5
+          padding: 6px 63px 12px
+          border: none
+          height: auto 
+
+@import "tablet"
+@import "mobile"
+
+
+
+
+

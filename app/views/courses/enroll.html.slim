@@ -1,0 +1,29 @@
+h1.page-header
+  | #{@course.name} Enroll Page
+- if @course.desc.present?
+  h2 = @course.desc
+
+form.form-horizontal.enroll data-remote=true action=enroll_course_path(@course) method='post'
+
+  .button-grup
+    a.btn.btn-primary.old-user href=login_path 老用户？直接登陆~
+
+  input name='type' type='hidden' value='new_user'
+
+  .form-group.name
+    label.col-md-2.control-label Name
+    .col-md-10
+      input.name.form-control required=true name='name'
+      .help-block.with-errors
+
+  .form-group.email
+    label.col-md-2.control-label Email
+    .controls.col-md-10
+      input.name.form-control type='email' name='email' required=true
+      .help-block.with-errors
+
+
+
+  button.btn.btn-info.pull-right type='submit' data-remote=true Enroll
+
+

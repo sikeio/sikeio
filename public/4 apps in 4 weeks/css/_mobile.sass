@@ -1,0 +1,48 @@
+@include media($mobile)
+  .app-preview
+    li
+      @include span-columns(3)
+
+  .brag
+    li
+      @include span-columns(1)
+      &:first-child
+        @include shift(0)
+      
+  .sell-points
+    li
+      @include span-columns(3)
+      margin-left: 0
+      margin-right: 0
+
+  .toc
+    padding: 0 10px
+    ul
+      @include span-columns(3)
+      margin-left: 0
+      margin-right: 0
+
+  .testimonials
+    ul
+      li
+        @include span-columns(3)
+        margin-left: 0
+        margin-right: 0
+
+  footer
+    ul
+      .author
+        @include span-columns(3)
+        margin-left: 0
+        margin-right: 0
+      .preview
+        @include span-columns(3)
+        margin-left: 0
+        margin-right: 0
+
+
+
+
+
+
+

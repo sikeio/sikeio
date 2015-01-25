@@ -1,0 +1,6 @@
+h1.page-hedaer All Courses
+
+ul.list-group
+  - @courses.each do |c|
+    li.list-group-item
+      a href=payment_course_path(c) = c.name
