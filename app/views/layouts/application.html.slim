@@ -6,17 +6,17 @@ head
   = csrf_meta_tags
 body class=page_identifier
 
-  .well
-    - if login?
-      span
-        | Welcome #{current_user.name}
-      a.btn.btn-danger href=logout_path data-method='delete' Logout
+  - unless @display_top
+    .well
+      - if login?
+        span
+          | Welcome #{current_user.name}
+        a.btn.btn-danger href=logout_path data-method='delete' Logout
 
-  - [:success,:error].each do |type|
-    - if flash[type]
-      .alert class="alert-#{type == :error ? 'danger' : type}" = flash[type]
+    - [:success,:error].each do |type|
+      - if flash[type]
+        .alert class="alert-#{type == :error ? 'danger' : type}" = flash[type]
 
-  .container
-    == yield
+  == yield
 
 

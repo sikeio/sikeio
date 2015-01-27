@@ -1,14 +1,12 @@
 class CoursesController < ApplicationController
 
   before_action :require_login,only:[:show]
+  before_action :require_course_exists,except:[:list]
   before_action :require_take_part_in,only:[:show]
+  
 
   def enroll
     @course = Course.find params[:id]
-
-    unless @course
-      redirect_to root_path
-    end
 
     redirect_to payment_course_path(@course) if current_user
   end
@@ -16,8 +14,6 @@ class CoursesController < ApplicationController
   def create_enroll
     result = {}
     course = Course.find params[:id]
-
-    return redirect_to root_path unless course
 
     if params[:type] == "new_user"
       user = User.new(params.permit(:email,:name))
@@ -59,10 +55,9 @@ class CoursesController < ApplicationController
   end
 
   def payment
-    @course = Course.find(params[:id])
-    unless @course
-      redirect_to root_path
-    end
+    @course = Course.find params[:id]
+
+    @display_top = true
   end
 
   def start
@@ -91,6 +86,11 @@ class CoursesController < ApplicationController
       flash[:error] = "尚未参加这门课程~"
       redirect_to root_path
     end
+  end
+
+  def require_course_exists
+    @course = Course.find_by_id params[:id]
+    redirect_to root_path unless @course
   end
 
   def update_record

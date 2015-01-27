@@ -1,0 +1,100 @@
+$default-font-size: 14px
+
+@mixin L1
+  font-size: (18rem / 14)
+
+.courses-page
+  &.payment
+    font-family: Heiti SC
+    -webkit-font-smoothing: antialiased
+    background: url(activation_bg.png)
+    background-size: 100% 100%
+    color: white
+    height: 100%
+    border: 1px solid rgba(160,160,160, 0.2)
+    box-sizing: border-box
+    .wrapper
+      height: 538px
+      width: 250px
+      position: absolute
+      top: 0
+      left: 0
+      bottom: 0
+      right: 0
+      margin: auto
+      h1
+        @include L1
+        margin-top: 0
+        text-align: center
+      .form
+        position: relative
+        border: 1px solid rgba(160,160,160, 0.2)
+        padding: 29px 0 33px 30px
+        &:after
+          content: ''
+          position: absolute
+          top: 0
+          left: 0
+          width: 100%
+          height: 100%
+          background: white
+          z-index: -1
+          opacity: 0.2
+        p
+          margin: 0
+          &.number
+            margin: 15px 0 22px 12px
+        img
+          margin-left: 5px
+          margin-top: 20px
+        a
+          @include L1
+          display: block
+          color: white
+          text-align: center
+          width: 180px
+          padding: 9px 0
+          background: #E57E23
+          margin-left: 5px
+          margin-bottom: 15px
+        .checkbox
+          input
+            display: none
+          label
+            display: block
+            margin-left: 5px
+            span
+              border: 1px solid #979797
+              opacity: 0.5
+              display: inline-block
+              width: 16px
+              height: 16px
+              margin-right: 7px
+              vertical-align: middle
+              cursor: pointer
+              background-color: white
+          input:checked + label span
+            background-color: #8BFF81
+        label.friend
+          margin-left: 5px
+          margin-right: 20px
+        .name
+          border: 1px solid #979797
+          width: 100px
+          height: 30px
+          font-size: $default-font-size
+          background: rgba(255,255,255,0.5)
+          color: white
+          padding-left: 13px
+          box-sizing: border-box
+
+
+
+
+
+
+
+
+
+
+

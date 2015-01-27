@@ -1,21 +1,23 @@
 class UsersController < ApplicationController
 
-  before_action :require_login,only:[:dashbaord]
-  before_action :require_right_user,only:[:dashbaord]
+  before_action :require_login,only:[:dashboard]
+  before_action :require_right_user,only:[:dashboard]
 
 
   def activation
-    @user = User.find_by(id: params[:user_id])
+    @user = User.find_by_id params[:id]
     unless @user && @user.activation_token == params[:token]
       flash[:error] = 'Activation Token Error!'
       redirect_to root_path
     end
+    @display_top = true
   end
 
   def activate
     user = User.find_by(id: params[:user_id])
 
     unless user && user.activation_token == params[:token]
+      flash[:error] = 'Activation Token Error!'
       return redirect_to root_path
     end
 
@@ -39,7 +41,7 @@ class UsersController < ApplicationController
   end
 
   def require_right_user
-    unless current_user == User.find(params[:id])
+    unless current_user == User.find_by_id(params[:id])
       redirect_to root_path
     end
   end
