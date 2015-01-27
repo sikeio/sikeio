@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   helper_method :page_identifier
 
   def page_identifier
-    "#{self.class.to_s.downcase.gsub('::','-').gsub('controller','')}-page"
+    "#{self.class.to_s.downcase.gsub('::','-').gsub('controller','')}-page #{action_name}"
   end
 
   def store_location(location = nil)

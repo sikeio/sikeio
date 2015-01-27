@@ -10,7 +10,7 @@ $ ->
       if data.success
         swal
           title: 'Enroll successfully!'
-          test: data.msg
+          text: data.msg
           type: 'success'
       else
         if Array.isArray(data.msg)

@@ -1,6 +1,38 @@
-h1.page-header = "#{@course.name} Payment"
+.wrapper  
+  h1 训练营支付
+  .form  
+    p
+      | 学生 389
+      br
+      | 在职 589
+      br
+      | 拉小伙伴一起学习优惠 489
+
+    img src="/assets/alipay.png" alt=""
+    
+    p.number 支付宝: 高羊 18688696795
+
+    a href=start_course_path 开始课程
+    br
+
+    .checkbox
+      input type='checkbox' id='checkbox1'
+      label for='checkbox1'
+        span
+        | 我已经通过支付宝付款了
+      br
+      input type='checkbox' id='checkbox2'
+      label for='checkbox2'
+        span
+        | 我有小伙伴
+
+    br
+    label.friend 小伙伴名字
+    input.name
 
 
-a.btn.btn-primary href=start_course_path 开始课程
 
-input type='checkbox' 我已经通过支付宝付款了
+
+
+
+

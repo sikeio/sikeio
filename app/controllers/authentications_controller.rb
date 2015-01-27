@@ -18,7 +18,7 @@ class AuthenticationsController < ApplicationController
         info: auth_info["info"]
       )
 
-      redirect_to activation_user_path(user)
+      redirect_to activation_user_path(user,token: user.activation_token)
     end
   end
 end
