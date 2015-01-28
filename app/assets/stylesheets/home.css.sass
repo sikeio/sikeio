@@ -1,0 +1,65 @@
+
+@mixin L1
+  font-size: (64rem / 14)
+
+@mixin L2
+  font-size: (32rem / 14)
+
+@mixin L3
+  font-size: (20rem / 14)
+
+.home-page
+  &.index
+    font-family: Heiti SC
+    -webkit-font-smoothing: antialiased
+    .courses
+      padding: 0
+      .title
+        padding: 93px 0 357px
+        margin: 0 0 55px
+        a
+          @include L1
+          color: white
+          text-align: center
+          margin: 0 auto 27px
+          display: block
+          line-height: 93%
+          border-bottom: solid 2px white
+          width: 690px
+        p
+          @include L2
+          margin: 0
+          color: white
+          text-align: center
+      ul
+        list-style: none
+        padding: 0
+        &.introduction
+          margin-left: 45px
+          width: 45%
+        &.left
+          float: left
+          width: 45%
+          margin: 0 20px 0 45px
+        &.right
+          margin-right: 45px
+        li
+          @include L3
+          color: #757575
+          span
+            float: right
+        hr
+          border-top: none 
+          border-bottom: 1px dashed #D1CCCC
+          margin: 0 0 24px
+    .ios
+      .title
+        background: url(/assets/dive.jpg)
+        background-size: 100% 100%
+        a
+          width: 580px
+    .node
+      margin: 105px 0 151px
+      .title
+        background: url(/assets/hero.jpg)
+        background-size: 100% 100%
