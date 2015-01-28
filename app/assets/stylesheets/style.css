@@ -1,0 +1,294 @@
+html {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  line-height: 1.8;
+}
+
+a {
+  color: #00B7FF;
+  text-decoration: none;
+}
+
+/*a:hover {
+  text-decoration: underline !important;
+}*/
+
+section {
+  padding: 100px 0;
+}
+
+.l-main-nav {
+  position: absolute;
+  width: 100%;
+  text-align: right;
+  line-height: 60px;
+}
+
+.l-main-nav a {
+  padding: 35px;
+  color: #6c7d95;
+}
+
+.l-main-nav a:after {
+  content: '';
+}
+
+.l-main-header {
+  background-color: #32425C;
+  background-image: url(/assets/bg-nodejs.png), url(/assets/bg-swift.png);
+  background-repeat: no-repeat;
+  background-size: 187px 51px, 101px 89px;
+  background-position: 15% 65%, 80% 65%;
+  color: #fff;
+}
+
+.l-main-header .logo {
+  padding: 160px 0 10px;
+  text-align: center;
+}
+
+.l-main-header h1  {
+  font-size: 40px;
+  text-align: center;
+}
+
+.l-main-header .slogan  {
+  font-size: 20px;
+  font-weight: normal;
+  color: #6C7D95;
+}
+
+form {
+  margin-left: -5px;
+  text-align: center;
+  padding: 90px 0 130px;
+}
+
+input[type="text"] {
+  font-size: 16px;
+  color: #AFB6C0;
+  padding: 8px;
+  border: 1px solid #CF616F;
+  border-radius: 6px;
+}
+
+input[type="submit"] {
+  position: relative;
+  left: -10px;
+  font-size: 16px;
+  color: #fff;
+  padding: 9px;
+  font-weight: bold;
+  background-color: #CF616F;
+  border: none;
+  border-radius: 6px;
+}
+
+input:focus {
+  outline: 0;
+}
+
+.wrap {
+  position: relative;
+  width: 600px;
+  margin: 0 auto;
+}
+
+.l-question ul {
+  list-style: none;
+  color: #444;
+}
+
+.l-question li {
+  margin: 40px 0 100px;
+  background-repeat: no-repeat;
+  background-position: 136px bottom;
+}
+
+.l-question li:nth-child(1) {
+  background-image: url(/assets/icon-question1.png);
+  background-size: 64px 68px;
+}
+
+.l-question li:nth-child(2) {
+  background-image: url(/assets/icon-question2.png);
+  background-size: 49px 68px;
+}
+
+.l-question h2 {
+  margin-right: 40px;
+  width: 200px;
+  float: left;
+  text-align: right;
+  font-size: 20px;
+}
+
+.l-question .content {
+  overflow: hidden;
+}
+
+.l-question p:last-child {
+  margin-bottom: 0;
+}
+
+.l-slogan {
+  position: relative;
+  margin: 100px 0;
+  padding: 0;
+}
+
+.l-slogan:before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  width: 100%;
+  height: 200%;
+  z-index: -1;
+  background-color: #FAFAFA;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  -webkit-transform: skew(0, -5deg);
+     -moz-transform: skew(0, -5deg);
+      -ms-transform: skew(0, -5deg);
+       -o-transform: skew(0, -5deg);
+          transform: skew(0, -5deg);
+}
+
+.l-slogan h2 {
+  color: #666;
+  font-size: 32px;
+  text-align: center;
+}
+
+.l-introduction h2 {
+  color: #cf616f;
+  font-size: 32px;
+  text-align: center;
+}
+
+.l-introduction h2 sup {
+  position: relative;
+  top: -20px;
+  font-size: 12px;
+  color: #ccc;
+  font-weight: normal;
+}
+
+.l-mentor {
+  color: #eee;
+  background: #000 url(/assets/bg-mentor.png) repeat;
+  background-size: 141px 142px;
+}
+
+.l-mentor .avatar img {
+  margin: 112px 40px 0 0;
+  border: 2px solid #fff;
+  border-radius: 85px;
+  float: left;
+  width: 85px;
+  height: 85px;
+}
+
+.l-mentor h2 {
+  font-size: 32px;
+}
+
+.l-mentor .content {
+  overflow: hidden;
+}
+
+.l-mentor .content a {
+  color: #ae4f4f;
+}
+
+.l-subscribe {
+  position: relative;
+  text-align: center;
+  color: #444;
+  padding-bottom: 200px;
+  overflow: hidden;
+}
+
+.l-subscribe h2 {
+  font-size: 20px;
+  font-weight: normal;
+}
+
+.l-subscribe form {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.l-subscribe .notice {
+  font-size: 14px;
+}
+
+.l-subscribe:after {
+  position: absolute;
+  left: 50%;
+  bottom: -350px;
+  margin-left: -350px;
+  content: '';
+  width: 700px;
+  height: 700px;
+  background-color: #f0f3f8;
+  border-radius: 2000px;
+  transform: translateY(30%);
+  -webkit-transform: translateY(30%);
+}
+
+footer {
+  position: relative;
+  height: 30px;
+  background-color: #32425c;
+  color: #d2d8e2;
+  font-size: 12px;
+  line-height: 30px;
+}
+
+footer .wrap {
+  height: 30px;
+}
+
+footer .footer-logo {
+  height: 30px;
+  text-align: center;
+}
+
+footer .footer-logo img {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 59px;
+  height: 47px;
+  margin-left: -30px;
+}
+
+footer .copyright {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+footer .l-footer-nav {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+footer .l-footer-nav ul {
+  margin: 0;
+  list-style: none;
+}
+
+footer .l-footer-nav li {
+  margin-left: 10px;
+  float: left;
+}
+
+footer .l-footer-nav a {
+  color: #d2d8e2;
+}

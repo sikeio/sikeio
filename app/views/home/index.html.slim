@@ -1,8 +1,226 @@
-h1.page-header 思客教学首页
 
-h2 All Courses
+nav.l-main-nav
+  a href="http://d.fork2.com" 交流论坛
+header.l-main-header
+  .logo
+    img(src="/assets/logo.png" width="88" alt="思客")
+  h1
+    |满足你的技术情怀
+    p.slogan 专注 IT 领域远程学徒式教学
+  form.subscribe
+    input type="text" placeholder="name@domain.com"
+    input type="submit" value="订阅迷你课程"
+section.wrap.l-question
+  ul
+    li
+      h2 想学东西，<br>不知道从哪里着手？
+      .content
+        p 我们是幸运的一代，
+        p 想学技术在互联网上有非常丰富的资源，
+        p 可以读书、看视频、读博文、参与开源软件。
+        p 但面对各式各样的选择，
+        p 反而想学东西不知道从哪里着手。
+    li
+      h2 自学的路漫长而艰难，<br>你是不是：
+      .content
+        p 觉得自己学的很慢？
+        p 不确定学习方向？
+        p 遇到问题不好意思问？
+        p 身边没有共同学习的小伙伴？
+        p 学习注意力分散，无法静下心学习？
+        p 看了书但还是缺少实战经验？
+section.l-slogan
+  .wrap
+    h2 学习的方法决定效果
+    .content
+      p
+        | 学好技术要靠耐心，一点一滴的累积经验。
+        | 但除了时间的投入之外，学习的方法是区分优秀和平庸最大的因素。
+        | 在自学的过程你可能走了很多弯路。
+        | 浪费很多时间解决没有意义的问题，穷折腾。
+        | 这些都是经验，但不是特别有用的经验。
+        | 经验是不可替代的。
+        | <strong>如果你能加入一个靠谱的技术团队，那么实际操作项目肯定是最好的学习方式。</strong>
+        | 但是在你自己技术水平还没到位之前，要找到一个靠谱的技术团队是一个困难的问题。
+section.wrap.l-introduction
+  h2 远程学徒式教学 <sup>TM</sup>
+  .content
+    p 思客的教学方法是以远程工作的模式来做一个项目，以实战加快对技术的熟练度。我当客人，你当远程工作者来满足项目需求。我会提交功能需求由你来完成。同时我也会发给你博文和文档，学习代码实现的相关知识。书本和视频都是相对被动的学习方式，看过了容易忘，也说不准自己理解地到不到位。边学边做会更好，因为在实现项目的过程中很容易就可以暴露出没有理解清楚的概念。你不需要问自己懂不懂，只要看做不做得出来。自学才是最好的学习方式。和其他 IT 教学相比，我们更关注：
+    ul
+      li 实战：依照任务需求自己查资料，读文档，写代码。
+      li 深度：熟悉常见命令行工具，和敏捷开发流程，不只是光学 API。
+      li 自主：不直接给你正确答案，而是适当的提示让你自己解决问题。
+      li 氛围：和其他有相同兴趣和理想的小伙伴们一起进步。
+      li 习惯：每天都加强一点点。
+      li 友好：没有人会骂你是小白。
 
-- @courses.each do |c|
-  h2
-    a href="#{c.name}/index.html" = c.name
+section.courses.ios
+  .title
+    a href="/4%20apps%20in%204%20weeks/index.html" iOS 零基础深度入坑
+    p 四周四个应用，系统性学习 iOS8， Swift， Cocoa
 
+  .toc
+    ul.introduction
+      li
+        | Introduction
+        span 1
+      hr
+
+    ul.left
+      li
+        | Fortuna - Dive into Xcode
+        span 2
+      hr
+      li
+        | Generate a project
+        span 2.1
+      hr
+      li
+        | Breaking a project - Debugging
+        span 2.2
+      hr
+      li
+        | Storyboard
+        span 2.3
+      hr
+      li
+        | The App Delegate
+        span 2.4
+      hr
+      li
+        | The View Controller
+        span 2.5
+      hr
+
+    ul.right
+      li
+        | KFC Converter - Reponsive App
+        span 3
+      hr
+      li
+        | Build the app for one device
+        span 3.1
+      hr
+      li
+        | Universal app
+        span 3.2
+      hr
+      li
+        | Layout with code
+        span 3.3      
+      hr
+      li
+        | Auto layout
+        span 3.4      
+        hr
+      li
+        | Using size classes
+        span 3.5
+      hr
+
+section.courses.node
+  .title
+    a href="#" NodeJS Express 快速路
+    p 创建自己的 Web 框架，熟悉 NPM 生态圈，了解 HTTP 协议
+
+  .toc
+    ul.introduction
+      li
+        | Introduction
+        span 1
+      hr
+
+    ul.left
+      li
+        | Fortuna - Dive into Xcode
+        span 2
+      hr
+      li
+        | Generate a project
+        span 2.1
+      hr
+      li
+        | Breaking a project - Debugging
+        span 2.2
+      hr
+      li
+        | Storyboard
+        span 2.3
+      hr
+      li
+        | The App Delegate
+        span 2.4
+      hr
+      li
+        | The View Controller
+        span 2.5
+      hr
+
+    ul.right
+      li
+        | KFC Converter - Reponsive App
+        span 3
+      hr
+      li
+        | Build the app for one device
+        span 3.1      
+      hr
+      li
+        | Universal app
+        span 3.2      
+      hr
+      li
+        | Layout with code
+        span 3.3      
+      hr
+      li
+        | Auto layout
+        span 3.4      
+      hr
+      li
+        | Using size classes
+        span 3.5
+      hr
+
+section.l-mentor
+  .wrap
+    .avatar
+      img src="/assets/howard-yeh.jpg" alt="avatar"
+    .content
+      h2 导师介绍
+      p
+        | 我叫 Howard，台湾同胞一枚。
+        | 小时候随家人移民加拿大。
+        | 2011 年远程工作，边旅行边赚钱。
+        | 那一年第一次来到了天朝。
+        | 我写了篇有关这个经历的博文 
+        a href="http://metacircus.com/writings/2011/09/19/from-the-office-to-travelling-the-world.html" From The Office to Travelling The World
+        |  。
+        | 2012 年觉得生活太安逸，决定来中国发展，发现难度瞬间提升为 Hard。
+        | 在深圳和朋友创立了 
+        a href="http://www.puffant.com" 小象网
+        |  ，做创意纸品，婚纱相册之类的产品。
+        | 现在已盈利，处稳定发展状态。
+        | 2013 夏，搬到成都和女朋友在一起。
+      p Github: http://github.com/hayeah
+      p Blog: http://metacircus.com
+
+section.wrap.l-subscribe
+  h2 如果你对远程学徒教学有兴趣，欢迎订阅我们的免费课程：
+  form.subscribe
+    input type="text" placeholder="name@domain.com"
+    input type="submit" value="订阅迷你课程"
+  p.notice 我们绝不泄露你的邮箱，你可以随时取消订阅
+
+footer
+  .wrap
+    .footer-logo
+      a href="#" 
+        img src="/assets/footer-logo.png" width="59" alt="思客"
+    .copyright ©2015 思客
+    nav.l-footer-nav
+      ul
+        li
+          a href="mailto:contact@besike.com" 联系我们
+        li
+          a href="http://d.fork2.com" 交流论坛
