@@ -2,12 +2,12 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
-  # get '/enroll' => 'enroll#new'
-  # post '/enroll' => "enroll#create"
-
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   delete '/logout' => 'sessions#destroy'
+
+
+  resources :subscribers,only:[:create]
 
   resources :users,only:[:show] do
     member do
@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     collection do
       #list courses,user will select one to visit payment page
       get '/list' => 'courses#list'
+      get '/get_user_status' => 'courses#get_user_status'
     end
   end
 

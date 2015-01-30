@@ -67,9 +67,24 @@ form {
   padding: 90px 0 130px;
 }
 
+/* style for placeholders */
+::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #AFB6C0;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #AFB6C0;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #AFB6C0;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+   color:    #AFB6C0;
+}
 input[type="text"] {
   font-size: 16px;
-  color: #AFB6C0;
+  color: #E9573F;
   padding: 8px;
   border: 1px solid #CF616F;
   border-radius: 6px;

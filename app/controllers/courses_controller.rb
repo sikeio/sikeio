@@ -3,40 +3,17 @@ class CoursesController < ApplicationController
   before_action :require_login,only:[:show]
   before_action :require_course_exists,except:[:list]
   before_action :require_take_part_in,only:[:show]
-  
 
-  def enroll
-    @course = Course.find params[:id]
-
-    redirect_to payment_course_path(@course) if current_user
-  end
 
   def create_enroll
     result = {}
-    course = Course.find params[:id]
-
-    if params[:type] == "new_user"
-      user = User.new(params.permit(:email,:name))
-      if user.save
-        result['success'] = true
-        result['msg'] = "注册成功~请去邮箱检查邮件吧~"
-      else
-        result['success'] = false
-        result['msg'] = user.errors.full_messages
-      end
+    user = User.new(params.permit(:email,:name))
+    if user.save
+      result['success'] = true
+      result['msg'] = "注册成功~请去邮箱检查邮件吧~"
     else
-      user = User.find_by_email(params[:email].downcase)
-      if user && user.has_been_activated
-        if course.include_user?(user)
-          result['success'] = false
-          result['msg'] = '已经加入课程了~'
-        else
-          return render js: "window.location = '#{payment_course_url(course)}'"
-        end
-      else
-        result['success'] = false
-        result['msg'] = '用户不存在或者未激活~'
-      end
+      result['success'] = false
+      result['msg'] = user.errors.full_messages
     end
 
     render json: result
@@ -56,7 +33,6 @@ class CoursesController < ApplicationController
 
   def payment
     @course = Course.find params[:id]
-
     @display_top = true
   end
 
@@ -75,7 +51,20 @@ class CoursesController < ApplicationController
       update_record
       redirect_to course_path(course)
     end
+  end
 
+
+  def send_course_preview
+    #TODO
+  end
+
+  def get_user_status
+    result = {}
+    result["has_logged_in"] = login?
+    if login?
+      result["has_enrolled"] = Course.find_by_id(params[:course_id]).include_user?(current_user)
+    end
+    render json:result
   end
 
   private
@@ -89,8 +78,8 @@ class CoursesController < ApplicationController
   end
 
   def require_course_exists
-    @course = Course.find_by_id params[:id]
-    redirect_to root_path unless @course
+    course = Course.find_by_id(params[:id]) || Course.find_by_id(params[:course_id])
+    redirect_to root_path unless course
   end
 
   def update_record

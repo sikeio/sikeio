@@ -7,8 +7,8 @@ header.l-main-header
   h1
     |满足你的技术情怀
     p.slogan 专注 IT 领域远程学徒式教学
-  form.subscribe
-    input type="text" placeholder="name@domain.com"
+  = form_tag subscribers_path,remote:true,class:'subscribe'
+    input type="text" name='email' placeholder="name@domain.com"
     input type="submit" value="订阅迷你课程"
 section.wrap.l-question
   ul
@@ -56,7 +56,7 @@ section.wrap.l-introduction
 
 section.courses.ios
   .title
-    a href="/4%20apps%20in%204%20weeks/index.html" iOS 零基础深度入坑
+    a href="/4-apps-in-4-weeks/index.html" iOS 零基础深度入坑
     p 四周四个应用，系统性学习 iOS8， Swift， Cocoa
 
   .toc
@@ -107,11 +107,11 @@ section.courses.ios
       hr
       li
         | Layout with code
-        span 3.3      
+        span 3.3
       hr
       li
         | Auto layout
-        span 3.4      
+        span 3.4
         hr
       li
         | Using size classes
@@ -163,19 +163,19 @@ section.courses.node
       hr
       li
         | Build the app for one device
-        span 3.1      
+        span 3.1
       hr
       li
         | Universal app
-        span 3.2      
+        span 3.2
       hr
       li
         | Layout with code
-        span 3.3      
+        span 3.3
       hr
       li
         | Auto layout
-        span 3.4      
+        span 3.4
       hr
       li
         | Using size classes
@@ -193,11 +193,11 @@ section.l-mentor
         | 小时候随家人移民加拿大。
         | 2011 年远程工作，边旅行边赚钱。
         | 那一年第一次来到了天朝。
-        | 我写了篇有关这个经历的博文 
+        | 我写了篇有关这个经历的博文
         a href="http://metacircus.com/writings/2011/09/19/from-the-office-to-travelling-the-world.html" From The Office to Travelling The World
         |  。
         | 2012 年觉得生活太安逸，决定来中国发展，发现难度瞬间提升为 Hard。
-        | 在深圳和朋友创立了 
+        | 在深圳和朋友创立了
         a href="http://www.puffant.com" 小象网
         |  ，做创意纸品，婚纱相册之类的产品。
         | 现在已盈利，处稳定发展状态。
@@ -207,15 +207,15 @@ section.l-mentor
 
 section.wrap.l-subscribe
   h2 如果你对远程学徒教学有兴趣，欢迎订阅我们的免费课程：
-  form.subscribe
-    input type="text" placeholder="name@domain.com"
+  = form_tag subscribers_path,remote:true,class:'subscribe'
+    input type="text" name='email' placeholder="name@domain.com"
     input type="submit" value="订阅迷你课程"
   p.notice 我们绝不泄露你的邮箱，你可以随时取消订阅
 
 footer
   .wrap
     .footer-logo
-      a href="#" 
+      a href="#"
         img src="/assets/footer-logo.png" width="59" alt="思客"
     .copyright ©2015 思客
     nav.l-footer-nav
