@@ -65,7 +65,7 @@ document.querySelector('#enroll').addEventListener 'click',(e)->
         e.stopPropagation()
 
   course_id = document.body.getAttribute("data-course-id")
-  throw new Error() unless course_id
+  throw new Error("Must proivde course_id") unless course_id
   url = "/courses/get_user_status?course_id=#{course_id}"
   xml.open("GET",url)
   xml.send()

@@ -11,7 +11,6 @@ class CoursesController < ApplicationController
     user = User.new(params.permit(:email,:name))
     if user.save
       result['success'] = true
-      result['msg'] = "注册成功~请去邮箱检查邮件吧~"
     else
       result['success'] = false
       result['msg'] = user.errors.full_messages
