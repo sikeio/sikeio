@@ -8,6 +8,7 @@ gem 'omniauth-github'
 
 gem 'slim-rails'
 gem 'redcarpet'
+gem 'sidekiq'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'

@@ -18,7 +18,7 @@ class CoursesController < ApplicationController
 
     render json: result
     if result['success'] == true
-      UserMailer.welcome_email(user).deliver_later
+      UserMailer.welcome_email(user).deliver_later! wait: (30 + rand(30)).minutes
     end
   end
 
