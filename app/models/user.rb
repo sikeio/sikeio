@@ -12,12 +12,11 @@ class User < ActiveRecord::Base
 
   validates :name,presence:{message: '不能为空~'}
 
+  scope :activated,->{ where(has_been_activated: true)}
+  scope :unactivated,->{ where(has_been_activated: false)}
+
   def self.generate_token
     SecureRandom.urlsafe_base64
-  end
-
-  def activation_path
-    "/activation?token=#{self.activation_token}&user_id=#{self.id}"
   end
 
   def has_binded_github

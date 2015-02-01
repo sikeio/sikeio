@@ -1,5 +1,10 @@
 h1.page-header 用户列表
 
+.alert.alert-info
+  | Total Users #{@users.length}
+.alert.alert-info
+  | Unactivated Users #{@users.length}
+
 table.table.table-bordered.users
   thead
     tr
@@ -8,15 +13,12 @@ table.table.table-bordered.users
       th 操作
 
   tbody
-    - @users.each do |u|
+    - @users.unactivated.each do |u|
       tr
         td = u.name
         td = u.email
         td
-          - if u.has_been_activated
-            | Alread Activated
-          - else
-            button.btn.btn-info.activate  data-user-id=u.id Send Activation Email
+          button.btn.btn-info.activate  data-user-id=u.id Send Activation Email
 
 .email-panel
   = form_tag send_activation_email_admin_users_path,class:'form',remote:true
