@@ -1,0 +1,151 @@
+body {
+  margin: 0;
+  font-family: Roboto;
+  font-size: 17.33px;
+  font-weight: 300; }
+
+.status-bar {
+  font-size: 20px;
+  padding: 10px 50px; }
+  .status-bar:after {
+    display: block;
+    content: "";
+    clear: both; }
+  .status-bar .left {
+    float: left; }
+    .status-bar .left .course-title {
+      margin-left: 20px; }
+    .status-bar .left * {
+      float: left; }
+  .status-bar .right {
+    float: right; }
+    .status-bar .right .mission-status {
+      margin-right: 20px; }
+    .status-bar .right * {
+      float: right; }
+
+header {
+  font-size: 0;
+  position: relative; }
+  header:after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2); }
+  header img {
+    width: 100%; }
+  header h1 {
+    font-size: 40px;
+    font-weight: 400;
+    text-decoration: underline;
+    z-index: 1;
+    color: white;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    text-align: center;
+    height: 1.5em;
+    width: 100%; }
+    header h1 .banner {
+      display: inline-block;
+      position: relative;
+      top: -5px;
+      font-size: 24px;
+      margin-right: 40px; }
+      header h1 .banner:before {
+        content: "";
+        display: block;
+        position: absolute;
+        background: #FF5252;
+        width: 60px;
+        height: 60px;
+        border-radius: 100%;
+        top: -14px;
+        left: -23px;
+        z-index: -1; }
+
+.time-remaining {
+  padding-top: 15px;
+  font-size: 20px;
+  text-align: center;
+  width: 280px;
+  margin: auto;
+  position: relative; }
+  .time-remaining:before {
+    display: block;
+    content: "";
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border-radius: 100%;
+    background: #F8FBFF;
+    top: -140px;
+    z-index: -1; }
+  .time-remaining .time {
+    font-size: 36px;
+    margin-top: 0; }
+
+.current-mission {
+  margin-top: 80px; }
+  .current-mission h2 {
+    font-size: 36px;
+    font-weight: 300;
+    width: 60%;
+    max-width: 620px;
+    margin: auto;
+    text-align: center;
+    margin: 30px auto; }
+  .current-mission p {
+    width: 60%;
+    max-width: 620px;
+    margin: auto; }
+
+.course-status {
+  text-align: center;
+  margin: 20px 0; }
+  .course-status.uncompleted {
+    color: #C6C6C6; }
+  .course-status.completed {
+    color: #11D146; }
+  .course-status i {
+    font-size: 8em; }
+
+.missions {
+  list-style: none;
+  padding: 30px 0;
+  background: #F8FBFF; }
+  .missions .week {
+    width: 60%;
+    max-width: 620px;
+    margin: auto;
+    color: #454441;
+    font-size: 20px;
+    margin-top: 80px;
+    margin-bottom: 30px; }
+    .missions .week:first-child {
+      margin-top: 0; }
+  .missions li {
+    position: relative;
+    background: white;
+    line-height: 200%;
+    border: solid 1px #CBCCCE;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    width: 60%;
+    max-width: 620px;
+    margin: auto;
+    margin-bottom: 25px; }
+    .missions li.future {
+      color: #BFBFBF; }
+    .missions li.done i {
+      font-size: 1.5em;
+      position: absolute;
+      left: -50px;
+      color: #11D146; }
+    .missions li:last-child {
+      margin-bottom: 0; }

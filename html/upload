@@ -1,0 +1,2 @@
+#!/bin/bash
+rsync -rP --update . root@besike.com:/www/cj

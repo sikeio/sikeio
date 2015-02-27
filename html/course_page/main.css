@@ -1,0 +1,226 @@
+body {
+  margin: 0;
+  font-family: Roboto;
+  font-weight: 300;
+  font-size: 18px;
+  overflow: auto;
+  overflow-x: hidden; }
+
+code {
+  font-family: menlo;
+  font-size: 16px; }
+
+img {
+  max-width: 100%; }
+
+header {
+  font-size: 0;
+  position: relative; }
+  header:after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2); }
+  header img {
+    width: 100%; }
+  header h1 {
+    font-size: 40px;
+    font-weight: 400;
+    text-decoration: underline;
+    z-index: 1;
+    color: white;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    text-align: center;
+    height: 1em;
+    width: 100%; }
+
+.normal {
+  margin: auto;
+  margin-top: 50px; }
+  .normal p, .normal h2, .normal ul {
+    width: 80%;
+    max-width: 700px;
+    margin: auto; }
+  .normal p {
+    margin: 30px auto; }
+  .normal h2 {
+    font-size: 36px;
+    font-weight: 300;
+    margin: 30px auto;
+    color: #616161; }
+  .normal ul {
+    padding-left: 0; }
+  .normal img {
+    display: block;
+    margin: auto; }
+  .normal pre {
+    padding: 20px 0;
+    background: rgba(204, 204, 204, 0.1); }
+    .normal pre code {
+      display: block;
+      width: 80%;
+      max-width: 700px;
+      margin: auto; }
+
+.exercise {
+  background: #F8FBFF;
+  padding-top: 40px; }
+  .exercise h2, .exercise p {
+    width: 80%;
+    max-width: 700px;
+    margin: auto; }
+  .exercise h2 {
+    font-size: 20px;
+    font-weight: 300;
+    margin-top: 0;
+    margin-bottom: 50px;
+    position: relative; }
+    .exercise h2 .indicator {
+      font-size: 20px;
+      font-weight: 400;
+      position: absolute;
+      left: -20%;
+      top: 0; }
+  .exercise pre {
+    overflow: auto; }
+  .exercise .steps {
+    counter-reset: list;
+    list-style: none;
+    padding: 0; }
+    .exercise .steps .step .content {
+      width: 80%;
+      max-width: 700px;
+      margin: auto;
+      position: relative; }
+      .exercise .steps .step .content.top-space:first-child:before {
+        top: 30px; }
+      .exercise .steps .step .content.top-space h3 {
+        padding: 30px 0; }
+      .exercise .steps .step .content:first-child:before {
+        counter-increment: list;
+        content: counter(list);
+        display: block;
+        position: absolute;
+        font-weight: 400;
+        left: -40px; }
+      .exercise .steps .step .content:after {
+        content: "";
+        display: block;
+        position: absolute;
+        left: -20px;
+        top: 0;
+        background: #CBCCCE;
+        width: 3px;
+        height: 100%;
+        z-index: 10; }
+    .exercise .steps .step h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 300; }
+    .exercise .steps .step pre {
+      padding: 20px 15px;
+      line-height: 150%;
+      background: white; }
+    .exercise .steps .step img {
+      position: relative;
+      z-index: 100;
+      display: block;
+      margin: auto; }
+    .exercise .steps .step .guide {
+      position: relative;
+      z-index: 50; }
+      .exercise .steps .step .guide h4, .exercise .steps .step .guide ol {
+        width: 80%;
+        max-width: 700px;
+        margin: auto; }
+      .exercise .steps .step .guide:before {
+        display: block;
+        content: "";
+        position: absolute;
+        top: -150px;
+        width: 100%;
+        left: 0;
+        height: 100%;
+        padding-top: 150px;
+        background: white;
+        box-shadow: 0 0 3px 0; }
+      .exercise .steps .step .guide h4 {
+        text-align: center;
+        position: relative;
+        font-style: italic;
+        padding: 30px 0; }
+      .exercise .steps .step .guide ol {
+        padding: 0;
+        list-style: none;
+        counter-reset: list;
+        position: relative;
+        padding-bottom: 40px; }
+        .exercise .steps .step .guide ol li {
+          padding-left: 20px;
+          line-height: 200%; }
+          .exercise .steps .step .guide ol li:before {
+            left: -3%;
+            counter-increment: list;
+            content: counter(list);
+            display: block;
+            position: absolute;
+            font-weight: 400; }
+  .exercise .goal {
+    margin: 100px auto;
+    margin-bottom: 30px;
+    font-size: 2em;
+    color: #616161;
+    text-align: center; }
+    .exercise .goal strong {
+      color: #FF5252; }
+  .exercise .completed {
+    padding: 30px 0;
+    text-align: center; }
+    .exercise .completed i {
+      display: block;
+      font-size: 5em;
+      color: #11D146; }
+  .exercise .conclusion {
+    background: white; }
+    .exercise .conclusion p {
+      width: 80%;
+      max-width: 700px;
+      margin: auto;
+      padding: 30px 0;
+      font-family: "Open Sans";
+      font-weight: 400; }
+
+.next {
+  text-align: center;
+  margin: 0;
+  padding: 30px 0; }
+  .next i {
+    font-size: 3em;
+    color: #8E8E8E; }
+
+@media only screen and (max-width: 1000px) {
+  .indicator {
+    display: none; } }
+@media only screen and (max-width: 480px) {
+  header h1 {
+    font-size: 25px; }
+
+  .exercise .steps .step .content {
+    width: 60%; }
+
+  code {
+    overflow: auto; }
+
+  .guide:before {
+    top: -50px !important;
+    padding-top: 50px !important; } }
+@media only screen and (max-width: 280px) {
+  header h1 {
+    font-size: 20px; } }
