@@ -21,6 +21,7 @@ module SessionsHelper
   def require_login
     unless current_user
       flash[:error] = "请首先登陆~"
+      store_location request.fullpath
       redirect_to login_path
     end
   end

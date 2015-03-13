@@ -1,2 +1,65 @@
-h1.page-header = @course.name
-p  课程首页
+div.status-bar
+  .left
+    = image_tag "courses/logo_course.png", class: "logo"
+    p.course-title 
+      = @course.name
+
+  .right
+    = image_tag "courses/avatar.png", class: "avatar"
+    p.mission-status
+     | #{@current_lesson_num - 1}/#{@lesson_sum} Completed
+     /等待添加功能
+
+header
+  = image_tag "courses/header.png"
+  <h1>
+    span.banner 6
+    | Ditching The Story Board
+  </h1>
+= hidden_field_tag 'day_left', @day_left
+= hidden_field_tag 'send-day', @send_day
+div.time-remaining
+  p.time 
+
+div.current-mission
+  - if @finished
+    h2
+      | Finished
+  - else
+    h2
+      | #{@current_lesson.name}
+    p
+      | #{@current_lesson.overview}
+
+- if @finished
+  div.course-status.completed
+    i.fa.fa-check-circle
+- else
+  div.course-status.uncompleted
+    i.fa.fa-check-circle
+
+ul.missions
+  - show_control_num = 0
+  - finished_num = @current_lesson_num - 1
+  - @weeks.size.times do |num| 
+    p.week
+      | Week #{@weeks[num].num} #{@weeks[num].title}
+    - week_lessons = @weeks[num].lessons
+    - week_lessons.each do |lesson|
+      - show_control_num += 1
+      - if show_control_num <= finished_num
+        li.mission.done
+          i.fa.fa-check-circle
+          | #{show_control_num.to_s + '. ' + lesson.name}
+      - elsif (show_control_num == @current_lesson_num && @current_lesson_num <= @released_lesson_num)
+        li.mission.current
+          | #{show_control_num.to_s + '. ' + lesson.name}
+      - elsif show_control_num <= @released_lesson_num
+        li.mission.to-be-done
+          | #{show_control_num.to_s + '. ' + lesson.name}
+      - else 
+        li.mission.future
+          | #{show_control_num.to_s + '. ' + lesson.name}
+          /使用连接代替
+ 
+

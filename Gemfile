@@ -10,6 +10,9 @@ gem 'slim-rails'
 gem 'redcarpet'
 gem 'sidekiq'
 
+#To parse Xml
+gem 'nokogiri'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
 gem 'pg'
@@ -51,5 +54,12 @@ group :development, :test do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'annotate'
+
+  # Using Rspec tot test
+
+  gem 'rspec-rails'
+  # set data to database
+
+  gem 'factory_girl_rails'
 end
 

@@ -1,10 +1,11 @@
 class SessionsController < ApplicationController
 
   def new
+    session[:user_id] = 1;
   end
 
   def destroy
-    session.delete :user_id
+    session[:user_id] = nil
     redirect_to root_path
   end
 

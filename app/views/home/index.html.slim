@@ -3,7 +3,7 @@ nav.l-main-nav
   a href="http://d.fork2.com" 交流论坛
 header.l-main-header
   .logo
-    img(src="/assets/logo.png" width="88" alt="思客")
+    = image_tag("logo.png", width: '88', alt: "思客")
   h1
     |满足你的技术情怀
     p.slogan 专注 IT 领域远程学徒式教学
@@ -185,7 +185,7 @@ section.courses.node
 section.l-mentor
   .wrap
     .avatar
-      img src="/assets/howard-yeh.jpg" alt="avatar"
+      = image_tag("howard-yeh.jpg", alt: "avatar")
     .content
       h2 导师介绍
       p
@@ -216,7 +216,7 @@ footer
   .wrap
     .footer-logo
       a href="#"
-        img src="/assets/footer-logo.png" width="59" alt="思客"
+        img src=image_path("footer-logo.png") width="59" alt="思客"
     .copyright ©2015 思客
     nav.l-footer-nav
       ul

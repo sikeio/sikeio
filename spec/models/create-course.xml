@@ -1,0 +1,53 @@
+<course name="create-course">
+  <week title="Startup Quotes">
+    <lesson name="create lesson-1" title="title of lesson 1" day="1">
+      <overview>
+        Information about the lesson 1
+      </overview>
+    </lesson>
+
+    <lesson name="create lesson-2" title="lesson 2" day="2">
+      <overview>
+        Information about the lesson 2
+      </overview>
+    </lesson>
+
+    <lesson name="create lesson-3" title="lesson 3" day="4">
+      <overview>
+        Information about the lesson 3
+      </overview>
+    </lesson>
+
+    <lesson name="create lesson-4" title="lesson 4" day="5">
+      <overview>
+        Information about the lesson 4
+      </overview>
+    </lesson>
+  </week>
+
+  <week title="Temperature Converter">
+    <lesson name="create lesson-5" title="title" day="1">
+      <overview>
+        Information about the lesson 5
+      </overview>
+    </lesson>
+
+    <lesson name="create lesson-6" title="title" day="2">
+      <overview>
+        Information about the lesson 6
+      </overview>
+    </lesson>
+
+    <lesson name="create lesson-7" title="title" day="3">
+      <overview>
+        Information about the lesson 7
+      </overview>
+    </lesson>
+
+    <lesson name="create lesson-8" title="title" day="4">
+      <overview>
+        Information about the lesson 8
+      </overview>
+    </lesson>
+  </week>
+</course>

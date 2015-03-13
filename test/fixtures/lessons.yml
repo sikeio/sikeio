@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  week: 1
+  day: 1
+  title: MyString
+  overview: MyText
+
+two:
+  name: MyString
+  week: 1
+  day: 1
+  title: MyString
+  overview: MyText

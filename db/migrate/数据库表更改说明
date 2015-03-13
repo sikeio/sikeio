@@ -1,0 +1,2 @@
+这里删除user和course表里面相互指向对方的integer矩阵。
+用order表去表示两者之间的订阅关系，同时还可以在order中插入user完成课程情况等的相关信息
