@@ -9,7 +9,7 @@ $ ->
         send_day = Number.parseInt($("#send-day").val())
         day_left = $("#day_left").val()
         day_left -= 1 if (send_day != date.getDate())
-        if day_left >= 0
+        if day_left > 0
           hour = 24 * day_left - date.getHours() - 1 
           min = 60 - date.getMinutes() - 1
           sec = 60 - date.getSeconds() - 1

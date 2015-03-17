@@ -35,47 +35,9 @@ class CoursesController < ApplicationController
 
   def show
     @course = Course.find params[:id]
-    #@week_num = @course.weeks.maximum(:num)
-
-    #order = @course.orders.find_by(user_id: session[:user_id])
-    enrollment = @course.enrollment.find_by(user_id: 1)
-
-    #Info needed to show
-    @course_weeks = @course.course_weeks
-    @course_week_titles = @course.course_week_titles
-    @current_lesson_num = temp_num = enrollment.current_lesson_num
-    @released_lesson_num = get_released_lesson_num(enrollment)
-    @current_lesson = nil
-    @lesson_sum = @course.lessons_sum
-    @finished = (@current_lesson_num > @lesson_sum)
-    @day_left = 0
-    @send_day = 0
-
-    #@weeks中是按照num排好序的
-    require_day = 0
-    @course.course_weeks_sum.times do |num|
-      week_lessons = @course_weeks[num]
-      if temp_num <= week_lessons.size
-        lesson_info = week_lessons[temp_num - 1]
-        @current_lesson = lesson_info[0]
-        require_day += lesson_info[1]
-        break
-      else
-        temp_num -= week_lessons.size
-        require_day += 7
-      end
-    end
-    
-    start_time = enrollment.start_time.to_date
-    start_day = start_time.cwday
-
-    # 如果不是星期一申请成功开课的话，第一次开课时间为下周星期一
-    start_time = start_time + 8 - start_day if start_day != 1 
-    require_time = start_time + require_day
-    today = Date.today
-    @day_left = (require_time - today).to_i
-    @send_day = today.day
-
+    @enrollment = @course.enrollments.find_by(user_id: 1)
+    @course.current_version = @enrollment.version
+    @send_day = Date.today.day
   end
 
   def payment
@@ -119,40 +81,6 @@ class CoursesController < ApplicationController
 
   private
 
-  def get_released_lesson_num(enrollment)
-    released_lesson_num = 0
-    start_time = enrollment.start_time.to_date
-    start_day = start_time.cwday
-
-    # 如果不是星期一申请成功开课的话，第一次开课时间为下周星期一
-    start_time = start_time + 8 - start_day if start_day != 1 
-    start_year = start_time.cwyear
-    start_week = start_time.cweek
-
-    today = Date.today
-    today_year = today.cwyear
-    today_week = today.cweek
-    day = today.cwday
-
-    weeks = (today_year - start_year) * 53 + today_week - start_week
-    if(weeks >= 0)
-      weeks_sum = enrollment.course_weeks_sum
-      if weeks >= weeks_sum
-        released_lesson_num = enrollment.course.lessons_sum
-      else
-        (weeks).times do |n|
-          released_lesson_num += enrollment.course.course_weeks[n].size
-        end
-        enrollment.course.course_weeks[weeks].size.times do |n|
-          released_lesson_num += 1 if enrollment.course.course_weeks[weeks][n][1] <= day
-          
-        end
-        released_lesson_num += enrollment.course.course_weeks[weeks].lessons.where("day <= #{day} ").count
-      end
-    end
-
-    return released_lesson_num
-  end
 
   def require_take_part_in
     @course = Course.find params[:id]

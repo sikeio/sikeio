@@ -52,6 +52,17 @@ class Course < ActiveRecord::Base
     @version
   end
 
+  def has_lesson?(lesson)
+    result = false
+    @lessons.each do |lesson_in_course|
+      if lesson == lesson_in_course
+        result = true
+        break
+      end
+    end
+   result 
+  end
+
     
   def self.update_lessons!(xml_file_path)
     raise "Error: #{xml_file_path} does not exist" if !File.exist?(xml_file_path)
@@ -129,6 +140,7 @@ class Course < ActiveRecord::Base
           lesson = [day_lesson, day]
           course_week_lessons << lesson
           @lessons << day_lesson
+          temp_test_day = day
         end
         @course_weeks << course_week_lessons
       end
