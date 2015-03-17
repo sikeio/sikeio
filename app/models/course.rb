@@ -1,9 +1,7 @@
 class Course < ActiveRecord::Base
 
-  has_many :lessons,  -> { order 'day ASC'}, through: :weeks  
-  has_many :weeks, -> { order 'num ASC' } ,dependent: :destroy
-  has_many :orders # dependent: :destroy 需要吗？
-  has_many :users, through: :orders
+  has_many :enrollments # dependent: :destroy 需要吗？
+  has_many :users, through: :enrollments
 
   validates :name ,presence: true
 
@@ -13,6 +11,48 @@ class Course < ActiveRecord::Base
   end
 =end
 
+  def load
+    parse_xml_file!
+  end
+
+  def lessons
+    @lessons
+  end
+
+  def repo_path
+    Rails.root + self.name + @version
+  end
+  
+  def xml_file_path
+    repo_path + (self.name + ".xml")
+  end
+
+  def lessons_sum
+    @lessons_sum
+  end
+
+  def course_weeks
+    @course_weeks
+  end
+
+  def course_week_titles
+    @course_week_titles
+  end
+
+  def course_weeks_sum
+    @course_weeks_sum
+  end
+
+  def current_version=(new_version)
+    @version = new_version
+    parse_xml_file!
+  end
+
+  def current_version
+    @version
+  end
+
+    
   def self.update_lessons!(xml_file_path)
     raise "Error: #{xml_file_path} does not exist" if !File.exist?(xml_file_path)
     #--get xml content ---
@@ -20,27 +60,17 @@ class Course < ActiveRecord::Base
     xml_doc = Nokogiri::XML(f)
     f.close
 
-    #TO_DO 应该检查格式？
 
     #--parse xml and update DB--
     xml_doc.css('course').each do |course_node|
 
       #get course and lesson
       course_name = course_node["name"]
-      unless course = Course.find_by_name(course_name)
-        course = Course.create!(name: course_name) 
+      unless Course.find_by_name(course_name)
+        Course.create!(name: course_name) 
       end
 
-      week_num = 0
       course_node.css('week').each do |week_node|
-        week_num += 1
-        unless week = course.weeks.find_by(num: week_num)
-          week = Week.create(num: week_num)
-          course.weeks << week
-        end
-        week.title = week_node["title"]
-        week.save
-
         week_node.css('lesson').each do |lesson_node|
           overview_node = lesson_node.css('overview')
 
@@ -49,19 +79,14 @@ class Course < ActiveRecord::Base
           lesson_title = lesson_node["title"]
           lesson_overview = overview_node.text
 
-          #lessons conflict 
-          lesson_day = week.lessons.exists?(day: lesson_day) ? nil : lesson_node["day"] 
-
           lesson_info = {
             name: lesson_name, 
             title: lesson_title, 
             overview: lesson_overview,
-            day: lesson_day,
           }
 
           #create or update record
-          lesson = week.lessons.exists?(name: lesson_name) ? lesson.update!(lesson_info) : week.lessons.create!(lesson_info)
-
+          (lesson = Lesson.find_by(name: lesson_name)) ? lesson.update!(lesson_info) : Lesson.create!(lesson_info)
         end
       end
     end
@@ -71,5 +96,46 @@ class Course < ActiveRecord::Base
     participants.include? user.id
   end
 
+  private
+
+  def parse_xml_file!
+    raise "Error: #{xml_file_path} does not exist" if !File.exist?(xml_file_path)
+    #--get xml content ---
+    f = File.open(xml_file_path)
+    xml_doc = Nokogiri::XML(f)
+    f.close
+
+    #--parse xml and set value--
+    @lessons = []
+    @course_weeks = []
+    @course_week_titles = []
+    @lessons_sum = 0
+    @course_weeks_sum = 0
+    xml_doc.css('course').each do |course_node|
+
+      #--get info-------------
+      course_name = course_node["name"]
+
+      course_node.css('week').each do |week_node|
+        course_week_lessons = []
+        temp_test_day = 0
+        @course_week_titles << week_node["title"]
+        week_node.css('lesson').each do |lesson_node|
+          #因为xml文件中，一周内的day是递增的，所以可以用来判断是否有冲突
+          day = lesson_node["day"].to_i
+          raise "Error: lesson day conflict" if temp_test_day >= day
+          lesson_name = lesson_node["name"]
+          day_lesson = Lesson.find_by_name(lesson_name)
+          lesson = [day_lesson, day]
+          course_week_lessons << lesson
+          @lessons << day_lesson
+        end
+        @course_weeks << course_week_lessons
+      end
+    end
+    @lessons_sum = @lessons.size
+    @course_weeks_sum = @course_weeks.size
+  end
+  
 end
 
