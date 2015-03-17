@@ -41,25 +41,25 @@ div.current-mission
 ul.missions
   - show_control_num = 0
   - finished_num = @current_lesson_num - 1
-  - @weeks.size.times do |num| 
+  - @course_weeks.size.times do |num| 
     p.week
-      | Week #{@weeks[num].num} #{@weeks[num].title}
-    - week_lessons = @weeks[num].lessons
+      | Week #{num + 1} #{@course_week_titles[num]}
+    - week_lessons = @course_weeks[num]
     - week_lessons.each do |lesson|
       - show_control_num += 1
       - if show_control_num <= finished_num
         li.mission.done
           i.fa.fa-check-circle
-          | #{show_control_num.to_s + '. ' + lesson.name}
+          | #{show_control_num.to_s + '. ' + lesson[0].name}
       - elsif (show_control_num == @current_lesson_num && @current_lesson_num <= @released_lesson_num)
         li.mission.current
-          | #{show_control_num.to_s + '. ' + lesson.name}
+          | #{show_control_num.to_s + '. ' + lesson[0].name}
       - elsif show_control_num <= @released_lesson_num
         li.mission.to-be-done
-          | #{show_control_num.to_s + '. ' + lesson.name}
+          | #{show_control_num.to_s + '. ' + lesson[0].name}
       - else 
         li.mission.future
-          | #{show_control_num.to_s + '. ' + lesson.name}
+          | #{show_control_num.to_s + '. ' + lesson[0].name}
           /使用连接代替
  
 

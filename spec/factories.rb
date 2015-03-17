@@ -1,4 +1,8 @@
-FactoryGirl.define do
+FactoryGirl.define do  
+  factory :enrollment do
+    
+  end
+
 
   factory :user do
     name "test_user"
@@ -36,6 +40,10 @@ FactoryGirl.define do
   factory :lesson do
     sequence(:title) { |n| "title_#{n}" }
     sequence(:overview) { |n| "overview_#{n}" }
+  end
+
+  factory :test_lesson, class: Lesson do
+    sequence(:name) { |n| "test_lesson_#{n + 1}"}
   end
 
 end

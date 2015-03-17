@@ -38,25 +38,27 @@ class CoursesController < ApplicationController
     #@week_num = @course.weeks.maximum(:num)
 
     #order = @course.orders.find_by(user_id: session[:user_id])
-    order = @course.orders.find_by(user_id: 1)
+    enrollment = @course.enrollment.find_by(user_id: 1)
 
     #Info needed to show
-    @weeks = @course.weeks
-    @current_lesson_num = temp_num = order.current_lesson_num
-    @released_lesson_num = get_released_lesson_num(order)
+    @course_weeks = @course.course_weeks
+    @course_week_titles = @course.course_week_titles
+    @current_lesson_num = temp_num = enrollment.current_lesson_num
+    @released_lesson_num = get_released_lesson_num(enrollment)
     @current_lesson = nil
-    @lesson_sum = @course.lessons.size
+    @lesson_sum = @course.lessons_sum
     @finished = (@current_lesson_num > @lesson_sum)
     @day_left = 0
     @send_day = 0
 
     #@weeks中是按照num排好序的
     require_day = 0
-    @weeks.size.times do |num|
-      week_lessons = @weeks[num].lessons
+    @course.course_weeks_sum.times do |num|
+      week_lessons = @course_weeks[num]
       if temp_num <= week_lessons.size
-        @current_lesson = week_lessons[temp_num - 1]
-        require_day += @current_lesson.day
+        lesson_info = week_lessons[temp_num - 1]
+        @current_lesson = lesson_info[0]
+        require_day += lesson_info[1]
         break
       else
         temp_num -= week_lessons.size
@@ -64,7 +66,7 @@ class CoursesController < ApplicationController
       end
     end
     
-    start_time = order.start_time.to_date
+    start_time = enrollment.start_time.to_date
     start_day = start_time.cwday
 
     # 如果不是星期一申请成功开课的话，第一次开课时间为下周星期一
@@ -117,9 +119,9 @@ class CoursesController < ApplicationController
 
   private
 
-  def get_released_lesson_num(order)
+  def get_released_lesson_num(enrollment)
     released_lesson_num = 0
-    start_time = order.start_time.to_date
+    start_time = enrollment.start_time.to_date
     start_day = start_time.cwday
 
     # 如果不是星期一申请成功开课的话，第一次开课时间为下周星期一
@@ -134,14 +136,18 @@ class CoursesController < ApplicationController
 
     weeks = (today_year - start_year) * 53 + today_week - start_week
     if(weeks >= 0)
-      lesson_weeks = order.course.weeks.size
-      if weeks >= lesson_weeks
-        released_lesson_num = order.course.lessons.size 
+      weeks_sum = enrollment.course_weeks_sum
+      if weeks >= weeks_sum
+        released_lesson_num = enrollment.course.lessons_sum
       else
         (weeks).times do |n|
-          released_lesson_num += order.course.weeks[n].lessons.size
+          released_lesson_num += enrollment.course.course_weeks[n].size
         end
-        released_lesson_num += order.course.weeks[weeks].lessons.where("day <= #{day} ").count
+        enrollment.course.course_weeks[weeks].size.times do |n|
+          released_lesson_num += 1 if enrollment.course.course_weeks[weeks][n][1] <= day
+          
+        end
+        released_lesson_num += enrollment.course.course_weeks[weeks].lessons.where("day <= #{day} ").count
       end
     end
 

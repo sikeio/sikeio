@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
   has_many :authentications
 
-  has_many :orders, dependent: :destroy
-  has_many :courses, through: :orders
+  has_many :enrollments, dependent: :destroy
+  has_many :courses, through: :enrollments
 
   before_save :downcase_email
   before_create :fill_activation_token
