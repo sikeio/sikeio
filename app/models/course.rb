@@ -5,33 +5,30 @@ class Course < ActiveRecord::Base
 
   validates :name ,presence: true
 
+  after_initialize do |course|
+    parse_xml_file! if course.current_version
+  end
+
 =begin
   def self.release_lesson!
     Order.release_lesson!
   end
 =end
 
-  def load
-    parse_xml_file!
-  end
-
-  def lessons
+  def lessons  #根据先后顺序排序好的
     @lessons
   end
 
-  def repo_path
-    Rails.root + self.name + @version
-  end
-  
-  def xml_file_path
-    repo_path + (self.name + ".xml")
+  def next_lesson(lesson)
+    index = @lessons.find_index { |var_lesson| lesson == var_lesson }
+    @lessons[index + 1]
   end
 
   def lessons_sum
     @lessons_sum
   end
 
-  def course_weeks
+  def course_weeks #排序好的
     @course_weeks
   end
 
@@ -52,18 +49,19 @@ class Course < ActiveRecord::Base
     @version
   end
 
-  def has_lesson?(lesson)
-    result = false
-    @lessons.each do |lesson_in_course|
-      if lesson == lesson_in_course
-        result = true
-        break
+  def release_day_of_lesson(lesson)
+    result_day = 0 #stand no lesson in this course
+    @course_weeks.each do |course_week|
+      target_lesson_info = course_week.find { |lesson_info| lesson_info[0].name == lesson.name } 
+      if target_lesson_info
+        result_day += target_lesson_info[1] # [1]里面存储的是课程所在周里第几天
+      else
+        result_day += 7
       end
     end
-   result 
+    result_day
   end
 
-    
   def self.update_lessons!(xml_file_path)
     raise "Error: #{xml_file_path} does not exist" if !File.exist?(xml_file_path)
     #--get xml content ---
@@ -103,11 +101,16 @@ class Course < ActiveRecord::Base
     end
   end
 
-  def include_user?(user)
-    participants.include? user.id
+  private
+
+  def repo_path
+    Rails.root + self.name + @version
+  end
+  
+  def xml_file_path
+    repo_path + (self.name + ".xml")
   end
 
-  private
 
   def parse_xml_file!
     raise "Error: #{xml_file_path} does not exist" if !File.exist?(xml_file_path)

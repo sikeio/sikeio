@@ -38,25 +38,11 @@ RSpec.describe Course, :type => :model do
 
 
   let(:course) do
-    course = Course.create(name: "test_course", current_version: "v1")
-    course.load
-    course
+    Course.create(name: "test_course", current_version: "v1")
   end
 
   before(:each) do
     FactoryGirl.create_list(:test_lesson, 10)
-  end
-
-  describe "#repo_path" do
-    it 'returns path to the cached repo' do
-      expect(course.repo_path).to eq(Rails.root + course.name + "v1")
-    end
-  end
-
-  describe  "#xml_file_path" do
-    it 'returns the xml file path' do
-      expect(course.xml_file_path).to eq(course.repo_path + (course.name + ".xml"))
-    end
   end
 
   describe "#lessons" do
@@ -65,6 +51,17 @@ RSpec.describe Course, :type => :model do
       expect(course.lessons).to eq(test_lessons)
     end
   end
+
+=begin
+  describe "#release_day_of_lesson" do
+    it 'returns the lesson release day from start time' do
+      #lesson = Lesson.find_by_name("test_lesson_1")
+      lesson = Lesson.last
+      puts lesson.name
+      expect(course.release_day_of_lesson(lesson)).to eq(8)
+    end
+  end
+=end
 
   describe "#lessons_sum" do
     it 'returns the sum of this lessons' do
@@ -111,131 +108,7 @@ RSpec.describe Course, :type => :model do
     end
   end
 
-  after(:all) do
+  after(:each) do
     FactoryGirl.reload
   end
-
-
-#-------------------------------------------------------------------
-=begin
-  let(:course) { Course.create(name: "ios", current_version: "v1") }
-  describe "cour" do
-    
-  end
-
-
-
-  describe  "content handling" do
-
-    describe "#content" do
-      it 'returns an object of Content' do
-        expect(course.content).to be_a(Course::Content)
-      end
-    end
-
-    describe 'Course::Content' do
-      let(:content) { course.content }
-      describe "#repo_path" do
-        it 'returns the path to the cached repo ' do
-          expect(content.repo_path).to eq(Rails.root + "ios/master")
-        end
-      end
-
-      describe "#index_file_path" do
-        it 'returns the file path' do
-          expect(content.index_file_path).to eq(content.repo_path + "ios.xml")
-        end
-      end
-
-      describe "#lessons" do
-        let(:content_v1) { course.content("v1")}
-        let(:master_lessons) {  }
-        it 'returns the master version lessons' do
-          expect(content.lessons).to 
-          
-        end
-
-        it 'returns the v1 version lessons' do
-          
-        end
-
-        
-      end
-
-    end
-  end
-=end
-=begin
-  describe "Update Course accroding to the given XML file" do
-
-    it 'should create course if the given course is not exists' do
-      xml_file_path = Rails.root + "spec/models/create-course.xml"
-      expect { Course.update_lessons!(xml_file_path) }.to change{Course.count}.by(1)
-    end
-
-    #怎么写更好？？？？
-    it 'should update lessons if the given course exists' do
-      xml_file_path = Rails.root + "spec/models/update-lessons.xml"
-      # 测试写的是增加lessons
-      expect { Course.update_lessons!(xml_file_path) }.to change{Lesson.count}
-    end
-
-  end
-  describe  "Release Lesson" do
-    before(:each) do
-      date = Date.today
-      @day_week = date.cwday
-
-      @order = @user.orders.first
-
-      @order.course.lessons.each do |lesson|
-        lesson.day = @day_week
-        lesson.save
-      end
-    end
-
-    it 'should change order if course is not finished and the time is the lesson release day' do
-
-      @order.released_lesson_num = 1
-      @order.save
-
-
-
-      expect { 
-        Course.release_lesson!
-        @order.reload 
-      }.to change{ @order.released_lesson_num }.by(1)
-
-    end
-
-    it 'should not change order if today is not the lesson release day' do
-      @order.course.lessons.each do |lesson|
-        lesson.day = @day_week + 1
-        lesson.save
-      end
-
-      @order.released_lesson_num = 1
-      @order.save
-
-      expect { 
-        Course.release_lesson!
-        @order.reload
-      }.to_not change{ @order.released_lesson_num }
-    end
-
-    it 'should not change order if course is finished' do
-      @order.released_lesson_num = @order.course.lessons.size
-      @order.save
-
-      expect { 
-       Course.release_lesson!
-       @order.reload 
-      }.to_not change{ @order.released_lesson_num }
-
-    end
-
-  end    
-=end
-
-
 end

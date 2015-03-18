@@ -16,52 +16,47 @@ RSpec.describe Enrollment, type: :model do
     temp
   end
 
-  let(:course_lesson_sum) { 8 }
-
-  describe "#current_lesson_info" do
-    it 'returns the current lesson' do
-      enrollment.update(current_lesson_num: 1)
-      expect(enrollment.current_lesson_info).to eq(Lesson.find_by_name("test_lesson_1"))
+  describe "#next_uncompleted_lesson" do
+    it 'returns the current lesson waiting for being done' do
+      expect(enrollment.next_uncompleted_lesson).to eq(Lesson.find_by_name("test_lesson_1"))
     end
   end
 
-  describe "#all_finished?" do
+  describe  "#completed_lessons" do
+    it 'returns the lessons that already finished' do
+      check = CheckOut.create(lesson_name: "test_lesson_1")
+      enrollment.check_outs << check
+      temp = []
+      temp << Lesson.find_by_name("test_lesson_1")
+
+      expect(enrollment.completed_lessons).to eq(temp)
+    end
+  end
+
+  describe "#uncompleted_lessons" do
+    it 'returns the lessons that already released but not completed' do
+      
+    end
+  end
+
+  describe "#released_lessons" do
+    it 'returns the lessons that already released' do
+      
+      
+    end
+  end
+
+  describe "#all_completed?" do
     it 'returns true if all lessons in this course finished' do
-      enrollment.update(current_lesson_num: (course_lesson_sum + 1))
-      expect(enrollment.all_finished?).to eq(true)
+      expect(enrollment.all_completed?).to eq(true)
     end
 
     it 'returns false if not all lessons finished' do
-      enrollment.update(current_lesson_num: 1)
-      expect(enrollment.all_finished?).to eq(false)
+      expect(enrollment.all_completed?).to eq(false)
     end
   end
 
-  describe "#lesson_status" do
-    before(:each) do
-      enrollment.update(current_lesson_num: 8, start_time: (Time.now.to_date - 7))
-    end
-    it 'returns -1 if lesson is finished' do
-      lesson = Lesson.find_by_name("test_lesson_1")
-      expect(enrollment.lesson_status(lesson)).to eq(-1)
-    end
-
-    it 'returns 0 if the lesson is being done' do
-      lesson = Lesson.find_by_name("test_lesson_6")
-      
-    end
-
-    it 'returns 1 if the lesson is waiting for done' do
-      
-    end
-
-    it 'returns 2 if the lesson is not open' do
-      
-    end
-  end
-
-  describe "#current_lesson_day_left" do
-    pending
+  describe "#uncompleted_lesson_day_left" do
     it 'returns the day left for the current lesson' do
       
     end

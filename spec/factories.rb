@@ -1,8 +1,20 @@
 FactoryGirl.define do  
+
+  factory :check_out , class: CheckOut do
+    lesson_name "check_out_lesson"
+  end
+  
   factory :enrollment do
-    
+
   end
 
+  factory :lesson_checked, class: Lesson do
+    name "check_out_lesson"
+  end
+
+  factory :lesson_not_checked, class: Lesson do
+    name "no_check_out_lesson"
+  end
 
   factory :user do
     name "test_user"
