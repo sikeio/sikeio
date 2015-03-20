@@ -1,6 +1,6 @@
-class CreateCheckOuts < ActiveRecord::Migration
+class CreateCheckouts < ActiveRecord::Migration
   def change
-    create_table :check_outs do |t|
+    create_table :checkouts do |t|
       t.belongs_to :enrollment, index: true
       t.string :lesson_name
 

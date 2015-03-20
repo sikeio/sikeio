@@ -2,29 +2,36 @@ class Enrollment < ActiveRecord::Base
   belongs_to :user
   belongs_to :course
 
-  has_many :check_outs
-
-  after_initialize do |a|
-    #a.course.current_version = a.version
-    puts a.version
-  end
+  has_many :checkouts
 
   def next_uncompleted_lesson
     #得到尚未完成的第一个课程
     self.course.lessons.find do |lesson|
-      !(CheckOut.check_out?(self, lesson))
+      !(Checkout.check_out?(self, lesson))
+    end
+  end
+
+  def course
+    target_course = Course.find(self.course_id)
+    target_course.current_version = self.version if self.version
+    target_course
+  end
+
+  def uncompleted_lessons
+    self.course.lessons.select do |lesson|
+      self.is_released?(lesson) && (!Checkout.check_out?(self, lesson))
     end
   end
 
   def completed_lessons
     self.course.lessons.select do |lesson|
-      CheckOut.check_out(self, lesson) && self.is_released?(lesson)
+      Checkout.check_out?(self, lesson) && self.is_released?(lesson)
     end
   end
 
   def all_completed?
-    self.course.lessons.all do |lesson|
-      CheckOut.check_out?(self, lesson)
+    self.course.lessons.all? do |lesson|
+      Checkout.check_out?(self, lesson)
     end
   end
 
@@ -32,6 +39,13 @@ class Enrollment < ActiveRecord::Base
     self.course.lessons.select do |lesson|
       self.is_released? lesson
     end
+  end
+
+  def unreleased_lessons
+    self.course.lessons.select do |lesson|
+      !(self.is_released? lesson)
+    end
+    
   end
 
 
@@ -42,16 +56,16 @@ class Enrollment < ActiveRecord::Base
     next_lesson_start_day - day_from_start_time
   end
 
-  private
-
   def is_released?(lesson)
     day = self.course.release_day_of_lesson(lesson)
     day_from_start_time >= day
   end
 
+  private
+
   def day_from_start_time
     today = Time.now.beginning_of_day.to_date
-    course_start_time = self.start_time.beginnig_of_day.to_date
+    course_start_time = self.start_time.beginning_of_day.to_date
     (today - course_start_time).to_i + 1
   end
 

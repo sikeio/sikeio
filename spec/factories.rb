@@ -1,6 +1,9 @@
-FactoryGirl.define do  
+FactoryGirl.define do  factory :checkout do
+    
+  end
+  
 
-  factory :check_out , class: CheckOut do
+  factory :check_out  do
     lesson_name "check_out_lesson"
   end
   
@@ -22,11 +25,12 @@ FactoryGirl.define do
   end
 
   factory :test_lesson, class: Lesson do
-    sequence(:name) { |n| "test_lesson_#{n + 1}"}
+    sequence(:name) { |n| "test_lesson_#{n}"}
   end
 
   factory :test_course, class: Course do
     name "test_course"
+    current_version "v1"
   end
 
 end

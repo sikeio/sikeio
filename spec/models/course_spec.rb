@@ -22,7 +22,7 @@ RSpec.describe Course, :type => :model do
     test_weeks_sum.times do |week|
       week_lessons = []
       day_week.times do |day|
-        week_lessons << [Lesson.find_by_name("test_lesson_#{ (week) * day_week + (day + 1) }"), day + 1]
+        week_lessons << Lesson.find_by_name("test_lesson_#{ (week) * day_week + (day + 1) }")
       end
       course_weeks << week_lessons
     end
@@ -47,7 +47,6 @@ RSpec.describe Course, :type => :model do
 
   describe "#lessons" do
     it 'returns all the lessons of the course' do
-      lessons = []
       expect(course.lessons).to eq(test_lessons)
     end
   end
