@@ -7,7 +7,7 @@ div.status-bar
   .right
     = image_tag "courses/avatar.png", class: "avatar"
     p.mission-status
-     | #{@enrollment.current_lesson_num - 1}/#{@course.lessons_sum} Completed
+     | #{@enrollment.completed_lessons_num}/#{@course.lessons_sum} Completed
      /等待添加功能
 
 header
@@ -16,19 +16,19 @@ header
     span.banner 6
     | Ditching The Story Board
   </h1>
-- if @enrollment.current_lesson_num > 0 && @enrollment.current_lesson_num < @course.lessons_sum
-  = hidden_field_tag 'day_left', @enrollment.current_lesson_day_left
+- if @enrollment.any_released? && !(@enrollment.all_completed?)
+  = hidden_field_tag 'day_left', @enrollment.uncompleted_lesson_day_left
   = hidden_field_tag 'send-day', @send_day
   div.time-remaining
     p.time 
 
 div.current-mission
-  - if @enrollment.all_finished?
+  - if @enrollment.all_completed?
     h2
       | Finished
   - else
-    - if @enrollment.current_lesson_num > 0
-      - current_lesson = @enrollment.current_lesson_info
+    - if @enrollment.any_released?
+      - current_lesson = @enrollment.next_uncompleted_lesson
       h2
         | #{current_lesson.name}
       p
@@ -37,7 +37,7 @@ div.current-mission
       h2
         | 即将开始
 
-- if @enrollment.all_finished?
+- if @enrollment.all_completed?
   div.course-status.completed
     i.fa.fa-check-circle
 - else
@@ -46,27 +46,25 @@ div.current-mission
 
 ul.missions
   - show_control_num = 0
-  - finished_num = @enrollment.current_lesson_num - 1
   - @course.course_weeks_sum.times do |num| 
     p.week
       | Week #{num + 1} #{@course.course_week_titles[num]}
     - week_lessons = @course.course_weeks[num]
     - week_lessons.each do |lesson|
       - show_control_num += 1
-      - sign = @enrollment.lesson_status(lesson[0])
-      - if sign == -1
+      - if @enrollment.is_completed?(lesson)
         li.mission.done
           i.fa.fa-check-circle
-          | #{show_control_num.to_s + '. ' + lesson[0].name}
-      - elsif sign == 0
+          | #{show_control_num.to_s + '. ' + lesson.name}
+      - elsif @enrollment.is_next_uncompleted_lesson?(lesson)
         li.mission.current
-          | #{show_control_num.to_s + '. ' + lesson[0].name}
-      - elsif sign == 1
+          | #{show_control_num.to_s + '. ' + lesson.name}
+      - elsif @enrollment.is_released?(lesson)
         li.mission.to-be-done
-          | #{show_control_num.to_s + '. ' + lesson[0].name}
+          | #{show_control_num.to_s + '. ' + lesson.name}
       - else 
         li.mission.future
-          | #{show_control_num.to_s + '. ' + lesson[0].name}
+          | #{show_control_num.to_s + '. ' + lesson.name}
           /使用连接代替
  
 

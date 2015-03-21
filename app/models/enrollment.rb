@@ -11,22 +11,18 @@ class Enrollment < ActiveRecord::Base
     end
   end
 
+  def is_next_uncompleted_lesson?(lesson)
+    lesson == next_uncompleted_lesson
+  end
+
   def course
     target_course = Course.find(self.course_id)
     target_course.current_version = self.version if self.version
     target_course
   end
 
-  def uncompleted_lessons
-    self.course.lessons.select do |lesson|
-      self.is_released?(lesson) && (!Checkout.check_out?(self, lesson))
-    end
-  end
-
-  def completed_lessons
-    self.course.lessons.select do |lesson|
-      Checkout.check_out?(self, lesson) && self.is_released?(lesson)
-    end
+  def completed_lessons_num
+    self.checkouts.count
   end
 
   def all_completed?
@@ -34,20 +30,6 @@ class Enrollment < ActiveRecord::Base
       Checkout.check_out?(self, lesson)
     end
   end
-
-  def released_lessons
-    self.course.lessons.select do |lesson|
-      self.is_released? lesson
-    end
-  end
-
-  def unreleased_lessons
-    self.course.lessons.select do |lesson|
-      !(self.is_released? lesson)
-    end
-    
-  end
-
 
   def uncompleted_lesson_day_left 
     lesson = course.next_lesson(self.next_uncompleted_lesson)
@@ -59,6 +41,15 @@ class Enrollment < ActiveRecord::Base
   def is_released?(lesson)
     day = self.course.release_day_of_lesson(lesson)
     day_from_start_time >= day
+  end
+
+  def any_released?
+    first_lesson = self.course.lessons.first
+    self.is_released? first_lesson
+  end
+  
+  def is_completed?(lesson)
+      Checkout.check_out?(self, lesson)
   end
 
   private

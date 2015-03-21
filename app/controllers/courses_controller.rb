@@ -36,7 +36,7 @@ class CoursesController < ApplicationController
   def show
     @course = Course.find params[:id]
     @enrollment = @course.enrollments.find_by(user_id: 1)
-    @course.current_version = @enrollment.version
+    @course.current_version = @enrollment.version if @enrollment.version
     @send_day = Date.today.day
   end
 

@@ -5,10 +5,15 @@ class Course < ActiveRecord::Base
 
   validates :name ,presence: true
 
- 
+  attr_reader :current_version
+
+  after_initialize do |course|
+    course.current_version = "v1" unless course.current_version
+  end
+
   def lessons  #根据先后顺序排序好的
     lessons = []
-    @content.lessons_info.each do |lesson_info|
+    content.lessons_info.each do |lesson_info|
       lesson_info.each_key do |lesson_name|
         lessons << Lesson.find_by_name(lesson_name)
       end
@@ -17,45 +22,47 @@ class Course < ActiveRecord::Base
   end
 
   def next_lesson(lesson)
-    index = @lessons.find_index { |var_lesson| lesson == var_lesson }
-    @lessons[index + 1]
+    index = self.lessons.find_index { |var_lesson| lesson == var_lesson }
+    self.lessons[index + 1]
   end
 
   def lessons_sum
-    @content.lessons_sum
+    content.lessons_sum
   end
 
   def course_weeks #排序好的
-    @content.course_weeks.map do |one_week|
+    content.course_weeks.map do |one_week|
       one_week.map { |lesson_name|  Lesson.find_by_name(lesson_name) }
     end
   end
 
   def course_week_titles
-    @content.course_week_titles
+    content.course_week_titles
   end
 
   def course_weeks_sum
-    @content.course_weeks_sum
+    content.course_weeks_sum
   end
 
   def current_version=(new_version)
-    if new_version && @version != new_version
-      @version = new_version
-      @content = Content.new(self)
+    if new_version && @current_version != new_version
+      @current_version = new_version
+      @content = nil
     end
   end
 
-  def current_version
-    @version
-  end
-
   def release_day_of_lesson(lesson)
-    @content.release_day_of_lesson[lesson.name]
+    content.release_day_of_lesson[lesson.name]
   end
 
+  private
 
-=begin
+  def content
+    @content ||= Content.new(self)
+  end
+
+  #def self.update_lessons!(xml_file_path) 
+  #end
   def self.update_lessons!(xml_file_path)
     raise "Error: #{xml_file_path} does not exist" if !File.exist?(xml_file_path)
     #--get xml content ---
@@ -94,6 +101,5 @@ class Course < ActiveRecord::Base
       end
     end
   end
-=end 
 end
 
