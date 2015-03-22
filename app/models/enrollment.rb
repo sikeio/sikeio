@@ -2,16 +2,17 @@ class Enrollment < ActiveRecord::Base
   belongs_to :user
   belongs_to :course
 
-  has_many :checkouts
+  has_many :checkouts, dependent: :destroy
 
   def next_uncompleted_lesson
     #得到尚未完成的第一个课程
-    self.course.lessons.find do |lesson|
+    result = self.course.lessons.find do |lesson|
       !(Checkout.check_out?(self, lesson))
     end
   end
 
   def is_next_uncompleted_lesson?(lesson)
+
     lesson == next_uncompleted_lesson
   end
 

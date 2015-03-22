@@ -18,7 +18,7 @@ class Course::Content
     end
   end
 
-  #{lesson_name => day, lesson_name2 => day2]
+  #{lesson_name => day, lesson_name2 => day2}
   def release_day_of_lesson
     return @release_day_of_lesson if @release_day_of_lesson
 

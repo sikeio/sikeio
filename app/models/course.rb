@@ -1,6 +1,6 @@
 class Course < ActiveRecord::Base
 
-  has_many :enrollments # dependent: :destroy 需要吗？
+  has_many :enrollments , dependent: :destroy
   has_many :users, through: :enrollments
 
   validates :name ,presence: true
@@ -63,6 +63,7 @@ class Course < ActiveRecord::Base
 
   #def self.update_lessons!(xml_file_path) 
   #end
+=begin
   def self.update_lessons!(xml_file_path)
     raise "Error: #{xml_file_path} does not exist" if !File.exist?(xml_file_path)
     #--get xml content ---
@@ -101,5 +102,6 @@ class Course < ActiveRecord::Base
       end
     end
   end
+=end
 end
 

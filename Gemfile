@@ -56,10 +56,12 @@ group :development, :test do
   gem 'annotate'
 
   # Using Rspec tot test
-
   gem 'rspec-rails'
-  # set data to database
 
+  # set data to database
   gem 'factory_girl_rails'
+
+  # clean the database
+  gem 'database_cleaner'
 end
 
