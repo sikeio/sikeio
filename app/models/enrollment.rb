@@ -6,9 +6,17 @@ class Enrollment < ActiveRecord::Base
 
   def next_uncompleted_lesson
     #得到尚未完成的第一个课程
-    result = self.course.lessons.find do |lesson|
+    result = course.lessons.find do |lesson|
       !(Checkout.check_out?(self, lesson))
     end
+  end
+
+  def current_lesson
+    return nil if all_completed? || (!any_released?)
+    lesson = next_uncompleted_lesson
+    return lesson if is_released?(lesson)
+    lesson = course.pre_lesson(lesson) while !(is_completed?(lesson))
+    lesson
   end
 
   def is_next_uncompleted_lesson?(lesson)
@@ -27,7 +35,7 @@ class Enrollment < ActiveRecord::Base
   end
 
   def all_completed?
-    self.course.lessons.all? do |lesson|
+    course.lessons.all? do |lesson|
       Checkout.check_out?(self, lesson)
     end
   end

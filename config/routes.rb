@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   delete '/logout' => 'sessions#destroy'
   get '/test/:id' => 'courses#test'
 
+  post '/checkout/:enroll_id/:lesson_id' => 'checkouts#new', as: :check_out
 
   resources :subscribers,only:[:create]
 

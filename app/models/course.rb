@@ -25,6 +25,11 @@ class Course < ActiveRecord::Base
     index = self.lessons.find_index { |var_lesson| lesson == var_lesson }
     self.lessons[index + 1]
   end
+  
+  def pre_lesson(lesson)
+    index = self.lessons.find_index { |var_lesson| lesson == var_lesson }
+    self.lessons[index - 1]
+  end
 
   def lessons_sum
     content.lessons_sum

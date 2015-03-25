@@ -16,7 +16,8 @@ header
     span.banner 6
     | Ditching The Story Board
   </h1>
-- if @enrollment.any_released? && !(@enrollment.all_completed?)
+- current_lesson = @enrollment.current_lesson
+- if current_lesson && (!@enrollment.is_completed?(current_lesson))
   = hidden_field_tag 'day_left', @enrollment.uncompleted_lesson_day_left
   = hidden_field_tag 'send-day', @send_day
   div.time-remaining
@@ -26,23 +27,23 @@ div.current-mission
   - if @enrollment.all_completed?
     h2
       | Finished
+    div.course-status.completed
+      i.fa.fa-check-circle
   - else
-    - if @enrollment.any_released?
-      - current_lesson = @enrollment.next_uncompleted_lesson
+    - if current_lesson
       h2
         | #{current_lesson.name}
       p
         | #{current_lesson.overview}
+      - if @enrollment.is_completed?(current_lesson)
+        div.course-status.completed
+          i.fa.fa-check-circle
+      - else
+        div.course-status.uncompleted
+          i.fa.fa-check-circle.uncompleted
     - else
       h2
         | 即将开始
-
-- if @enrollment.all_completed?
-  div.course-status.completed
-    i.fa.fa-check-circle
-- else
-  div.course-status.uncompleted
-    i.fa.fa-check-circle
 
 ul.missions
   - show_control_num = 0
@@ -56,7 +57,7 @@ ul.missions
         li.mission.done
           i.fa.fa-check-circle
           | #{show_control_num.to_s + '. ' + lesson.name}
-      - elsif @enrollment.is_next_uncompleted_lesson?(lesson)
+      - elsif @enrollment.is_released?(lesson) && @enrollment.is_next_uncompleted_lesson?(lesson)
         li.mission.current
           | #{show_control_num.to_s + '. ' + lesson.name}
       - elsif @enrollment.is_released?(lesson)
@@ -66,5 +67,41 @@ ul.missions
         li.mission.future
           | #{show_control_num.to_s + '. ' + lesson.name}
           /使用连接代替
- 
+
+   
+div.modal.fade id="checkout_modal" role="dialog" aria-hidden="true" tabindex="-1"
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close type="button" data-dismiss="modal" aria-label="Close" 
+          span aria-hidden="true"
+            |&times;
+        h4.modal-title
+          = @enrollment.next_uncompleted_lesson.name 
+      .modal-body
+        = form_tag check_out_path(@enrollment, @enrollment.next_uncompleted_lesson), remote: true, class: 'form-horizontal checkout'
+          .form-group
+            = label_tag :time_cost, "所花时间", class: "col-md-2 control-label"
+            .col-md-3
+              = select_tag :time_cost, options_for_select([1,2,3,4,5,6]), class: 'form-control'
+          .form-group
+            = label_tag :degree_of_difficulty, "难度如何", class: "col-md-2 control-label"
+            .col-md-3
+              = select_tag :degree_of_difficulty, options_for_select([["简单", 0],["适中", 1], ["难", 2]]), class: 'form-control'
+          .form-group
+            = label_tag :github_repository, "github链接", class: "col-md-2 control-label" 
+            .col-md-9
+              = text_field_tag :github_repository, nil, class: 'form-control', placeholder: "https://github.com/..."
+          .form-group
+            = label_tag :solved_problem, "我的心得", class: "col-md-2 control-label" 
+            .col-md-12
+              = text_area_tag :solved_problem, nil, class: 'form-control',  placeholder: "在课程中你遇到过什么问题？怎么解决的？",rows: "5" 
+          .form-group
+            = label_tag :question, "问题",class: "col-md-2 control-label"
+            .col-md-12
+              = text_area_tag :question, nil, class: 'form-control',  placeholder: "有什么问题需要我来帮您解决的？", rows: "5"
+          .modal-footer
+            .col-md-12
+              = submit_tag "提交", class: "btn btn-primary checkout_button"
+
 
