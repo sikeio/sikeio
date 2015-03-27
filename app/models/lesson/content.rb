@@ -5,7 +5,8 @@ class Lesson::Content
                         "exercise" => {"class" => "exercise" },
                         "screenshot" => {"class" => "screenshot" },
                         "exercise-text" => {"class" => "exercise-text" },
-                        "tip" => {"class" => "tip" }
+                        "tip" => {"class" => "tip" },
+                        "code" => {"class" => "code"}
                      }
   SPECIAL_INLINE_TAG = {
                          "video" => { "info_needed" => ["src"], "tag" => "video","options" => {"class" => "video"} },
@@ -53,13 +54,23 @@ class Lesson::Content
     document = xml.document
     SPECIAL_BLOCK_TAG.each do |tag, options|
       xml.css(tag).each do |node|
-        new_div = Nokogiri::XML::Node.new("div", document)
-        options["src"] = node["src"] if tag == "screenshot"
+        new_node_tag = (tag == "code") ? "pre" : "div"
+        new_node = Nokogiri::XML::Node.new(new_node_tag, document)
         options.each do |key, value|
-          new_div[key] = value
+          new_node[key] = value
         end
-        node.children.each { |child_node| new_div.add_child(child_node.dup) }
-        node.replace(new_div)
+        if tag == "code"
+          new_node.add_child(node.dup)
+        else 
+          if tag == "screenshot"
+            src = node["src"]
+            image_node = Nokogiri::HTML::Node.new("image", document)
+            image_node["src"] = src
+            node.prepend_child(image_node)
+          end
+          node.children.each { |child_node| new_node.add_child(child_node.dup) }
+        end
+        node.replace(new_node)
       end
     end
   end
