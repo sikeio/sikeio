@@ -1,4 +1,5 @@
 class AuthenticationsController < ApplicationController
+  protect_from_forgery except: :callback
 
   def callback
     auth_info = request.env["omniauth.auth"]
