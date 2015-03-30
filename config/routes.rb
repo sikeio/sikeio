@@ -48,15 +48,14 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :courses
+
     get '/' => "dashboard#index",as: :dashboard
 
     get '/login' => "sessions#new"
     post '/login' => "sessions#create"
     delete '/logout' => 'sessions#destroy'
   end
-
-
-
 end
 
 
