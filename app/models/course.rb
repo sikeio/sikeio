@@ -3,7 +3,9 @@ class Course < ActiveRecord::Base
   has_many :enrollments, dependent: :restrict_with_exception
   has_many :users, through: :enrollments
 
-  validates :name, presence: true, format: {with: /\A[a-zA-Z0-9\-_]+\z/}
+  validates :name, presence: true,
+    format: {with: /\A[a-zA-Z0-9\-_]+\z/},
+    uniqueness: true
 
   attr_reader :current_version
 
