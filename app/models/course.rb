@@ -13,6 +13,10 @@ class Course < ActiveRecord::Base
     course.current_version = "v1" unless course.current_version
   end
 
+  def to_param
+    self.name
+  end
+
   def lessons  #根据先后顺序排序好的
     lessons = []
     content.lessons_info.each do |lesson_info|
