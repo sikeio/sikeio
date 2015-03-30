@@ -1,19 +1,20 @@
 class User < ActiveRecord::Base
   has_many :authentications
 
-  has_many :enrollments, dependent: :destroy
+  has_many :enrollments
   has_many :courses, through: :enrollments
 
-  before_save :downcase_email
-  before_create :fill_activation_token
+  before_validation :normalize_email!
+  before_create :reset_activation_token!
 
   validates :email,{
-    presence:{message:'不能为空~'},
-    format:{with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i ,message:'格式不正确~'},
-    # uniqueness: {case_sensitive: false,message:'地址已经被注册了~'}
+    presence: true,
+    # http://davidcel.is/blog/2012/09/06/stop-validating-email-addresses-with-regex/
+    format: { with: /@/ },
+    uniqueness: true
   }
 
-  validates :name,presence:{message: '不能为空~'}
+  # validates :name,presence:{message: '不能为空~'}
 
   scope :activated,->{ where(has_been_activated: true)}
   scope :unactivated,->{ where(has_been_activated: false)}
@@ -26,13 +27,12 @@ class User < ActiveRecord::Base
     self.authentications.one? {|a| a.provider == 'github' }
   end
 
-  private
-  def downcase_email
-    self.email.downcase!
+  def normalize_email!
+    self.email = self.email.downcase.strip if self.email
   end
 
-  def fill_activation_token
-    self.activation_token = User.generate_token
+  def reset_activation_token!
+    self.activation_token = SecureRandom.urlsafe_base64(64)
   end
 
 end
