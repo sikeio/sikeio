@@ -63,5 +63,7 @@ group :development, :test do
 
   # clean the database
   gem 'database_cleaner'
+
+  gem 'quiet_assets'
 end
 
