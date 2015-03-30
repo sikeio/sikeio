@@ -20,19 +20,19 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :enrollments
+
   resources :courses,only:[:index,:show] do
 
     member do
-
+      get :info
+      post :enroll
       get '/payment' => 'courses#payment'
       get '/start' => 'courses#start'
     end
 
     collection do
-      #list courses,user will select one to visit payment page
-      post '/enroll' => 'courses#create_enroll'
-      get '/list' => 'courses#list'
-      get '/get_user_status' => 'courses#get_user_status'
+      # get '/get_user_status' => 'courses#get_user_status'
     end
   end
 

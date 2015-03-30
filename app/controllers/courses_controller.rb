@@ -3,8 +3,6 @@ class CoursesController < ApplicationController
 #  before_action :require_login,only:[:show, :start]
 #  before_action :require_course_exists,except:[:list,:create_enroll]
 #  before_action :require_take_part_in,only:[:show]
-  protect_from_forgery except: :create_enroll
-
 
 =begin
   def create_enroll
@@ -24,13 +22,9 @@ class CoursesController < ApplicationController
     end
   end
 =end
-  def create_enroll
-    
-  end
 
-  #list every courses for user to visit payment page
-  def list
-    @courses = Course.all
+  def info
+    course
   end
 
   def show
@@ -80,6 +74,10 @@ class CoursesController < ApplicationController
   end
 
   private
+
+  def course
+    @course ||= Course.find_by(name: params[:id])
+  end
 
 
   def require_take_part_in
