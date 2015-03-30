@@ -27,8 +27,9 @@ Rails.application.routes.draw do
     member do
       get :info
       post :enroll
-      get '/payment' => 'courses#payment'
-      get '/start' => 'courses#start'
+      get :invite
+      get :pay
+      post :pay
     end
 
     collection do
