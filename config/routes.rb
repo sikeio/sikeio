@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   post '/checkout/:enroll_id/:lesson_id' => 'checkouts#new', as: :check_out
 
+  resources :lessons, only:[:show]
   resources :subscribers,only:[:create]
 
   resources :users,only:[:show] do

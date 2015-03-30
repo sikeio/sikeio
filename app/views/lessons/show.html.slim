@@ -1,0 +1,16 @@
+header
+  h1
+    = @lesson["name"]
+  = image_tag("lesson/header.png")
+
+= render "#{@lesson["name"].downcase}"
+
+p.goal
+  i.fa.fa-flag
+  | Pass
+  strong
+    | testPathDrawing
+
+div.completed
+  i.fa.fa-check-circle
+  | Completed!
