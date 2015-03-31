@@ -21,6 +21,8 @@ class Course < ActiveRecord::Base
     self.name
   end
 
+
+
   def lessons  #根据先后顺序排序好的
     lessons = []
     content.lessons_info.each do |lesson_info|
