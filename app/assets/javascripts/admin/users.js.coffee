@@ -1,6 +1,6 @@
 $ ->
-  page_identifier = 'admin-users-page'
-  $ = jQuery.getLocal(page_identifier)
+  eventPrefix = '.admin-users-page'
+  $ = jQuery.getLocal(eventPrefix)
 
   $(document)
     .on 'ajax:success','.email-panel form',->

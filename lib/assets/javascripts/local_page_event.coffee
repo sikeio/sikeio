@@ -1,7 +1,7 @@
 oldMethod = $.fn.on
-$.getLocal = (page_identifier)->
+$.getLocal = (prefix)->
   $.fn.on = ->
     if typeof arguments[1] == 'string'
-      arguments[1] = "." + page_identifier + " " + arguments[1]
+      arguments[1] = prefix + " " + arguments[1]
     oldMethod.apply(this,arguments)
   return $

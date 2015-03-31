@@ -38,6 +38,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :enrollments,only: [:create]
+
 
   get '/auth/:provider/callback' => 'authentications#callback'
 

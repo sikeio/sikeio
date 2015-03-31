@@ -4,29 +4,10 @@ class CoursesController < ApplicationController
 #  before_action :require_course_exists,except:[:list,:create_enroll]
 #  before_action :require_take_part_in,only:[:show]
 
-=begin
-  def create_enroll
-    require_course_exists params[:id]
-    result = {}
-    user = User.new(params.permit(:email,:name))
-    if user.save
-      result['success'] = true
-    else
-      result['success'] = false
-      result['msg'] = user.errors.full_messages
-    end
 
-    render json: result
-    if result['success'] == true
-      UserMailer.welcome_email(user).deliver_later! wait: (30 + rand(30)).minutes
-    end
-  end
-=end
-  def create_enroll
-
-  end
 
   def info
+    @course = Course.find params[:id]
   end
 
   def info

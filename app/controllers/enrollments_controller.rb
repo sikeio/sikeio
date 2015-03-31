@@ -1,24 +1,20 @@
 class EnrollmentsController < ApplicationController
-  def create
-    course
-    email = params[:email]
-    user = User.find_or_create_by!(email: email)
-    enrollment = Enrollment.find_or_initialize_by(user: user, course: course)
-    if !enrollment.new_record?
-      render text: "already enrolled"
-      return
+    def create
+      # require_course_exists params[:id]
+      # result = {}
+      # user = User.new(params.permit(:email,:name))
+      # if user.save
+      #   result['success'] = true
+      # else
+      #   result['success'] = false
+      #   result['msg'] = user.errors.full_messages
+      # end
+
+      # render json: result
+      # if result['success'] == true
+      #   UserMailer.welcome_email(user).deliver_later! wait: (30 + rand(30)).minutes
+      # end
+      head :ok
     end
 
-    if enrollment.save
-      render text: "enrolled"
-    else
-      render json: enrollment.errors
-    end
-  end
-
-  private
-
-  def course
-    @course ||= Course.find_by!(name: params[:course_id])
-  end
 end
