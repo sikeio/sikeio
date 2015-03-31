@@ -27,11 +27,10 @@ Rails.application.routes.draw do
   resources :courses,only:[:index,:show] do
 
     member do
-      get :info
-      post :enroll
-      get :invite
-      get :pay
-      post :pay
+      get 'pay'
+      get 'start'
+      get 'info'
+      get 'invite'
     end
 
     collection do

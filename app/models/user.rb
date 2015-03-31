@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                 :integer          not null, primary key
+#  name               :string
+#  email              :string
+#  activation_token   :string
+#  personal_info      :json
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  has_been_activated :boolean          default(FALSE)
+#
+
 class User < ActiveRecord::Base
   has_many :authentications
 

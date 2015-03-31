@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: lessons
+#
+#  id         :integer          not null, primary key
+#  name       :string
+#  title      :string
+#  overview   :text
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class Lesson < ActiveRecord::Base
 
   #validates :name, uniqueness: { case_sensitive: false, scope: :course_id,

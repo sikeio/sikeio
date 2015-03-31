@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: enrollments
+#
+#  id                 :integer          not null, primary key
+#  user_id            :integer
+#  course_id          :integer
+#  version            :string
+#  current_lesson_num :integer
+#  start_time         :datetime         default(Mon, 16 Mar 2015 20:45:17 CST +08:00), not null
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe Enrollment, type: :model do

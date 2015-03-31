@@ -1,14 +1,14 @@
 header
   img src=image_url('logo2.png')
-  p.course-name =@course_name
+  p.course-name =@course.name
 
 .container
   section.text
     h1 邀请函
     p
-      | 感谢你申请#{@course_name}。很欢迎你加入我们一起学习！
+      | 感谢你申请#{@course.name}。很欢迎你加入我们一起学习！
 
-    p = @course_desc
+    p = @course.desc
 
   section.github
     h2 1. 绑定 Github 账号

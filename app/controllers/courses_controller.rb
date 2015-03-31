@@ -22,6 +22,12 @@ class CoursesController < ApplicationController
     end
   end
 =end
+  def create_enroll
+
+  end
+
+  def info
+  end
 
   def info
     course
@@ -34,9 +40,13 @@ class CoursesController < ApplicationController
     @send_day = Date.today.day
   end
 
-  def payment
+  def pay
     @course = Course.find params[:id]
-    @display_top = true
+  end
+
+  def invite
+    @course = Course.find params[:id]
+    @user = User.take
   end
 
   # 待定  should use before_action to controller login or not
