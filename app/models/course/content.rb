@@ -63,20 +63,16 @@ class Course::Content
   private
 
   def repo_path
-    Rails.root + @course.name + @course.current_version
+    Rails.root + @course.name
   end
 
-  def xml_file_path
-    file = @course.name 
-    repo_path + (@course.name + ".xml")
+  def xml_file_content
+    file = @course.name + ".xml"
+    git_repo = Git.open(repo_path)
+    git_repo.show(@course.current_version, file)
   end
 
   def xml_handle
-    raise "Error: #{xml_file_path} does not exist" if !File.exist?(xml_file_path)
-    f = File.open(xml_file_path)
-    xml = Nokogiri::XML(f)
-    f.close
-    xml
+    Nokogiri::XML(xml_file_content)
   end
-
 end
