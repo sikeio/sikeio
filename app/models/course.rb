@@ -1,6 +1,9 @@
 class Course < ActiveRecord::Base
 
+
   has_many :enrollments, dependent: :restrict_with_exception
+  DEFAULT_VERSION = "v1"
+
   has_many :users, through: :enrollments
 
   validates :name, presence: true,
@@ -10,8 +13,9 @@ class Course < ActiveRecord::Base
   attr_reader :current_version
 
   after_initialize do |course|
-    course.current_version = "v1" unless course.current_version
+    course.current_version = DEFAULT_VERSION unless course.current_version
   end
+
 
   def to_param
     self.name
@@ -39,6 +43,10 @@ class Course < ActiveRecord::Base
 
   def lessons_sum
     content.lessons_sum
+  end
+
+  def course_lesson(lesson_name)
+    lessons.find { |lesson| lesson.name = lesson_name }
   end
 
   def course_weeks #排序好的
