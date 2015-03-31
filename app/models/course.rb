@@ -1,5 +1,7 @@
 class Course < ActiveRecord::Base
 
+  DEFAULT_VERSION = "v1"
+
   has_many :enrollments , dependent: :destroy
   has_many :users, through: :enrollments
 
@@ -8,8 +10,10 @@ class Course < ActiveRecord::Base
   attr_reader :current_version
 
   after_initialize do |course|
-    course.current_version = "v1" unless course.current_version
+    course.current_version = DEFAULT_VERSION unless course.current_version
   end
+
+
 
   def lessons  #根据先后顺序排序好的
     lessons = []
@@ -25,7 +29,7 @@ class Course < ActiveRecord::Base
     index = self.lessons.find_index { |var_lesson| lesson == var_lesson }
     self.lessons[index + 1]
   end
-  
+
   def pre_lesson(lesson)
     index = self.lessons.find_index { |var_lesson| lesson == var_lesson }
     self.lessons[index - 1]
@@ -33,6 +37,10 @@ class Course < ActiveRecord::Base
 
   def lessons_sum
     content.lessons_sum
+  end
+
+  def course_lesson(lesson_name)
+    lessons.find { |lesson| lesson.name = lesson_name }
   end
 
   def course_weeks #排序好的
@@ -66,7 +74,7 @@ class Course < ActiveRecord::Base
     @content ||= Content.new(self)
   end
 
-  #def self.update_lessons!(xml_file_path) 
+  #def self.update_lessons!(xml_file_path)
   #end
 =begin
   def self.update_lessons!(xml_file_path)
@@ -83,21 +91,21 @@ class Course < ActiveRecord::Base
       #get course and lesson
       course_name = course_node["name"]
       unless Course.find_by_name(course_name)
-        Course.create!(name: course_name) 
+        Course.create!(name: course_name)
       end
 
       course_node.css('week').each do |week_node|
         week_node.css('lesson').each do |lesson_node|
           overview_node = lesson_node.css('overview')
 
-          #get all the info needed to update db  
+          #get all the info needed to update db
           lesson_name = lesson_node["name"]
           lesson_title = lesson_node["title"]
           lesson_overview = overview_node.text
 
           lesson_info = {
-            name: lesson_name, 
-            title: lesson_title, 
+            name: lesson_name,
+            title: lesson_title,
             overview: lesson_overview,
           }
 

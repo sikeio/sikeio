@@ -7,9 +7,11 @@ Rails.application.routes.draw do
   delete '/logout' => 'sessions#destroy'
   get '/test/:id' => 'courses#test'
 
-  post '/checkout/:enroll_id/:lesson_id' => 'checkouts#new', as: :check_out
+  get '/lessons/:course_name/:lesson_name' => 'lessons#show', as: :lesson
 
-  resources :lessons, only:[:show]
+  post '/checkout/:course_name/:lesson_name' => 'checkouts#new', as: :check_out
+  put '/checkout/:id' => 'checkouts#update', as: :check_out_update
+
   resources :subscribers,only:[:create]
 
   resources :users,only:[:show] do

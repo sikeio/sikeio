@@ -1,0 +1,38 @@
+div.modal.fade id="checkout_modal" role="dialog" aria-hidden="true" tabindex="-1"
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close type="button" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true"
+            |&times;
+        h4.modal-title
+          = title
+      .modal-body
+        = form_for checkout, url: url_path, method: html_method, remote: true, html: {class: 'form-horizontal checkout'} do |f|
+          .form-group
+            = f.label :time_cost, "所花时间", class: "col-md-2 control-label"
+            .col-md-3
+              = f.select :time_cost, options_for_select([1,2,3,4,5,6]), class: 'form-control'
+          .form-group
+            = f.label :degree_of_difficulty, "难度如何", class: "col-md-2 control-label"
+            .col-md-3
+              = f.select :degree_of_difficulty, options_for_select([["简单", 0],["适中", 1], ["难", 2]]), class: 'form-control'
+          .form-group
+            = f.label :github_repository, "github链接", class: "col-md-2 control-label"
+            .col-md-9
+              = f.text_field :github_repository, class: 'form-control', placeholder: "https://github.com/..."
+          .form-group
+            = f.label :solved_problem, "我的心得", class: "col-md-2 control-label"
+            .col-md-12
+              = f.text_area :solved_problem, class: 'form-control',  placeholder: "在课程中你遇到过什么问题？怎么解决的？",rows: "5"
+          .form-group
+            = f.label :question, "问题",class: "col-md-2 control-label"
+            .col-md-12
+              = f.text_area :question, class: 'form-control',  placeholder: "有什么问题需要我来帮您解决的？", rows: "5"
+          .modal-footer
+            .col-md-12
+              = f.submit "提交", class: "btn btn-primary checkout_button"
+
+
+
+
