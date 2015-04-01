@@ -27,10 +27,8 @@ Rails.application.routes.draw do
   resources :courses,only:[:index,:show] do
 
     member do
-      get 'pay'
       get 'start'
       get 'info'
-      get 'invite'
     end
 
     collection do
@@ -38,17 +36,30 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :enrollments,only: [:create]
+  resources :enrollments,only: [:create] do
+    member do
+      get '' => 'enrollments#invite',as: :invite
+      get 'pay'
+      post 'pay' => 'enrollments#finish',as: :finish
+    end
+  end
 
 
   get '/auth/:provider/callback' => 'authentications#callback'
+
+  scope 'api',format: :json do
+    get 'login_status' => 'api#login_status'
+  end
 
 
   namespace 'admin' do
 
     resources :users,only:[:index] do
+    end
+
+    resources :enrollments,only:[:index] do
       collection do
-        post '/send_activation_email' => 'users#send_activation_email'
+        post 'send_invitation_email' => 'enrollments#send_invitation_email'
       end
     end
 

@@ -1,5 +1,5 @@
 $ ->
-  eventPrefix = '.admin-users-page'
+  eventPrefix = '.admin-enrollments-page'
   $ = jQuery.getLocal(eventPrefix)
 
   $(document)
@@ -10,9 +10,9 @@ $ ->
         type: "success"
 
 
-    .on 'click','.users .activate',->
-      userId = $(this).attr('data-user-id')
-      $('.email-panel').find('[name=user_id]').val userId
+    .on 'click','.enrollments .send',->
+      enrollmentId = $(this).attr('data-enrollment-id')
+      $('.email-panel').find('[name=id]').val enrollmentId
       $('.email-panel').show()
 
     .on 'click','.email-panel .cancel',->

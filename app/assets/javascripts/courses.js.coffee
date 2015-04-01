@@ -82,22 +82,46 @@ $ ->
   $success = $('<div class="success-panel">').html(successHTML)
 
   $(document)
-    .on 'ajax:before','#enroll-form',->
+    .on 'ajax:beforeSend','#enroll-form',(evt,xhr,settings)->
       name = $(this).find('.name').val()
       email = $(this).find('.email').val()
       if name == "" || email == ""
         swal
           title: "名称和电子邮件不能为空~"
           type: 'error'
+      else
+        courseId = $('.data-course-id').text()
+        settings.data += "&courseId=#{courseId}"
+
 
     .on 'ajax:success','#enroll-form',->
       $success.appendTo('body')
       $success.show()
       $enroll.hide()
+    .on 'ajax:error',(evt,xhr,error)->
+      msg = xhr.responseJSON.msg
+      text = if Array.isArray(msg) then msg.join("\n") else msg
+      swal
+        title: error
+        text: text
+        type: 'error'
 
     .on 'click','#enroll',->
-      $enroll.appendTo('body')
-      $enroll.show()
+      $.ajax
+        url: '/api/login_status'
+        success: (data)->
+          if data.login
+            $.ajax
+              url: '/enrollments'
+              type: 'POST'
+              data:
+                courseId: $('.data-course-id').text()
+              success: ->
+                $success.appendTo('body')
+                $success.show()
+          else
+            $enroll.appendTo('body')
+            $enroll.show()
       return false
 
     # selector is empty,this add a event listen to body

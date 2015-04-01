@@ -1,0 +1,126 @@
+@mixin common
+  font-family: "Hiragino Sans GB"
+  font-size: 16px
+  font-weight: 500
+  max-width: 600px
+  padding: 0 20px
+  margin: auto
+  color: #595959
+  header
+    @include clearfix
+    padding: 24px 0
+    img
+      display: block
+      float: left
+      height: 45px
+    .course-name
+      color: #747474
+      float: left
+      margin: 0
+      margin-left: 10px
+      font-size: 20px
+      padding: 5px
+  section
+    h2
+      font-size: 24px
+      font-weight: 500
+      margin-bottom: 0
+    p
+      margin: 30px auto
+    .content
+      background-color: #F8FBFF
+      font-size: 18px
+      padding: 20px
+  .button
+    display: block
+    text-align: center
+    width: 163px
+    background: #E57E23
+    padding: 5px
+    margin: 25px auto
+    color: white
+    font-family: "Heiti SC"
+    font-weight: 300
+  footer
+    padding: 50px 0
+    img
+      height: 62px
+      display: block
+      margin: auto
+
+.enrollments-page.pay
+  @include common
+  .text
+    h1
+      line-height: 120%
+      font-weight: 500
+      font-size: 36px
+      width: 180px
+      padding-bottom: 2px
+      border-bottom: solid 2px black
+      margin: 20px auto
+    p
+      text-align: center
+      font-size: 18px
+  .buddy
+    input
+      border: solid 1px #979797
+      width: 100%
+      height: 30px
+      margin: 10px 1px 19px
+  .pay
+    .content
+      text-align: center
+
+.enrollments-page.invite
+  @include common
+  .button
+    background-color: #3AB330
+  .text
+    h1
+      line-height: 120%
+      font-weight: 500
+      font-size: 36px
+      width: 108px
+      padding-bottom: 2px
+      border-bottom: solid 2px black
+      margin: 20px auto
+  .github
+    a
+      color: #FF6161
+    a.bind-github
+      color: white
+      &.success
+        background: #00D1B7
+
+  .personal-info
+    form
+      .blog-url
+        border: solid 1px #979797
+        width: 100%
+        height: 30px
+        margin: 10px 1px 19px
+      .radio
+        display: inline-block
+        margin-top: 4px
+        input
+          display: none
+        label
+          margin-right: 15px
+          span
+            border: 1px solid #979797
+            display: inline-block
+            width: 16px
+            height: 16px
+            margin-right: 7px
+            vertical-align: middle
+            cursor: pointer
+            border-radius: 100%
+            background-color: white
+        input:checked + label span
+          background-color: #3AB330
+          width: 18px
+          height: 18px
+          border: none
+      button
+        border: none

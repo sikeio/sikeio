@@ -10,6 +10,7 @@
 #  start_time         :datetime         default(Mon, 16 Mar 2015 20:45:17 CST +08:00), not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  token              :string
 #
 
 require 'rails_helper'

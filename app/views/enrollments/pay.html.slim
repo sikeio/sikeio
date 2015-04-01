@@ -11,12 +11,13 @@ header
         br
         | 在职 589
 
-  section.friends
+  section.buddy
     h2 我有小伙伴！
     .content
       label 小伙伴姓名
-      input.friend-name
-      label 拉小伙伴一起学习优惠 489
+      = form_tag finish_enrollment_path(@enrollment),method:'POST'
+        input.buddy-name name="buddy_name"
+        label 拉小伙伴一起学习优惠 489
 
   section.pay
     h2 支付宝
@@ -30,7 +31,7 @@ header
       img src="/assets/alipay.png" alt=""
       p 支付宝: 高羊 18688696795
 
-      a.button.start href=start_course_path 开始课程
+      button.button.start-course href=finish_enrollment_path(@enrollment) 开始课程
 
       input type='checkbox' id='have-paid'
       label for='have-paid'

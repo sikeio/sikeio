@@ -10,16 +10,24 @@
 #  start_time         :datetime         default(Mon, 16 Mar 2015 20:45:17 CST +08:00), not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#
+#  token              :string
 
 class Enrollment < ActiveRecord::Base
   belongs_to :user
   belongs_to :course
 
-  has_many :checkouts
-
   validates :user_id, presence: true
   validates :course_id, presence: true, uniqueness: {scope: :user_id}
+  before_create :fill_in_token
+  has_many :checkouts, dependent: :destroy
+
+  def invitation_path
+    "/enrollments/#{self.id}?token=#{self.token}"
+  end
+
+  def invitation_url
+    "http://localhost:3000/enrollments/#{self.id}?token=#{self.token}"
+  end
 
   def next_uncompleted_lesson
     #得到尚未完成的第一个课程
@@ -84,6 +92,10 @@ class Enrollment < ActiveRecord::Base
     today = Time.now.beginning_of_day.to_date
     course_start_time = self.start_time.beginning_of_day.to_date
     (today - course_start_time).to_i + 1
+  end
+
+  def fill_in_token
+    self.token = SecureRandom.urlsafe_base64
   end
 
 end

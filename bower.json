@@ -20,6 +20,7 @@
     "bootstrap": "~3.3.2",
     "bootstrap-validator": "~0.6.0",
     "sweetalert": "~0.4.1",
-    "vex": "~2.3.0"
+    "vex": "~2.3.0",
+    "fontawesome": "~4.3.0"
   }
 }

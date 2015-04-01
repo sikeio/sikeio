@@ -1,10 +1,8 @@
 class CoursesController < ApplicationController
 
-#  before_action :require_login,only:[:show, :start]
+  before_action :require_login,only:[:show, :start]
 #  before_action :require_course_exists,except:[:list,:create_enroll]
 #  before_action :require_take_part_in,only:[:show]
-
-
 
   def info
     @course = Course.find params[:id]
@@ -16,9 +14,11 @@ class CoursesController < ApplicationController
 
   def show
     @course = Course.find params[:id]
-    @enrollment = @course.enrollments.find_by(user_id: 1)
-    @course.current_version = @enrollment.version if @enrollment.version
+    @enrollment = @course.enrollments.find_by(user: current_user)
+    redirect_to :root unless @enrollment.data["activated"]
+    # @course.current_version = @enrollment.version if @enrollment.version
     @send_day = Date.today.day
+    render '_show'
   end
 
   def pay
