@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+ENV['RAILS_ENV'] = "development"
+require '../config/environment.rb'
+
+if ARGV.length >= 2
+  course_name = ARGV[0]
+  url = ARGV[1]
+  course = Course.new(name: course_name, repo_url: url)
+  course.update_repo
+else
+  puts "command ERROR:"
+  puts "example: course_update course_name git@bitbucket.org:he_YM/test_course_update.git"
+end
+
+
