@@ -68,6 +68,34 @@ class Course < ActiveRecord::Base
     content.release_day_of_lesson[lesson.name]
   end
 
+  def update_repo
+    puts repo_dir_path
+    if self.repo_cloned?
+      pull_clone
+    else
+      clone_repo
+    end
+  end
+
+  def repo_cloned?
+    File.exist?(repo_dir_path)
+  end
+
+  def repo_dir_path
+    Rails.root + "repo" + self.name
+  end
+
+  def pull_clone
+    git = Git.open(repo_dir_path)
+    git.pull
+  end
+
+  def clone_repo
+    FileUtils::mkdir_p(repo_dir_path)
+    Git.clone(repo_url, repo_dir_path)
+  end
+
+
   private
 
   def content
