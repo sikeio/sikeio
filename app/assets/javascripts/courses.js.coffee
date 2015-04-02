@@ -21,4 +21,27 @@ $ ->
           sec = date.getSeconds()
           $(".time-remaining").html("超出时间<p class='time'>" + hour + "h " + min + "m " + sec + "s</p>") 
       setInterval(getClock, 1000)
+
+    .on 'ajax:success', '.checkout', (e,data)->
+      if !data.success
+        swal
+          title:"失败"
+          text: data.message.join('\n')
+          type: 'error'
+    
+  $('i.fa.fa-check-circle.uncompleted').click (e)->
+    $('#checkout_modal').modal({
+           backdrop: false
+        })
+
+  $('button.close').click (e)->
+    $('#checkout_modal').modal('hide')
+
+  $('i.fa.fa-check-circle.uncompleted').mouseenter (e)->
+    $(this).css("color", "#11D146")
+    $(this).css("cursor", "pointer")
+
+  $('i.fa.fa-check-circle.uncompleted').mouseleave (e)->
+    $(this).css("color", "" )
+    $(this).css("cursor", "")
   

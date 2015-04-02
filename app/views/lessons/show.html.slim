@@ -1,0 +1,23 @@
+header
+  h1
+    = @lesson.name
+  = image_tag("lesson/header.png")
+
+= sanitize @lesson_html
+
+p.goal
+  i.fa.fa-flag
+  | Pass
+  strong
+    | testPathDrawing
+
+div.uncompleted
+  i.fa.fa-check-circle
+  | Completed!
+
+- local_vars = nil
+- if @checkout
+  - local_vars = { title: @lesson.name, url_path: check_out_update_path(@checkout.id), html_method: :put, checkout: @checkout}
+- else
+  - local_vars = {title: @lesson.name, url_path: check_out_path(@enrollment.id, @lesson.id), html_method: :post, checkout: :checkout}
+= render partial: "courses/checkout", locals: local_vars

@@ -7,6 +7,10 @@ Rails.application.routes.draw do
   delete '/logout' => 'sessions#destroy'
   get '/test/:id' => 'courses#test'
 
+  get '/lessons/:course_name/:lesson_name' => 'lessons#show', as: :lesson
+
+  post '/checkout/:course_name/:lesson_name' => 'checkouts#new', as: :check_out
+  put '/checkout/:id' => 'checkouts#update', as: :check_out_update
 
   resources :subscribers,only:[:create]
 
@@ -18,19 +22,20 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :enrollments
+
   resources :courses,only:[:index,:show] do
 
     member do
-
-      get '/payment' => 'courses#payment'
-      get '/start' => 'courses#start'
+      get :info
+      post :enroll
+      get :invite
+      get :pay
+      post :pay
     end
 
     collection do
-      #list courses,user will select one to visit payment page
-      post '/enroll' => 'courses#create_enroll'
-      get '/list' => 'courses#list'
-      get '/get_user_status' => 'courses#get_user_status'
+      # get '/get_user_status' => 'courses#get_user_status'
     end
   end
 
@@ -46,15 +51,14 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :courses
+
     get '/' => "dashboard#index",as: :dashboard
 
     get '/login' => "sessions#new"
     post '/login' => "sessions#create"
     delete '/logout' => 'sessions#destroy'
   end
-
-
-
 end
 
 

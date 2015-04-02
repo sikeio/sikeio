@@ -1,0 +1,94 @@
+<div class="normal"><h2>Start the Project</h2>
+
+<p>Create a &#x201C;Single View Application&#x201D; called &#x2018;FingerPaint&#x2019;.</p>
+<ul>
+  <li>Disable launch screen.</li>
+  <li>Disable auto layout &amp; size classes.</li>
+</ul>
+
+</div><div class="normal"><h2> Adding the Test Suite to the Project </h2>
+
+<p>The test suite is in a separate git repo from your project's own repo. This way we can checkout different versions of the test suite for each step without affecting the history of your own app.</p>
+
+</div><div class="exercise">
+  <h2>Add the test suite to the project<div class="indicator"><i class="fa fa-wrench"></i>Exercise</div></h2>
+
+  <ol class="steps"><li class="step"><div class="content"><h3>Clone the test repo by running the following command from the project root:</h3><pre class="code"><code>
+      git clone https://github.com/hayeah/ios-FingerPaint-spec.git FingerPaintTests/spec --branch init
+    </code></pre>
+  </div></li><li class="step"><div class="content"><h3>Create the `.gitignore` file, and add `FingerPaintTests/spec` to it:</h3><pre class="code"><code>
+      # .gitignore
+      FingerPaintTests/spec
+    </code></pre>
+  </div></li><li class="step"><div class="content"><h3>Once the test repo is cloned, we need to add the test's files to Xcode.</h3><div class="guide"><img max-width="300" src="/assets/e1.png" />
+      <h4>Add the test's files to Xcode</h4>
+
+      <ol>
+        <li>Right-click on `FingerPaintTests`</li>
+        <li>Select `Add Files`</li>
+      </ol>
+    </div></div><div class="content">
+
+    <p class="next"><i class="fa fa-angle-double-down"></i></p><div class="guide"><img src="lesson_img/e2.png" />
+      <h4>Add the test suite directory to the test target as a group.</h4>
+      <ol>
+        <li>Select the folder we just cloned.</li>
+        <li>Select "Create groups".</li>
+        <li>Add to the `FingerPaintTests` target.</li>
+      </ol>
+    </div></div><div class="content">
+
+    <p class="next"><i class="fa fa-angle-double-down"></i></p><div class="guide"><img max-width="350" src="spec-file-added.png" />
+      <h4>You should see `FingerPaintTests/spec/SpecTests.swift` show up in Xcode</h4>
+    </div></div>
+  </li><li class="step"><div class="content"><h3>Run the test now (`cmd-u`), and the test suite should pass (because it doesn't test anything yet!)</h3><div class="guide"><img src="init-test-passed.png" />
+      <h4>Passing tests</h4>
+    </div></div>
+  </li></ol>
+
+  
+
+  
+
+
+  
+
+  <exercise-test name="testPathDrawing"></exercise-test>
+
+</div><div class="tip">
+The yellow folders you see in Xcode are "groups". They are basically Xcode's own directory structure, which can be different from the file system's directory structure if you want to organize your source files differently.
+</div><div class="normal">
+
+
+
+<h2>Drawing by Touches</h2>
+
+<p>We'll now implement interactive drawing by responding to touches.</p>
+
+<video src="demo-drawing.mp4"></video>
+
+<p>To get the CanvasView to respond to touches, we can override the touchesBegan method:</p>
+
+<pre class="code"><code>
+override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
+  let t = touches.anyObject() as UITouch
+  let point = t.locationInView(self)
+  println("touch: \(point)")
+}
+</code></pre>
+
+<p>Touch the screen, and you'd see where the touch occured:</p>
+
+<pre class="code"><code>
+touch: (149.5,195.0)
+touch: (100.0,279.0)
+touch: (250.0,284.0)
+touch: (245.5,220.0)
+touch: (188.5,392.5)
+touch: (132.5,421.0)
+touch: (172.0,358.5)
+touch: (137.0,212.5)
+</code></pre>
+
+<p>There can be more than one touches in the NSSet if multi-touch is enabled (multipleTouchEnabled). But since multi-touch is disabled by default, there would be only one UITouch object in touches, and we can fetch it with the anyObject method.</p>
+</div>

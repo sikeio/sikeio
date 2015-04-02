@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150316075639) do
+ActiveRecord::Schema.define(version: 20150323024201) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,20 @@ ActiveRecord::Schema.define(version: 20150316075639) do
     t.json     "info"
   end
 
+  create_table "checkouts", force: :cascade do |t|
+    t.integer  "enrollment_id"
+    t.string   "lesson_name"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.text     "question"
+    t.text     "solved_problem"
+    t.string   "github_repository"
+    t.integer  "degree_of_difficulty"
+    t.integer  "time_cost"
+  end
+
+  add_index "checkouts", ["enrollment_id"], name: "index_checkouts_on_enrollment_id", using: :btree
+
   create_table "courses", force: :cascade do |t|
     t.string   "name"
     t.string   "desc"
@@ -36,10 +50,10 @@ ActiveRecord::Schema.define(version: 20150316075639) do
     t.integer  "user_id"
     t.integer  "course_id"
     t.string   "version"
-    t.integer  "current_lesson_num"
-    t.datetime "start_time",         default: '2015-03-16 12:45:17', null: false
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
+    t.datetime "start_time",  default: '2015-03-30 06:23:30', null: false
+    t.datetime "enroll_time", default: '2015-03-30 06:23:30', null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
   end
 
   add_index "enrollments", ["course_id"], name: "index_enrollments_on_course_id", using: :btree

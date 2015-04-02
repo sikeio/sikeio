@@ -2,69 +2,122 @@ require 'rails_helper'
 
 RSpec.describe Enrollment, type: :model do
 
-  let(:course) do
+  before(:all) do
+    FactoryGirl.create_list(:test_lesson, 10)
     user = FactoryGirl.create :user
-    temp = FactoryGirl.create :test_course
-    temp.current_version = "v1"
-    user.courses << temp
-    temp
+    @course = FactoryGirl.create :test_course
+    user.courses << @course
+    @enrollment = user.enrollments.first
   end
 
-  let(:enrollment) do
-    temp = course.enrollments.first
-    temp.update(version: "v1")
-    temp
-  end
-
-  let(:course_lesson_sum) { 8 }
-
-  describe "#current_lesson_info" do
-    it 'returns the current lesson' do
-      enrollment.update(current_lesson_num: 1)
-      expect(enrollment.current_lesson_info).to eq(Lesson.find_by_name("test_lesson_1"))
+  describe "#next_uncompleted_lesson" do
+    it 'returns the current lesson waiting for being done' do
+      expect(@enrollment.next_uncompleted_lesson).to eq(Lesson.find_by_name("test_lesson_1"))
     end
   end
 
-  describe "#all_finished?" do
-    it 'returns true if all lessons in this course finished' do
-      enrollment.update(current_lesson_num: (course_lesson_sum + 1))
-      expect(enrollment.all_finished?).to eq(true)
+  describe "#is_next_uncompleted_lesson?" do
+    let(:lesson) { Lesson.find_by_name("test_lesson_1") }
+      
+    it 'returns true if the lesson is the next uncompleted lesson' do
+      expect(@enrollment.is_next_uncompleted_lesson?(lesson)).to eq(true)
     end
 
-    it 'returns false if not all lessons finished' do
-      enrollment.update(current_lesson_num: 1)
-      expect(enrollment.all_finished?).to eq(false)
+    it 'returns false if the lesson is not the next uncompleted lesson' do
+      check = Checkout.create(lesson_name: "test_lesson_1")
+      @enrollment.checkouts << check
+
+      expect(@enrollment.is_next_uncompleted_lesson?(lesson)).to eq(false)
+      @enrollment.checkouts = []
     end
   end
 
-  describe "#lesson_status" do
+  describe "#completed_lessons_num" do
+    it 'returns the num of completed lessons' do
+      check = Checkout.create(lesson_name: "test_lesson_1")
+      @enrollment.checkouts << check
+
+      expect(@enrollment.completed_lessons_num).to eq(1)
+      @enrollment.checkouts = []
+    end
+  end
+
+  describe "#all_completed?" do
     before(:each) do
-      enrollment.update(current_lesson_num: 8, start_time: (Time.now.to_date - 7))
+      7.times do |n|
+        @enrollment.checkouts << Checkout.create(lesson_name: "test_lesson_#{n + 1}")
+      end
     end
-    it 'returns -1 if lesson is finished' do
-      lesson = Lesson.find_by_name("test_lesson_1")
-      expect(enrollment.lesson_status(lesson)).to eq(-1)
-    end
-
-    it 'returns 0 if the lesson is being done' do
-      lesson = Lesson.find_by_name("test_lesson_6")
-      
+    it 'returns false if not all lessons finished' do
+      expect(@enrollment.all_completed?).to eq(false)
+      @enrollment.checkouts = []
     end
 
-    it 'returns 1 if the lesson is waiting for done' do
-      
-    end
-
-    it 'returns 2 if the lesson is not open' do
-      
+    it 'returns true if all lessons in this course finished' do
+      @enrollment.checkouts << Checkout.create(lesson_name: "test_lesson_8")
+      expect(@enrollment.all_completed?).to eq(true)
+      @enrollment.checkouts = []
     end
   end
 
-  describe "#current_lesson_day_left" do
-    pending
+  describe "#uncompleted_lesson_day_left" do
+    before(:all) do
+      start = (Time.now.beginning_of_day.to_date).to_time
+      @enrollment.update(start_time: start)
+    end
+
     it 'returns the day left for the current lesson' do
-      
+      expect(@enrollment.uncompleted_lesson_day_left).to eq(1)
     end
   end
 
+  describe "#is_released?" do
+    before(:all) do
+      start = (Time.now.beginning_of_day.to_date).to_time
+      @enrollment.update(start_time: start)
+    end
+
+    it 'returns true if the lesson is released' do
+      lesson = Lesson.find_by_name("test_lesson_1")
+      expect(@enrollment.is_released?(lesson)).to eq(true)
+    end
+
+    it 'returns false if the lesson is not released' do
+      lesson = Lesson.find_by_name("test_lesson_2")
+      expect(@enrollment.is_released?(lesson)).to eq(false)
+    end
+  end
+
+  describe "#any_released?" do
+
+    it 'returns true if has lesson released' do
+      start = (Time.now.beginning_of_day.to_date).to_time
+      @enrollment.update(start_time: start)
+
+      expect(@enrollment.any_released?).to eq(true)
+    end
+
+    it 'returns false if has no lesson released' do
+      start = (Time.now.beginning_of_day.to_date + 1).to_time
+      @enrollment.update(start_time: start)
+
+      expect(@enrollment.any_released?).to eq(false)
+    end
+
+  end
+
+  describe "#is_completed?" do
+    let(:lesson) { Lesson.find_by_name("test_lesson_1") }
+
+    it 'returns false if the lesson is not completed' do
+      expect(@enrollment.is_completed?(lesson)).to eq(false)
+    end
+
+    it 'returns true if the lesson is completed' do
+      check = Checkout.create(lesson_name: "test_lesson_1")
+      @enrollment.checkouts << check
+      expect(@enrollment.is_completed?(lesson)).to eq(true)
+      @enrollment.checkouts = []
+    end
+  end
 end

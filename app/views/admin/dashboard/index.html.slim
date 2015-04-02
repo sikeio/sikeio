@@ -1,4 +1,17 @@
 h1.page-header Admin Dashboard
 
+h2 Uninvited
+
+p show all uninvited enrollments
+
+h2 Courses
+
+= render @courses
+
+.btn-group.btn-group-justified
+  a.btn.btn-info href='/admin/courses/new' New Course
+
+br
+
 .btn-group.btn-group-justified
   a.btn.btn-info href='/admin/users' User Management

@@ -10,6 +10,9 @@ gem 'slim-rails'
 gem 'redcarpet'
 gem 'sidekiq'
 
+# use git
+gem 'git'
+
 #To parse Xml
 gem 'nokogiri'
 
@@ -24,6 +27,9 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
+gem "therubyracer"
+gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
+gem "twitter-bootstrap-rails"
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -33,6 +39,8 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
+
+gem 'bootstrap_form'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -56,10 +64,14 @@ group :development, :test do
   gem 'annotate'
 
   # Using Rspec tot test
-
   gem 'rspec-rails'
-  # set data to database
 
+  # set data to database
   gem 'factory_girl_rails'
+
+  # clean the database
+  gem 'database_cleaner'
+
+  gem 'quiet_assets'
 end
 
