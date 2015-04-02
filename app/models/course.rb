@@ -110,8 +110,14 @@ class Course < ActiveRecord::Base
     @content ||= Content.new(self)
   end
 
-  #def self.update_lessons!(xml_file_path)
-  #end
+  def update_course_and_lessons!
+    if course = Course.find_by(self.name)
+
+    else
+
+    end
+    content.lessons_info
+  end
 =begin
   def self.update_lessons!(xml_file_path)
     raise "Error: #{xml_file_path} does not exist" if !File.exist?(xml_file_path)
