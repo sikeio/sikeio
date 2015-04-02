@@ -13,8 +13,6 @@ gem 'sidekiq'
 # use git
 gem 'git'
 
-gem 'github-markdown'
-
 #To parse Xml
 gem 'nokogiri'
 
