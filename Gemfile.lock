@@ -59,9 +59,8 @@ GEM
       execjs
     coffee-script-source (1.9.1)
     columnize (0.9.0)
-<<<<<<< HEAD
-    connection_pool (2.1.3)
     commonjs (0.2.7)
+    connection_pool (2.1.3)
     database_cleaner (1.4.1)
     debug_inspector (0.0.2)
     debugger-linecache (1.2.0)
@@ -76,6 +75,7 @@ GEM
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
     git (1.2.9.1)
+    github-markdown (0.6.8)
     globalid (0.3.3)
       activesupport (>= 4.1.0)
     hashie (3.4.0)
@@ -262,6 +262,7 @@ DEPENDENCIES
   database_cleaner
   factory_girl_rails
   git
+  github-markdown
   jbuilder (~> 2.0)
   jquery-rails
   less-rails
