@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20150402012309) do
     t.string   "desc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "repo_url"
   end
 
   create_table "enrollments", force: :cascade do |t|
@@ -71,7 +72,10 @@ ActiveRecord::Schema.define(version: 20150402012309) do
     t.text     "overview"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "course_id"
   end
+
+  add_index "lessons", ["course_id"], name: "index_lessons_on_course_id", using: :btree
 
   create_table "subscribers", force: :cascade do |t|
     t.string   "email"
