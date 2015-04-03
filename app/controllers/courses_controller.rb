@@ -5,10 +5,6 @@ class CoursesController < ApplicationController
 #  before_action :require_take_part_in,only:[:show]
 
   def info
-    @course = Course.find params[:id]
-  end
-
-  def info
     course
   end
 
@@ -70,7 +66,7 @@ class CoursesController < ApplicationController
   private
 
   def course
-    @course = Course.find params[:id]
+    @course ||= Course.find_by! name:params[:id]
   end
 
 
