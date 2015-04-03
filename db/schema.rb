@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150402012309) do
+ActiveRecord::Schema.define(version: 20150403023758) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,8 @@ ActiveRecord::Schema.define(version: 20150402012309) do
     t.string   "repo_url"
   end
 
+  add_index "courses", ["name"], name: "index_courses_on_name", unique: true, using: :btree
+
   create_table "enrollments", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "course_id"
@@ -75,6 +77,7 @@ ActiveRecord::Schema.define(version: 20150402012309) do
     t.integer  "course_id"
   end
 
+  add_index "lessons", ["course_id", "name"], name: "index_lessons_on_course_id_and_name", unique: true, using: :btree
   add_index "lessons", ["course_id"], name: "index_lessons_on_course_id", using: :btree
 
   create_table "subscribers", force: :cascade do |t|

@@ -44,6 +44,10 @@ class Course < ActiveRecord::Base
     lessons
   end
 
+  def lessons_in_database
+    Lesson.where("course_id = #{self.id}")
+  end
+
   def next_lesson(lesson)
     index = self.lessons.find_index { |var_lesson| lesson == var_lesson }
     self.lessons[index + 1]
@@ -115,20 +119,42 @@ class Course < ActiveRecord::Base
   end
 
 
-  private
 
   def content
     @content ||= Content.new(self)
   end
 
-  def update_course_and_lessons!
-    if course = Course.find_by(self.name)
-
-    else
-
-    end
-    content.lessons_info
+  def self.update_course_and_lessons(course_name)
+    update_course_according_to_xml(course_name)
+    update_lessons_according_to_xml(course_name)
   end
+
+  def self.update_course_according_to_xml(course_name)
+    if course = Course.find_by_name(course_name)
+      course_info = course.content.course_info
+      course.update(course_info)
+    else
+      course = Course.new(name: course_name)
+      course.save
+      course_info = course.content.course_info
+      course.update(course_info)
+    end
+  end
+
+  def self.update_lessons_according_to_xml(course_name)
+    course = Course.find_by_name(course_name)
+    lesson_names = course.content.lesson_names
+    lesson_names.each do |lesson_name|
+      lesson_info = course.content.lesson_info(lesson_name)
+      if lesson = Lesson.find_by_name(lesson_name)
+        lesson.update(lesson_info)
+      else
+        lesson = Lesson.create(name: lesson_name,course_id: course.id)
+        lesson.update(lesson_info)
+      end
+    end
+  end
+
 =begin
   def self.update_lessons!(xml_file_path)
     raise "Error: #{xml_file_path} does not exist" if !File.exist?(xml_file_path)

@@ -15,7 +15,8 @@ result = {
             "lessons_sum" => content.lessons_sum,
             "course_weeks" => content.course_weeks,
             "course_week_titles" => content.course_week_titles,
-            "course_weeks_sum" => content.course_weeks_sum
+            "course_weeks_sum" => content.course_weeks_sum,
+            "lesson_names" => content.lesson_names
           }
 if ARGV[1] == "course_weeks"
   array = result[ARGV[1]]

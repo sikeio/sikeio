@@ -7,7 +7,7 @@ class Course::Content
   end
 
   def course_info
-
+    {desc: nil}
   end
 
 
@@ -23,21 +23,39 @@ class Course::Content
     end
   end
 
+  def lesson_names
+    return @lesson_names if @lesson_names
+
+    @lesson_names = @xml_doc.css("lesson").map do |lesson_node|
+      lesson_node["name"]
+    end
+  end
+
+  def lesson_info(lesson_name)
+    info = nil
+    lessons_info.each do |lesson|
+      if info = lesson[lesson_name]
+        break
+      end
+    end
+    return info
+  end
+
+
   #{lesson_name => day, lesson_name2 => day2}
   def release_day_of_lesson
-    return @release_day if @release_day
+    return @release_day_of_lesson if @release_day_of_lesson
 
-    @release_day = {}
+    @release_day_of_lesson = {}
     week_num = 0
     @xml_doc.css("week").each do |week_node|
       week_node.css("lesson").each do |lesson_node|
         lesson_release_day = 7 * week_num + lesson_node["day"].to_i
-        @release_day[lesson_node["name"]] = lesson_release_day
+        @release_day_of_lesson[lesson_node["name"]] = lesson_release_day
       end
       week_num += 1
     end
-    @release_day
-
+    @release_day_of_lesson
   end
 
   def lessons_sum
