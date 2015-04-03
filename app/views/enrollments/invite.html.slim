@@ -16,14 +16,15 @@ header
     .content
       | 训练营使用Github做技术交流。
       br
-      | 没有Github账号的请先去
-      a href="https://github.com/" 注册
-      | 。
+      span.github-tip
+        | 没有Github账号的请先去
+        a href="https://github.com/" 注册
+        | 。
 
       - if @user.has_binded_github
         a.bind-github.button.success disabled=true 绑定成功
       - else
-        a.bind-github.button href="/auth/github?user_id=#{@user.id}&back_path=#{@enrollment.invitation_path}&binding_github=true" data-disable-with="<i class='fa fa-spinner fa-spin'></i> Loading..."
+        a.bind-github.button href="/auth/github?user_id=#{@user.id}&back_path=#{invite_enrollment_path(@enrollment)}&github_binding=true" data-disable-with="<i class='fa fa-spinner fa-spin'></i> Loading..."
           | Github 绑定
 
 
@@ -31,24 +32,23 @@ header
     h2 2. 个人信息
     .content
       = form_tag pay_enrollment_path(@enrollment),method: 'GET'
-        input type='hidden' name='token' value=@enrollment.token
         label 博客
         br
-        input.blog-url name='data[blog_url]'
+        input.blog-url name='personal_info[blog_url]'
         label 职业
         br
         .radio
-          input type='radio' id='radio1' name='data[type]' value="在职"
+          input type='radio' id='radio1' name='personal_info[type]' value="在职"
           label for='radio1'
             span
             | 在职
         .radio
-          input type='radio' id='radio2' name='data[type]' value="学生"
+          input type='radio' id='radio2' name='personal_info[type]' value="学生"
           label for='radio2'
             span
             | 学生
         .radio
-          input type='radio' id='radio3' name='data[type]' value="无业游民"
+          input type='radio' id='radio3' name='personal_info[type]' value="无业游民"
           label for='radio3'
             span
             | 无业游民
@@ -62,6 +62,9 @@ javascript:
   if(!$('.github a').hasClass('success')){
     $('form input').attr('disabled',true)
     $('form').css('opacity',0.3)
+  }
+  else{
+    $('.github-tip').hide()
   }
 
 

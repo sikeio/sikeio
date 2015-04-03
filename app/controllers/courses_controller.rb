@@ -13,9 +13,12 @@ class CoursesController < ApplicationController
   end
 
   def show
-    @course = Course.find params[:id]
-    @enrollment = @course.enrollments.find_by(user: current_user)
-    redirect_to :root unless @enrollment.data["activated"]
+    @enrollment = course.enrollments.find_by(user: current_user)
+    if !@enrollment.activated
+      flash[:error] = "您尚未激活该课程"
+      redirect_to :root
+      return
+    end
     # @course.current_version = @enrollment.version if @enrollment.version
     @send_day = Date.today.day
     render '_show'
@@ -67,7 +70,7 @@ class CoursesController < ApplicationController
   private
 
   def course
-    @course ||= Course.find_by(name: params[:id])
+    @course = Course.find params[:id]
   end
 
 

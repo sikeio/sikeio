@@ -9,7 +9,7 @@
       <%== @content %>
     </div>
     <p>
-      课程邀请连接 <%=link_to 'Invitation',@enrollment.invitation_url %>
+      课程邀请连接 <%=link_to 'Invitation',invite_enrollment_url(@enrollment) %>
     </p>
   </body>
 </html>

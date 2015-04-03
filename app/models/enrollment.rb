@@ -21,12 +21,8 @@ class Enrollment < ActiveRecord::Base
   before_create :fill_in_token
   has_many :checkouts, dependent: :destroy
 
-  def invitation_path
-    "/enrollments/#{self.id}?token=#{self.token}"
-  end
-
-  def invitation_url
-    "http://localhost:3000/enrollments/#{self.id}?token=#{self.token}"
+  def to_param
+    self.token
   end
 
   def next_uncompleted_lesson

@@ -19,11 +19,11 @@ table.table.table-bordered.enrollments
         td = e.user.name
         td = e.user.email
         td = e.course.name
-        td = e.data['buddy_name'] || 'None'
-        td = e.data['activated'] ? "True" : "False"
-        td = e.data['paid'] ? "True" : "False"
+        td = e.buddy_name
+        td = e.activated
+        td = e.paid
         td
-          button.btn.btn-info.send  data-enrollment-id=e.id class=(e.data['has_sent_invitation_email'] ? 'has-sent' : '')
+          button.btn.btn-info.send  data-enrollment-id=e.id class=(e.has_sent_invitation_email ? 'has-sent' : '')
             | Send Invitation Email
           button.btn.btn-info.pay  data-enrollment-id=e.id Set Payment Status
 

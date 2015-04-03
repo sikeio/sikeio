@@ -7,16 +7,15 @@ class AuthenticationsController < ApplicationController
 
     auth = Authentication.find_by uid: auth_info["uid"]
     if auth
-      if params["binding_github"]
+      if params["github_binding"]
         flash[:error] = "此Github账号已经被绑定。请直接登录"
-        return redirect_to :root
+        redirect_to :root
+        return
       end
       login_as auth.user
       redirect_to_back_or_default params["back_path"]
     else
-      user = User.find_by_id params["user_id"]
-      redirect_to root_path unless user
-
+      user = User.find_by!  id:params["user_id"]
       user.authentications.create(
         provider: 'github',
         uid: auth_info["uid"],

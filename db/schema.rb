@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150401025304) do
+ActiveRecord::Schema.define(version: 20150402012309) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,13 +50,17 @@ ActiveRecord::Schema.define(version: 20150401025304) do
     t.integer  "user_id"
     t.integer  "course_id"
     t.string   "version"
-    t.datetime "start_time",  default: '2015-03-30 06:23:30', null: false
-    t.datetime "enroll_time", default: '2015-03-30 06:23:30', null: false
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
-    t.integer  "current_lesson_num"
+    t.datetime "start_time",                default: '2015-04-03 06:49:13', null: false
+    t.datetime "enroll_time",               default: '2015-04-03 06:49:13', null: false
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
     t.string   "token"
-    t.json     "data",               default: {}
+    t.json     "personal_info",             default: {}
+    t.boolean  "activated",                 default: false
+    t.boolean  "has_personal_info",         default: false
+    t.boolean  "has_sent_invitation_email", default: false
+    t.boolean  "paid",                      default: false
+    t.string   "buddy_name"
   end
 
   add_index "enrollments", ["course_id"], name: "index_enrollments_on_course_id", using: :btree

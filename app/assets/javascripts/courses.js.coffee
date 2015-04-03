@@ -91,7 +91,7 @@ $ ->
           type: 'error'
       else
         courseId = $('.data-course-id').text()
-        settings.data += "&courseId=#{courseId}"
+        settings.data += "&course_id=#{courseId}"
 
 
     .on 'ajax:success','#enroll-form',->

@@ -38,9 +38,9 @@ Rails.application.routes.draw do
 
   resources :enrollments,only: [:create] do
     member do
-      get '' => 'enrollments#invite',as: :invite
+      get 'invite'
       get 'pay'
-      post 'pay' => 'enrollments#finish',as: :finish
+      post 'pay'
     end
   end
 
