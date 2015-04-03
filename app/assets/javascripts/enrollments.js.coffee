@@ -2,6 +2,14 @@ $ ->
   #invite page
   eventPrefix = ".enrollments-page.invite"
   $ = jQuery.getLocal(eventPrefix)
+  $(document)
+    .on 'submit', 'form', ->
+      if $('[name="personal_info[type]"]:checked').length == 0
+        swal
+          title: '请先选择你的职业~'
+          type: "error"
+        return false
+
 
 
 $ ->

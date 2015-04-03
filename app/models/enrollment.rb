@@ -6,14 +6,13 @@
 #  user_id                   :integer
 #  course_id                 :integer
 #  version                   :string
-#  start_time                :datetime         default(Fri, 03 Apr 2015 14:49:13 CST +08:00), not null
-#  enroll_time               :datetime         default(Fri, 03 Apr 2015 14:49:13 CST +08:00), not null
+#  start_time                :datetime         default(Fri, 03 Apr 2015 17:56:30 CST +08:00), not null
+#  enroll_time               :datetime         default(Fri, 03 Apr 2015 17:56:30 CST +08:00), not null
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
 #  token                     :string
-#  personal_info             :json             default({})
+#  personal_info             :json
 #  activated                 :boolean          default(FALSE)
-#  has_personal_info         :boolean          default(FALSE)
 #  has_sent_invitation_email :boolean          default(FALSE)
 #  paid                      :boolean          default(FALSE)
 #  buddy_name                :string
@@ -30,6 +29,10 @@ class Enrollment < ActiveRecord::Base
 
   def to_param
     self.token
+  end
+
+  def has_personal_info?
+    !self.personal_info.nil?
   end
 
   def next_uncompleted_lesson

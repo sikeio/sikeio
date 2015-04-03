@@ -50,14 +50,13 @@ ActiveRecord::Schema.define(version: 20150402012309) do
     t.integer  "user_id"
     t.integer  "course_id"
     t.string   "version"
-    t.datetime "start_time",                default: '2015-04-03 06:49:13', null: false
-    t.datetime "enroll_time",               default: '2015-04-03 06:49:13', null: false
+    t.datetime "start_time",                default: '2015-04-03 09:56:30', null: false
+    t.datetime "enroll_time",               default: '2015-04-03 09:56:30', null: false
     t.datetime "created_at",                                                null: false
     t.datetime "updated_at",                                                null: false
     t.string   "token"
-    t.json     "personal_info",             default: {}
+    t.json     "personal_info"
     t.boolean  "activated",                 default: false
-    t.boolean  "has_personal_info",         default: false
     t.boolean  "has_sent_invitation_email", default: false
     t.boolean  "paid",                      default: false
     t.string   "buddy_name"

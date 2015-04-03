@@ -13,12 +13,12 @@ class EnrollmentsController < ApplicationController
       # TODO: send email to admin
       head :ok
     else
-      render json:{msg: user.errors.full_messages}, status: :bad_request
+      render json: {msg: user.errors.full_messages}, status: :bad_request
     end
   end
 
   def invite
-    if enrollment.has_personal_info
+    if enrollment.has_personal_info?
       redirect_to pay_enrollment_path(@enrollment, token: @enrollment.token)
       return
     end
@@ -35,8 +35,7 @@ class EnrollmentsController < ApplicationController
         redirect_to invite_enrollment_path(@enrollment)
         return
       end
-      @enrollment.update_attribute :personal_info, params[:personal_info]
-      @enrollment.update_attribute :has_personal_info, true
+      @enrollment.update_attribute :personal_info, personal_info
       @course = @enrollment.course
     end
 
@@ -51,6 +50,7 @@ class EnrollmentsController < ApplicationController
   private
 
   class InvalidEnrollmentTokenError < RuntimeError ; end
+  class InvalidPersonalInfoError < RuntimeError ; end
 
   def course
     Course.find params[:course_id]
@@ -63,6 +63,16 @@ class EnrollmentsController < ApplicationController
       raise InvalidEnrollmentTokenError
     else
       @enrollment
+    end
+  end
+
+  def personal_info
+    keys = [:blog_url, :type]
+    if params[:personal_info] &&
+        keys.all? { |k| params[:personal_info].key? k }
+      params[:personal_info].slice *keys
+    else
+      raise InvalidPersonalInfoError
     end
   end
 
