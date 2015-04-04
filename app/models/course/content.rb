@@ -1,8 +1,9 @@
 class Course::Content
 
-  def initialize(course)
-    raise "course is nil or current_version is not set" unless  (course && course.current_version)
-    @course = course
+  def initialize(course_name, version)
+    raise "course is nil or current_version is not set" unless  (course_name && version)
+    @course_name = course_name
+    @version = version
     @xml_doc = xml_handle
   end
 
@@ -10,37 +11,18 @@ class Course::Content
     {desc: nil}
   end
 
-
-  #[{lesson_name -> {title -> title, overview -> "overview"},,,,]
+  #{lesson_name -> {title -> title, overview -> "overview", lesson_name2 -> {title -> title, overview -> "overview"}}
   def lessons_info
     return @lessons_info if @lessons_info
-
-    @lessons_info = @xml_doc.css("lesson").map do |lesson_node|
+    @lessons_info = {}
+    @xml_doc.css("lesson").each do |lesson_node|
       info = {}
       info["title"] = lesson_node["title"]
       info["overview"] = lesson_node.css("overview").children.to_xhtml.strip
-      { lesson_node["name"] => info }
+       @lessons_info[lesson_node["name"]] = info
     end
+    @lessons_info
   end
-
-  def lesson_names
-    return @lesson_names if @lesson_names
-
-    @lesson_names = @xml_doc.css("lesson").map do |lesson_node|
-      lesson_node["name"]
-    end
-  end
-
-  def lesson_info(lesson_name)
-    info = nil
-    lessons_info.each do |lesson|
-      if info = lesson[lesson_name]
-        break
-      end
-    end
-    return info
-  end
-
 
   #{lesson_name => day, lesson_name2 => day2}
   def release_day_of_lesson
@@ -86,13 +68,13 @@ class Course::Content
 
   private
   def repo_path
-    Rails.root + "xml_repo" + @course.name
+    Rails.root + "xml_repo" + @course_name
   end
 
   def xml_file_content
-    file = @course.name + ".xml"
+    file = @course_name + ".xml"
     git_repo = Git.open(repo_path)
-    git_repo.show(@course.current_version, file)
+    git_repo.show(@version, file)
   end
 
   def xml_handle

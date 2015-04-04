@@ -57,7 +57,7 @@ class Enrollment < ActiveRecord::Base
 
   def course
     target_course = Course.find(self.course_id)
-    target_course.current_version = self.version if self.version
+    target_course.user_course_version = self.version if self.version
     target_course
   end
 

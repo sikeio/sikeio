@@ -3,18 +3,45 @@
 ENV['RAILS_ENV'] = "development"
 require '../config/environment.rb'
 
-course_name = ARGV[0]
-if course = Course.find_by_name(course_name)
-  puts course.name
-  lessons = Lesson.where(course_id: course.id)
-  lessons.each {|lesson| puts lesson.name}
-else
-  puts "no course #{course_name} before update"
+def course_show(course)
+    puts "Course Name: " + course.name
+    puts "Course Desc: " + course.desc if course.desc
 end
-Course.update_course_and_lessons(course_name)
-puts "after update"
-course = Course.find_by_name(course_name)
-lessons = Lesson.where(course_id: course.id)
-puts course.name
-lessons.each {|lesson| puts lesson.name}
+
+def lessons_show(lessons)
+  lessons.each do |lesson|
+    puts "Lesson Name: " + lesson.name
+    puts "Overview: " + lesson.overview if lesson.overview
+    puts "Title: " +lesson.title if lesson.title
+    puts "Course_id: " + lesson.course_id.to_s if lesson.course_id
+  end
+end
+
+if ARGV.length > 1
+  course_name = ARGV[0]
+  course_version = ARGV[1]
+  puts "Before update"
+  if course = Course.find_by_name(course_name)
+    lessons = Lesson.where(course_id: course.id)
+    course_show(course)
+    lessons_show(lessons)
+  else
+    puts "No course #{course_name} before update"
+  end
+
+  Course.update_course_and_lessons(course_name, course_version)
+
+
+  course = Course.find_by_name(course_name)
+  lessons = Lesson.where(course_id: course.id)
+
+
+  puts ""
+  puts "After update"
+  course_show(course)
+  lessons_show(lessons)
+else
+  puts "ERROR: no ARGV"
+  puts "Command EXPAMLE: update_course_lessons_in_db course_name version "
+end
 

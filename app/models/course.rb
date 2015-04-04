@@ -13,39 +13,25 @@ class Course < ActiveRecord::Base
 
 
   has_many :enrollments, dependent: :restrict_with_exception
-  DEFAULT_VERSION = "v1"
 
   has_many :users, through: :enrollments
+
+  attr_reader :user_course_version
 
   validates :name, presence: true,
     format: {with: /\A[a-zA-Z0-9\-_]+\z/},
     uniqueness: true
 
-  attr_reader :current_version
-
-  after_initialize do |course|
-    course.current_version = DEFAULT_VERSION unless course.current_version
-  end
-
-
   def to_param
     self.name
   end
 
-
-
   def lessons  #根据先后顺序排序好的
     lessons = []
-    content.lessons_info.each do |lesson_info|
-      lesson_info.each_key do |lesson_name|
-        lessons << Lesson.find_by_name(lesson_name)
-      end
+    content.lessons_info.each do |lesson_name, other_attr|
+      lessons << Lesson.find_by_name(lesson_name)
     end
     lessons
-  end
-
-  def lessons_in_database
-    Lesson.where("course_id = #{self.id}")
   end
 
   def next_lesson(lesson)
@@ -80,9 +66,9 @@ class Course < ActiveRecord::Base
     content.course_weeks_sum
   end
 
-  def current_version=(new_version)
-    if new_version && @current_version != new_version
-      @current_version = new_version
+  def user_course_version=(version = self.current_version)
+    if @user_course_version != version
+      @user_course_version = version
       @content = nil
     end
   end
@@ -118,82 +104,40 @@ class Course < ActiveRecord::Base
     Git.clone(repo_url, repo_dir_path)
   end
 
-
-
   def content
-    @content ||= Content.new(self)
+      @content ||= Content.new(self.name, user_course_version)
   end
 
-  def self.update_course_and_lessons(course_name)
-    update_course_according_to_xml(course_name)
-    update_lessons_according_to_xml(course_name)
+  def self.update_course_and_lessons(course_name, version)
+    update_course_according_to_xml(course_name, version)
+    update_lessons_according_to_xml(course_name, version)
   end
 
-  def self.update_course_according_to_xml(course_name)
+  def self.update_course_according_to_xml(course_name, version)
+    content = Content.new(course_name, version)
+    course_info = content.course_info
     if course = Course.find_by_name(course_name)
-      course_info = course.content.course_info
       course.update(course_info)
     else
       course = Course.new(name: course_name)
       course.save
-      course_info = course.content.course_info
       course.update(course_info)
     end
   end
 
-  def self.update_lessons_according_to_xml(course_name)
+  def self.update_lessons_according_to_xml(course_name, version)
+    content = Content.new(course_name, version)
     course = Course.find_by_name(course_name)
-    lesson_names = course.content.lesson_names
-    lesson_names.each do |lesson_name|
-      lesson_info = course.content.lesson_info(lesson_name)
+    lessons_info = content.lessons_info
+    lessons_info.each do |lesson_name, other_attr|
       if lesson = Lesson.find_by_name(lesson_name)
-        lesson.update(lesson_info)
+        lesson.update(other_attr)
       else
         lesson = Lesson.create(name: lesson_name,course_id: course.id)
-        lesson.update(lesson_info)
+        lesson.update(other_attr)
       end
     end
   end
 
-=begin
-  def self.update_lessons!(xml_file_path)
-    raise "Error: #{xml_file_path} does not exist" if !File.exist?(xml_file_path)
-    #--get xml content ---
-    f = File.open(xml_file_path)
-    xml_doc = Nokogiri::XML(f)
-    f.close
-
-
-    #--parse xml and update DB--
-    xml_doc.css('course').each do |course_node|
-
-      #get course and lesson
-      course_name = course_node["name"]
-      unless Course.find_by_name(course_name)
-        Course.create!(name: course_name)
-      end
-
-      course_node.css('week').each do |week_node|
-        week_node.css('lesson').each do |lesson_node|
-          overview_node = lesson_node.css('overview')
-
-          #get all the info needed to update db
-          lesson_name = lesson_node["name"]
-          lesson_title = lesson_node["title"]
-          lesson_overview = overview_node.text
-
-          lesson_info = {
-            name: lesson_name,
-            title: lesson_title,
-            overview: lesson_overview,
-          }
-
-          #create or update record
-          (lesson = Lesson.find_by(name: lesson_name)) ? lesson.update!(lesson_info) : Lesson.create!(lesson_info)
-        end
-      end
-    end
-  end
-=end
 end
 
