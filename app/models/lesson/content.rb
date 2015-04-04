@@ -37,14 +37,15 @@ class Lesson::Content
   end
 
   def repo_path
-    Rails.root + @course_name
+    Rails.root + "xml_repo" + @course_name
   end
 
   def html_page
     git = Git.open(repo_path)
-    file = @lesson_name + ".xml"
+    file = @course_name + ".xml"
     xml = Nokogiri::HTML(git.show(@version, file))
 
+    xml = xml.css("page[name=#{@lesson_name}]")[0]
     document = xml.document
     parse_normal_block(xml, document)
     pre_parse_special_block_tag(xml, document)
@@ -68,8 +69,8 @@ class Lesson::Content
 
   def parse_normal_block(xml, document)
     normal_node = normal_div(document)
-    xml.css("body").children.each do |child|
-      unless child.name == "exercise" || child.name == "tip" || child.name == "h2"
+    xml.children.each do |child|
+      unless child.name == "exercise" || child.name == "tip" || child.name == "h1"
         normal_node.add_child(child.dup)
         child.remove
       else
@@ -77,14 +78,14 @@ class Lesson::Content
           child.add_previous_sibling(normal_node)
           normal_node = normal_div(document)
         end
-        if child.name == "h2"
+        if child.name == "h1"
           normal_node.add_child(child.dup)
           child.remove
         end
       end
     end
     if normal_node.element_children.size > 0
-      xml.css("body")[0].add_child(normal_node)
+      xml.add_child(normal_node)
     end
   end
 

@@ -16,7 +16,6 @@ class Course < ActiveRecord::Base
 
   has_many :users, through: :enrollments
 
-  attr_reader :user_course_version
 
   validates :name, presence: true,
     format: {with: /\A[a-zA-Z0-9\-_]+\z/},
@@ -70,6 +69,14 @@ class Course < ActiveRecord::Base
     if @user_course_version != version
       @user_course_version = version
       @content = nil
+    end
+  end
+
+  def user_course_version
+    if @user_course_version
+      return @user_course_version
+    else
+      self.current_version
     end
   end
 

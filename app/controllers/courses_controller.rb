@@ -17,7 +17,7 @@ class CoursesController < ApplicationController
     end
     # @course.current_version = @enrollment.version if @enrollment.version
     @send_day = Date.today.day
-    render '_show'
+    #render '_show'
   end
 
   def pay
