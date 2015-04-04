@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+ENV['RAILS_ENV'] = "development"
+require '../config/environment.rb'
+
+path = Pathname.new(ARGV[0])
+
+md_parse = Course::MdParse.new(path)
+
+xml = md_parse.result
+puts path + "course.xml"
+
+file = File.new(path + "course.xml", "w+")
+file.write(xml.to_xhtml)
+
