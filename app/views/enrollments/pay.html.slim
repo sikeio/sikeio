@@ -1,0 +1,49 @@
+header
+  img src=image_url('logo2.png')
+  p.course-name =@course.name
+
+.container
+  section.text
+    h1 训练营支付
+    .form
+      p
+        | 学生 389
+        br
+        | 在职 589
+
+  section.buddy
+    h2 我有小伙伴！
+    .content
+      label 小伙伴姓名
+      = form_tag pay_enrollment_path(@enrollment),method:'POST'
+        input.buddy-name name="buddy_name"
+        label 拉小伙伴一起学习优惠价 489
+
+  section.pay
+    h2 支付宝
+    .content
+      p
+        | 支付金额:&nbsp;&nbsp;
+        span.tuition
+          span.origin =( @enrollment.personal_info["type"] == '学生' ? 389 : 589 )
+          | &nbsp;
+          span.new
+        | &nbsp;大洋
+      img src="/assets/alipay.png" alt=""
+      p 支付宝: 高羊 18688696795
+
+      button.button.start-course 开始课程
+
+      input type='checkbox' id='have-paid'
+      label for='have-paid'
+        | &nbsp;&nbsp;我已经通过支付宝付款了
+
+
+footer
+  img src=image_url('logo2.png')
+
+
+
+
+
+

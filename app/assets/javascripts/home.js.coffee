@@ -1,6 +1,6 @@
 $ ->
-  page_identifier = 'home-page'
-  $ = jQuery.getLocal(page_identifier)
+  eventPrefix = 'home-page'
+  $ = jQuery.getLocal(eventPrefix)
 
   $(document)
     .on 'ajax:success','.subscribe',(e,data)->

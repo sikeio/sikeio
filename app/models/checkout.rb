@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: checkouts
+#
+#  id                   :integer          not null, primary key
+#  enrollment_id        :integer
+#  lesson_name          :string
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  question             :text
+#  solved_problem       :text
+#  github_repository    :string
+#  degree_of_difficulty :integer
+#  time_cost            :integer
+#
+
 class Checkout < ActiveRecord::Base
   belongs_to :enrollment
 

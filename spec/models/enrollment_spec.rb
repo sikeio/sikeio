@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: enrollments
+#
+#  id                        :integer          not null, primary key
+#  user_id                   :integer
+#  course_id                 :integer
+#  version                   :string
+#  start_time                :datetime         default(Fri, 03 Apr 2015 17:56:30 CST +08:00), not null
+#  enroll_time               :datetime         default(Fri, 03 Apr 2015 17:56:30 CST +08:00), not null
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  token                     :string
+#  personal_info             :json
+#  activated                 :boolean          default(FALSE)
+#  has_sent_invitation_email :boolean          default(FALSE)
+#  paid                      :boolean          default(FALSE)
+#  buddy_name                :string
+#
+
 require 'rails_helper'
 
 RSpec.describe Enrollment, type: :model do

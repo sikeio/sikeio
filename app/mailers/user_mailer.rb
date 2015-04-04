@@ -8,11 +8,11 @@ class UserMailer < ApplicationMailer
   end
 
 
-  def activation_email(user,content)
-    @user = user
+  def invitation_email(enrollment,content)
+    @enrollment = enrollment
     markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
     @content = markdown.render content
-    mail(to: @user.email, subject: '思客教学激活链接')
+    mail(to: @enrollment.user.email, subject: '思客教学邀请函')
   end
 
 

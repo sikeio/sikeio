@@ -1,42 +1,32 @@
 class CoursesController < ApplicationController
 
-#  before_action :require_login,only:[:show, :start]
+  before_action :require_login,only:[:show, :start]
 #  before_action :require_course_exists,except:[:list,:create_enroll]
 #  before_action :require_take_part_in,only:[:show]
-
-=begin
-  def create_enroll
-    require_course_exists params[:id]
-    result = {}
-    user = User.new(params.permit(:email,:name))
-    if user.save
-      result['success'] = true
-    else
-      result['success'] = false
-      result['msg'] = user.errors.full_messages
-    end
-
-    render json: result
-    if result['success'] == true
-      UserMailer.welcome_email(user).deliver_later! wait: (30 + rand(30)).minutes
-    end
-  end
-=end
 
   def info
     course
   end
 
   def show
-    @course = Course.find params[:id]
-    @enrollment = @course.enrollments.find_by(user_id: 1)
-    @course.current_version = @enrollment.version if @enrollment.version
+    @enrollment = course.enrollments.find_by(user: current_user)
+    if !@enrollment.activated
+      flash[:error] = "您尚未激活该课程"
+      redirect_to :root
+      return
+    end
+    # @course.current_version = @enrollment.version if @enrollment.version
     @send_day = Date.today.day
+    render '_show'
   end
 
-  def payment
+  def pay
     @course = Course.find params[:id]
-    @display_top = true
+  end
+
+  def invite
+    @course = Course.find params[:id]
+    @user = User.take
   end
 
   # 待定  should use before_action to controller login or not
@@ -76,7 +66,7 @@ class CoursesController < ApplicationController
   private
 
   def course
-    @course ||= Course.find_by(name: params[:id])
+    @course ||= Course.find_by! name:params[:id]
   end
 
 

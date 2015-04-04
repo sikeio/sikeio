@@ -32,5 +32,8 @@ module Sike
 
     config.active_job.queue_adapter = :sidekiq
 
+    #Rspec has changed the path,WTF!
+    config.action_mailer.preview_path = "#{Rails.root}/test/mailers/previews"
+
   end
 end
