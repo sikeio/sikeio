@@ -11,5 +11,5 @@ xml = md_parse.result
 puts path + "course.xml"
 
 file = File.new(path + "course.xml", "w+")
-file.write(xml.to_xhtml)
+file.write(xml)
 
