@@ -24,7 +24,7 @@ class Enrollment < ActiveRecord::Base
 
   validates :user_id, presence: true
   validates :course_id, presence: true, uniqueness: {scope: :user_id}
-  before_create :fill_in_token
+  before_create :fill_in_token, :fill_in_time
   has_many :checkouts, dependent: :destroy
 
   def to_param
@@ -103,5 +103,16 @@ class Enrollment < ActiveRecord::Base
   def fill_in_token
     self.token = SecureRandom.urlsafe_base64
   end
+
+  def fill_in_time
+    self.enroll_time = Time.now
+    self.start_time = course_start_time
+  end
+
+  def course_start_time
+    date = Time.now().to_date + (7 - Time.now().to_date.cwday) + 1
+    date.to_time
+  end
+
 
 end
