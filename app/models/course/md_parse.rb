@@ -3,18 +3,23 @@ class Course::MdParse
   WEEK_HEADER = "h2"
   COURSE_TITLE_HEADER = "h1"
 
+  attr_reader :lesson_names, :course_name, :course_base_dir
+
   def initialize(repo_dir)
     raise "repo does not exist" if !File.exist?(repo_dir)
     @course_base_dir = repo_dir #Pathname
-    course_index = @course_base_dir + "index.xmd"
-    @lesson_names = compile(course_index).css("lesson").map { |node| node["name"] }
-    @course_name = compile(course_index).css("h1")[0].text
+    @lesson_names = course_index_dom.css("lesson").map { |node| node["name"] }
+    @course_name = course_index_dom.css("h1")[0].text
+  end
+
+  def course_index_dom
+    course_index_file_path = course_base_dir + "index.xmd"
+    compile(course_index_file_path)
   end
 
   def result
-
     course =<<-THERE
-    <course name="#{@course_name}">
+    <course name="#{course_name}">
       #{index_xml}
       #{pages_xml}
     </course>
@@ -31,7 +36,7 @@ class Course::MdParse
 
   def weeks_xml
     weeks = ""
-    xml = compile(@course_base_dir + "index.xmd")
+    xml = course_index_dom
     node = xml.child.child
     nodes_in_week = nil
     while node
@@ -73,20 +78,24 @@ class Course::MdParse
     THERE
   end
 
+  def lesson_dom(lesson_name)
+    dom = nil
+    file_path = course_base_dir + lesson_name + "index.md"
+    if File.exists?(file_path)
+    else
+      file_path = course_base_dir + lesson_name + "index.xmd"
+    end
+    dom = compile(file_path)
+    dom
+  end
+
   def pages_xml
     pages = ""
-    @lesson_names.each do |lesson_name|
-      file_xml = nil
-      file_path = @course_base_dir + lesson_name + "index.md"
-      if File.exists?(file_path)
-        file_xml = compile(file_path)
-      else
-        file_path = @course_base_dir + lesson_name + "index.xmd"
-        file_xml = compile(file_path)
-      end
+    lesson_names.each do |lesson_name|
+      lesson_xml_dom = lesson_dom(lesson_name)
       page = <<-THERE
       <page name="#{lesson_name}">
-      #{file_xml.children.to_xhtml}
+      #{lesson_xml_dom.children.to_xhtml}
       </page>
       THERE
       pages << page
