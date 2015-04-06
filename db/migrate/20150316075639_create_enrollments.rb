@@ -4,8 +4,8 @@ class CreateEnrollments < ActiveRecord::Migration
       t.belongs_to :user, index: true
       t.belongs_to :course, index: true
       t.string :version
-      t.datetime :start_time, null: false, :default => Time.now
-      t.datetime :enroll_time, null:false, :default => Time.now
+      t.datetime :start_time, null: false, :default => "now()"
+      t.datetime :enroll_time, null:false, :default => "now()"
 
       t.timestamps null: false
     end
