@@ -11,15 +11,19 @@
 
 class Course < ActiveRecord::Base
 
+  attr_reader :content_version
 
   has_many :enrollments, dependent: :restrict_with_exception
 
   has_many :users, through: :enrollments
 
-
   validates :name, presence: true,
     format: {with: /\A[a-zA-Z0-9\-_]+\z/},
     uniqueness: true
+
+  after_initialize do
+    self.content_version = self.current_version
+  end
 
   def to_param
     self.name
@@ -65,27 +69,43 @@ class Course < ActiveRecord::Base
     content.course_weeks_sum
   end
 
-  def user_course_version=(version = self.current_version)
-    if @user_course_version != version
-      @user_course_version = version
-      @content = nil
-    end
-  end
-
-  def user_course_version
-    if @user_course_version
-      return @user_course_version
-    else
-      self.current_version
-    end
-  end
-
   def release_day_of_lesson(lesson)
     content.release_day_of_lesson[lesson.name]
   end
 
+  def content_version=(version)
+    if version == self.current_version
+      @content_version = nil
+    else
+      @content_version = version
+    end
+    set_first_time_set_version(true)
+  end
+
+  def test_content
+    content
+  end
+
+  private
+
+  #why accessor does not work
+  def set_first_time_set_version(bool)
+    @first_time_set_version = bool
+  end
+
+  def first_time_set_version
+    @first_time_set_version
+  end
+
   def content
-      @content ||= Content.new(self.name, user_course_version)
+    if first_time_set_version
+      if content_version
+        @content = Content.new(self.name, content_version)
+      else
+        @content = Content.new(self.name, self.current_version)
+      end
+      set_first_time_set_version(false)
+    end
+    @content
   end
 end
-
