@@ -20,13 +20,14 @@ class Course < ActiveRecord::Base
   validates :name, presence: true,
     format: {with: /\A[a-zA-Z0-9\-_]+\z/},
     uniqueness: true
+  validates_uniqueness_of :permalink
 
   after_initialize do
     self.content_version = self.current_version
   end
 
   def to_param
-    self.name
+    self.permalink
   end
 
   def lessons  #根据先后顺序排序好的
@@ -35,6 +36,10 @@ class Course < ActiveRecord::Base
       lessons << Lesson.find_by_name(lesson_name)
     end
     lessons
+  end
+
+  def lesson_number(lesson)
+    content.lesson_numbers[lesson.name]
   end
 
   def next_lesson(lesson)
@@ -51,8 +56,8 @@ class Course < ActiveRecord::Base
     content.lessons_sum
   end
 
-  def course_lesson(lesson_name)
-    lessons.find { |lesson| lesson.name = lesson_name }
+  def course_lesson(lesson_permalink)
+    lessons.find { |lesson| lesson.permalink == lesson_permalink }
   end
 
   def course_weeks #排序好的

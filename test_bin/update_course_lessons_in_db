@@ -6,6 +6,8 @@ require '../config/environment.rb'
 def course_show(course)
     puts "Course Name: " + course.name
     puts "Course Desc: " + course.desc if course.desc
+    puts "Course Title: " + course.title if course.title
+    puts "Course Permalink: " + course.permalink if course.permalink
 end
 
 def lessons_show(lessons)

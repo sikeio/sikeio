@@ -21,7 +21,7 @@ $ ->
           sec = date.getSeconds()
           $(".time-remaining").html("超出时间<p class='time'>" + hour + "h " + min + "m " + sec + "s</p>")
       setInterval(getClock, 1000)
-
+###
     .on 'ajax:success', '.checkout', (e,data)->
       if !data.success
         swal
@@ -44,6 +44,7 @@ $ ->
   $('i.fa.fa-check-circle.uncompleted').mouseleave (e)->
     $(this).css("color", "" )
     $(this).css("cursor", "")
+###
 
 $ ->
   #info page
