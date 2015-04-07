@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+ENV['RAILS_ENV'] = "development"
+require '../config/environment.rb'
+
+course_name = ARGV[0]
+
+course = Course.new(name: course_name, current_version: "v1")
+content = course.test_content
+#content = Course::Content.new(course_name, "v1")
+
+result = {
+            "lessons_info" => content.lessons_info,
+            "release_day_of_lesson" => content.release_day_of_lesson,
+            "lessons_sum" => content.lessons_sum,
+            "course_weeks" => content.course_weeks,
+            "course_week_titles" => content.course_week_titles,
+            "course_weeks_sum" => content.course_weeks_sum,
+            "course_info" => content.course_info,
+            "lesson_numbers" => content.lesson_numbers
+          }
+if ARGV[1] == "course_weeks"
+  array = result[ARGV[1]]
+  array.each do |child_array|
+    puts "[ "
+    puts child_array
+    puts "]"
+  end
+else
+  puts result[ARGV[1]]
+end
+

@@ -13,8 +13,7 @@ div.status-bar
 header
   = image_tag "courses/header.png"
   <h1>
-    span.banner 6
-    | Ditching The Story Board
+     |#{@course.title}
   </h1>
 - current_lesson = @enrollment.current_lesson
 - if current_lesson && (!@enrollment.is_completed?(current_lesson))
@@ -46,31 +45,30 @@ div.current-mission
         | 即将开始
 
 ul.missions
-  - show_control_num = 0
   - @course.course_weeks_sum.times do |num|
     p.week
       | Week #{num + 1} #{@course.course_week_titles[num]}
     - week_lessons = @course.course_weeks[num]
     - week_lessons.each do |lesson|
-      - lesson_url = lesson_path(@course.name, lesson.name)
-      - show_control_num += 1
+      - lesson_url = lesson_path(@course, lesson)
+      - lesson_number = @course.lesson_number(lesson)
       - if @enrollment.is_completed?(lesson)
         li.mission.done
           i.fa.fa-check-circle
           a href=lesson_url
-            | #{show_control_num.to_s + '. ' + lesson.name}
+            | #{lesson_number.to_s + '. ' + lesson.name}
       - elsif @enrollment.is_released?(lesson) && @enrollment.is_next_uncompleted_lesson?(lesson)
         li.mission.current
           a href=lesson_url
-            | #{show_control_num.to_s + '. ' + lesson.name}
+            | #{lesson_number.to_s + '. ' + lesson.name}
       - elsif @enrollment.is_released?(lesson)
         li.mission.to-be-done
-          | #{show_control_num.to_s + '. ' + lesson.name}
+          | #{lesson_number.to_s + '. ' + lesson.name}
       - else
         li.mission.future
-          | #{show_control_num.to_s + '. ' + lesson.name}
+          | #{lesson_number.to_s + '. ' + lesson.name}
           /使用连接代替
 
-= render partial: "checkout", locals: {title: @enrollment.next_uncompleted_lesson.name, checkout: :checkout, html_method: :post,
-                                       url_path: check_out_path(@course.name, @enrollment.next_uncompleted_lesson.name) }
+/= render partial: "checkout", locals: {title: @enrollment.next_uncompleted_lesson.name, checkout: :checkout, html_method: :post,
+                                       url_path: check_out_path(@course, @enrollment.next_uncompleted_lesson) }
 

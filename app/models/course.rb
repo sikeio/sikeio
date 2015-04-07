@@ -11,37 +11,35 @@
 
 class Course < ActiveRecord::Base
 
+  attr_reader :content_version
 
   has_many :enrollments, dependent: :restrict_with_exception
-  DEFAULT_VERSION = "v1"
 
   has_many :users, through: :enrollments
 
   validates :name, presence: true,
     format: {with: /\A[a-zA-Z0-9\-_]+\z/},
     uniqueness: true
+  validates_uniqueness_of :permalink
 
-  attr_reader :current_version
-
-  after_initialize do |course|
-    course.current_version = DEFAULT_VERSION unless course.current_version
+  after_initialize do
+    self.content_version = self.current_version
   end
-
 
   def to_param
-    self.name
+    self.permalink
   end
-
-
 
   def lessons  #根据先后顺序排序好的
     lessons = []
-    content.lessons_info.each do |lesson_info|
-      lesson_info.each_key do |lesson_name|
-        lessons << Lesson.find_by_name(lesson_name)
-      end
+    content.lessons_info.each do |lesson_name, other_attr|
+      lessons << Lesson.find_by_name(lesson_name)
     end
     lessons
+  end
+
+  def lesson_number(lesson)
+    content.lesson_numbers[lesson.name]
   end
 
   def next_lesson(lesson)
@@ -58,8 +56,8 @@ class Course < ActiveRecord::Base
     content.lessons_sum
   end
 
-  def course_lesson(lesson_name)
-    lessons.find { |lesson| lesson.name = lesson_name }
+  def course_lesson(lesson_permalink)
+    lessons.find { |lesson| lesson.permalink == lesson_permalink }
   end
 
   def course_weeks #排序好的
@@ -76,92 +74,43 @@ class Course < ActiveRecord::Base
     content.course_weeks_sum
   end
 
-  def current_version=(new_version)
-    if new_version && @current_version != new_version
-      @current_version = new_version
-      @content = nil
-    end
-  end
-
   def release_day_of_lesson(lesson)
     content.release_day_of_lesson[lesson.name]
   end
 
-  def update_repo
-    puts repo_dir_path
-    if self.repo_cloned?
-      pull_clone
+  def content_version=(version)
+    if version == self.current_version
+      @content_version = nil
     else
-      clone_repo
+      @content_version = version
     end
+    set_first_time_set_version(true)
   end
 
-  def repo_cloned?
-    File.exist?(repo_dir_path)
+  def test_content
+    content
   end
-
-  def repo_dir_path
-    Rails.root + "repo" + self.name
-  end
-
-  def pull_clone
-    git = Git.open(repo_dir_path)
-    git.pull
-  end
-
-  def clone_repo
-    FileUtils::mkdir_p(repo_dir_path)
-    Git.clone(repo_url, repo_dir_path)
-  end
-
 
   private
 
+  #why accessor does not work
+  def set_first_time_set_version(bool)
+    @first_time_set_version = bool
+  end
+
+  def first_time_set_version
+    @first_time_set_version
+  end
+
   def content
-    @content ||= Content.new(self)
-  end
-
-  #def self.update_lessons!(xml_file_path)
-  #end
-=begin
-  def self.update_lessons!(xml_file_path)
-    raise "Error: #{xml_file_path} does not exist" if !File.exist?(xml_file_path)
-    #--get xml content ---
-    f = File.open(xml_file_path)
-    xml_doc = Nokogiri::XML(f)
-    f.close
-
-
-    #--parse xml and update DB--
-    xml_doc.css('course').each do |course_node|
-
-      #get course and lesson
-      course_name = course_node["name"]
-      unless Course.find_by_name(course_name)
-        Course.create!(name: course_name)
+    if first_time_set_version
+      if content_version
+        @content = Content.new(self.name, content_version)
+      else
+        @content = Content.new(self.name, self.current_version)
       end
-
-      course_node.css('week').each do |week_node|
-        week_node.css('lesson').each do |lesson_node|
-          overview_node = lesson_node.css('overview')
-
-          #get all the info needed to update db
-          lesson_name = lesson_node["name"]
-          lesson_title = lesson_node["title"]
-          lesson_overview = overview_node.text
-
-          lesson_info = {
-            name: lesson_name,
-            title: lesson_title,
-            overview: lesson_overview,
-          }
-
-          #create or update record
-          (lesson = Lesson.find_by(name: lesson_name)) ? lesson.update!(lesson_info) : Lesson.create!(lesson_info)
-        end
-      end
+      set_first_time_set_version(false)
     end
+    @content
   end
-=end
 end
-

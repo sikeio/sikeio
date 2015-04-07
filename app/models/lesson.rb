@@ -14,14 +14,16 @@ class Lesson < ActiveRecord::Base
 
   #validates :name, uniqueness: { case_sensitive: false, scope: :course_id,
   #                               message: "should have uniq name per course" }
-  validates :name,  presence: true 
+  validates :name,  presence: true
+  validates_uniqueness_of :name, scope: :course_id
+  validates_uniqueness_of :permalink, scope: :course_id
 
   def content
     @content ||= Content.new
   end
 
-  def lesson_git_path
-    
+  def to_param
+    self.permalink
   end
 
 end

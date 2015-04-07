@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
 
-  before_action :require_login,only:[:show, :start]
+  #before_action :require_login,only:[:show, :start]
 #  before_action :require_course_exists,except:[:list,:create_enroll]
 #  before_action :require_take_part_in,only:[:show]
 
@@ -9,15 +9,16 @@ class CoursesController < ApplicationController
   end
 
   def show
+    session[:user_id] = 1
     @enrollment = course.enrollments.find_by(user: current_user)
     if !@enrollment.activated
       flash[:error] = "您尚未激活该课程"
       redirect_to :root
       return
     end
-    # @course.current_version = @enrollment.version if @enrollment.version
+    @course.content_version = @enrollment.version if @enrollment.version
     @send_day = Date.today.day
-    render '_show'
+    #render '_show'
   end
 
   def pay
@@ -66,7 +67,7 @@ class CoursesController < ApplicationController
   private
 
   def course
-    @course ||= Course.find_by! name:params[:id]
+    @course ||= Course.find_by!(permalink: params[:id])
   end
 
 

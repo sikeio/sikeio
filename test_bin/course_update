@@ -7,7 +7,8 @@ if ARGV.length >= 2
   course_name = ARGV[0]
   url = ARGV[1]
   course = Course.new(name: course_name, repo_url: url)
-  course.update_repo
+  repo_updater = Course::RepoUpdater.new(course)
+  repo_updater.update_repo
 else
   puts "command ERROR:"
   puts "example: course_update course_name git@bitbucket.org:he_YM/test_course_update.git"
