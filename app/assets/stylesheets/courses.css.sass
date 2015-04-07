@@ -34,229 +34,408 @@ $default-font-size: 14px
   max-width: 620px
   margin: auto
 
-.courses-page
-  &.payment
-    font-family: Heiti SC
-    -webkit-font-smoothing: antialiased
-    background: url(activation_bg.jpg)
-    background-size: 100% 100%
+@mixin enroll
+  font-family: "Hiragino Sans GB"
+  font-size: 16px
+  font-weight: 500
+  max-width: 600px
+  padding: 0 20px
+  margin: auto
+  color: #595959
+  header
+    @include clearfix
+    padding: 24px 0
+    img
+      display: block
+      float: left
+      height: 45px
+    .course-name
+      color: #747474
+      float: left
+      margin: 0
+      margin-left: 10px
+      font-size: 20px
+      padding: 5px
+  section
+    h2
+      font-size: 24px
+      font-weight: 500
+      margin-bottom: 0
+    p
+      margin: 30px auto
+    .content
+      background-color: #F8FBFF
+      font-size: 18px
+      padding: 20px
+  .button
+    display: block
+    text-align: center
+    width: 163px
+    background: #E57E23
+    padding: 5px
+    margin: 25px auto
     color: white
-    height: 100%
-    border: 1px solid rgba(160,160,160, 0.2)
-    box-sizing: border-box
-    .wrapper
-      height: 538px
-      width: 250px
+    font-family: "Heiti SC"
+    font-weight: 300
+  footer
+    padding: 50px 0
+    img
+      height: 62px
+      display: block
+      margin: auto
+
+.course-page
+  // something common for all the pages of courses controller
+
+.courses-page.pay
+  @include enroll
+  .text
+    h1
+      line-height: 120%
+      font-weight: 500
+      font-size: 36px
+      width: 180px
+      padding-bottom: 2px
+      border-bottom: solid 2px black
+      margin: 20px auto
+    p
+      text-align: center
+      font-size: 18px
+  .friends
+    input
+      border: solid 1px #979797
+      width: 100%
+      height: 30px
+      margin: 10px 1px 19px
+  .pay
+    .content
+      text-align: center
+
+.courses-page.invite
+  @include enroll
+  .button
+    background-color: #3AB330
+  .text
+    h1
+      line-height: 120%
+      font-weight: 500
+      font-size: 36px
+      width: 108px
+      padding-bottom: 2px
+      border-bottom: solid 2px black
+      margin: 20px auto
+  .github
+    a
+      color: #FF6161
+    a.bind-github
+      color: white
+      &.success
+        background: gray
+
+  .personal-info
+    form
+      .blog-url
+        border: solid 1px #979797
+        width: 100%
+        height: 30px
+        margin: 10px 1px 19px
+      .radio
+        display: inline-block
+        margin-top: 4px
+        input
+          display: none
+        label
+          margin-right: 15px
+          span
+            border: 1px solid #979797
+            display: inline-block
+            width: 16px
+            height: 16px
+            margin-right: 7px
+            vertical-align: middle
+            cursor: pointer
+            border-radius: 100%
+            background-color: white
+        input:checked + label span
+          background-color: #3AB330
+          width: 18px
+          height: 18px
+          border: none
+      button
+        border: none
+
+.courses-page.show
+  line-height: normal
+  font-family: "Times New Roman"
+
+  body
+    margin: 0
+    font-family: Roboto
+    font-size: 17.33px
+    font-weight: 300
+
+  .status-bar
+    font-size: 20px
+    padding: 10px 50px
+    @include clearfix
+    .left
+      .course-title
+        margin-left: 20px
+      float: left
+      *
+        float: left
+    .right
+      .mission-status
+        margin-right: 20px
+      float: right
+      *
+        float: right
+
+  header
+    font-size: 0
+    position: relative
+    @include shadow
+    img
+      width: 100%
+    h1
+      @include font-h1
+      text-decoration: underline
+      z-index: 1
+      color: white
       position: absolute
       top: 0
-      left: 0
       bottom: 0
-      right: 0
       margin: auto
-      h1
-        @include L1
-        margin-top: 0
-        text-align: center
-      .form
+      text-align: center
+      height: 1.5em
+      width: 100%
+      .banner
+        display: inline-block
         position: relative
-        border: 1px solid rgba(160,160,160, 0.2)
-        padding: 29px 0 33px 30px
-        &:after
+        top: -5px
+        font-size: 24px
+        margin-right: 40px
+        &:before
           content: ''
-          position: absolute
-          top: 0
-          left: 0
-          width: 100%
-          height: 100%
-          background: white
-          z-index: -1
-          opacity: 0.2
-        p
-          margin: 0
-          &.number
-            margin: 15px 0 22px 12px
-        img
-          margin-left: 5px
-          margin-top: 20px
-        a
-          @include L1
           display: block
-          color: white
-          text-align: center
-          width: 180px
-          padding: 9px 0
-          background: #E57E23
-          margin-left: 5px
-          margin-bottom: 15px
-        .checkbox
-          input
-            display: none
-          label
-            display: block
-            margin-left: 5px
-            span
-              border: 1px solid #979797
-              opacity: 0.5
-              display: inline-block
-              width: 16px
-              height: 16px
-              margin-right: 7px
-              vertical-align: middle
-              cursor: pointer
-              background-color: white
-          input:checked + label span
-            background-color: #8BFF81
-        label.friend
-          margin-left: 5px
-          margin-right: 20px
-        .name
-          border: 1px solid #979797
-          width: 100px
-          height: 30px
-          font-size: $default-font-size
-          background: rgba(255,255,255,0.5)
-          color: white
-          padding-left: 13px
-          box-sizing: border-box
+          position: absolute
+          background: #FF5252
+          width: 60px
+          height: 60px
+          border-radius: 100%
+          top: -14px
+          left: -23px
+          z-index: -1
 
-  &.show
-    line-height: normal
-    font-family: "Times New Roman"
-
-    body
-      margin: 0
-      font-family: Roboto
-      font-size: 17.33px
-      font-weight: 300
-
-    .status-bar
-      font-size: 20px
-      padding: 10px 50px
-      @include clearfix
-      .left
-        .course-title
-          margin-left: 20px
-        float: left
-        *
-          float: left
-      .right
-        .mission-status
-          margin-right: 20px
-        float: right
-        *
-          float: right
-
-    header
-      font-size: 0
-      position: relative
-      @include shadow
-      img
-        width: 100%
-      h1
-        @include font-h1
-        text-decoration: underline
-        z-index: 1
-        color: white
-        position: absolute
-        top: 0
-        bottom: 0
-        margin: auto
-        text-align: center
-        height: 1.5em
-        width: 100%
-        .banner
-          display: inline-block
-          position: relative
-          top: -5px
-          font-size: 24px
-          margin-right: 40px
-          &:before
-            content: ''
-            display: block
-            position: absolute
-            background: #FF5252
-            width: 60px
-            height: 60px
-            border-radius: 100%
-            top: -14px
-            left: -23px
-            z-index: -1
-
-    .time-remaining
-      padding-top: 15px
-      font-size: 20px
-      text-align: center
+  .time-remaining
+    padding-top: 15px
+    font-size: 20px
+    text-align: center
+    width: 280px
+    margin: auto
+    position: relative
+    &:before
+      display: block
+      content: ''
+      position: absolute
       width: 280px
-      margin: auto
-      position: relative
-      &:before
-        display: block
-        content: ''
-        position: absolute
-        width: 280px
-        height: 280px
-        border-radius: 100%
-        background: #F8FBFF
-        top: -140px
-        z-index: -1
-      .time
-        font-size: 36px
+      height: 280px
+      border-radius: 100%
+      background: #F8FBFF
+      top: -140px
+      z-index: -1
+    .time
+      font-size: 36px
+      margin-top: 0
+
+  .current-mission
+    margin-top: 80px
+    h2
+      @include font-h2
+      @include position-center
+      text-align: center
+      margin: 30px auto
+    p
+      @include position-center
+
+  .course-status
+    text-align: center
+    margin: 20px 0
+    &.uncompleted
+      color: #C6C6C6
+    &.completed
+      color: #11D146
+    i
+      font-size: 8em
+
+  .missions
+    list-style: none
+    padding: 30px 0
+    background: #F8FBFF
+    .week
+      @include position-center
+      color: #454441
+      font-size: 20px
+      margin-top: 80px
+      margin-bottom: 30px
+      &:first-child
         margin-top: 0
 
-    .current-mission
-      margin-top: 80px
-      h2
-        @include font-h2
-        @include position-center
-        text-align: center
-        margin: 30px auto
+    li
+      position: relative
+      background: white
+      line-height: 200%
+      border: solid 1px #CBCCCE
+      padding: 10px 20px
+      box-sizing: border-box
+      @include position-center
+      margin-bottom: 25px
+      &.future
+        color: #BFBFBF
+      &.to-be-done
+        color: #F00
+      &.done
+        i
+          font-size: 1.5em
+          position: absolute
+          left: -50px
+          color: #11D146
+      &:last-child
+        margin-bottom: 0
+
+.courses-page.info
+  @mixin main-font
+    font-size: 20px
+    color: white
+
+  .enroll-panel
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    margin: auto
+    width: 499px
+    height: 400px
+    z-index: 2000
+    &:after
+      display: block
+      content: ''
+      position: fixed
+      left: 0
+      top: 0
+      width: 100%
+      height: 100%
+      background: rgba(0,0,0,0.6)
+      z-index: -1
+    .top
+      img
+        float: left
+        position: absolute
+        top: 40px
+      .say
+        position:relative
+        background: #FFF4D8
+        border-radius: 20px
+        padding: 16px
+        margin-bottom: 27px
+        margin-left: 125px
+        &:before
+          position: absolute
+          left: 103px
+          top: 75px
+          content: ''
+          display: block
+          width: 0
+          height: 0
+          border-right: 22px solid #FFF4D8
+          border-top: 11px solid transparent
+          border-bottom: 11px solid transparent
+        p
+          @include main-font
+          margin: 0
+          color: #686868
+          &.top
+            margin-bottom: 15px
+    form
+      label
+        @include main-font
+        margin-right: 60px
+      input
+        @include main-font
+        color: black
+        width: 371px
+        height: 50px
+        border: 1px solid #E2E2E2
+        line-height: 150%
+        padding: 0 15px
+        &.name
+          margin-bottom: 18px
+      button
+        @include main-font
+        width: 153px
+        height: 49px
+        background: #24C970
+        border: none
+        margin-top: 23px
+        margin-left: 102px
+        border-radius: 5px
+
+  .success-panel
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    margin: auto
+    width: 450px
+    height: 400px
+    z-index: 2000
+    text-align: center
+    &:after
+      display: block
+      content: ''
+      position: fixed
+      left: 0
+      top: 0
+      width: 100%
+      height: 100%
+      background: rgba(0,0,0,0.6)
+      z-index: -1
+    .author
+      float: left
+    .say
+      position: relative
+      background: #FFF4D8
+      border-radius: 20px
+      padding: 16px
+      margin-bottom: 27px
+      margin-left: 125px
+      text-align: left
+      &:before
+        position: absolute
+        left: -22px
+        top: 35px
+        content: ''
+        display: block
+        width: 0
+        height: 0
+        border-right: 22px solid #FFF4D8
+        border-top: 11px solid transparent
+        border-bottom: 11px solid transparent
       p
-        @include position-center
+        @include main-font
+        color: #686868
+        margin: 0
+    p
+      @include main-font
 
-    .course-status
-      text-align: center
-      margin: 20px 0
-      &.uncompleted
-        color: #C6C6C6
-      &.completed
-        color: #11D146
-      i
-        font-size: 8em
 
-    .missions
-      list-style: none
-      padding: 30px 0
-      background: #F8FBFF
-      .week
-        @include position-center
-        color: #454441
-        font-size: 20px
-        margin-top: 80px
-        margin-bottom: 30px
-        &:first-child
-          margin-top: 0
 
-      li
-        position: relative
-        background: white
-        line-height: 200%
-        border: solid 1px #CBCCCE
-        padding: 10px 20px
-        box-sizing: border-box
-        @include position-center
-        margin-bottom: 25px
-        &.future
-          color: #BFBFBF
-        &.to-be-done
-          color: #F00
-        &.done
-          i
-            font-size: 1.5em
-            position: absolute
-            left: -50px
-            color: #11D146
-        &:last-child
-          margin-bottom: 0
+
+
+
+
 
 
 

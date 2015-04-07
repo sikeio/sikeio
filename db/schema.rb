@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150402122417) do
+ActiveRecord::Schema.define(version: 20150404010523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,19 +42,28 @@ ActiveRecord::Schema.define(version: 20150402122417) do
   create_table "courses", force: :cascade do |t|
     t.string   "name"
     t.string   "desc"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.string   "repo_url"
+    t.string   "current_version"
   end
+
+  add_index "courses", ["name"], name: "index_courses_on_name", unique: true, using: :btree
 
   create_table "enrollments", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "course_id"
     t.string   "version"
-    t.datetime "start_time",  default: '2015-03-18 14:02:24', null: false
-    t.datetime "enroll_time", default: '2015-03-18 14:02:24', null: false
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
+    t.datetime "start_time",                default: '2015-04-03 09:56:30', null: false
+    t.datetime "enroll_time",               default: '2015-04-03 09:56:30', null: false
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
+    t.string   "token"
+    t.json     "personal_info"
+    t.boolean  "activated",                 default: false
+    t.boolean  "has_sent_invitation_email", default: false
+    t.boolean  "paid",                      default: false
+    t.string   "buddy_name"
   end
 
   add_index "enrollments", ["course_id"], name: "index_enrollments_on_course_id", using: :btree
@@ -69,6 +78,7 @@ ActiveRecord::Schema.define(version: 20150402122417) do
     t.integer  "course_id"
   end
 
+  add_index "lessons", ["course_id", "name"], name: "index_lessons_on_course_id_and_name", unique: true, using: :btree
   add_index "lessons", ["course_id"], name: "index_lessons_on_course_id", using: :btree
 
   create_table "subscribers", force: :cascade do |t|

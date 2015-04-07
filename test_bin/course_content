@@ -5,9 +5,9 @@ require '../config/environment.rb'
 
 course_name = ARGV[0]
 
-course = Course.new(name: course_name)
-
-content = Course::Content.new(course)
+course = Course.new(name: course_name, current_version: "v1")
+content = course.test_content
+#content = Course::Content.new(course_name, "v1")
 
 result = {
             "lessons_info" => content.lessons_info,
@@ -15,7 +15,9 @@ result = {
             "lessons_sum" => content.lessons_sum,
             "course_weeks" => content.course_weeks,
             "course_week_titles" => content.course_week_titles,
-            "course_weeks_sum" => content.course_weeks_sum
+            "course_weeks_sum" => content.course_weeks_sum,
+            "course_info" => content.course_info,
+            "lesson_numbers" => content.lesson_numbers
           }
 if ARGV[1] == "course_weeks"
   array = result[ARGV[1]]

@@ -1,3 +1,4 @@
+###
 $ ->
   page_identifier = 'courses-page'
   $ = jQuery.getLocal(page_identifier)
@@ -17,4 +18,4 @@ $ ->
   $('i.fa.fa-check-circle').mouseleave (e)->
     $(this).css("color", "" )
     $(this).css("cursor", "")
-
+###

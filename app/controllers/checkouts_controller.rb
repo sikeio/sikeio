@@ -3,9 +3,9 @@ class CheckoutsController < ApplicationController
   before_action :require_login
 
   def new
-    course = Course.find_by_name(params[:course_name])
+    course = Course.find_by_permalink(params[:course_permalink])
     enrollment = course.enrollments.find_by(user_id: session[:user_id])
-    lesson = course.course_lesson(params[:lesson_name])
+    lesson = course.course_lesson(params[:lesson_permalink])
 
     check_out_info = checkout_params
     check_out_info[:enrollment_id] = enrollment.id
@@ -13,7 +13,7 @@ class CheckoutsController < ApplicationController
     check = Checkout.new(check_out_info)
     result = {}
     if check.save
-      render js: "window.location='#{course_path(enrollment.course_id)}'"
+      render js: "window.location='#{course_path(enrollment.course)}'"
     else
       result[:success] = false
       result[:message] = check.errors.full_messages
@@ -25,7 +25,7 @@ class CheckoutsController < ApplicationController
     checkout = Checkout.find(params[:id])
     begin
       checkout.update!(checkout_params)
-      render js: "window.location='#{course_path(checkout.enrollment.course_id)}'"
+      render js: "window.location='#{course_path(checkout.enrollment.course)}'"
     rescue
       result[:success] = false
       result[:message] = check.errors.full_messages

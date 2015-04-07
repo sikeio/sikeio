@@ -1,11 +1,39 @@
+# == Schema Information
+#
+# Table name: enrollments
+#
+#  id                        :integer          not null, primary key
+#  user_id                   :integer
+#  course_id                 :integer
+#  version                   :string
+#  start_time                :datetime         default(Fri, 03 Apr 2015 17:56:30 CST +08:00), not null
+#  enroll_time               :datetime         default(Fri, 03 Apr 2015 17:56:30 CST +08:00), not null
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  token                     :string
+#  personal_info             :json
+#  activated                 :boolean          default(FALSE)
+#  has_sent_invitation_email :boolean          default(FALSE)
+#  paid                      :boolean          default(FALSE)
+#  buddy_name                :string
+#
+
 class Enrollment < ActiveRecord::Base
   belongs_to :user
   belongs_to :course
 
-  has_many :checkouts
-
   validates :user_id, presence: true
   validates :course_id, presence: true, uniqueness: {scope: :user_id}
+  before_create :fill_in_token, :fill_in_time
+  has_many :checkouts, dependent: :destroy
+
+  def to_param
+    self.token
+  end
+
+  def has_personal_info?
+    !self.personal_info.nil?
+  end
 
   def next_uncompleted_lesson
     #得到尚未完成的第一个课程
@@ -29,7 +57,7 @@ class Enrollment < ActiveRecord::Base
 
   def course
     target_course = Course.find(self.course_id)
-    target_course.current_version = self.version if self.version
+    target_course.user_course_version = self.version if self.version
     target_course
   end
 
@@ -71,5 +99,20 @@ class Enrollment < ActiveRecord::Base
     course_start_time = self.start_time.beginning_of_day.to_date
     (today - course_start_time).to_i + 1
   end
+
+  def fill_in_token
+    self.token = SecureRandom.urlsafe_base64
+  end
+
+  def fill_in_time
+    self.enroll_time = Time.now
+    self.start_time = course_start_time
+  end
+
+  def course_start_time
+    date = Time.now().to_date + (7 - Time.now().to_date.cwday) + 1
+    date.to_time
+  end
+
 
 end
