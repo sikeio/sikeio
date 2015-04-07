@@ -9,14 +9,12 @@ class CoursesController < ApplicationController
   end
 
   def show
-    session[:user_id] = 1
     @enrollment = course.enrollments.find_by(user: current_user)
     if !@enrollment.activated
       flash[:error] = "您尚未激活该课程"
       redirect_to :root
       return
     end
-    @course.content_version = @enrollment.version if @enrollment.version
     @send_day = Date.today.day
     #render '_show'
   end

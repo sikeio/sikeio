@@ -5,13 +5,12 @@ class LessonsController < ApplicationController
   def show
     course = Course.find_by_permalink(params[:course_permalink])
     @enrollment = course.enrollments.find_by(user_id: session[:user_id])
-    course_version = @enrollment.version if @enrollment.version
-    @lesson = course.course_lesson(params[:lesson_permalink])
+    schedule = @enrollment.schedule
+    @lesson = schedule.course_lesson(params[:lesson_permalink])
     if Checkout.check_out?(@enrollment, @lesson)
       @checkout = @enrollment.checkouts.find_by(lesson_name: @lesson.name)
     end
-    content = Lesson::Content.new(course.name, course_version, @lesson.name)
+    content = Lesson::Content.new(course.name, @enrollment.version, @lesson.name)
     @lesson_html = content.html_page
   end
-
 end

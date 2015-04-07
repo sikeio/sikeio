@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+
+ENV['RAILS_ENV'] = "development"
+require '../config/environment.rb'
+
+course_name = ARGV[0]
+version = ARGV[1]
+
+lesson_name = ARGV[2]
+
+
+
+course = Course.find_by_name(course_name)
+lesson = course.lessons.find_by_name(lesson_name)
+schedule = course.schedule(version)
+
+result = {
+            "lessons" => schedule.lessons,
+            "lesson_number" => schedule.lesson_number(lesson),
+            "next_lesson" => schedule.next_lesson(lesson),
+            "pre_lesson" => schedule.pre_lesson(lesson),
+            "lessons_sum" => schedule.lessons_sum,
+            "course_lesson" => schedule.course_lesson(lesson.permalink),
+            "course_weeks" => schedule.course_weeks,
+            "course_week_titles" => schedule.course_week_titles,
+            "course_weeks_sum" => schedule.course_weeks_sum,
+            "release_day_of_lesson" => schedule.release_day_of_lesson(lesson)
+         }
+puts "Lesson Info: "
+puts "Name: " + lesson.name
+puts "Title: " + lesson.title if lesson.title
+puts "Overview: " + lesson.overview if lesson.overview
+puts "Permalink: " + lesson.permalink if lesson.permalink
+puts
+
+puts result[ARGV[3]].to_s
+
+
+
