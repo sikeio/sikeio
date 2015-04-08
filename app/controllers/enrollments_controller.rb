@@ -35,7 +35,7 @@ class EnrollmentsController < ApplicationController
         redirect_to invite_enrollment_path(@enrollment)
         return
       end
-      @enrollment.update_attribute :personal_info, personal_info
+      @enrollment.update_attribute :personal_info, params.require(:personal_info).permit(:blog_url, :type)
       @course = @enrollment.course
     end
 
@@ -63,16 +63,6 @@ class EnrollmentsController < ApplicationController
       raise InvalidEnrollmentTokenError
     else
       @enrollment
-    end
-  end
-
-  def personal_info
-    keys = [:blog_url, :type]
-    if params[:personal_info] &&
-        keys.all? { |k| params[:personal_info].key? k }
-      params[:personal_info].slice *keys
-    else
-      raise InvalidPersonalInfoError
     end
   end
 
