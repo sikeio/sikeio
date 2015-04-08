@@ -5,8 +5,7 @@ require '../config/environment.rb'
 
 course_name = ARGV[0]
 
-course = Course.new(name: course_name, current_version: "v1")
-content = course.test_content
+content = Course::Content.new(course_name, "v1")
 #content = Course::Content.new(course_name, "v1")
 
 result = {

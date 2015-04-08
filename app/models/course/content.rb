@@ -82,7 +82,7 @@ class Course::Content
   #[week1_title, week2_title]
   def course_week_titles
     return @course_week_titles if @course_week_titles
-    @course_week_titles = xml_doc.css("week").map { |week_node| week_node["title"] }
+    @course_week_titles = xml_doc.css("week h2").map { |week_h2_node| week_h2_node.text }
   end
 
   def course_weeks_sum

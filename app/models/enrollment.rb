@@ -37,7 +37,7 @@ class Enrollment < ActiveRecord::Base
 
   def next_uncompleted_lesson
     #得到尚未完成的第一个课程
-    result = course.lessons.find do |lesson|
+    result = schedule.lessons.find do |lesson|
       !(Checkout.check_out?(self, lesson))
     end
   end
@@ -46,19 +46,23 @@ class Enrollment < ActiveRecord::Base
     return nil if all_completed? || (!any_released?)
     lesson = next_uncompleted_lesson
     return lesson if is_released?(lesson)
-    lesson = course.pre_lesson(lesson) while !(is_completed?(lesson))
+    lesson = schedule.pre_lesson(lesson) while !(is_completed?(lesson))
     lesson
   end
 
   def is_next_uncompleted_lesson?(lesson)
-
     lesson == next_uncompleted_lesson
   end
 
-  def course
-    target_course = Course.find(self.course_id)
-    target_course.user_course_version = self.version if self.version
-    target_course
+  def schedule
+    if !@schedule
+      if self.version
+        @schedule = self.course.schedule(self.version)
+      else
+        @schedule = self.course.schedule
+      end
+    end
+    @schedule
   end
 
   def completed_lessons_num
@@ -66,25 +70,25 @@ class Enrollment < ActiveRecord::Base
   end
 
   def all_completed?
-    course.lessons.all? do |lesson|
+    schedule.lessons.all? do |lesson|
       Checkout.check_out?(self, lesson)
     end
   end
 
   def uncompleted_lesson_day_left
-    lesson = course.next_lesson(self.next_uncompleted_lesson)
-    next_lesson_start_day = course.release_day_of_lesson(lesson)
+    lesson = schedule.next_lesson(self.next_uncompleted_lesson)
+    next_lesson_start_day = schedule.release_day_of_lesson(lesson)
 
     next_lesson_start_day - day_from_start_time
   end
 
   def is_released?(lesson)
-    day = self.course.release_day_of_lesson(lesson)
+    day = schedule.release_day_of_lesson(lesson)
     day_from_start_time >= day
   end
 
   def any_released?
-    first_lesson = self.course.lessons.first
+    first_lesson = schedule.lessons.first
     self.is_released? first_lesson
   end
 
@@ -113,6 +117,4 @@ class Enrollment < ActiveRecord::Base
     date = Time.now().to_date + (7 - Time.now().to_date.cwday) + 1
     date.to_time
   end
-
-
 end

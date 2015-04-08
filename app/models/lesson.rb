@@ -17,6 +17,7 @@ class Lesson < ActiveRecord::Base
   validates :name,  presence: true
   validates_uniqueness_of :name, scope: :course_id
   validates_uniqueness_of :permalink, scope: :course_id
+  belongs_to :course
 
   def content
     @content ||= Content.new
