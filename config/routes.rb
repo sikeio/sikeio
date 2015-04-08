@@ -58,8 +58,9 @@ Rails.application.routes.draw do
     end
 
     resources :enrollments,only:[:index] do
-      collection do
-        post 'send_invitation_email' => 'enrollments#send_invitation_email'
+      member do
+        post 'send_invitation_email'
+        post 'set_payment_status'
       end
     end
 
