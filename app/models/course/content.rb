@@ -61,6 +61,7 @@ class Course::Content
       week_num += 1
     end
     @release_day_of_lesson
+
   end
 
   def lessons_sum
