@@ -29,6 +29,6 @@ class Course < ActiveRecord::Base
   end
 
   def schedule(version = self.current_version)
-    Schedule.new(self, version)
+    Course::Schedule.new(self, version)
   end
 end
