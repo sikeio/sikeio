@@ -63,7 +63,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :courses
+    resources :courses do
+      member do
+        post 'clone_and_update' => 'courses#clone_and_update'
+      end
+    end
 
     get '/' => "dashboard#index",as: :dashboard
 
