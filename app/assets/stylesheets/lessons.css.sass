@@ -1,40 +1,30 @@
 $content-width: 80%
 $content-max-width: 700px
-$code-max-width: 960px
+$body-fontsize: 18px
 
-@mixin h1
-  font-size: 40px
-  font-weight: 400
+$h1-margin-top: 65px
+$h1-margin-bottom: 30px
 
-@mixin h2
-  font-size: 36px
-  font-weight: 300
+$p-margin: 25px
+$p-lineheight: 150%
 
-@mixin h3
-  font-size: 18px
-  font-weight: 300
+$ul-margin: 20px
+$code-lineheight: 150%
 
-@mixin exercise-h2
-  font-size: 20px
-  font-weight: 300
-
-@mixin exercise-indicator
-  font-size: 20px
-  font-weight: 400
+$exercise-p-margin: 30px
+$exercise-code-padding: 20px 0 20px 20px
 
 @mixin position-center
   width: $content-width
   max-width: $content-max-width
   margin: auto
-
 @mixin show-number
   counter-increment: list
   content: counter(list)
   display: block
   position: absolute
   font-weight: 400
-
-@mixin shadow
+@mixin image-mask
   &:after
     content: ''
     display: block
@@ -44,224 +34,301 @@ $code-max-width: 960px
     width: 100%
     height: 100%
     background: rgba(0,0,0,0.2)
+body
+  margin: 0
+  font-family: "Roboto"
+  font-weight: 300
+  font-size: $body-fontsize
+  color: #373737
+  overflow: auto
+  overflow-x: hidden
+header
+  @include image-mask
+  font-size: 0
+  position: relative
+  margin-bottom: 80px
+  img
+    width: 100%
+  h1
+    font-size: 40px
+    font-weight: 400
+    text-decoration: underline
+    z-index: 1
+    color: white
+    position: absolute
+    top: 0
+    bottom: 0
+    margin: auto
+    text-align: center
+    height: 45px
+    width: 100%
+    max-width: none
+p,h1,ul
+  @include position-center
+h1
+  font-size: 36px
+  font-weight: 300
+  margin-top: $h1-margin-top
+  margin-bottom: $h1-margin-bottom
+  font-family: 'Heiti SC'
+  color: #454441
+ul
+  padding-left: 0
+  margin: $ul-margin auto
+p
+  margin: $p-margin auto
+  line-height: $p-lineheight
+img,video
+  max-width: 100%
+  display: block
+  margin: auto
+code
+  font-family: menlo
+  font-size: 16px
+pre
+  background: rgba(204,204,204,0.1)
+  code
+    padding: 20px 0
+    line-height: $code-lineheight
+    display: block
+    overflow: auto
+    @include position-center
 
 
-.lessons-page
-  &.show
-    body
-      margin: 0
-      font-family: Roboto
-      font-weight: 300
-      font-size: 18px
-      overflow: auto
-      overflow-x: hidden
-
+.exercise
+  background: #F8FBFF
+  padding-top: 40px
+  pre
+    @include position-center
+    background: white
     code
-      font-family: menlo
-      font-size: 16px
-    img
-      max-width: 100%
+      line-height: $code-lineheight
+      width: 100%
+      padding: $exercise-code-padding
+      display: block
+  h1
+    font-family: 'Roboto'
+    font-size: 20px
+    font-weight: 300
+    margin-top: 0
+    color: #454441
+    margin-bottom: 50px
+    position: relative
+    .indicator
+      font-size: 20px
+      font-weight: 400
+      position: absolute
+      left: -20%
+      top: 0
+  p
+    margin: $exercise-p-margin auto
 
-    header
-      font-size: 0
-      position: relative
-      @include shadow
-
-      img
-        width: 100%
-      h1
-        @include h1
-        text-decoration: underline
-        z-index: 1
-        color: white
-        position: absolute
-        top: 0
-        bottom: 0
-        margin: auto
-        text-align: center
-        height: 1em
-        width: 100%
-
-    .normal
-      margin: auto
-      margin-top: 50px
-      p,h2,ul
-        @include position-center
-      p
-        margin: 30px auto
-      h2
-        @include h2
-        margin: 30px auto
-        color: #616161
-      ul
-        padding-left: 0
-      img
-        display: block
-        margin: auto
-      pre
-        padding: 20px 0
-        code
-          display: block
-          @include position-center
-        background: rgba(204,204,204,0.1)
-
-
-    .uncompleted
-      padding: 30px 0
-      text-align: center
-      i
-        display: block
-        font-size: 5em
-        color: #C6C6C6
-
-    .completed
-      padding: 30px 0
-      text-align: center
-      i
-        display: block
-        font-size: 5em
-        color: #11D146
-    .tip
-      background: white
-      p
-        @include position-center
-        padding: 30px 0
-        font-family: 'Open Sans'
-        font-weight: 400
-    .goal
-      margin: 100px auto
-      margin-bottom: 30px
-      font-size: 2em
-      color: #616161
-      text-align: center
-      strong
-        color: #FF5252
-    .exercise
-      background: #F8FBFF
-      padding-top: 40px
-      h2,p
-        @include position-center
-      h2
-        @include exercise-h2
-        margin-top: 0
-        margin-bottom: 50px
+  .steps
+    counter-reset: list
+    list-style: none
+    padding: 0
+    .step
+      > p
         position: relative
-        .indicator
-          @include exercise-indicator
-          position: absolute
-          left: -20%
+        &:before
+          @include show-number
+          left: -30px
           top: 0
-
-      pre
-        overflow: auto
-
-      .steps
-        counter-reset: list
-        list-style: none
-        padding: 0
-        .step
-          .content
+      p,pre
+        width: 100%
+      img
+        position: relative
+        z-index: 100
+        display: block
+        margin: auto
+      .screenshot
+        margin-top: 50px
+        h2
+          font-size: 18px
+          font-style: italic
+          font-weight: 500
+          margin-top: 60px
+          margin-bottom: 40px
+          text-align: center
+        ol
+          position: relative
+          padding-top: 30px
+          padding-bottom: 30px
+          &:before
+            content: ''
+            display: block
+            width: 100%
+            height: calc(100% + 150px)
+            position: absolute
+            left: 0
+            bottom: 0
+            background: white
+            border-top: #E5F0FF solid 1px
+            border-bottom: #E5F0FF solid 1px
+          li
+            line-height: 200%
             @include position-center
             position: relative
-            &.top-space
-              &:first-child
-                &:before
-                  top: 30px
-              h3
-                padding: 30px 0
+            z-index: 1
 
-            &:first-child
-              &:before
-                @include show-number
-                left: -40px
-            &:after
-              content: ''
-              display: block
-              position: absolute
-              left: -20px
-              top: 0
-              background: #CBCCCE
-              width: 3px
-              height: 100%
-              z-index: 10
-
-          h3
-            margin: 0
-            @include h3
-          pre
-            padding: 20px 15px
-            line-height: 150%
-            background: white
-
-          img
-            position: relative
-            z-index: 100
-            display: block
-            margin: auto
-
-
-          .guide
-            position: relative
-            z-index: 50
-            h4,ol
-              @include position-center
-
-            h4
-              text-align: center
-              position: relative
-              font-style: italic
-              padding: 30px 0
-
-            ol
-              padding: 0
-              list-style: none
-              counter-reset: list
-              position: relative
-              padding-bottom: 40px
-              li
-                padding-left: 20px
-                line-height: 200%
-                &:before
-                  left: -3%
-                  @include show-number
-
-
-
-    .next
-      text-align: center
-      margin: 0
+  .goal
+    text-align: center
+    font-size: 36px
+    margin-top: 80px
+    i
+      color: #616161
+      &:before
+        margin-right: 15px
+    span
+      color: #FF5252
+  .completed
+    padding: 60px 0
+    text-align: center
+    i
+      display: block
+      font-size: 5em
+      color: #11D146
+  .conclusion
+    background: white
+    p
+      @include position-center
       padding: 30px 0
-      i
-        font-size: 3em
-        color: #8E8E8E
+      font-family: 'Open Sans'
+      font-weight: 400
+
+// it's the point where we should hide the indicator
+@media only screen  and (max-width : 1000px)
+  .indicator
+    display: none
+@media only screen  and (max-width : 800px)
+  .screenshot > h2
+    margin-left: 10px !important
+    margin-right: 10px !important
+  .step > p
+    margin-left: 50px !important
+    margin-right: 10px !important
+@media only screen  and (max-width : 480px)
+  header
+    h1
+      font-size: 25px
+@media only screen  and (max-width : 280px)
+  header
+    h1
+      font-size: 20px
+// ****HTML****
+//
+// <header>
+//   <h1>The Finger Painting App</h1>
+//   <img src="header.png">
+// </header>
+
+// <h1>Start the Project</h1>
+// <p>Create a "Single View Application" called FingerPaint</p>
+// <ul>
+//   <li>Disable launch screen.</li>
+//   <li>Disable auto layout & size classes.</li>
+// </ul>
+
+// <h1>Adding the Test Suite to the Project</h1>
+// <p>The test suite is in a separate git repo from your project's own repo. This way we can checkout different versions of the test suite for each step without affecting the history of your own app.</p>
 
 
-    // it's the point where we should hide the indicator
-    @media only screen  and (max-width : 1000px)
-      .indicator
-        display: none
+// <div class="exercise">
+//   <h1>
+//     Add the test suite to the project
+//     <div class="indicator">
+//       <i class="fa fa-wrench"></i>
+//       Exercise
+//     </div>
+//   </h1>
 
-    // for mobile 480px
-    @media only screen  and (max-width : 480px)
-      header
-        h1
-          font-size: 25px
-      .exercise
-        .steps
-          .step
-            .content
-              width: 60%
+//   <ol class='steps'>
+//     <li class='step'>
+//         <p>Clone the test repo by running the following command from the project root.</p>
+//         <pre><code>git clone https://github.com/hayeah/ios-Finlsdf...
+// </code></pre>
+//     </li>
 
-      code
-        overflow: auto
+//     <li class='step'>
+//         <p>Create the <code>.gitignore</code> file,and add <code>FingerPaintTests/spec</code> to it</p>
+//         <pre><code># .gitignore
+// FingerPaintTests/spec
+// </code></pre>
+//     </li>
 
-      .guide
-        &:before
-          top: -50px !important
-          padding-top: 50px !important
+//     <li class='step'>
+//         <p>Once the test repo is cloned,we need to add the test's files to xcode</p>
+//         <pre><code># .gitignore
+// FingerPaintTests/spec
+// </code></pre>
 
-    // for mobile 280px
-    @media only screen  and (max-width : 280px)
-      header
-        h1
-          font-size: 20px
+//       <div class='screenshot'>
+//         <h2>Add the test's file to Xcode</h2>
+//         <img src="e1.png">
+//         <ol>
+//           <li>right-click on FingerPaint</li>
+//           <li>Select Add Files</li>
+//         </ol>
+//       </div>
+
+//       <div class="screenshot">
+//         <h2>Add the test suite directory to the test target as a group</h2>
+//         <img src="e2.png">
+//         <ol>
+//           <li>Select the folder we just cloned.</li>
+//           <li>Select "Create groups"</li>
+//           <li>Add to the FingerPaintTests target.</li>
+//         </ol>
+//       </div>
+
+//       <div class="screenshot">
+//         <h2>Finally,you should see FingerPaintTests/spec/SpecTests.swift show up in Xcode</h2>
+//         <img src="e3.png">
+//       </div>
+
+//     </li>
+
+
+//     <li class='step'>
+//       <p>Run the test now(cmd-u),and the test suite should pass(because it doesn't test anything yet!)</p>
+
+//       <div class="screenshot">
+//         <h2>Passing Tests</h2>
+//         <img src="e4.png">
+//       </div>
+
+//     </li>
+//   </ol>
+
+//   <div class="goal">
+//     <i class="fa fa-flag">Pass</i>
+//     <span>testPathDrawing</span>
+//   </div>
+
+//   <div class="completed">
+//     <i class="fa fa-check-circle"></i>
+//     Completed!
+//   </div>
+
+// </div>
+
+// <p>The yellow folders you see in Xcode are "groups". They are basically Xcode's own directory structure, which can be different from the file system's directory structure if you want to organize your source files differently.</p>
+
+// <h1>Drawing by Touches</h1>
+
+// <img src="1.png">
+
+// <p>We'll now implement interactive drawing by responding to touches.</p>
+
+// <p>To get the CanvasView to respond to touches, we can override the touchesBegan method:</p>
+// <pre><code>override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!){
+// let t = touches.anyObject() as UITouch
+// let point = t.locationInView(self)
+// println("touch: \(point)")
+// }
+// </code></pre>
+
+// <p>Touch the screen, and you'd see where the touch occured:</p>
+
+// <img src="2.png">
+
