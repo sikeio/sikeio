@@ -8,7 +8,7 @@ class Lesson::Content
     @lesson_name = lesson_name
   end
 
-  def html
+  def html_page
     html_content = ""
     xml = xml_content
     puts xml
@@ -23,101 +23,95 @@ class Lesson::Content
   end
 
   def exercise_html(exercise_node)
-    content = ""
+    ol_content = ""
     first_step = true
     ol_tag_end = false
-    exercise_node.children.each do |node|
-      if node.name != "exercise-step"
-        content << node.to_xhtml
-      else
-        if first_step
-          out = <<-THERE
-          <ol class="steps">
-          THERE
-          content << out
-          first_step = false
-        end
-        content << exercise_step_html(node)
-        if node.next_sibling == nil || node.next_sibling.name != "exercise-step"
-          if !ol_tag_end
-            content << "</ol>"
-            ol_tag_end = true
-          end
-        end
-      end
+    exercise_node.css("exercise-step").each do |node|
+      ol_content << exercise_step_html(node)
     end
     output =  <<-THERE
     <div class="exercise">
-    #{content}
+      #{exercise_title(exercise_node)}
+      <ol class='steps'>
+        #{ol_content}
+      </ol>
+      <div class="goal">
+        <i class="fa falflag">Pass</i>
+        <span>testPathDrawing</span>
+      </div>
+
+      <div class="completed">
+        <i class="fa fa-check-circle"></i>
+        Completed!
+      </div>
     </div>
     THERE
   end
 
   def exercise_step_html(exercise_step_node)
-    content = ""
-    new_content_div = true
-    more_than_one_screenshot = false
+    li_content = ""
+
     exercise_step_node.children.each do |node|
       if node.name != "screenshot"
-        if new_content_div
-          out = <<-THERE
-           <div class="content">
-          THERE
-          content << out
-          new_content_div = false
+        if node.type == Nokogiri::XML::Node::TEXT_NODE && node.text.strip != ""
+          li_content << "<p>#{node.text}</p>"
+        elsif node.name == "code"
+          li_content << "<pre>#{node.to_xhtml}</pre>"
+        else
+          li_content << node.to_xhtml
         end
-        content << node.to_xhtml
       else
-        if new_content_div
-          out = <<-THERE
-            <div class="content">
-          THERE
-          content << out
-        end
-        content << screenshot_html(node, more_than_one_screenshot)
-        more_than_one_screenshot = true
-        content << "</div>"
-        new_content_div = true
-      end
-      if node.next_sibling == nil && !new_content_div
-        content << "</div>"
+        li_content << screenshot_html(node)
       end
     end
 
     output = <<-THERE
-    <li class="steps">
-    #{content}
-    </li>
+      <li class="step">
+        #{li_content}
+      </li>
     THERE
   end
 
-  def screenshot_html(screenshot_node, next_tag)
-    content = ""
-    screenshot_node.children.each do |node|
-      content << node.to_xhtml
-    end
-
-    if next_tag
-      next_p = next_arrow
-    else
-      next_p = ""
+  def screenshot_html(screen_node)
+    other_content = ""
+    first = true
+    screen_node.children.each do |node|
+      if !first
+        other_content << node.to_xhtml
+      else
+        first = false
+      end
     end
 
     output = <<-THERE
-    <div class="guide">
-    #{next_p}
-    #{content}
-    </div>
+      <div class="screenshot">
+        #{screen_head(screen_node)}
+        #{other_content}
+      </div>
     THERE
   end
 
-  def next_arrow
+  def screen_head(node)
+    src = "/" + course_name + "/" + lesson_name + "/" + node["src"]
     output = <<-THERE
-        <p class='next'>
-          <i class="fa fa-angle-double-down"></i>
-        </p>
+      #{node.child.to_xhtml}
+      <img src=#{src}>
     THERE
   end
+
+  def exercise_title(exercise_node)
+    h1_text = exercise_node.css("h1")[0].text
+    output = <<-THERE
+    <h1>
+      #{h1_text}
+      <div class="indicator">
+        <i class="fa fa-wrench"></i>
+        Exercise
+      </div>
+    </h1>
+    THERE
+  end
+
 
   def xml_content
     git = Git.open(Course::Utils::XML_REPO_DIR + course_name)
