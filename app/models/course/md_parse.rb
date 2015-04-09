@@ -3,10 +3,11 @@ class Course::MdParse
   WEEK_HEADER = "h2"
   COURSE_TITLE_HEADER = "h1"
 
-  attr_reader :lesson_names, :course_name, :course_base_dir
+  attr_reader :lesson_names, :course_name, :course_base_dir, :version
 
-  def initialize(repo_dir)
+  def initialize(repo_dir, version)
     raise "repo does not exist" if !File.exist?(repo_dir)
+    @version = version
     @course_base_dir = repo_dir #Pathname
     @lesson_names = course_index_dom.css("lesson").map { |node| node["name"] }
     @course_name = course_index_dom.css("h1")[0].text
@@ -123,6 +124,10 @@ class Course::MdParse
   def compile_md(file)
     str = %x{ marked -i #{file} }
     Nokogiri::HTML(str).css("body")[0]
+  end
+
+  def git_read
+    git = Git.open(dir)
   end
 
 
