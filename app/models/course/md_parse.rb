@@ -3,18 +3,28 @@ class Course::MdParse
   WEEK_HEADER = "h2"
   COURSE_TITLE_HEADER = "h1"
 
-  attr_reader :lesson_names, :course_name, :course_base_dir, :version
+  attr_reader :course_base_dir, :version, :sha, :temp_dir
 
-  def initialize(repo_dir, version)
+  def initialize(repo_dir, version = "master")
     raise "repo does not exist" if !File.exist?(repo_dir)
     @version = version
     @course_base_dir = repo_dir #Pathname
-    @lesson_names = course_index_dom.css("lesson").map { |node| node["name"] }
-    @course_name = course_index_dom.css("h1")[0].text
+    @temp_dir = Course::Utils::TEMP_DIR
+    @sha = SecureRandom.hex
+    save_file_in_temp
+  end
+
+  def course_name
+    @course_name ||= course_index_dom.css("h1")[0].text
+  end
+
+  def lesson_names
+    @lesson_names ||= course_index_dom.css("lesson").map { |node| node["name"] }
   end
 
   def course_index_dom
-    course_index_file_path = course_base_dir + "index.xmd"
+    index_file = sha + "index.xmd"
+    course_index_file_path = temp_dir + index_file
     compile(course_index_file_path)
   end
 
@@ -25,6 +35,18 @@ class Course::MdParse
       #{pages_xml}
     </course>
     THERE
+    clear_temp_dir
+    course
+  end
+
+  def clear_temp_dir
+    Dir.chdir(temp_dir) do
+      list = Dir.glob("#{sha}*")
+      puts sha
+      puts list
+      FileUtils.rm_rf(list)
+    end
+
   end
 
   def index_xml
@@ -81,10 +103,13 @@ class Course::MdParse
 
   def lesson_dom(lesson_name)
     dom = nil
-    file_path = course_base_dir + lesson_name + "index.md"
+    file = sha + "index.md"
+    lesson_dir = sha + lesson_name
+    file_path = temp_dir + lesson_dir + file
     if File.exists?(file_path)
     else
-      file_path = course_base_dir + lesson_name + "index.xmd"
+      file = sha + "index.xmd"
+      file_path = temp_dir + lesson_dir + file
     end
     dom = compile(file_path)
     dom
@@ -126,8 +151,35 @@ class Course::MdParse
     Nokogiri::HTML(str).css("body")[0]
   end
 
-  def git_read
-    git = Git.open(dir)
+
+  def save_file_in_temp
+    save_course_index
+    save_lesson_index
+  end
+
+  def save_course_index
+    git = Git.open(course_base_dir)
+    FileUtils::mkdir_p(temp_dir)
+    git.branch(version).gcommit.gtree.files.each do |file_name, file|
+      temp_file_name = sha + file_name
+      f = File.new(temp_dir + temp_file_name, "w")
+      f.write(file.contents)
+      f.close
+    end
+  end
+
+  def save_lesson_index
+    git = Git.open(course_base_dir)
+    git.branch(version).gcommit.gtree.trees.each do |dir_name, dir|
+      dir.files.each do |file_name, file|
+        temp_dir_name = sha + dir_name
+        FileUtils::mkdir_p(temp_dir + temp_dir_name)
+        temp_file_name = sha + file_name
+        f = File.new(temp_dir + temp_dir_name + temp_file_name, "w")
+        f.write(file.contents)
+        f.close
+      end
+    end
   end
 
 

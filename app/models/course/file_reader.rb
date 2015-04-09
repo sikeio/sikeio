@@ -17,7 +17,6 @@ class Course::FileReader
         f = File.new(dir + file, "w")
         f.write(parse.result)
       end
-
     end
   end
 end

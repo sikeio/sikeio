@@ -1,12 +1,11 @@
 class Course::XMLUpdater
 
-  attr_reader :course_name, :version, :content
+  attr_reader :course_name, :content
 
-  def initialize(course_name, version)
-    raise "No course_name or version passed in" if !(course_name && version)
+  def initialize(course_name)
+    raise "No course_name passed in" if !course_name
     @course_name = course_name
-    @version = version
-    @content = Course::Content.new(course_name, version)
+    @content = Course::Content.new(course_name, "master")
   end
 
   def update_course_and_lessons
