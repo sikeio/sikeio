@@ -28,7 +28,7 @@ class Admin::CoursesController < Admin::ApplicationController
 
   def clone_and_update
     course = Course.find_by_permalink(params[:id])
-    updater = Course::Updater.new(course, params["version"])
+    updater = Course::Updater.new(course)
     updater.update
     redirect_to admin_courses_path
   end
