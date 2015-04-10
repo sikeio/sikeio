@@ -1,22 +1,43 @@
 class Course::FileReader
 
-  def self.read_file(name, version)
-    raise "pass the file name" if !name
-    version = "master" if !version
-    dir = Course::Utils::XML_REPO_DIR + name + version
+  attr_reader :name, :version, :dir, :xmd_dir, :file
+
+  def initialize(course_name, course_version = "master")
+    raise "pass the file name" if !course_name
+    @name = course_name
+    @version = course_version
+    @dir = Course::Utils::XML_REPO_DIR + course_name + course_version
+    @xmd_dir = Course::Utils::REPO_DIR + course_name
+    @file = course_name + ".xml"
+  end
+
+  def read_file
+    result = nil
     FileUtils::mkdir_p(dir)
-    file = name + ".xml"
     if File.exist?(dir + file)
-      f = File.open(dir + file)
-      result = f.read
-      f.close
+      result = read_xml_file
     else
-      xmd_dir = Course::Utils::REPO_DIR + name
       if File.exist?(xmd_dir)
-        parse = Course::MdParse.new(xmd_dir)
-        f = File.new(dir + file, "w")
-        f.write(parse.result)
+        parse_file
+        result = read_xml_file
       end
     end
+    result
+  end
+
+  private
+
+  def read_xml_file
+    f = File.open(dir + file)
+    result = f.read
+    f.close
+    result
+  end
+
+  def parse_file
+    parse = Course::MdParse.new(xmd_dir)
+    f = File.new(dir + file, "w")
+    f.write(parse.result)
+    f.close
   end
 end

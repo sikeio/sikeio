@@ -96,10 +96,8 @@ class Course::Content
   end
 
   def xml_file_content
-    file = course_name + ".xml"
-    f = File.open(repo_path + file)
-    result = f.read
-    f.close
+    f = Course::FileReader.new(course_name, course_version)
+    result = f.read_file
     result
   end
 
