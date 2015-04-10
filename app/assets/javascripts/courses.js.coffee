@@ -51,54 +51,33 @@ $ ->
   eventPrefix = '.courses-page.info'
   $= jQuery.getLocal(eventPrefix)
 
-  successHTML = """
-    <img class="author" src="/assets/courses/enroll_author.png" alt="">
-    <div class="say">
-      <p class="top">邮件已发出，期待和你交流！我的个人微信账号是 hayeah666，有问题可以加我~</p>
-    </div>
-    <img src="/assets/courses/weixin.png" alt="">
-    <p>微信：hayeah666</p>
-  """
+  $enroll = $('.enroll-panel')
+  $success = $('.success-panel')
 
-  enrollHTML = """
-    <div class="top">
-      <img src="/assets/courses/enroll_author.png" alt="">
-      <div class="say">
-        <p class="top">嗨~我是 Howard 很高兴认识你。我希望先了解你的技术背景和学习动机，再决定这个训练营是否能对你有帮助。</p>
-        <p>请在下面留下你的邮箱，我会在 2 天内和你联系。</p>
-      </div>
-    </div>
-    <form action="/enrollments" method='post' id="enroll-form" data-remote>
-      <label>姓名</label>
-      <input class="name" type="text" name='name'>
-      <br>
-      <label>邮箱</label>
-      <input class='email' type="text" name='email'>
-      <br>
-      <button type="submit">申请加入</button>
-    </form>
-  """
-
-  $enroll = $('<dpaneliv class="enroll-panel"></div>').html(enrollHTML)
-  $success = $('<div class="success-panel">').html(successHTML)
+  showPanel = ($panel)->
+    $('html').css 'background','rgba(0,0,0,0.6)'
+    $panel.show()
+  hidePanel = ($panel)->
+    $('html').css 'background','none'
+    $panel.hide()
 
   $(document)
-    .on 'ajax:beforeSend','#enroll-form',(evt,xhr,settings)->
-      name = $(this).find('.name').val()
-      email = $(this).find('.email').val()
+    .on 'ajax:beforeSend','.enroll-form',(evt,xhr,settings)->
+      name = $(this).find('[name=name]').val()
+      email = $(this).find('[name=email]').val()
       if name == "" || email == ""
         swal
           title: "名称和电子邮件不能为空~"
           type: 'error'
+        return false
       else
         courseId = $('.data-course-id').text()
         settings.data += "&course_id=#{courseId}"
 
 
-    .on 'ajax:success','#enroll-form',->
-      $success.appendTo('body')
-      $success.show()
-      $enroll.hide()
+    .on 'ajax:success','.enroll-form',->
+      hidePanel($enroll)
+      showPanel($success)
     .on 'ajax:error',(evt,xhr,error)->
       msg = xhr.responseJSON.msg
       text = if Array.isArray(msg) then msg.join("\n") else msg
@@ -118,16 +97,14 @@ $ ->
               data:
                 courseId: $('.data-course-id').text()
               success: ->
-                $success.appendTo('body')
-                $success.show()
+                showPanel($success)
           else
-            $enroll.appendTo('body')
-            $enroll.show()
+            showPanel($enroll)
       return false
 
-    # selector is empty,this add a event listen to body
-    .on 'click',"",(e)->
+    .on 'click', '.panel', (e)->
+      panel = $('.panel:visible')
       x = e.offsetX
       y = e.offsetY
-      [$enroll,$success].forEach (p)->
-        p.hide() if x < 0 ||  x > p.width() || y < 0 || y > p.height()
+      if  x < 0 || x > panel.outerWidth() || y < 0 || y > panel.outerHeight()
+        hidePanel panel

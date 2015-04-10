@@ -14,74 +14,58 @@
   <img src="header.png">
 </header>
 
-<div class="normal">
-  <h2>Start the Project</h2>
-  <p>Create a "Single View Application" called FingerPaint</p>
-  <ul>
-    <li>Disable launch screen.</li>
-    <li>Disable auto layout & size classes.</li>
-  </ul>
-</div>
+<h1>Start the Project</h1>
+<p>Create a "Single View Application" called FingerPaint</p>
+<ul>
+  <li>Disable launch screen.</li>
+  <li>Disable auto layout & size classes.</li>
+</ul>
 
-<div class="normal">
-  <h2>Adding the Test Suite to the Project</h2>
-  <p>The test suite is in a separate git repo from your project's own repo. This way we can checkout different versions of the test suite for each step without affecting the history of your own app.</p>
-</div>
+<h1>Adding the Test Suite to the Project</h1>
+<p>The test suite is in a separate git repo from your project's own repo. This way we can checkout different versions of the test suite for each step without affecting the history of your own app.</p>
 
 
 <div class="exercise">
-  <h2>
+  <h1>
     Add the test suite to the project
     <div class="indicator">
       <i class="fa fa-wrench"></i>
       Exercise
     </div>
-  </h2>
+  </h1>
+
   <ol class='steps'>
     <li class='step'>
-      <div class="content">
-        <h3>Clone the test repo by running the following command from the project root.</h3>
+        <p>Clone the test repo by running the following command from the project root.</p>
         <pre><code>git clone https://github.com/hayeah/ios-Finlsdf...
 </code></pre>
-      </div>
     </li>
 
     <li class='step'>
-      <div class="content">
-        <h3>Create the <code>.gitignore</code> file,and add <code>FingerPaintTests/spec</code> to it</h3>
+        <p>Create the <code>.gitignore</code> file,and add <code>FingerPaintTests/spec</code> to it</p>
         <pre><code># .gitignore
 FingerPaintTests/spec
 </code></pre>
-      </div>
     </li>
 
     <li class='step'>
-      <div class="content">
-        <h3>Once the test repo is cloned,we need to add the test's files to xcode</h3>
+        <p>Once the test repo is cloned,we need to add the test's files to xcode</p>
         <pre><code># .gitignore
 FingerPaintTests/spec
 </code></pre>
 
+      <div class='screenshot'>
+        <h2>Add the test's file to Xcode</h2>
         <img src="e1.png">
-      </div>
-
-      <div class="guide">
-        <h4>Add the test's file to Xcode</h4>
         <ol>
           <li>right-click on FingerPaint</li>
           <li>Select Add Files</li>
         </ol>
       </div>
 
-      <div class="content">
-        <p class='next'>
-          <i class="fa fa-angle-double-down"></i>
-        </p>
+      <div class="screenshot">
+        <h2>Add the test suite directory to the test target as a group</h2>
         <img src="e2.png">
-      </div>
-
-      <div class="guide">
-        <h4>Add the test suite directory to the test target as a group</h4>
         <ol>
           <li>Select the folder we just cloned.</li>
           <li>Select "Create groups"</li>
@@ -89,124 +73,29 @@ FingerPaintTests/spec
         </ol>
       </div>
 
-      <div class="content">
-        <p class="next">
-          <i class="fa fa-angle-double-down"></i>
-        </p>
+      <div class="screenshot">
+        <h2>Finally,you should see FingerPaintTests/spec/SpecTests.swift show up in Xcode</h2>
         <img src="e3.png">
       </div>
 
-      <div class="guide">
-        <h4>Finally,you should see FingerPaintTests/spec/SpecTests.swift show up in Xcode</h4>
-      </div>
     </li>
 
 
     <li class='step'>
-      <div class="content top-space">
-        <h3>Run the test now(cmd-u),and the test suite should pass(because it doesn't test anything yet!)</h3>
+      <p>Run the test now(cmd-u),and the test suite should pass(because it doesn't test anything yet!)</p>
+
+      <div class="screenshot">
+        <h2>Passing Tests</h2>
         <img src="e4.png">
       </div>
 
-      <div class="guide" data-full-width-bg>
-        <h4>Passing Tests</h4>
-      </div>
     </li>
   </ol>
 
-  <div class="completed">
-    <i class="fa fa-check-circle"></i>
-    Completed!
+  <div class="goal">
+    <i class="fa fa-flag">Pass</i>
+    <span>testPathDrawing</span>
   </div>
-
-  <div class='conclusion'>
-    <p>The yellow folders you see in Xcode are "groups". They are basically Xcode's own directory structure, which can be different from the file system's directory structure if you want to organize your source files differently.</p>
-  </div>
-
-</div>
-
-
-<div class="normal">
-  <h2>Drawing by Touches</h2>
-  <img src="1.png">
-
-  <p>To get the CanvasView to respond to touches, we can override the touchesBegan method:</p>
-  <pre><code>override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!){
-  let t = touches.anyObject() as UITouch
-  let point = t.locationInView(self)
-  println("touch: \(point)")
-}
-</code></pre>
-
-  <p>Touch the screen, and you'd see where the touch occured:</p>
-
-  <img src="2.png">
-
-  <p>There can be more than one touches in the NSSet if multi-touch is enabled (multipleTouchEnabled). But since multi-touch is disabled by default, there would be only one UITouch object in touches, and we can fetch it with the anyObject method.</p>
-
-</div>
-
-<div class="exercise">
-
-
-  <h2>
-    Draw when user touches the screen.
-    <div class="indicator">
-      <i class="fa fa-wrench"></i>
-      Exercise
-    </div>
-  </h2>
-
-  <p>We are going to track touches, and keep track of the touches in a Path object.</p>
-
-  <ol class='steps'>
-    <li class='step'>
-      <div class="content">
-        <h3>In the CanvasView we need to track all the touches that occur when the user moves a finger across the screen:</h3>
-        <pre><code>override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
-  // TODO: Start a new path, and add the starting touch point to it.
-}
-
-override func touchesMoved(touches: NSSet!, withEvent event: UIEvent!) {
-  // TODO: Add a new touch point to the path
-}
-
-override func touchesEnded(touches: NSSet!, withEvent event: UIEvent!) {
-  // TODO: Add the end touch point
-}
-</code></pre>
-      </div>
-    </li>
-
-    <li class='step'>
-      <div class="content">
-        <h3>Create the Path class.</h3>
-        <pre><code>class Path {
-  var points: [CGPoint] = []
-  let color: UIColor
-  init(color: UIColor) {
-      self.color = color
-  }
-
-  func add(point: CGPoint) {
-      points.append(point)
-  }
-}
-</code></pre>
-      </div>
-    </li>
-
-    <li class='step'>
-      <div class="content">
-        <h3>Store the user drawing in a property paths: [Path].</h3>
-      </div>
-    </li>
-  </ol>
-
-  <p class="goal">
-    <i class="fa fa-flag"></i>
-    Pass <strong>testPathDrawing</strong>
-  </p>
 
   <div class="completed">
     <i class="fa fa-check-circle"></i>
@@ -215,7 +104,25 @@ override func touchesEnded(touches: NSSet!, withEvent event: UIEvent!) {
 
 </div>
 
+<p>The yellow folders you see in Xcode are "groups". They are basically Xcode's own directory structure, which can be different from the file system's directory structure if you want to organize your source files differently.</p>
 
+<h1>Drawing by Touches</h1>
+
+<img src="1.png">
+
+<p>We'll now implement interactive drawing by responding to touches.</p>
+
+<p>To get the CanvasView to respond to touches, we can override the touchesBegan method:</p>
+<pre><code>override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!){
+let t = touches.anyObject() as UITouch
+let point = t.locationInView(self)
+println("touch: \(point)")
+}
+</code></pre>
+
+<p>Touch the screen, and you'd see where the touch occured:</p>
+
+<img src="2.png">
 
 </body>
 </html>
