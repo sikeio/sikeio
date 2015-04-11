@@ -26,12 +26,14 @@ p
   margin: 30px auto
 
 ul
+  padding: 0
   list-style: none
 
 img.logo
   width: 60px
 
 #enroll
+  cursor: pointer
   margin: 50px auto
   display: block
   width: 250px
@@ -68,6 +70,10 @@ header
   background-color: rgba(0,0,0,0.3)
   background-blend-mode: multiply
   background-size: cover
+  &.ios
+    background-image: image-url("courses/ios/bg.png")
+  &.nodejs
+    background-image: image-url("courses/nodejs/bg.png")
   h1
     display: table
     margin: auto
@@ -119,15 +125,8 @@ header
   h1
     &:first-child
       font-size: 48px
-    text-align: center
-    &.top
-      font-size: 48px
-    &.bottom
-      margin-top: 60px
   ul
     font-size: 18px
-    position: relative
-    left: -35px
 
 .coach
   max-width: $max-width
@@ -145,8 +144,18 @@ footer
   text-align: center
   margin: 55px 0
 
+.toc
+  margin: 30px auto
+  max-width: $max-width
+  h2
+    margin-top: 60px
+    font-size: 24px
+    font-weight: lighter
+    border-bottom: solid 2px #979797
+  ul
+    padding: 0
+
 .slick-dots
-  @include clearfix
   padding: 0
   text-align: center
   margin: auto
