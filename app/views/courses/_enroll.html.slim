@@ -1,0 +1,33 @@
+.panel.enroll-panel
+  header
+    img src=image_url('logo2.png')
+    h1.course NodeJS 高速道路
+  .author
+    img src=image_url('courses/avatar.png')
+    p
+      | 嗨~我是Howard 很高兴认识你。我希望先了解你的技术背景和学习动机，再知道这个训练营是否对你有帮助。
+      br
+      br
+      | 请在下面留下你的邮箱，我会在2天内和你联系。
+  form.enroll-form action='/enrollments' method='post' data-remote=true
+    .name
+      label 姓名
+      input name="name"
+    .email
+      label 邮箱
+      input name="email"
+    button type='submit' 申请加入
+
+.panel.success-panel
+  header
+    img src=image_url('logo2.png')
+    h1.course NodeJS 高速道路
+  p
+    | 邮件将尽快发出，期待和你交流!
+    br
+    | 我的个人微信账号是 hayeah666，有问题可以加我~
+  img src=image_url('courses/weixin.png')
+  p.weixin
+    | 微信：hayeah666
+
+

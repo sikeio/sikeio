@@ -1,22 +1,28 @@
 $ ->
-  eventPrefix = '.admin-enrollments-page'
+  eventPrefix = '.admin-enrollments-page.index'
   $ = jQuery.getLocal(eventPrefix)
 
   $(document)
-    .on 'ajax:success','.email-panel form',->
+    .on 'ajax:success', '.email-panel form', ->
       $('.email-panel').hide().find('textarea').val('')
       swal
         title: 'Send Successfully!'
         type: "success"
 
-
-    .on 'click','.enrollments .send',->
-      enrollmentId = $(this).attr('data-enrollment-id')
-      $('.email-panel').find('[name=id]').val enrollmentId
+    .on 'click', '.enrollments .send', ->
+      url = $(this).attr 'href'
+      $('.email-panel form').attr 'action', url
       $('.email-panel').show()
+      return false
 
-    .on 'click','.email-panel .cancel',->
+    .on 'click', '.email-panel .cancel', ->
       $('.email-panel').hide()
+
+    .on 'ajax:success', '.enrollments .pay', ->
+      swal
+        title: 'Set Successfully!'
+        type: "success"
+      $('td.paid').text 'true'
 
 
 
