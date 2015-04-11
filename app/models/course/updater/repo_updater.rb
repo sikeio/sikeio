@@ -15,6 +15,8 @@ class Course::Updater::RepoUpdater
     end
   end
 
+  private
+
   def repo_cloned?
     File.exist?(repo_dir_path)
   end

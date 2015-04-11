@@ -26,6 +26,8 @@ class Lesson::Content
     html_content
   end
 
+  private
+
   def video_html(node)
     src = "/" + course_name + "/" + lesson_name + "/" + version + "/" + node["src"]
     output = <<-THERE

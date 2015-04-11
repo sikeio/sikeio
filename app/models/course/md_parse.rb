@@ -14,6 +14,20 @@ class Course::MdParse
     save_file_in_temp
   end
 
+
+  def result
+    course =<<-THERE
+    <course name="#{course_name}">
+      #{index_xml}
+      #{pages_xml}
+    </course>
+    THERE
+    clear_temp_dir
+    course
+  end
+
+  private
+
   def course_name
     @course_name ||= course_index_dom.css("h1")[0].text
   end
@@ -26,17 +40,6 @@ class Course::MdParse
     index_file = sha + "index.xmd"
     course_index_file_path = temp_dir + index_file
     compile(course_index_file_path)
-  end
-
-  def result
-    course =<<-THERE
-    <course name="#{course_name}">
-      #{index_xml}
-      #{pages_xml}
-    </course>
-    THERE
-    clear_temp_dir
-    course
   end
 
   def clear_temp_dir

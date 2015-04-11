@@ -18,6 +18,8 @@ class Course::Updater
     update_database
   end
 
+  private
+
   def remove_releated_file
     Course::FileRemover.new(course.name).remove_course_releated_file
   end
