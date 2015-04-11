@@ -1,9 +1,9 @@
-class Course::RepoUpdater
+class Course::Updater::RepoUpdater
 
-  attr_reader :course, :repo_dir_path
+  attr_reader :url, :repo_dir_path
 
-  def initialize(temp_course, repo_dir)
-    @course = temp_course
+  def initialize(url, repo_dir)
+    @url = url
     @repo_dir_path = repo_dir
   end
 
@@ -26,7 +26,7 @@ class Course::RepoUpdater
 
   def clone_repo
     FileUtils::mkdir_p(repo_dir_path)
-    Git.clone(course.repo_url, repo_dir_path)
+    Git.clone(url, repo_dir_path)
   end
 
 end

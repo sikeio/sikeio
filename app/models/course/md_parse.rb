@@ -60,7 +60,7 @@ class Course::MdParse
   def weeks_xml
     weeks = ""
     xml = course_index_dom
-    node = xml.child.child
+    node = xml.child
     nodes_in_week = nil
     while node
       if node.name == WEEK_HEADER
@@ -143,7 +143,7 @@ class Course::MdParse
 
   def compile_xmd(file)
     str = %x{ xmd #{file} }
-    Nokogiri::HTML(str).css("body")[0]
+    Nokogiri::HTML(str).css("body")[0].child
   end
 
   def compile_md(file)
@@ -181,6 +181,4 @@ class Course::MdParse
       end
     end
   end
-
-
 end

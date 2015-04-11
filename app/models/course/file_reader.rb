@@ -13,7 +13,6 @@ class Course::FileReader
 
   def read_file
     result = nil
-    FileUtils::mkdir_p(dir)
     if File.exist?(dir + file)
       result = read_xml_file
     else
