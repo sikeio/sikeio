@@ -163,6 +163,11 @@ prune_bundler
 # activate_control_app 'unix:///var/run/pumactl.sock'
 # activate_control_app 'unix:///var/run/pumactl.sock', { auth_token: '12345' }
 # activate_control_app 'unix:///var/run/pumactl.sock', { no_token: true }
-if control_token = ENV["PUMA_CONTROL_TOKEN"]
-  activate_control_app 'tcp://0.0.0.0:9293', {auth_token: control_token}
+if port = ENV["PUMA_CONTROL_PORT"]
+  if token = ENV["PUMA_CONTROL_TOKEN"]
+    opts = { auth_token: token }
+  else
+    opts = { no_token: true }
+  end
+  activate_control_app "tcp://0.0.0.0:#{port}", opts
 end
