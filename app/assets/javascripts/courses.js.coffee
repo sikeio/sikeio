@@ -53,12 +53,20 @@ $ ->
 
   $enroll = $('.enroll-panel')
   $success = $('.success-panel')
+  $overlay = $('<div>').css
+                position: 'fixed',
+                top: '0',
+                left: '0',
+                width: "100%",
+                height: "100%",
+                background: "rgba(0,0,0,0.6)",
+              .appendTo('body').hide()
 
   showPanel = ($panel)->
-    $('html').css 'background','rgba(0,0,0,0.6)'
+    $overlay.show()
     $panel.show()
   hidePanel = ($panel)->
-    $('html').css 'background','none'
+    $overlay.hide()
     $panel.hide()
 
   $(document)
