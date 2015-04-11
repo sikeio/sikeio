@@ -15,7 +15,10 @@ foreman start
 
 # Environment Variables
 
+Running Rails
+
 + RAILS_ROOT: the root directory of the app
++ RAILS_PORT: port to start the web service
 + RAILS_ENV: the environment of the app
 + PUMA_CONTROL_PORT: port on which to start a puma control app
   + If present, bind 0.0.0.0:$PUMA_CONTROL_PORT
