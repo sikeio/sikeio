@@ -28,7 +28,7 @@ class Course < ActiveRecord::Base
     self.permalink
   end
 
-  def schedule(version = self.current_version)
+  def schedule(version = "master")
     Course::Schedule.new(self, version)
   end
 end

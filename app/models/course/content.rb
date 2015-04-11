@@ -92,13 +92,13 @@ class Course::Content
 
   private
   def repo_path
-    Rails.root + "xml_repo" + course_name
+    Rails.root + "xml_repo" + course_name + course_version
   end
 
   def xml_file_content
-    file = course_name + ".xml"
-    git_repo = Git.open(repo_path)
-    git_repo.show(course_version, file)
+    f = Course::FileReader.new(course_name, course_version)
+    result = f.read_file
+    result
   end
 
   def xml_handle

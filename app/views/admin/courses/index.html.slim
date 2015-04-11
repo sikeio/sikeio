@@ -1,0 +1,68 @@
+button.btn.btn-primary data-toggle="modal" data-target="#addModal"
+ |Add Course
+table.table.table-bordered
+  thead
+    tr
+      th
+        |#
+      th
+        |Course Name
+      th
+        |Course Repo URL
+      th
+        |Current Version
+      th
+        |
+      th
+  - i = 0
+  - @courses.each do |course|
+    - i += 1
+    tbody
+      tr
+        = form_for course, url: admin_course_path(course), method: :put do |f|
+          td
+            | #{i}
+          td
+            = f.text_field :name
+          td
+            = f.text_field :repo_url
+          td
+            = f.text_field :current_version
+          td
+            = f.submit "Edit"
+        td
+          = form_tag clone_and_update_admin_course_path(course), method: :post
+            = label_tag "New Version"
+            = text_field_tag "version"
+            = submit_tag "Clone and Update repo"
+
+div class="modal fade" aria-hidden="true" id="addModal" role="dialog" tabindex="-1"
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close type="button" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true"
+            | &times;
+        h4.modal-title
+          | Title
+      .modal-body
+        = form_for :course, url: admin_courses_path, method: :post, html: {class: 'form-horizontal checkout'} do |f|
+          .form-group
+            = f.label :name, "Course Name", class: "col-md-3 control-label"
+            .col-md-9
+              = f.text_field :name, class: 'form-control'
+          .form-group
+            = f.label :repo_url, "Repo Url", class: "col-md-3 control-label"
+            .col-md-9
+              = f.text_field :repo_url, class: 'form-control'
+          .form-group
+            = f.label :current_version, "Current Version", class: "col-md-3 control-label"
+            .col-md-9
+              = f.text_field :current_version, class: 'form-control'
+          .modal-footer
+            .col-md-12
+              = f.submit "Submit", class: "btn btn-primary checkout_button"
+
+      .modal-footer
+
+

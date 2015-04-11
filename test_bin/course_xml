@@ -5,7 +5,7 @@ require '../config/environment.rb'
 
 path = Pathname.new(ARGV[0])
 
-md_parse = Course::MdParse.new(path)
+md_parse = Course::MdParse.new(path, "haha")
 
 xml = md_parse.result
 puts path + "course.xml"
