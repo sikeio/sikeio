@@ -13,5 +13,7 @@ class LessonsController < ApplicationController
     version = @enrollment.version ? @enrollment.version : "master"
     content = Lesson::Content.new(course.name, version, @lesson.name)
     @lesson_html = content.html_page
+    Lesson::AssetMover.new(course.name, @lesson.name, version).move_file
   end
+
 end

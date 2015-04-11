@@ -1,6 +1,6 @@
 class Course::FileReader
 
-  attr_reader :name, :version, :dir, :xmd_dir, :file
+  attr_reader :name, :version, :dir, :xmd_dir, :file, :asset_dir
 
   def initialize(course_name, course_version = "master")
     raise "pass the file name" if !course_name
