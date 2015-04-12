@@ -1,9 +1,5 @@
-ul.courses
-  h1 All Courses
-  - @courses.each do |c|
-    a href=info_course_path(c) =c.name
-
-p = flash[:error]
+- if flash[:error]
+  p= flash[:error]
 
 nav.l-main-nav
   a href="http://d.fork2.com" 交流论坛
