@@ -7,6 +7,7 @@ gem 'omniauth-github'
 
 
 gem 'slim-rails'
+gem 'react-rails', '~> 1.0'
 gem 'redcarpet'
 gem 'sidekiq'
 
