@@ -66,6 +66,7 @@ Rails.application.routes.draw do
 
     resources :courses do
       member do
+        get :info
         post 'clone_and_update' => 'courses#clone_and_update'
       end
     end

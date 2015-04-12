@@ -5,7 +5,13 @@ class CoursesController < ApplicationController
 #  before_action :require_take_part_in,only:[:show]
 
   def info
-    course
+    # TODO: should show only live courses
+    @course_name = params[:id]
+
+    if !["ios","nodejs"].include?(@course_name)
+      render_404("No such course: #{@course_name}")
+      return
+    end
   end
 
   def show
