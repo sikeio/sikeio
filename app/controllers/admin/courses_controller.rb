@@ -43,4 +43,3 @@ class Admin::CoursesController < Admin::ApplicationController
   end
 
 end
-
