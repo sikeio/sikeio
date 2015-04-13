@@ -53,6 +53,9 @@ Rails.application.routes.draw do
 
 
   namespace 'admin' do
+    namespace :test do
+      post :send_email
+    end
 
     resources :users,only:[:index] do
     end
