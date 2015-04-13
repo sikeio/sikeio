@@ -8,12 +8,9 @@ p show all uninvited enrollments
 
 h2 Courses
 
-= render @courses
+= link_to("Courses",admin_courses_path)
 
-.btn-group.btn-group-justified
-  a.btn.btn-info href='/admin/courses/new' New Course
-
-br
+h2 Users
 
 .btn-group.btn-group-justified
   a.btn.btn-info href='/admin/users' User Management
