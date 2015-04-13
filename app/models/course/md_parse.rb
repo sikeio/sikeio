@@ -143,12 +143,12 @@ class Course::MdParse
   end
 
   def compile_xmd(file)
-    str = %x{ xmd #{file} }
+    str = IO.popen(["xmd", file])
     Nokogiri::HTML(str).css("body")[0].child
   end
 
   def compile_md(file)
-    str = %x{ marked -i #{file} }
+    str = IO.popen(["marked", "-i", file])
     Nokogiri::HTML(str).css("body")[0]
   end
 
