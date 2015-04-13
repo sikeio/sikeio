@@ -32,6 +32,9 @@ module Sike
 
     config.active_job.queue_adapter = :sidekiq
 
+    config.action_mailer.default_url_options = {
+      host: ENV["RAILS_HOST"]
+    }
     config.action_mailer.default_options = {
       :from => ENV["RAILS_DEFAULT_FROM_EMAIL"]
     }
