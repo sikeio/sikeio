@@ -48,11 +48,11 @@ $ ->
 
 $ ->
   #info page
-  eventPrefix = '.courses-page.info'
+  eventPrefix = '#courses_info'
   $= jQuery.getLocal(eventPrefix)
 
-  $enroll = $('.enroll-panel')
-  $success = $('.success-panel')
+  $enroll = $('.panel--enrolling')
+  $success = $('.panel--success')
   $overlay = $('<div>').css
                 position: 'fixed',
                 top: '0',
