@@ -8,7 +8,10 @@ class ApplicationController < ActionController::Base
   helper_method :page_identifier
 
   def page_identifier
-    "#{self.class.to_s.downcase.gsub('::','-').gsub('controller','')}-page #{action_name}"
+    # admin/courses#index => admin-courses_index
+    controller = params[:controller].tr("/","-")
+    action = params[:action]
+    "#{controller}_#{action}"
   end
 
   def store_location(location = nil)
