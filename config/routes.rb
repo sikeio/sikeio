@@ -1,6 +1,12 @@
+class AdminConstraint
+  def matches?(request)
+    return request.session[:is_admin] == true
+  end
+end
+
 Rails.application.routes.draw do
   require 'sidekiq/web'
-  mount Sidekiq::Web => '/sidekiq'
+  mount Sidekiq::Web => '/admin/sidekiq', :constraints => AdminConstraint.new
 
   root 'home#index'
 

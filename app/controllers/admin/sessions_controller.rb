@@ -8,7 +8,6 @@ class Admin::SessionsController < Admin::ApplicationController
   end
 
   def create
-    admins = CONFIG["admins"]
     if params[:password] == ADMIN_PASSWORD
       session[:is_admin] = true
       redirect_to_back_or_default
