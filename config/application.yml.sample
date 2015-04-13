@@ -1,0 +1,7 @@
+# Add configuration values here, as shown below.
+#
+
+ADMIN_PASSWORD: ""
+COURSE_BUILD_PATH: "course_build"
+
+RAILS_SECRET_KEY_BASE: 076f2085e31b732a15b86648c3b9f8b8a325942945cba87289db90c8cd7fef6ebc649b9509e6ad63c2e2bfc6552bee1c6a0aad8d43046c3c5de2db33de2ebf13
