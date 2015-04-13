@@ -1,4 +1,4 @@
-class Course::XMLUpdater
+class Course::Updater::XMLUpdater
 
   attr_reader :course_name, :content
 

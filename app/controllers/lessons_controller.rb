@@ -10,7 +10,10 @@ class LessonsController < ApplicationController
     if Checkout.check_out?(@enrollment, @lesson)
       @checkout = @enrollment.checkouts.find_by(lesson_name: @lesson.name)
     end
-    content = Lesson::Content.new(course.name, @enrollment.version, @lesson.name)
+    version = @enrollment.version ? @enrollment.version : "master"
+    content = Lesson::Content.new(course.name, version, @lesson.name)
     @lesson_html = content.html_page
+    Lesson::AssetMover.new(course.name, @lesson.name, version).move_file
   end
+
 end

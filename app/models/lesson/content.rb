@@ -2,9 +2,9 @@ class Lesson::Content
 
   attr_reader :course_name, :version, :lesson_name
 
-  def initialize(course_name, version, lesson_name)
-    @course_name = course_name
-    @version = version
+  def initialize(temp_name, temp_version, lesson_name)
+    @course_name = temp_name
+    @version = temp_version
     @lesson_name = lesson_name
   end
 
@@ -14,7 +14,11 @@ class Lesson::Content
     puts xml
     xml.children.each do |node|
       if node.name != "exercise"
-        html_content << node.to_xhtml
+        if node.name == "video"
+          html_content << video_html(node)
+        else
+          html_content << node.to_xhtml
+        end
       else
         html_content << exercise_html(node)
       end
@@ -22,11 +26,20 @@ class Lesson::Content
     html_content
   end
 
+  private
+
+  def video_html(node)
+    src = "/" + course_name + "/" + lesson_name + "/" + version + "/" + node["src"]
+    output = <<-THERE
+    <video  autoplay="true" loop="true" controls="true" src=#{src}></video>
+    THERE
+  end
+
   def exercise_html(exercise_node)
     ol_content = ""
     first_step = true
     ol_tag_end = false
-    exercise_node.css("exercise-step").each do |node|
+    exercise_node.css("step").each do |node|
       ol_content << exercise_step_html(node)
     end
     output =  <<-THERE
@@ -53,13 +66,8 @@ class Lesson::Content
 
     exercise_step_node.children.each do |node|
       if node.name != "screenshot"
-        if node.type == Nokogiri::XML::Node::TEXT_NODE && node.text.strip != ""
-          li_content << "<p>#{node.text}</p>"
-        elsif node.name == "code"
-          li_content << "<pre>#{node.to_xhtml}</pre>"
-        else
-          li_content << node.to_xhtml
-        end
+      elsif node.name == "video"
+          li_content << video_html(node)
       else
         li_content << screenshot_html(node)
       end
@@ -74,27 +82,27 @@ class Lesson::Content
 
   def screenshot_html(screen_node)
     other_content = ""
-    first = true
     screen_node.children.each do |node|
-      if !first
-        other_content << node.to_xhtml
+      if node.name == "caption"
+        other_content << "<h2>#{node.text}</h2>"
+      elsif node.name == "video"
+        other_content << video_html(node)
       else
-        first = false
+        other_content << node.to_xhtml
       end
     end
 
     output = <<-THERE
       <div class="screenshot">
-        #{screen_head(screen_node)}
+        #{img(screen_node)}
         #{other_content}
       </div>
     THERE
   end
 
-  def screen_head(node)
-    src = "/" + course_name + "/" + lesson_name + "/" + node["src"]
+  def img(node)
+    src = "/" + course_name + "/" + lesson_name + "/" + version + "/" + node["src"]
     output = <<-THERE
-      #{node.child.to_xhtml}
       <img src=#{src}>
     THERE
   end
@@ -114,9 +122,9 @@ class Lesson::Content
 
 
   def xml_content
-    git = Git.open(Course::Utils::XML_REPO_DIR + course_name)
-    file = course_name + ".xml"
-    xml = Nokogiri::HTML(git.show(version, file))
+    f = Course::FileReader.new(course_name, version)
+    result = f.read_file
+    xml = Nokogiri::HTML(result)
     xml = xml.css("page[name=#{lesson_name}]")[0]
   end
 end

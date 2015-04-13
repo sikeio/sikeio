@@ -2,7 +2,7 @@ div.status-bar
   .left
     = image_tag "courses/logo_course.png", class: "logo"
     p.course-title
-      = @enrollment.course.name
+      = @enrollment.course.title
 
   .right
     = image_tag "courses/avatar.png", class: "avatar"
@@ -31,9 +31,9 @@ div.current-mission
   - else
     - if current_lesson
       h2
-        | #{current_lesson.name}
-      p
-        | #{current_lesson.overview}
+        | #{current_lesson.title}
+
+      = sanitize current_lesson.overview
       - if @enrollment.is_completed?(current_lesson)
         div.course-status.completed
           i.fa.fa-check-circle

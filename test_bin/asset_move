@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+ENV['RAILS_ENV'] = "development"
+require '../config/environment.rb'
+
+mover = Course::AssetMover.new("nodebc-xmd", "finger-paint", "master")
+mover.move_file
