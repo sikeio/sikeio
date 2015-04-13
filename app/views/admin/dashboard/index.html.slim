@@ -16,3 +16,11 @@ br
 .btn-group.btn-group-justified
   a.btn.btn-info href='/admin/users' User Management
   a.btn.btn-info href='/admin/enrollments' Enrollment Management
+
+h2 Test Actions
+
+.btn-group.btn-group-justified
+  = bootstrap_form_tag(url: admin_test_send_email_path) do |f|
+    = f.text_field :email
+    = f.text_field :message, :value => "Make something people want."
+    = f.submit "send email"
