@@ -1,5 +1,7 @@
 class Admin::SessionsController < Admin::ApplicationController
 
+  ADMIN_PASSWORD = ENV["ADMIN_PASSWORD"]
+
   before_action :require_admin,except:[:new,:create]
 
   def new
@@ -7,7 +9,7 @@ class Admin::SessionsController < Admin::ApplicationController
 
   def create
     admins = CONFIG["admins"]
-    if admins.one? {|h| h["email"] == params[:email] && h["password"] == params[:password] }
+    if params[:password] == ADMIN_PASSWORD
       session[:is_admin] = true
       redirect_to_back_or_default
     end
