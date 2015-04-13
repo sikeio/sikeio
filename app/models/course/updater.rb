@@ -34,6 +34,6 @@ class Course::Updater
   end
 
   def update_databse
-    Course::XMLUpdater.new(course_name).update_course_and_lessons
+    Course::XMLUpdater.new(course.name).update_course_and_lessons
   end
 end
