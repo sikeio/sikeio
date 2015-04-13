@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   post '/checkout/:course_permalink/:lesson_permalink' => 'checkouts#new', as: :check_out
   put '/checkout/:id' => 'checkouts#update', as: :check_out_update
 
-  resources :subscribers,only:[:create]
+  resources :subscribers, only: [:create]
 
   resources :users,only:[:show] do
     member do
