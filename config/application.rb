@@ -32,8 +32,15 @@ module Sike
 
     config.active_job.queue_adapter = :sidekiq
 
-    #Rspec has changed the path,WTF!
-    config.action_mailer.preview_path = "#{Rails.root}/test/mailers/previews"
+    config.action_mailer.default_options = {
+      :from => ENV["RAILS_DEFAULT_FROM_EMAIL"]
+    }
+
+    # RSpec expects preview_path to be at its own directory. See: https://github.com/rspec/rspec-rails/issues/1325
+    ## rspec wants it to be here:
+    # config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
+    ## rails by default put it here:
+    # config.action_mailer.preview_path = "#{Rails.root}/test/mailers/previews"
 
   end
 end

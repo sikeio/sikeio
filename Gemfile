@@ -48,6 +48,9 @@ gem "foreman"
 
 gem "figaro", '~> 1.1'
 
+gem 'mailgun_rails', :group => :production
+gem "letter_opener", :group => :development
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

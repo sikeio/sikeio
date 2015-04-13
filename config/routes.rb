@@ -53,6 +53,15 @@ Rails.application.routes.draw do
 
 
   namespace 'admin' do
+    get '/' => "dashboard#index",as: :dashboard
+
+    get '/login' => "sessions#new"
+    post '/login' => "sessions#create"
+    delete '/logout' => 'sessions#destroy'
+
+    namespace :test do
+      post :send_email
+    end
 
     resources :users,only:[:index] do
     end
@@ -70,12 +79,6 @@ Rails.application.routes.draw do
         post 'clone_and_update' => 'courses#clone_and_update'
       end
     end
-
-    get '/' => "dashboard#index",as: :dashboard
-
-    get '/login' => "sessions#new"
-    post '/login' => "sessions#create"
-    delete '/logout' => 'sessions#destroy'
   end
 end
 
