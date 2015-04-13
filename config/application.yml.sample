@@ -17,6 +17,10 @@ RAILS_DEFAULT_FROM_EMAIL: admin@besike.com
 # config.time_zone
 RAILS_TIME_ZONE: "Beijing"
 
+# Database Name (Postgres on well-known port. No auth.)
+# Note: In production with run postgres in container. Probably not a big deal security-wise.
+RAILS_DATABASE: sike_development
+
 ########################################################################
 # App configurations
 ########################################################################
