@@ -21,6 +21,13 @@ RAILS_TIME_ZONE: "Beijing"
 # Note: In production with run postgres in container. Probably not a big deal security-wise.
 RAILS_DATABASE: sike_development
 
+# Redis config
+REDIS_HOST: localhost
+# REDIS_PORT: "6379"
+
+# Redis DB number for sidekiq
+SIDEKIQ_REDIS_DB: "0"
+
 ########################################################################
 # App configurations
 ########################################################################
