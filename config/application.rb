@@ -23,7 +23,7 @@ module Sike
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
     config.sass.preferred_syntax = :sass
-    config.time_zone = 'Beijing'
+    config.time_zone = ENV["RAILS_TIME_ZONE"]
 
     config.generators do |g|
       g.assets false

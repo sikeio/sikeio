@@ -14,6 +14,9 @@ RAILS_PORT: "3000"
 # Default FROM address for ActionMailer
 RAILS_DEFAULT_FROM_EMAIL: admin@besike.com
 
+# config.time_zone
+RAILS_TIME_ZONE: "Beijing"
+
 ########################################################################
 # App configurations
 ########################################################################
