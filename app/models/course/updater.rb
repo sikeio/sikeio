@@ -42,9 +42,6 @@ class Course::Updater
     f.close
   end
 
-  module Foo
-  end
-
   def update_databse
     Course::XMLUpdater.new(course.name).update_course_and_lessons
   end

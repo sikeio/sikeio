@@ -45,8 +45,6 @@ class Course::MdParse
   def clear_temp_dir
     Dir.chdir(temp_dir) do
       list = Dir.glob("#{sha}*")
-      puts sha
-      puts list
       FileUtils.rm_rf(list)
     end
 

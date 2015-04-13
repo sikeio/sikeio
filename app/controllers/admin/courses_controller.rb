@@ -28,8 +28,7 @@ class Admin::CoursesController < Admin::ApplicationController
 
   def clone_and_update
     course = Course.find_by_permalink(params[:id])
-    updater = Course::Updater.new(course)
-    updater.update
+    CloneAndUpdateJob.perform_later(course)
     redirect_to admin_courses_path
   end
 
@@ -44,4 +43,3 @@ class Admin::CoursesController < Admin::ApplicationController
   end
 
 end
-
