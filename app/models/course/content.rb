@@ -37,7 +37,7 @@ class Course::Content
     @lessons_info = {}
     xml_doc.css("lesson").each do |lesson_node|
       info = {}
-      info["title"] = lesson_node["title"]
+      info["title"] = lesson_title(lesson_node["name"])
       info["overview"] = lesson_node.css("overview").children.to_xhtml.strip
 
       #TODO permalink should be title.underscore
@@ -105,8 +105,18 @@ class Course::Content
     Nokogiri::HTML(xml_file_content).css("index")[0]
   end
 
+  def lesson_title(lesson_name)
+    page_node = Nokogiri::HTML(xml_file_content).css("page[name=#{lesson_name}]")[0]
+    title = page_node.css("h1")[0].text
+  end
+
   def course_title
     Nokogiri::HTML(xml_file_content).css("course")[0]["name"]
+  end
+
+  def lesson_title(lesson_name)
+    page_node = Nokogiri::HTML(xml_file_content).css("page[name=#{lesson_name}]")[0]
+    title = page_node.css("h1")[0].text
   end
 
   def course_permalink
