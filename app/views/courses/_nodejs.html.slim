@@ -1,16 +1,16 @@
-header
-  img.logo src=image_url('logo2.png')
-  h1
+header.site-header
+  img.site-header__logo src=image_url('logo2.png')
+  h1.site-header__title
     | NodeJS 高速道路
 
-.jumbotron.nodejs
-  h1
-    img src=image_url('courses/nodejs/js.png')
+.jumbotron.jumbotron--nodejs
+  h1.jumbotron__title
+    img.jumbotron__badge src=image_url('courses/nodejs/js.png')
     | NodeJS 高速道路
-  a#enroll
+  a#enroll.jumbotron__btn
     | 课程报名质询
 
-.plain
+.text-content
   h1
     | 高性能，高并发
   ul
@@ -36,7 +36,7 @@ header
   p
     | 在这个课程我们会通过实现一个完整的项目来熟悉 NodeJS 的异步编程模式。你对 Javascript 要有基本的了解。
 
-.highlight
+.text-content.text-content--blue
   h1
     | 写代码才是硬道理
   p
@@ -49,53 +49,65 @@ header
   p
     | 我们会一起仿照一个 Express Web 框架。 课程的每天都有任务，让你天天都能有一些提升。通过这些任务我们可以接触到 NodeJS 的编程模式，并且深度了解 Express 的原理。
 
-.toc
-  h1
-    | 课程大纲
+.text-content
+  .course-toc
+    h1
+      | 课程大纲
 
-  h2
-    | 暖身周
-  ul
-    li + 写一个简单的 NPM package
-    li + 用 mocha 写测试
-    li + 用 CoffeeScript 写 NPM package
-    li + 实现 JS 类 （练习原型链）
+    h2.course-toc__heading
+      | 暖身周
 
-  h2
-    | 第一周 - 中间件机制
-  ul
-    li + 实现穷人的 HarpJS （练习使用 middleware）
-    li + 实现 Connect 的中间件机制
+    ul.course-toc__items
+      li 写一个简单的 NPM package
+      li 用 mocha 写测试
+      li 用 CoffeeScript 写 NPM package
+      li 实现 JS 类 （练习原型链）
 
-  h2
-    | 第二周 - Express
-  ul
-    li + 实现 Express 路由
-    li + 实现路径匹配
-    li + 实现 HTTP 动词
-    li + 实现 @luin 的 dependency injection 中间件 （可选）
+    h2.course-toc__heading
+      | 第一周 - 中间件机制
+    ul.course-toc__items
+      li 实现穷人的 HarpJS （练习使用 middleware）
+      li 实现 Connect 的中间件机制
 
-  h2
-    | 第三周 - HTTP 协议
-  ul
-    li + 实现 content negotiation
-    li + 实现 conditional get
-    li + 实现档案下载
-    li + 实现档案上传
+    h2.course-toc__heading
+      | 第二周 - Express
+    ul.course-toc__items
+      li 实现 Express 路由
+      li 实现路径匹配
+      li 实现 HTTP 动词
+      li 实现 @luin 的 dependency injection 中间件 （可选）
 
-a#enroll
+    h2.course-toc__heading
+      | 第三周 - HTTP 协议
+    ul.course-toc__items
+      li 实现 content negotiation
+      li 实现 conditional get
+      li 实现档案下载
+      li 实现档案上传
+
+a#enroll.enroll-btn
   | 课程报名质询
 
-.coach
-  h1
-    | 导师介绍
-  img src=image_url('courses/avatar2.png')
-  p
-    | 我叫 Howard，台湾同胞一枚。小时候随家人移民加拿大。2011 年远程工作，边旅行边赚钱。那一年第一次来到了天朝。我写了篇有关这个经历的博文 From The Office to Travelling The World。2012 年觉得生活太安逸，决定来中国发展，发现难度瞬间提升为 Hard。在深圳和朋友创立了小象网，做创意纸品，婚纱相册之类的产品。现在已盈利，处稳定发展状态。2013 夏，搬到成都和女朋友在一起。
-  p
-    | Github: http://github.com/hayeah
-  p
-    | Blog: http://metacircus.com
+.text-content
+  h1 导师介绍
+  .coach-info
+    img.coach-info__portrait src=image_url('courses/avatar2.png')
+    p.coach-info__bio
+      | 我叫 Howard，台湾同胞一枚。小时候随家人移民加拿大。2011 年远程工作，边旅行边赚钱。那一年第一次来到了天朝。我写了篇有关这个经历的博文 From The Office to Travelling The World。2012 年觉得生活太安逸，决定来中国发展，发现难度瞬间提升为 Hard。在深圳和朋友创立了小象网，做创意纸品，婚纱相册之类的产品。现在已盈利，处稳定发展状态。2013 夏，搬到成都和女朋友在一起。
 
-footer
-  img.logo src=image_url('logo2.png')
+      br
+      br
+
+      | Github:
+      a href="http://github.com/hayeah"
+        |  http://github.com/hayeah
+
+      br
+      br
+
+      | Blog:
+      a href="http://metacircus.com"
+        |  http://metacircus.com
+
+footer.site-footer
+  img.site-footer__logo src=image_url('logo2.png')

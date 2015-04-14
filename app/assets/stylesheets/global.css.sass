@@ -11,3 +11,24 @@ a
 
 .hidden
   display: none
+
+@mixin clearfix
+  &:after
+    content: ''
+    display: block
+    clear: both
+
+
+$content-max-width: 620px
+
+@mixin content($margin: "",$margin-bottom: "")
+  @if $margin == "" && $margin-bottom == ""
+    margin: auto
+
+  @if $margin != "" && $margin-bottom == ""
+    margin: $margin auto
+
+  @if $margin != "" && $margin-bottom != ""
+    margin: $margin auto $margin-bottom auto
+
+  max-width: $content-max-width
