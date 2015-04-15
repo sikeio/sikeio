@@ -1,35 +1,20 @@
 @import ../function
 
 div.panel
-  z-index: 9999
-  display: none
-  box-sizing: border-box
+  // center vertically and horizontally
   position: fixed
-  background: white
+  margin: auto
   top: 0
   left: 0
   right: 0
   bottom: 0
-  margin: auto
-  padding: 15px 25px
+
+  z-index: 9999
+  display: none
+  box-sizing: border-box
+
   width: 600px
   height: 464px
-  //it covers the whole screen for click event
-  &:after
-    content: ''
-    display: block
-    position: fixed
-    top: 0
-    left: 0
-    width: 100%
-    height: 100%
-    z-index: -1
 
-div.panel-overlay
-  display: none
-  position: fixed
-  top: 0
-  left: 0
-  width: 100%
-  height: 100%
-  background: rgba(0,0,0,0.6)
+  background: white
+  padding: 15px 25px

@@ -47,34 +47,8 @@ $ ->
 ###
 
 $ ->
-  $overlay = $('<div class="panel-overlay">').appendTo('body')
-
-  $enroll = $('.js-panel--enrolling')
-  $success = $('.js-panel--success')
-  
-
-  showPanel = ($panel)->
-    $overlay.show()
-    $panel.show()
-  hidePanel = ($panel)->
-    $overlay.hide()
-    $panel.hide()
-
-
-  # The panel actually covers the whole screen.
-  $(".panel").on 'click', (e)->
-    panel = $('.panel:visible')
-    x = e.offsetX
-    y = e.offsetY
-    if  x < 0 || x > panel.outerWidth() || y < 0 || y > panel.outerHeight()
-      hidePanel panel
-
-  # not sure why it doesn't work to hook into document
-  # $(document).on "click", ".js-enroll-panel-trigger", ->
-  $(".js-enroll-panel-trigger").on "click", ->
-    showPanel($enroll)
-
   $form = $(".js-panel--enrolling__form")
+
   $form.on 'ajax:error', (evt,xhr,error)->
       console.log("ajax error")
       msg = xhr.responseJSON.msg
@@ -85,6 +59,5 @@ $ ->
         type: 'error'
 
   $form.on "ajax:success", ->
-    hidePanel($enroll)
-    showPanel($success)
+    $(".js-modal").trigger("show",".js-panel--success")
 

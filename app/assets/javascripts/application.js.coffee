@@ -7,6 +7,8 @@
 #= require slick.js/slick/slick.min.js
 
 #= require_self
+#= require_directory ./blocks
 #= require_directory .
+
 
 

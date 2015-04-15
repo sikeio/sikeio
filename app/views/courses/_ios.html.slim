@@ -7,7 +7,7 @@ header.site-header
   h1.jumbotron__title
     img.jumbotron__badge src=image_url('courses/ios/ios.png')
     | 攀爬第一个高峰
-  a.jumbotron__btn.js-enroll-panel-trigger
+  a.jumbotron__btn.js-modal-trigger data-modal-target=".js-panel--enrolling"
     | 课程报名质询
 
 .text-content
@@ -92,7 +92,7 @@ header.site-header
   p
     | 来吧，让我们一起走上 iOS Native 开发这条不归路！
 
-a.enroll-btn.js-enroll-panel-trigger
+a.enroll-btn.js-modal-trigger data-modal-target=".js-panel--enrolling"
   | 课程报名质询
 
 .text-content
