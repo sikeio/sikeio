@@ -6,11 +6,6 @@
 #= require local_page_event
 #= require slick.js/slick/slick.min.js
 
-#= require react
-#= require react_ujs
-#= require components
-
-
 #= require_self
 #= require_directory .
 
