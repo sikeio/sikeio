@@ -1,7 +1,9 @@
 header.site-header
-  img.site-header__logo src=image_url('logo2.png')
-  h1.site-header__title
-    | iOS 基础教程
+  .logo-title
+    a.logo-title__logo href="/"
+      .logo
+    h1.logo-title__title
+      | iOS 基础教程
 
 .jumbotron.jumbotron--ios
   h1.jumbotron__title
@@ -120,7 +122,7 @@ header.site-header
         |  http://metacircus.com
 
 footer.site-footer
-  img.site-footer__logo src=image_url('logo2.png')
+  .logo
 
 javascript:
   var $demo = $('.js-iphone-demo');

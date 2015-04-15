@@ -1,7 +1,10 @@
 .panel.js-panel--enrolling
-  header.title-logo
-    img.title-logo__logo src=image_url('logo2.png')
-    h1.title-logo__title NodeJS 高速道路
+  .logo-title
+    span.logo-title__logo
+      .logo
+    h1.logo-title__title
+      | iOS 基础教程
+
   .speech-bubble
     img.speech-bubble__portrait src=image_url('courses/avatar.png')
     .speech-bubble__text
@@ -9,6 +12,7 @@
       br
       br
       | 请在下面留下你的邮箱，我会在2天内和你联系。
+
   form.form.js-panel--enrolling__form action='/enrollments' method='post' data-remote=true
     p.form__row
       label 姓名
@@ -20,9 +24,11 @@
       button.btn--large.btn--green type='submit' 申请加入
 
 .panel.js-panel--success
-  header.title-logo
-    img.title-logo__logo src=image_url('logo2.png')
-    h1.title-logo__title NodeJS 高速道路
+  .logo-title
+    span.logo-title__logo
+      .logo
+    h1.logo-title__title
+      | iOS 基础教程
 
   .speech-bubble
     img.speech-bubble__portrait src=image_url('courses/avatar.png')
