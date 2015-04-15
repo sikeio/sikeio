@@ -7,8 +7,9 @@ class UserMailer < ApplicationMailer
 
   def invitation_email(enrollment,content)
     @enrollment = enrollment
-    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
-    @content = markdown.render content
+    # markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
+    # @content = markdown.render content
+    @content = content
     mail(to: @enrollment.user.email, subject: '思客教学邀请函')
   end
 

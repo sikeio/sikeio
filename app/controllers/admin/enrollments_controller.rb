@@ -5,8 +5,9 @@ class Admin::EnrollmentsController < Admin::ApplicationController
   end
 
   def send_invitation_email
-    content = params[:content]
-    UserMailer.invitation_email(enrollment, content).deliver_later
+    # content = params[:content]
+
+    UserMailer.invitation_email(enrollment, "hello, click this invitation link: #{invite_enrollment_url(@enrollment)}").deliver_later
     enrollment.update_attribute :has_sent_invitation_email, true
     render text: "sent email"
   end
