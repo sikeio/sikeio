@@ -1,20 +1,21 @@
 class EnrollmentsController < ApplicationController
   def create
-    if current_user
-      Enrollment.create user: current_user, course: course
-      #TODO: send email to admin
-      head :ok
+    user = User.find_or_create_by(email: params[:email])
+    user.name = params[:name]
+    if !user.save
+      render json: { msg: user.errors.full_messages }, status: :bad_request
       return
     end
-    user = User.new params.permit(:name, :email)
-    if user.save
-      Enrollment.create user: user, course: course
-      UserMailer.welcome_email(user).deliver_later
-      # TODO: send email to admin
-      head :ok
-    else
-      render json: {msg: user.errors.full_messages}, status: :bad_request
+
+    # TODO use an actual course
+    @course = Course.first
+    @enrollment = Enrollment.find_or_create_by user_id: user.id, course_id: course.id
+    if !enrollment.save
+      render json: { msg: enrollment.errors.full_messages }, status: :bad_request
+      return
     end
+
+    head :ok
   end
 
   def invite
@@ -53,7 +54,7 @@ class EnrollmentsController < ApplicationController
   class InvalidPersonalInfoError < RuntimeError ; end
 
   def course
-    Course.find params[:course_id]
+    @course ||= Course.find params[:course_id]
   end
 
   def enrollment

@@ -22,10 +22,15 @@ class Enrollment < ActiveRecord::Base
   belongs_to :user
   belongs_to :course
 
+  validates :token, presence: true
   validates :user_id, presence: true
   validates :course_id, presence: true, uniqueness: {scope: :user_id}
   before_create :fill_in_token, :fill_in_time
   has_many :checkouts, dependent: :destroy
+
+  before_create {
+    self.reset_token
+  }
 
   def to_param
     self.token
@@ -96,6 +101,10 @@ class Enrollment < ActiveRecord::Base
       Checkout.check_out?(self, lesson)
   end
 
+  def reset_token
+    self.token = SecureRandom.urlsafe_base64
+  end
+
   private
 
   def day_from_start_time
@@ -104,9 +113,6 @@ class Enrollment < ActiveRecord::Base
     (today - course_start_time).to_i + 1
   end
 
-  def fill_in_token
-    self.token = SecureRandom.urlsafe_base64
-  end
 
   def fill_in_time
     self.enroll_time = Time.now

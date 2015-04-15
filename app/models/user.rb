@@ -29,6 +29,9 @@ class User < ActiveRecord::Base
   }
 
   # validates :name,presence:{message: '不能为空~'}
+  validates :name, {
+    presence: true
+  }
 
   scope :activated,->{ where(has_been_activated: true)}
   scope :unactivated,->{ where(has_been_activated: false)}
