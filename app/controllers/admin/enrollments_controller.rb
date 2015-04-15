@@ -8,7 +8,7 @@ class Admin::EnrollmentsController < Admin::ApplicationController
     content = params[:content]
     UserMailer.invitation_email(enrollment, content).deliver_later
     enrollment.update_attribute :has_sent_invitation_email, true
-    head :ok
+    render text: "sent email"
   end
 
   def set_payment_status

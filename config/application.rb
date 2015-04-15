@@ -30,7 +30,7 @@ module Sike
       g.helper false
     end
 
-    config.active_job.queue_adapter = :sidekiq
+    config.active_job.queue_adapter = (ENV["RAILS_QUEUE_ADAPTER"] || "inline").to_sym
 
     config.action_mailer.default_url_options = {
       host: ENV["RAILS_HOST"]

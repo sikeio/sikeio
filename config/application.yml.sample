@@ -21,6 +21,9 @@ RAILS_TIME_ZONE: "Beijing"
 # Note: In production with run postgres in container. Probably not a big deal security-wise.
 RAILS_DATABASE: sike_development
 
+# Rails.application.config.active_job.queue_adapter (default: inline)
+RAILS_QUEUE_ADAPTER: inline # or sidekiq, resque
+
 # Redis config
 REDIS_HOST: localhost
 # REDIS_PORT: "6379"

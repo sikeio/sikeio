@@ -25,7 +25,7 @@ table.table.table-bordered.enrollments
         td
           a.btn.btn-info.send href=send_invitation_email_admin_enrollment_path(e) class=(e.has_sent_invitation_email ? 'has-sent' : '')
             | Send Invitation Email
-          a.btn.btn-info.pay  data-method='post' href=set_payment_status_admin_enrollment_path(e)   data-remote=true Set Payment Status
+          a.btn.btn-info.pay data-method='post' href=set_payment_status_admin_enrollment_path(e) data-remote=true Set Payment Status
 
 .email-panel
   = form_tag '',class:'form',remote:true
