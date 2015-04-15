@@ -1,0 +1,42 @@
+@import ../global
+
+.iphone-demo
+  @include content(60px,0px)
+
+.iphone-demo__left-btn
+  cursor: pointer
+  position: relative
+  top: 260px
+  float: left
+
+.iphone-demo__right-btn
+  cursor: pointer
+  position: relative
+  top: 260px
+  float: right
+
+.iphone-demo__slides
+  width: 80%
+  margin: auto
+  img
+    margin: auto
+
+.iphone-demo__slides .slick-dots
+  padding: 0
+  text-align: center
+  margin: auto
+  margin-top: 20px
+  width: 30%
+  li
+    margin-right: 10px
+    display: inline-block
+    width: 10px
+    height: 10px
+    border-radius: 50%
+    border: solid 1px #22AAFF
+    &.slick-active
+      background: #22AAFF
+    button
+      width: 100%
+      height: 100%
+      opacity: 0

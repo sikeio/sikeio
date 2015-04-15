@@ -3,13 +3,14 @@
 
 nav.l-main-nav
   a href="http://d.fork2.com" 交流论坛
+
 header.l-main-header
   .logo
     = image_tag("logo.png", width: '88', alt: "思客")
   h1
     |满足你的技术情怀
     p.slogan 专注 IT 领域远程学徒式教学
-  = form_tag subscribers_path,remote:true,class:'subscribe'
+  = form_tag subscribers_path, remote:true, class:'subscribe'
     input type="text" name='email' placeholder="name@domain.com"
     input type="submit" value="订阅迷你课程"
 section.wrap.l-question

@@ -4,9 +4,39 @@ body
 html
   height: 100%
   font-size: 14px
+  overflow-x: hidden
 
 a
   text-decoration: none
 
 .hidden
   display: none
+
+@mixin clearfix
+  &:after
+    content: ''
+    display: block
+    clear: both
+
+////////////////////////////////////////////////////////////////////////////////
+// layout helpers
+////////////////////////////////////////////////////////////////////////////////
+
+.u-center-text
+  text-align: center
+
+
+$content-max-width: 620px
+
+// define a centered content block that has top and bottom margin
+@mixin content($margin: "",$margin-bottom: "")
+  @if $margin == "" && $margin-bottom == ""
+    margin: auto
+
+  @if $margin != "" && $margin-bottom == ""
+    margin: $margin auto
+
+  @if $margin != "" && $margin-bottom != ""
+    margin: $margin auto $margin-bottom auto
+
+  max-width: $content-max-width

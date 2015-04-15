@@ -1,0 +1,38 @@
+@import ../global
+
+.text-content
+  margin: 0
+  font-size: 18px
+  font-family: "Hiragino Sans GB"
+  font-weight: 300
+  color: #3D3D3C
+
+  & > h1
+    @include content(40px)
+    font-size: 36px
+    font-weight: 300
+    text-align: center
+    &.emphasize
+      text-decoration: underline
+
+  & > p
+    @include content(30px)
+    font-size: 18px
+
+  & > ul, & > ol
+    @include content()
+    padding: 0
+
+.text-content--blue
+  background: #F8FBFF
+  padding-top: 30px
+  padding-bottom: 70px
+
+.text-content--imagebg
+  background: image-url('courses/ios/bg2.jpg')
+  background-size: cover
+  color: white
+  padding: 100px 0
+
+h1.text-content__title--large
+  font-size: 48px

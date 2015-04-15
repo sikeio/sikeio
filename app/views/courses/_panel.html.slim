@@ -1,0 +1,43 @@
+.panel.js-panel--enrolling
+  .logo-title
+    span.logo-title__logo
+      .logo
+    h1.logo-title__title
+      | iOS 基础教程
+
+  .speech-bubble
+    img.speech-bubble__portrait src=image_url('courses/avatar.png')
+    .speech-bubble__text
+      | 嗨~我是Howard 很高兴认识你。我希望先了解你的技术背景和学习动机，再知道这个训练营是否对你有帮助。
+      br
+      br
+      | 请在下面留下你的邮箱，我会在2天内和你联系。
+
+  form.form.js-panel--enrolling__form action='/enrollments' method='post' data-remote=true
+    p.form__row
+      label 姓名
+      input name="name"
+    p.form__row
+      label 邮箱
+      input name="email"
+    p.u-center-text
+      button.btn--large.btn--green type='submit' 申请加入
+
+.panel.js-panel--success
+  .logo-title
+    span.logo-title__logo
+      .logo
+    h1.logo-title__title
+      | iOS 基础教程
+
+  .speech-bubble
+    img.speech-bubble__portrait src=image_url('courses/avatar.png')
+    .speech-bubble__text
+      | 邮件将尽快发出，期待和你交流!
+      br
+      | 我的个人微信账号是 hayeah666，有问题可以加我~
+
+  .wechat-add
+    img.wechat-add__qr src=image_url('courses/weixin.png')
+    .wechat-add__account
+      | 微信：hayeah666

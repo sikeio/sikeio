@@ -47,46 +47,10 @@ $ ->
 ###
 
 $ ->
-  #info page
-  eventPrefix = '.courses-page.info'
-  $= jQuery.getLocal(eventPrefix)
+  $form = $(".js-panel--enrolling__form")
 
-  $enroll = $('.enroll-panel')
-  $success = $('.success-panel')
-  $overlay = $('<div>').css
-                position: 'fixed',
-                top: '0',
-                left: '0',
-                width: "100%",
-                height: "100%",
-                background: "rgba(0,0,0,0.6)",
-              .appendTo('body').hide()
-
-  showPanel = ($panel)->
-    $overlay.show()
-    $panel.show()
-  hidePanel = ($panel)->
-    $overlay.hide()
-    $panel.hide()
-
-  $(document)
-    .on 'ajax:beforeSend','.enroll-form',(evt,xhr,settings)->
-      name = $(this).find('[name=name]').val()
-      email = $(this).find('[name=email]').val()
-      if name == "" || email == ""
-        swal
-          title: "名称和电子邮件不能为空~"
-          type: 'error'
-        return false
-      else
-        courseId = $('.data-course-id').text()
-        settings.data += "&course_id=#{courseId}"
-
-
-    .on 'ajax:success','.enroll-form',->
-      hidePanel($enroll)
-      showPanel($success)
-    .on 'ajax:error',(evt,xhr,error)->
+  $form.on 'ajax:error', (evt,xhr,error)->
+      console.log("ajax error")
       msg = xhr.responseJSON.msg
       text = if Array.isArray(msg) then msg.join("\n") else msg
       swal
@@ -94,25 +58,6 @@ $ ->
         text: text
         type: 'error'
 
-    .on 'click','#enroll',->
-      $.ajax
-        url: '/api/login_status'
-        success: (data)->
-          if data.login
-            $.ajax
-              url: '/enrollments'
-              type: 'POST'
-              data:
-                courseId: $('.data-course-id').text()
-              success: ->
-                showPanel($success)
-          else
-            showPanel($enroll)
-      return false
+  $form.on "ajax:success", ->
+    $(".js-modal").trigger("show",".js-panel--success")
 
-    .on 'click', '.panel', (e)->
-      panel = $('.panel:visible')
-      x = e.offsetX
-      y = e.offsetY
-      if  x < 0 || x > panel.outerWidth() || y < 0 || y > panel.outerHeight()
-        hidePanel panel
