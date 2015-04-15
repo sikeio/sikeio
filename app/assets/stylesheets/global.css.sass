@@ -18,9 +18,17 @@ a
     display: block
     clear: both
 
+////////////////////////////////////////////////////////////////////////////////
+// layout helpers
+////////////////////////////////////////////////////////////////////////////////
+
+.u-center-text
+  text-align: center
+
 
 $content-max-width: 620px
 
+// define a centered content block that has top and bottom margin
 @mixin content($margin: "",$margin-bottom: "")
   @if $margin == "" && $margin-bottom == ""
     margin: auto
