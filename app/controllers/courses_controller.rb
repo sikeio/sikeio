@@ -6,7 +6,7 @@ class CoursesController < ApplicationController
 
   def info
     # TODO: should show only live courses
-    @course_name = params[:id]
+    @course_name = course.name
 
     if !["ios","nodejs"].include?(@course_name)
       render_404("No such course: #{@course_name}")
