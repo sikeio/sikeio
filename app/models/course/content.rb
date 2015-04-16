@@ -10,12 +10,11 @@ class Course::Content
     @xml_doc = xml_handle
   end
 
-  # {desc => "", title => "", permalink => ""}
+  # {desc => "", title => ""}
   def course_info
     {
       desc: nil,
       title: course_title,
-      permalink: course_permalink
     }
   end
 
@@ -31,7 +30,7 @@ class Course::Content
     @lesson_numbers
   end
 
-  #{lesson_name -> {title -> title, overview -> "overview", permalink -> ""}, lesson_name2 -> {title -> title, overview -> "overview"}}
+  #{lesson_name -> {title -> title, overview -> "overview"}, lesson_name2 -> {title -> title, overview -> "overview"}}
   def lessons_info
     return @lessons_info if @lessons_info
     @lessons_info = {}
@@ -40,8 +39,6 @@ class Course::Content
       info["title"] = lesson_title(lesson_node["name"])
       info["overview"] = lesson_node.css("overview").children.to_xhtml.strip
 
-      #TODO permalink should be title.underscore
-      info["permalink"] = lesson_node["name"]
        @lessons_info[lesson_node["name"]] = info
     end
     @lessons_info
@@ -119,7 +116,4 @@ class Course::Content
     title = page_node.css("h1")[0].text
   end
 
-  def course_permalink
-    course_title.strip.gsub(/ +/, "_").underscore
-  end
 end
