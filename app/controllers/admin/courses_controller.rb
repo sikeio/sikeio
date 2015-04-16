@@ -10,7 +10,8 @@ class Admin::CoursesController < Admin::ApplicationController
 
   def create
     course_info = course_params
-    course = Course.create(course_info)
+    # create a course with temporarily generated permalink
+    course = Course.create(course_info.merge(:permalink => SecureRandom.hex))
 
     redirect_to admin_courses_path
   end
