@@ -10,8 +10,6 @@ class Admin::CoursesController < Admin::ApplicationController
 
   def create
     course_info = course_params
-    temp_permalink = course_info[:name]
-    course_info[:permalink] = temp_permalink
     course = Course.create(course_info)
 
     redirect_to admin_courses_path
