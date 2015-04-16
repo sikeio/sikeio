@@ -23,12 +23,12 @@ table.table.table-bordered.enrollments
         td = e.activated
         td.paid = e.paid
         td
-          a.btn.btn-info.send href=send_invitation_email_admin_enrollment_path(e) class=(e.has_sent_invitation_email ? 'has-sent' : '') data-method="post"
+          a.btn.btn-info.send-invitation-email href=send_invitation_email_admin_enrollment_path(e) class=(e.has_sent_invitation_email ? 'has-sent' : '')
             | Send Invitation Email
           a.btn.btn-info.pay data-method='post' href=set_payment_status_admin_enrollment_path(e) data-remote=true Set Payment Status
 
 .email-panel
-  = form_tag '',class:'form',remote:true
+  = form_tag '',class:'form',remote: true
     textarea.form-control cols=20 rows=10 name='content'
     .form-grup
       .btn-group.pull-right

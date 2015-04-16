@@ -1,5 +1,5 @@
 $ ->
-  eventPrefix = '.admin-enrollments-page.index'
+  eventPrefix = '#admin-enrollments_index'
   $ = jQuery.getLocal(eventPrefix)
 
   $(document)
@@ -9,7 +9,7 @@ $ ->
         title: 'Send Successfully!'
         type: "success"
 
-    .on 'click', '.enrollments .send', ->
+    .on 'click', '.enrollments .send-invitation-email', ->
       url = $(this).attr 'href'
       $('.email-panel form').attr 'action', url
       $('.email-panel').show()

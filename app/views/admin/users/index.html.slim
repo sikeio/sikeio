@@ -8,23 +8,10 @@ table.table.table-bordered.users
     tr
       th 名称
       th email
-      th 操作
 
   tbody
     - @users.unactivated.each do |u|
       tr
         td = u.name
         td = u.email
-        td
-          button.btn.btn-info.activate  data-user-id=u.id Send Activation Email
-
-.email-panel
-  = form_tag send_activation_email_admin_users_path,class:'form',remote:true
-    input type='hidden' name='user_id'
-    textarea.form-control cols=20 rows=10 name='content'
-    .form-grup
-      .btn-group.pull-right
-        button.btn.btn-default.ok type='submit' OK
-        a.btn.btn-default.cancel Cancel
-
 
