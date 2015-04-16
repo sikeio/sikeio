@@ -1,9 +1,8 @@
 $ ->
   #invite page
-  eventPrefix = ".enrollments-page.invite"
-  $ = jQuery.getLocal(eventPrefix)
+  pageIdentifier = "#enrollments_invite "
   $(document)
-    .on 'submit', 'form', ->
+    .on 'submit', pageIdentifier + 'form', ->
       if $('[name="personal_info[type]"]:checked').length == 0
         swal
           title: '请先选择你的职业~'
@@ -14,17 +13,16 @@ $ ->
 
 $ ->
   #pay page
-  eventPrefix = ".enrollments-page.pay"
-  $ = jQuery.getLocal(eventPrefix)
+  pageIdentifier = "#enrollments_pay "
   $(document)
-    .on 'click', '.start-course', ->
+    .on 'click', pageIdentifier + '.start-course', ->
       if $('#have-paid').prop('checked')
         $('form').submit()
       else
         swal
           title: '请先通过支付宝付款再开始课程~'
 
-    .on 'keyup', 'input.buddy-name', ->
+    .on 'keyup', pageIdentifier + 'input.buddy-name', ->
       if $(this).val() != ''
         if $('.tuition .origin').text() == '589'
           $('.tuition .new').text '489'
