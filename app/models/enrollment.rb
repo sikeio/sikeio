@@ -3,14 +3,14 @@
 # Table name: enrollments
 #
 #  id                        :integer          not null, primary key
-#  user_id                   :integer
-#  course_id                 :integer
+#  user_id                   :integer          not null
+#  course_id                 :integer          not null
 #  version                   :string
 #  start_time                :datetime
 #  enroll_time               :datetime
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
-#  token                     :string
+#  token                     :string           not null
 #  personal_info             :json
 #  activated                 :boolean          default(FALSE)
 #  has_sent_invitation_email :boolean          default(FALSE)
