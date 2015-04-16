@@ -9,7 +9,12 @@ class Admin::EnrollmentsController < Admin::ApplicationController
 
     UserMailer.invitation_email(enrollment, "hello, click this invitation link: #{invite_enrollment_url(@enrollment)}").deliver_later
     enrollment.update_attribute :has_sent_invitation_email, true
-    render text: "sent email"
+    head :ok
+  end
+
+  def send_welcome_email
+    UserMailer.welcome_email(enrollment.user).deliver_later
+    head :ok
   end
 
   def set_payment_status

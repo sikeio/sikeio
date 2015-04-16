@@ -1,5 +1,5 @@
 $ ->
-  eventPrefix = '.admin-enrollments-page.index'
+  eventPrefix = '#admin-enrollments_index'
   $ = jQuery.getLocal(eventPrefix)
 
   $(document)
@@ -9,10 +9,11 @@ $ ->
         title: 'Send Successfully!'
         type: "success"
 
-    .on 'click', '.enrollments .send', ->
+    .on 'click', '.enrollments .send-invitation-email', ->
       url = $(this).attr 'href'
       $('.email-panel form').attr 'action', url
       $('.email-panel').show()
+      $('.email-panel textarea').focus()
       return false
 
     .on 'click', '.email-panel .cancel', ->
@@ -23,6 +24,12 @@ $ ->
         title: 'Set Successfully!'
         type: "success"
       $('td.paid').text 'true'
+
+    .on 'ajax:success', '.enrollments .send-welcome-email', ->
+      swal
+        title: 'Send Successfully'
+        type: 'success'
+
 
 
 
