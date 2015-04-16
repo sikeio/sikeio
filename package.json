@@ -21,6 +21,6 @@
   "homepage": "https://github.com/hayeah/sike",
   "dependencies": {
     "marked": "^0.3.3",
-    "xmd": "0.0.3"
+    "xmd": "0.0.4"
   }
 }
