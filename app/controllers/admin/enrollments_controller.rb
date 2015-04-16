@@ -12,6 +12,11 @@ class Admin::EnrollmentsController < Admin::ApplicationController
     head :ok
   end
 
+  def send_welcome_email
+    UserMailer.welcome_email(enrollment.user).deliver_later
+    head :ok
+  end
+
   def set_payment_status
     enrollment.update_attribute :paid,true
     head :ok

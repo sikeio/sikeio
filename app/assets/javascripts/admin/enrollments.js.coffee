@@ -13,6 +13,7 @@ $ ->
       url = $(this).attr 'href'
       $('.email-panel form').attr 'action', url
       $('.email-panel').show()
+      $('.email-panel textarea').focus()
       return false
 
     .on 'click', '.email-panel .cancel', ->
@@ -23,6 +24,12 @@ $ ->
         title: 'Set Successfully!'
         type: "success"
       $('td.paid').text 'true'
+
+    .on 'ajax:success', '.enrollments .send-welcome-email', ->
+      swal
+        title: 'Send Successfully'
+        type: 'success'
+
 
 
 

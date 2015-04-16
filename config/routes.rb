@@ -78,6 +78,7 @@ Rails.application.routes.draw do
       member do
         post 'send_invitation_email'
         post 'set_payment_status'
+        post 'send_welcome_email'
       end
     end
 
