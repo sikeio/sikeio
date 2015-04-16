@@ -1,9 +1,9 @@
+/ param [Course] course
 .panel.js-panel--enrolling
   .logo-title
     span.logo-title__logo
       .logo
-    h1.logo-title__title
-      | iOS 基础教程
+    h1.logo-title__title= course.title
 
   .speech-bubble
     img.speech-bubble__portrait src=image_url('courses/avatar.png')
@@ -14,6 +14,7 @@
       | 请在下面留下你的邮箱，我会在2天内和你联系。
 
   form.form.js-panel--enrolling__form action='/enrollments' method='post' data-remote=true
+    input name="course_id" type="hidden" value="#{course.permalink}"
     p.form__row
       label 姓名
       input name="name"
@@ -27,8 +28,7 @@
   .logo-title
     span.logo-title__logo
       .logo
-    h1.logo-title__title
-      | iOS 基础教程
+    h1.logo-title__title= course.title
 
   .speech-bubble
     img.speech-bubble__portrait src=image_url('courses/avatar.png')

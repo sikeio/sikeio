@@ -7,8 +7,6 @@ class EnrollmentsController < ApplicationController
       return
     end
 
-    # TODO use an actual course
-    @course = Course.first
     @enrollment = Enrollment.find_or_create_by user_id: user.id, course_id: course.id
     if !enrollment.save
       render json: { msg: enrollment.errors.full_messages }, status: :bad_request
@@ -32,7 +30,9 @@ class EnrollmentsController < ApplicationController
       if enrollment.activated
         redirect_to course_path(@enrollment.course)
         return
-      elsif !@enrollment.user.has_binded_github
+      end
+
+      if !@enrollment.user.has_binded_github
         redirect_to invite_enrollment_path(@enrollment)
         return
       end
@@ -54,7 +54,7 @@ class EnrollmentsController < ApplicationController
   class InvalidPersonalInfoError < RuntimeError ; end
 
   def course
-    @course ||= Course.find params[:course_id]
+    @course ||= Course.by_param!(params[:course_id])
   end
 
   def enrollment

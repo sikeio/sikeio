@@ -28,6 +28,14 @@ class Course < ActiveRecord::Base
     uniqueness: true
   validates_uniqueness_of :permalink
 
+  def self.by_param(id)
+    self.find_by(permalink: id)
+  end
+
+  def self.by_param!(id)
+    self.find_by!(permalink: id)
+  end
+
   def to_param
     self.permalink
   end

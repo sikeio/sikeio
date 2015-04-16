@@ -10,7 +10,7 @@
 #  enroll_time               :datetime
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
-#  token                     :string
+#  token                     :string           not null
 #  personal_info             :json
 #  activated                 :boolean          default(FALSE)
 #  has_sent_invitation_email :boolean          default(FALSE)

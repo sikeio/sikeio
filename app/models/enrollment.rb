@@ -25,11 +25,10 @@ class Enrollment < ActiveRecord::Base
   validates :token, presence: true
   validates :user_id, presence: true
   validates :course_id, presence: true, uniqueness: {scope: :user_id}
-  before_create :fill_in_token, :fill_in_time
   has_many :checkouts, dependent: :destroy
 
-  before_create {
-    self.reset_token
+  before_validation {
+    self.reset_token if self.token.nil?
   }
 
   def to_param
@@ -98,11 +97,16 @@ class Enrollment < ActiveRecord::Base
   end
 
   def is_completed?(lesson)
-      Checkout.check_out?(self, lesson)
+    Checkout.check_out?(self, lesson)
   end
 
   def reset_token
     self.token = SecureRandom.urlsafe_base64
+  end
+
+  def start!
+    # next monday at 0:00
+    self.start_time = Time.now.next_week :monday
   end
 
   private
@@ -111,16 +115,5 @@ class Enrollment < ActiveRecord::Base
     today = Time.now.beginning_of_day.to_date
     course_start_time = self.start_time.beginning_of_day.to_date
     (today - course_start_time).to_i + 1
-  end
-
-
-  def fill_in_time
-    self.enroll_time = Time.now
-    self.start_time = course_start_time
-  end
-
-  def course_start_time
-    date = Time.now().to_date + (7 - Time.now().to_date.cwday) + 1
-    date.to_time
   end
 end
