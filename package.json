@@ -1,0 +1,26 @@
+{
+  "name": "sike-web",
+  "version": "0.0.0",
+  "description": "sike web",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hayeah/sike.git"
+  },
+  "author": "Howard Yeh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hayeah/sike/issues"
+  },
+  "homepage": "https://github.com/hayeah/sike",
+  "dependencies": {
+    "marked": "^0.3.3",
+    "xmd": "0.0.3"
+  }
+}
