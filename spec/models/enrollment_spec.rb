@@ -6,8 +6,8 @@
 #  user_id                   :integer
 #  course_id                 :integer
 #  version                   :string
-#  start_time                :datetime         default(Fri, 03 Apr 2015 17:56:30 CST +08:00), not null
-#  enroll_time               :datetime         default(Fri, 03 Apr 2015 17:56:30 CST +08:00), not null
+#  start_time                :datetime         default(Mon, 30 Mar 2015 14:23:30 CST +08:00), not null
+#  enroll_time               :datetime         default(Mon, 30 Mar 2015 14:23:30 CST +08:00), not null
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
 #  token                     :string

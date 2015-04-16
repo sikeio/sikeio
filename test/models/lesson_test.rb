@@ -8,6 +8,8 @@
 #  overview   :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  course_id  :integer
+#  permalink  :string
 #
 
 require 'test_helper'

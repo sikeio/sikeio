@@ -2,11 +2,15 @@
 #
 # Table name: courses
 #
-#  id         :integer          not null, primary key
-#  name       :string
-#  desc       :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id              :integer          not null, primary key
+#  name            :string
+#  desc            :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  current_version :string
+#  repo_url        :string
+#  title           :string
+#  permalink       :string
 #
 
 require "rails_helper"
