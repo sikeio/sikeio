@@ -25,40 +25,6 @@ class CoursesController < ApplicationController
     #render '_show'
   end
 
-  def pay
-    @course = Course.find params[:id]
-  end
-
-  def invite
-    @course = Course.find params[:id]
-    @user = User.take
-  end
-
-  # 待定  should use before_action to controller login or not
-  def start
-    user = current_user
-    course = Course.find params[:id]
-
-=begin
-    unless user
-      store_location payment_course_url(course)
-      return redirect_to login_path
-    end
-=end
-
-    if user.courses.include? course.id
-      redirect_to course_path(course)
-    else
-      update_record
-      redirect_to course_path(course)
-    end
-  end
-
-
-  def send_course_preview
-    #TODO
-  end
-
   def get_user_status
     result = {}
     result["has_logged_in"] = login?
