@@ -1,15 +1,12 @@
 class SubscribersController < ApplicationController
-
   def create
-    result = {}
-    s = Subscriber.new params.permit(:email)
-    if s.save
-      result['success'] = true
-    else
-      result['success'] = false
-      result['msg'] = s.errors.full_messages
+    # should always succeed... if not, it's pretty weird.
+    subscriber = Subscriber.find_or_create_by(email: params[:email])
+    if !subscriber.valid?
+      render_400 "邮件订阅失败", subscriber.errors
+      return
     end
-    render json: result
-  end
 
+    head :ok
+  end
 end
