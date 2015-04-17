@@ -11,11 +11,11 @@ class Course::MdParse
     @course_base_dir = repo_dir #Pathname
     @temp_dir = Course::Utils::TEMP_DIR
     FileUtils.mkdir_p(Course::Utils::TEMP_DIR) if !File.exist?(Course::Utils::TEMP_DIR)
-    save_file_in_temp
   end
 
 
   def result
+    save_file_in_temp
     course =<<-THERE
     <course name="#{course_name}">
       #{index_xml}
@@ -24,6 +24,13 @@ class Course::MdParse
     THERE
     clear_temp_dir
     course
+  end
+
+  def current_commit_msg
+    git = Git.open(course_base_dir)
+    message = git.branch(version).gcommit.message
+    sha = git .branch(version).gcommit.sha
+    message + ": " + sha
   end
 
   private
@@ -150,7 +157,7 @@ class Course::MdParse
     FileUtils::mkdir_p(temp_dir)
     git.branch(version).gcommit.gtree.files.each do |file_name, file|
       ext = File.extname(file_name)
-      if ext == ".xmd"
+      if ext == ".xmd" || ext == ".md"
         basename = File.basename(file_name, ext)
         wirte_to_temp_file("course", basename, ext, file.contents)
       end
