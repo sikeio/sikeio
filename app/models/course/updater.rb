@@ -5,7 +5,6 @@ class Course::Updater
     @course = course
     @course_repo_dir = Course::Utils::REPO_DIR + course.name
     @course_xml_repo_dir = Course::Utils::XML_REPO_DIR + course.name + "master"
-    @coures_asset_dir = Course::Utils::ASSET_DIR + course.name
     file_name = course.name + ".xml"
     @course_xml_file_path = @course_xml_repo_dir + file_name
   end
