@@ -1,15 +1,20 @@
 class EnrollmentsController < ApplicationController
   def create
+    if params[:name].blank? || params[:email].blank?
+      render_400 "请输入你的姓名和邮箱"
+      return
+    end
+
     user = User.find_or_create_by(email: params[:email])
     user.name = params[:name]
     if !user.save
-      render json: { msg: user.errors.full_messages }, status: :bad_request
+      render_400 "报名失败", user.errors
       return
     end
 
     @enrollment = Enrollment.find_or_create_by user_id: user.id, course_id: course.id
     if !enrollment.save
-      render json: { msg: enrollment.errors.full_messages }, status: :bad_request
+      render_400 "报名失败", enrollment.errors
       return
     end
 

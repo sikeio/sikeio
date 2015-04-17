@@ -49,15 +49,6 @@ $ ->
 $ ->
   $form = $(".js-panel--enrolling__form")
 
-  $form.on 'ajax:error', (evt,xhr,error)->
-      console.log("ajax error")
-      msg = xhr.responseJSON.msg
-      text = if Array.isArray(msg) then msg.join("\n") else msg
-      swal
-        title: error
-        text: text
-        type: 'error'
-
   $form.on "ajax:success", ->
     $(".js-modal").trigger("show",".js-panel--success")
 

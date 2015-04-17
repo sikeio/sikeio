@@ -31,4 +31,19 @@ class ApplicationController < ActionController::Base
     raise ActionController::RoutingError.new(msg)
   end
 
+  # @params [String] msg
+  # @params [ActiveModel::Errors | (Hash => String|Array<String>)] errors
+  def render_400(msg,errors=nil)
+    if errors.is_a?(ActiveModel::Errors)
+      errors = errors.to_hash
+    end
+
+    if request.xhr?
+      render json: {
+        msg: msg,
+        errors: errors
+      }, status: :bad_request
+    end
+  end
+
 end
