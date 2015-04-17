@@ -106,7 +106,11 @@ class Enrollment < ActiveRecord::Base
 
   def start!
     # next monday at 0:00
-    self.start_time = Time.now.next_week :monday
+    self.start_time = next_monday
+  end
+
+  def next_monday
+    Time.now.next_week :monday
   end
 
   private

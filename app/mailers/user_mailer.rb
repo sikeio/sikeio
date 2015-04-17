@@ -1,17 +1,36 @@
 class UserMailer < ApplicationMailer
-  def welcome_email(user)
-    @user = user
-    mail(to: @user.email, subject: '欢迎来到思客教学')
+  def welcome(enrollment)
+    course_name = enrollment.course.name
+    @user = enrollment.user
+
+    titles = {
+      # "ios" => "【思客教学】 iOS 训练营邀请"
+      "nodejs" => "【思客教学】 NodeJS 训练营邀请"
+    }
+    title = titles[course_name] || raise("no welcome email defiend for: #{course_name}")
+
+    mail(to: @user.email, subject: title, template_name: "welcome_#{course_name}")
   end
 
+  def invite(enrollment)
+    titles = {
+      # "ios" => "【思客教学】 iOS 训练营邀请"
+      "nodejs" => "【思客教学】 NodeJS 训练营邀请"
+    }
 
-  def invitation_email(enrollment,content)
+    course_name = enrollment.course.name
+    title = titles[course_name] || raise("no invite email defiend for: #{course_name}")
+
+    @course = enrollment.course
     @enrollment = enrollment
-    # markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
-    # @content = markdown.render content
-    @content = content
-    mail(to: @enrollment.user.email, subject: '思客教学邀请函')
-  end
+    @next_monday = enrollment.next_monday
+    @user = @enrollment.user
 
+    mail \
+      to: @user.email,
+      subject: title,
+      template_name: "invite_#{course_name}"
+
+  end
 
 end
