@@ -4,4 +4,9 @@ class Admin::DashboardController < Admin::ApplicationController
     @courses = Course.all
   end
 
+  def status
+    @head_commit = `git log -n 1`.strip
+    @env = ENV
+  end
+
 end

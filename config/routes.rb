@@ -61,7 +61,8 @@ Rails.application.routes.draw do
 
 
   namespace 'admin' do
-    get '/' => "dashboard#index",as: :dashboard
+    get '/' => "dashboard#index", as: :dashboard
+    get "status" => "dashboard#status"
 
     get '/login' => "sessions#new"
     post '/login' => "sessions#create"
