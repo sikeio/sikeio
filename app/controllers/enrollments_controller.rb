@@ -12,13 +12,21 @@ class EnrollmentsController < ApplicationController
       return
     end
 
-    @enrollment = Enrollment.find_or_create_by user_id: user.id, course_id: course.id
-    if !enrollment.save
-      render_400 "报名失败", enrollment.errors
+    @enrollment = Enrollment.find_or_initialize_by user_id: user.id, course_id: course.id
+    # already enrolled
+    if !enrollment.new_record?
+      head :ok
       return
     end
 
-    head :ok
+    # create new enrollment
+    if !enrollment.save
+      render_400 "报名失败", enrollment.errors
+      return
+    else
+      UserMailer.welcome(enrollment).deliver_later
+      head :ok
+    end
   end
 
   def invite

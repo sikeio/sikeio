@@ -4,7 +4,7 @@ class UserMailer < ApplicationMailer
     @user = enrollment.user
 
     titles = {
-      # "ios" => "【思客教学】 iOS 训练营邀请"
+      "ios" => "【思客教学】 iOS 训练营邀请",
       "nodejs" => "【思客教学】 NodeJS 训练营邀请"
     }
     title = titles[course_name] || raise("no welcome email defiend for: #{course_name}")
@@ -14,7 +14,7 @@ class UserMailer < ApplicationMailer
 
   def invite(enrollment)
     titles = {
-      # "ios" => "【思客教学】 iOS 训练营邀请"
+      # "ios" => "【思客教学】 iOS 训练营邀请",
       "nodejs" => "【思客教学】 NodeJS 训练营邀请"
     }
 

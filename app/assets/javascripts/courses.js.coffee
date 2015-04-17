@@ -1,7 +1,4 @@
 $ ->
-  eventPrefix = '.courses-page'
-  $ = jQuery.getLocal(eventPrefix)
-
   $(document)
     .ready ->
       getClock = ->
