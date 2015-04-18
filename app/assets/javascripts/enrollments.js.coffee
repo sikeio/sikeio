@@ -1,8 +1,7 @@
 $ ->
   #invite page
-  pageIdentifier = "#enrollments_invite "
   $(document)
-    .on 'submit', pageIdentifier + 'form', ->
+    .on 'submit', ".js-enrollment-update-personal-info-form", ->
       if $('[name="personal_info[type]"]:checked').length == 0
         swal
           title: '请先选择你的职业~'

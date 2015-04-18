@@ -39,21 +39,26 @@ class EnrollmentsController < ApplicationController
     @user = @enrollment.user
   end
 
+  def update
+    enrollment.update_attribute :personal_info, params.require(:personal_info).permit(:blog_url, :occupation)
+    redirect_to pay_enrollment_path(@enrollment)
+  end
+
   def pay
     if enrollment.activated
       redirect_to course_path(@enrollment.course)
       return
     end
-    if !@enrollment.user.has_binded_github
+
+    if !@enrollment.user.has_binded_github || enrollment.personal_info.nil?
       redirect_to invite_enrollment_path(@enrollment)
       return
     end
-    if !@enrollment.has_personal_info?
-      @enrollment.update_attribute :personal_info, params.require(:personal_info).permit(:blog_url, :type)
-    end
+
     @course = @enrollment.course
   end
 
+  # POST
   def finish
     enrollment.buddy_name = params[:buddy_name]
     enrollment.activated = true

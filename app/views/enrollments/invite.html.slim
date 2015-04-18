@@ -30,8 +30,6 @@ header.site-header.site-header--center
         | Github 绑定账号:  #{@user.github.info["nickname"]}
       .message
         | Github 已经绑定
-      / p.u-center-text
-      /   a.btn.btn--success.js-bind-github.js-success disabled=true 绑定成功
     - else
       p.u-center-text
         a.btn.btn--normal.js-bind-github href="/auth/github?back_path=#{invite_enrollment_path(@enrollment)}&github_binding=true" data-disable-with="<i class='fa fa-spinner fa-spin'></i> Loading..."
@@ -40,24 +38,24 @@ header.site-header.site-header--center
 
   h2
     | 2. 个人信息
-  = form_tag pay_enrollment_path(@enrollment), class: 'form form--no-margin u-bg-lightblue u-padding-15'
+  = form_for @enrollment, class: 'form form--no-margin u-bg-lightblue u-padding-15 js-enrollment-update-personal-info-form'
     .form__row
       label 博客
       input.blog-url name='personal_info[blog_url]'
     .form__row
       label 职业
       .radio
-        input.radio__input type='radio' id='radio1' name='personal_info[type]' value="在职"
+        input.radio__input type='radio' id='radio1' name='personal_info[occupation]' value="在职"
         label.radio__label for='radio1'
           span.radio__label__span
           | 在职
       .radio
-        input.radio__input type='radio' id='radio2' name='personal_info[type]' value="学生"
+        input.radio__input type='radio' id='radio2' name='personal_info[occupation]' value="学生"
         label.radio__label for='radio2'
           span.radio__label__span
           | 学生
       .radio
-        input.radio__input type='radio' id='radio3' name='personal_info[type]' value="无业游民"
+        input.radio__input type='radio' id='radio3' name='personal_info[occupation]' value="无业游民"
         label.radio__label for='radio3'
           span.radio__label__span
           | 无业游民

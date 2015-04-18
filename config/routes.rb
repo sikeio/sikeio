@@ -42,10 +42,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :enrollments,only: [:create] do
+  resources :enrollments, only: [:create,:update] do
     member do
       get 'invite'
-      post 'pay'
       get 'pay'
       post 'finish'
     end
