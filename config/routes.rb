@@ -52,6 +52,7 @@ Rails.application.routes.draw do
 
 
   get '/auth/:provider/callback' => 'authentications#callback'
+  get '/auth/failure' => 'authentications#fail'
 
   scope 'api',format: :json do
     get 'login_status' => 'api#login_status'

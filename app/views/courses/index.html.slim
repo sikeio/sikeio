@@ -1,0 +1,16 @@
+header.site-header
+  .logo
+- if @enrollments == nil || @enrollments.all? { |e| e.activated == false }
+  .speech-bubble
+    p.speech-bubble__text
+      |你还没有加入课程
+- else
+  - @enrollments.each do |e|
+    - if e.activated
+      a href="#{course_path(e.course)}"
+        |#{e.course.name}
+
+
+
+
+

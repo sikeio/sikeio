@@ -23,4 +23,8 @@ class AuthenticationsController < ApplicationController
       redirect_to_back_or_default params["back_path"]
     end
   end
+
+  def fail
+    redirect_to request.env['omniauth.origin'] || :root
+  end
 end
