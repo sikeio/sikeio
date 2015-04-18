@@ -1,66 +1,72 @@
-header
-  img src=image_url('logo2.png')
-  p.course-name =@course.name
+.u-center-content
+  header.site-header
+    .logo-title
+      a.logo-title__logo href="/"
+        .logo
+      h1.logo-title__title
+        | iOS 基础教程
 
-.container
-  section.text
-    h1 邀请函
+  .u-center-text
+    h1.header.header--h1.header--underline 邀请函
+
+  p
+    | 感谢你申请#{@course.name}。很欢迎你加入我们一起学习！
+
+  p = @course.desc
+
+  h2.header.header--h2
+    |1. 绑定 Github 账号
+
+  .u-bg-lightblue.u-padding-15
     p
-      | 感谢你申请#{@course.name}。很欢迎你加入我们一起学习！
-
-    p = @course.desc
-
-  section.github
-    h2 1. 绑定 Github 账号
-
-    .content
       | 训练营使用Github做技术交流。
-      br
-      span.github-tip
-        | 没有Github账号的请先去
-        a href="https://github.com/" 注册
-        | 。
+    span.github-tip
+      | 没有Github账号的请先去
+      a.u-color-red href="https://github.com/" 注册
+      | 。
 
-      - if @user.has_binded_github
-        a.bind-github.button.success disabled=true 绑定成功
-      - else
-        a.bind-github.button href="/auth/github?user_id=#{@user.id}&back_path=#{invite_enrollment_path(@enrollment)}&github_binding=true" data-disable-with="<i class='fa fa-spinner fa-spin'></i> Loading..."
+    - if @user.has_binded_github
+      p.u-center-text
+        a.btn.btn--success.js-bind-github.js-success disabled=true 绑定成功
+    - else
+      p.u-center-text
+        a.btn.btn--normal.js-bind-github href="/auth/github?user_id=#{@user.id}&back_path=#{invite_enrollment_path(@enrollment)}&github_binding=true" data-disable-with="<i class='fa fa-spinner fa-spin'></i> Loading..."
           | Github 绑定
 
 
-  section.personal-info
-    h2 2. 个人信息
-    .content
-      = form_tag pay_enrollment_path(@enrollment),method: 'GET'
-        label 博客
-        br
-        input.blog-url name='personal_info[blog_url]'
-        label 职业
-        br
-        .radio
-          input type='radio' id='radio1' name='personal_info[type]' value="在职"
-          label for='radio1'
-            span
-            | 在职
-        .radio
-          input type='radio' id='radio2' name='personal_info[type]' value="学生"
-          label for='radio2'
-            span
-            | 学生
-        .radio
-          input type='radio' id='radio3' name='personal_info[type]' value="无业游民"
-          label for='radio3'
-            span
-            | 无业游民
+  h2.header.header--h2
+    | 2. 个人信息
+  = form_tag pay_enrollment_path(@enrollment), method: 'GET', class: 'form form--no-margin u-bg-lightblue u-padding-15'
+    .form__row
+      label 博客
+      input.blog-url name='personal_info[blog_url]'
+    .form__row
+      label 职业
+      .radio
+        input.radio__input type='radio' id='radio1' name='personal_info[type]' value="在职"
+        label.radio__label for='radio1'
+          span.radio__label__span
+          | 在职
+      .radio
+        input.radio__input type='radio' id='radio2' name='personal_info[type]' value="学生"
+        label.radio__label for='radio2'
+          span.radio__label__span
+          | 学生
+      .radio
+        input.radio__input type='radio' id='radio3' name='personal_info[type]' value="无业游民"
+        label.radio__label for='radio3'
+          span.radio__label__span
+          | 无业游民
 
-        button.button type='submit' 下一步
+      p.u-center-text
+        button.btn.btn--normal. type='submit' 下一步
 
-footer
-  img src=image_url('logo2.png')
+  footer.site-footer
+    .logo
 
 javascript:
-  if(!$('.github a').hasClass('success')){
-    $('form input').attr('disabled',true)
+  if(!$('.js-bind-github').hasClass('js-success')){
+    $('form input').attr('disabled', true)
     $('form').css('opacity',0.3)
   }
   else{

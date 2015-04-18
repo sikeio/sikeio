@@ -1,5 +1,10 @@
 body
   margin: 0
+  font-family: "Hiragino Sans GB"
+  font-size: 16px
+
+p
+  font-size: 18px
 
 html
   height: 100%
@@ -19,19 +24,7 @@ a
     display: block
     clear: both
 
-////////////////////////////////////////////////////////////////////////////////
-// layout helpers
-////////////////////////////////////////////////////////////////////////////////
-
-.u-center-text
-  text-align: center
-
-.u-hidden
-  display: none
-
-
 $content-max-width: 620px
-
 // define a centered content block that has top and bottom margin
 @mixin content($margin: "",$margin-bottom: "")
   @if $margin == "" && $margin-bottom == ""
@@ -44,3 +37,30 @@ $content-max-width: 620px
     margin: $margin auto $margin-bottom auto
 
   max-width: $content-max-width
+
+////////////////////////////////////////////////////////////////////////////////
+// layout helpers
+////////////////////////////////////////////////////////////////////////////////
+
+.u-center-text
+  text-align: center
+
+.u-hidden
+  display: none
+
+.u-bg-lightblue
+  background: #F8FBFF
+
+.u-padding-15
+  padding: 15px
+
+.u-color-red
+  color: #FF6161
+
+.u-half-opacity
+  opacity: 50%
+
+.u-center-content
+  @include content()
+
+
