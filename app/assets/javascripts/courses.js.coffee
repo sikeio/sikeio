@@ -44,6 +44,7 @@ $ ->
 ###
 
 $ ->
+  pageIdentifier = "#courses_info "
   $(document)
     .on 'ajax:success', pageIdentifier + '.js-panel--enrolling__form', ->
       $(".js-modal").trigger("show",".js-panel--success")

@@ -15,7 +15,7 @@ $ ->
   #pay page
   pageIdentifier = "#enrollments_pay "
   $(document)
-    .on 'click', pageIdentifier + '.start-course', ->
+    .on 'click', pageIdentifier + '.js-start-course', ->
       if $('#have-paid').prop('checked')
         $('form').submit()
       else
@@ -26,11 +26,11 @@ $ ->
       if $(this).val() != ''
         if $('.tuition .origin').text() == '589'
           $('.tuition .new').text '489'
-          $('.tuition .origin').addClass 'invalid'
+          $('.tuition .origin').addClass 'u-invalid-text'
       else
         if $('.tuition .new').text() == '489'
           $('.tuition .new').text ''
-          $('.tuition .origin').removeClass 'invalid'
+          $('.tuition .origin').removeClass 'u-invalid-text'
 
 
 

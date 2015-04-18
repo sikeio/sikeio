@@ -31,7 +31,7 @@ class EnrollmentsController < ApplicationController
 
   def invite
     if enrollment.has_personal_info?
-      redirect_to pay_enrollment_path(@enrollment, token: @enrollment.token)
+      redirect_to pay_enrollment_path(@enrollment)
       return
     end
     @course = @enrollment.course
@@ -49,7 +49,9 @@ class EnrollmentsController < ApplicationController
         redirect_to invite_enrollment_path(@enrollment)
         return
       end
-      @enrollment.update_attribute :personal_info, params.require(:personal_info).permit(:blog_url, :type)
+      if !@enrollment.has_personal_info?
+        @enrollment.update_attribute :personal_info, params.require(:personal_info).permit(:blog_url, :type)
+      end
       @course = @enrollment.course
     end
 
