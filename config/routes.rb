@@ -30,8 +30,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :enrollments
-
   resources :courses,only:[:index,:show] do
 
     member do
@@ -47,8 +45,8 @@ Rails.application.routes.draw do
   resources :enrollments,only: [:create] do
     member do
       get 'invite'
-      get 'pay'
       post 'pay'
+      post 'finish'
     end
   end
 

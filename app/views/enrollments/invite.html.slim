@@ -30,13 +30,13 @@
         a.btn.btn--success.js-bind-github.js-success disabled=true 绑定成功
     - else
       p.u-center-text
-        a.btn.btn--normal.js-bind-github href="/auth/github?user_id=#{@user.id}&back_path=#{invite_enrollment_path(@enrollment)}&github_binding=true" data-disable-with="<i class='fa fa-spinner fa-spin'></i> Loading..."
+        a.btn.btn--normal.js-bind-github href="/auth/github?back_path=#{invite_enrollment_path(@enrollment)}&github_binding=true" data-disable-with="<i class='fa fa-spinner fa-spin'></i> Loading..."
           | Github 绑定
 
 
   h2.header.header--h2
     | 2. 个人信息
-  = form_tag pay_enrollment_path(@enrollment), method: 'GET', class: 'form form--no-margin u-bg-lightblue u-padding-15'
+  = form_tag pay_enrollment_path(@enrollment), class: 'form form--no-margin u-bg-lightblue u-padding-15'
     .form__row
       label 博客
       input.blog-url name='personal_info[blog_url]'
@@ -66,7 +66,7 @@
 
 javascript:
   if(!$('.js-bind-github').hasClass('js-success')){
-    $('form input').attr('disabled', true)
+    $('form input,form button').attr('disabled', true)
     $('form').css('opacity',0.3)
   }
   else{
