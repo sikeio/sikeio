@@ -1,5 +1,6 @@
 $ ->
+  pageIdentifier = '#home_index '
   $(document)
-    .on '#home_index ajax:success','.subscribe',(e,data)->
+    .on 'ajax:success', pageIdentifier + '.subscribe', (e,data)->
       swal
         title: "订阅成功~"

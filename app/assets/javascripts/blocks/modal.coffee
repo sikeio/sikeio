@@ -40,6 +40,7 @@ $ ->
     $currentTarget.hide()
     $currentTarget = null
 
+
   $(".js-modal-trigger").on "click", ->
     target = $(this).data("modal-target")
     $modal.trigger("show",target)
