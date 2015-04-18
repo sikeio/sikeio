@@ -26,8 +26,12 @@
       | 。
 
     - if @user.has_binded_github
-      p.u-center-text
-        a.btn.btn--success.js-bind-github.js-success disabled=true 绑定成功
+      p.js-bind-success
+        | Github 绑定账号:  #{@user.github.info["nickname"]}
+      .message.message--success
+        | 绑定成功！
+      / p.u-center-text
+      /   a.btn.btn--success.js-bind-github.js-success disabled=true 绑定成功
     - else
       p.u-center-text
         a.btn.btn--normal.js-bind-github href="/auth/github?back_path=#{invite_enrollment_path(@enrollment)}&github_binding=true" data-disable-with="<i class='fa fa-spinner fa-spin'></i> Loading..."
@@ -65,7 +69,7 @@
     .logo
 
 javascript:
-  if(!$('.js-bind-github').hasClass('js-success')){
+  if($('.js-bind-success').length == 0 ){
     $('form input,form button').attr('disabled', true)
     $('form').css('opacity',0.3)
   }

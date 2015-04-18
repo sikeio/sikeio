@@ -15,7 +15,7 @@
       | 在职 589
 
   h2.header.header--h2 我有小伙伴！
-  = form_tag pay_enrollment_path(@enrollment), method:'POST', class: 'form form--no-margin u-bg-lightblue u-padding-15'
+  = form_tag finish_enrollment_path(@enrollment), class: 'form form--no-margin u-bg-lightblue u-padding-15'
     .form__row
       label 小伙伴姓名
       input.buddy-name name="buddy_name"

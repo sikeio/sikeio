@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     member do
       get 'invite'
       post 'pay'
+      get 'pay'
       post 'finish'
     end
   end
