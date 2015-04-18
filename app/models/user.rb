@@ -52,4 +52,8 @@ class User < ActiveRecord::Base
     self.activation_token = SecureRandom.urlsafe_base64(64)
   end
 
+  def github
+    self.authentications.find_by provider: 'github'
+  end
+
 end

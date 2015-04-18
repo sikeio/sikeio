@@ -1,20 +1,20 @@
-.u-center-content
-  header.site-header
-    .logo-title
-      a.logo-title__logo href="/"
-        .logo
-      h1.logo-title__title
-        | #{@course.name}
+header.site-header.site-header--center
+  .logo-title
+    a.logo-title__logo href="/"
+      .logo
+    h1.logo-title__title
+      | #{@course.name}
 
-  .u-center-text
-    h1.header.header--h1.header--underline 邀请函
+.u-center-content
+  .underline-header
+    h1 邀请函
 
   p
     | 感谢你申请#{@course.name}。很欢迎你加入我们一起学习！
 
   p = @course.desc
 
-  h2.header.header--h2
+  h2.
     |1. 绑定 Github 账号
 
   .u-bg-lightblue.u-padding-15
@@ -26,17 +26,21 @@
       | 。
 
     - if @user.has_binded_github
-      p.u-center-text
-        a.btn.btn--success.js-bind-github.js-success disabled=true 绑定成功
+      p.js-bind-success
+        | Github 绑定账号:  #{@user.github.info["nickname"]}
+      .message.message--success
+        | 绑定成功！
+      / p.u-center-text
+      /   a.btn.btn--success.js-bind-github.js-success disabled=true 绑定成功
     - else
       p.u-center-text
-        a.btn.btn--normal.js-bind-github href="/auth/github?user_id=#{@user.id}&back_path=#{invite_enrollment_path(@enrollment)}&github_binding=true" data-disable-with="<i class='fa fa-spinner fa-spin'></i> Loading..."
+        a.btn.btn--normal.js-bind-github href="/auth/github?back_path=#{invite_enrollment_path(@enrollment)}&github_binding=true" data-disable-with="<i class='fa fa-spinner fa-spin'></i> Loading..."
           | Github 绑定
 
 
-  h2.header.header--h2
+  h2
     | 2. 个人信息
-  = form_tag pay_enrollment_path(@enrollment), method: 'GET', class: 'form form--no-margin u-bg-lightblue u-padding-15'
+  = form_tag pay_enrollment_path(@enrollment), class: 'form form--no-margin u-bg-lightblue u-padding-15'
     .form__row
       label 博客
       input.blog-url name='personal_info[blog_url]'
@@ -61,12 +65,12 @@
       p.u-center-text
         button.btn.btn--normal. type='submit' 下一步
 
-  footer.site-footer
-    .logo
+footer.site-footer
+  .logo
 
 javascript:
-  if(!$('.js-bind-github').hasClass('js-success')){
-    $('form input').attr('disabled', true)
+  if($('.js-bind-success').length == 0 ){
+    $('form input,form button').attr('disabled', true)
     $('form').css('opacity',0.3)
   }
   else{

@@ -7,17 +7,10 @@ head
   = favicon_link_tag "favicon.ico"
   meta name="viewport" content="width=device-width, initial-scale=1"
 body id=page_identifier
-
-  - unless @display_top
-    .well
-      - if login?
-        span
-          | Welcome #{current_user.name}
-        a.btn.btn-danger href=logout_path data-method='delete' Logout
-
+  .message-box
     - [:success,:error].each do |type|
       - if flash[type]
-        .alert class="alert-#{type == :error ? 'danger' : type}" = flash[type]
+        .message class="message--#{type}" = flash[type]
 
   == yield
 

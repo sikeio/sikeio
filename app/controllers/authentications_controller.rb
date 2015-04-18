@@ -15,13 +15,11 @@ class AuthenticationsController < ApplicationController
       login_as auth.user
       redirect_to_back_or_default params["back_path"]
     else
-      user = User.find_by!  id:params["user_id"]
-      user.authentications.create(
+      current_user.authentications.create(
         provider: 'github',
         uid: auth_info["uid"],
         info: auth_info["info"]
       )
-      login_as user
       redirect_to_back_or_default params["back_path"]
     end
   end

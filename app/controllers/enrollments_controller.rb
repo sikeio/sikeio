@@ -30,7 +30,8 @@ class EnrollmentsController < ApplicationController
   end
 
   def invite
-    if enrollment.has_personal_info?
+    login_as enrollment.user
+    if @enrollment.has_personal_info?
       redirect_to pay_enrollment_path(@enrollment)
       return
     end
@@ -39,31 +40,27 @@ class EnrollmentsController < ApplicationController
   end
 
   def pay
-    if request.get?
-      if enrollment.activated
-        redirect_to course_path(@enrollment.course)
-        return
-      end
-
-      if !@enrollment.user.has_binded_github
-        redirect_to invite_enrollment_path(@enrollment)
-        return
-      end
-      if !@enrollment.has_personal_info?
-        @enrollment.update_attribute :personal_info, params.require(:personal_info).permit(:blog_url, :type)
-      end
-      @course = @enrollment.course
+    if enrollment.activated
+      redirect_to course_path(@enrollment.course)
+      return
     end
-
-    if request.post?
-      enrollment.buddy_name = params[:buddy_name]
-      enrollment.save
-
-      enrollment.start!
-
-      redirect_to course_path(enrollment.course)
+    if !@enrollment.user.has_binded_github
+      redirect_to invite_enrollment_path(@enrollment)
+      return
     end
+    if !@enrollment.has_personal_info?
+      @enrollment.update_attribute :personal_info, params.require(:personal_info).permit(:blog_url, :type)
+    end
+    @course = @enrollment.course
   end
+
+  def finish
+    enrollment.buddy_name = params[:buddy_name]
+    enrollment.activated = true
+    enrollment.save
+    redirect_to course_path(enrollment.course)
+  end
+
 
   private
 
