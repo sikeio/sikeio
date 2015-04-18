@@ -28,8 +28,8 @@ header.site-header.site-header--center
     - if @user.has_binded_github
       p.js-bind-success
         | Github 绑定账号:  #{@user.github.info["nickname"]}
-      .message.message--success
-        | 绑定成功！
+      .message
+        | Github 已经绑定
       / p.u-center-text
       /   a.btn.btn--success.js-bind-github.js-success disabled=true 绑定成功
     - else
