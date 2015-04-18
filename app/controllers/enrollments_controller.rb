@@ -57,8 +57,10 @@ class EnrollmentsController < ApplicationController
 
     if request.post?
       enrollment.buddy_name = params[:buddy_name]
-      enrollment.activated = true
       enrollment.save
+
+      enrollment.start!
+
       redirect_to course_path(enrollment.course)
     end
   end

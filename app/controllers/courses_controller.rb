@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
 
-  #before_action :require_login,only:[:show, :start]
+  before_action :require_login, except: [:info]
 #  before_action :require_course_exists,except:[:list,:create_enroll]
 #  before_action :require_take_part_in,only:[:show]
 
@@ -15,7 +15,8 @@ class CoursesController < ApplicationController
   end
 
   def show
-    @enrollment = course.enrollments.find_by(user: current_user)
+    @enrollment = current_user.enrollments.find_by(course: course)
+
     if !@enrollment.activated
       flash[:error] = "您尚未激活该课程"
       redirect_to :root

@@ -107,6 +107,8 @@ class Enrollment < ActiveRecord::Base
   def start!
     # next monday at 0:00
     self.start_time = next_monday
+    self.activated = true
+    self.save!
   end
 
   def next_monday
