@@ -1,20 +1,20 @@
-.u-center-content
-  header.site-header
-    .logo-title
-      a.logo-title__logo href="/"
-        .logo
-      h1.logo-title__title
-        | #{@course.name}
+header.site-header.site-header--center
+  .logo-title
+    a.logo-title__logo href="/"
+      .logo
+    h1.logo-title__title
+      | #{@course.name}
 
-  .u-center-text
-    h1.header.header--h1.header--underline 邀请函
+.u-center-content
+  .underline-header
+    h1 邀请函
 
   p
     | 感谢你申请#{@course.name}。很欢迎你加入我们一起学习！
 
   p = @course.desc
 
-  h2.header.header--h2
+  h2.
     |1. 绑定 Github 账号
 
   .u-bg-lightblue.u-padding-15
@@ -38,7 +38,7 @@
           | Github 绑定
 
 
-  h2.header.header--h2
+  h2
     | 2. 个人信息
   = form_tag pay_enrollment_path(@enrollment), class: 'form form--no-margin u-bg-lightblue u-padding-15'
     .form__row
@@ -65,8 +65,8 @@
       p.u-center-text
         button.btn.btn--normal. type='submit' 下一步
 
-  footer.site-footer
-    .logo
+footer.site-footer
+  .logo
 
 javascript:
   if($('.js-bind-success').length == 0 ){
