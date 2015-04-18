@@ -7,9 +7,10 @@ head
   = favicon_link_tag "favicon.ico"
   meta name="viewport" content="width=device-width, initial-scale=1"
 body id=page_identifier
-  - [:success,:error].each do |type|
-    - if flash[type]
-      .alert class="alert-#{type == :error ? 'danger' : type}" = flash[type]
+  .message-box
+    - [:success,:error].each do |type|
+      - if flash[type]
+        .message class="message--#{type}" = flash[type]
 
   == yield
 
