@@ -23,3 +23,8 @@ see: http://markdotto.com/2011/11/29/css-property-order/
 see: https://github.com/necolas/idiomatic-css#declaration-order
 
 
+# Configuration
+
+Use environmental variables. We use the [fiagaro](https://github.com/laserlemon/figaro) gem.
+
+When you add a configurable environmental variable, add it to `config/application.yml.sample`, and add a commentary.
