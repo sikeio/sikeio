@@ -40,6 +40,12 @@ ADMIN_PASSWORD: ""
 
 COURSE_BUILD_PATH: "courses_build"
 
+# Github OAuth API key and secret
+GITHUB_KEY: github key
+
+GITHUB_SECRET: github secret
+
+
 ########################################################################
 # Production configurations
 ########################################################################
