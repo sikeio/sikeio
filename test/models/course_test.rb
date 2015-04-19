@@ -11,6 +11,7 @@
 #  repo_url        :string
 #  title           :string
 #  permalink       :string
+#  current_commit  :string
 #
 
 require 'test_helper'
