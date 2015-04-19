@@ -93,26 +93,34 @@ header.site-header
     a.btn.btn--normal.btn--large.js-modal-trigger data-modal-target=".js-panel--enrolling"
       | 课程报名质询
 
-.text-content
-  h1 导师介绍
-  .coach-info
-    img.coach-info__portrait src=image_url('courses/avatar2.png')
-    p.coach-info__bio
-      | 我叫 Howard，台湾同胞一枚。小时候随家人移民加拿大。2011 年远程工作，边旅行边赚钱。那一年第一次来到了天朝。我写了篇有关这个经历的博文 From The Office to Travelling The World。2012 年觉得生活太安逸，决定来中国发展，发现难度瞬间提升为 Hard。在深圳和朋友创立了小象网，做创意纸品，婚纱相册之类的产品。现在已盈利，处稳定发展状态。2013 夏，搬到成都和女朋友在一起。
+.coach-info
+  h1.coach-info__title
+    |导师介绍
+  .coach-info__wechat-add
+    .wechat-add
+      img.wechat-add__qr src="#{image_path("courses/weixin.png")}"
+      .wechat-add__account
+        |微信：hayeah666
+  .coach-info__content
+    .text-content
+      p
+        |我叫 Howard，台湾同胞一枚。小时候随家人移民加拿大。2011 年远程工作，边旅行边赚钱。那一年第一次来到了天朝。我写了篇有关这个经历的博文 <a href="http://metacircus.com/writings/2011/09/19/from-the-office-to-travelling-the-world.html">From The Office to Travelling The World</a>。
 
-      br
-      br
+      p
+        |2012 年觉得生活太安逸，决定来中国发展，发现难度瞬间提升为 Hard。在深圳和朋友创立了小象网，做创意纸品，婚纱相册之类的产品。现在已盈利，处稳定发展状态。
 
-      | Github:
-      a href="http://github.com/hayeah"
-        |  http://github.com/hayeah
+      p
+        |2013 夏，搬到成都和女朋友在一起。
 
-      br
-      br
+      p
+        |Github:
+        a href="http://github.com/hayeah"
+          |  http://github.com/hayeah
+        br
+        |Blog:
+        a href="http://metacircus.com"
+          |  http://metacircus.com
 
-      | Blog:
-      a href="http://metacircus.com"
-        |  http://metacircus.com
 
 footer.site-footer
   img.site-footer__logo src=image_url('logo2.png')

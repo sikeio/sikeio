@@ -1,8 +1,22 @@
 .coach-info
-  @include content()
+  @include clearfix
+  padding: 0 15%
 
-img.coach-info__portrait
-  float: left
+h1.coach-info__title
+  font-size: 36px
+  font-weight: 300
+  text-align: center
+  margin: auto
 
-p.coach-info__bio
-  margin-left: 130px
+@media screen and (min-width: 1200px)
+  .coach-info__wechat-add
+    width: 20%
+    float: left
+    padding: 30px 0px
+
+  .coach-info__content
+    float: left
+    width: 80%
+
+
+
