@@ -5,6 +5,7 @@ class CoursesController < ApplicationController
 #  before_action :require_take_part_in,only:[:show]
 
   def index
+    @courses = Course.all
     @enrollments = current_user.enrollments.activated
     if @enrollments.length == 1
       redirect_to course_path(@enrollments[0].course)

@@ -1,0 +1,13 @@
+.course-entry.u-display-center class="course-entry--#{course_name}"
+  h1.course-entry__title
+    img.course-entry__badge src=image_url("courses/#{course_name}/icon.png")
+    - if new_course
+      a href="#{course_link}"
+        |#{title}
+    - else
+      |#{title}
+  - if !new_course
+    .course-entry__link
+      a href="#{course_link}"
+        i.fa.fa-sign-in.fa-lg
+        |进入课程
