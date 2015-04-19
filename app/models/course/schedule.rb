@@ -8,7 +8,7 @@ class Course::Schedule
     @content = Course::Content.new(course.name, version)
   end
 
-  def lessons  #根据先后顺序排序好的
+  def lessons
     lessons = []
     content.lessons_info.each do |lesson_name, other_attr|
       lessons << course.lessons.find_by_name(lesson_name)
@@ -38,7 +38,7 @@ class Course::Schedule
     lessons.find { |lesson| lesson.permalink == lesson_permalink }
   end
 
-  def course_weeks #排序好的
+  def course_weeks
     content.course_weeks.map do |one_week|
       one_week.map { |lesson_name|  course.lessons.find_by_name(lesson_name) }
     end
