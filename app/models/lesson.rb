@@ -33,11 +33,4 @@ class Lesson < ActiveRecord::Base
     super(title)
     self.permalink = title.parameterize
   end
-
-  private
-
-  def permalink=(link)
-    super(link)
-  end
-
 end

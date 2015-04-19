@@ -20,7 +20,7 @@ class Course::Updater::RepoUpdater
   private
 
   def repo_cloned?
-    File.exist?(repo_dir_path)
+    File.exist?(repo_dir_path + ".git")
   end
 
   def pull_clone

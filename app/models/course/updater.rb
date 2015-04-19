@@ -15,9 +15,21 @@ class Course::Updater
     result = md_parse
     write_to_xml_repo(result[:xml])
     update_database(result[:current_commit_msg])
+
+    sync_assets
   end
 
   private
+
+  def sync_assets
+    puts "making assets avaiable for: #{course.name}"
+    from_dir = course_repo_dir
+    to_dir = Course::Utils::ASSET_DIR + "courses" + course.name
+    system "mkdir", "-p", (Course::Utils::ASSET_DIR + "courses").to_s
+    cmd = ["rsync", "-Pa", from_dir.to_s + "/", to_dir.to_s]
+    p cmd
+    system *cmd
+  end
 
   def remove_releated_file
     Course::FileRemover.new(course.name).remove_course_releated_file
