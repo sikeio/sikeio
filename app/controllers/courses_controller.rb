@@ -5,13 +5,9 @@ class CoursesController < ApplicationController
 #  before_action :require_take_part_in,only:[:show]
 
   def index
-    @enrollments = current_user.enrollments
-    count = 0
-    @enrollments.each { |e| count += 1 if e.activated }
-    if count == 1
-      index = @enrollments.find_index {|e| e.activated }
-      enrollment = @enrollments[index]
-      redirect_to course_path(enrollment.course)
+    @enrollments = current_user.enrollments.activated
+    if @enrollments.length == 1
+      redirect_to course_path(@enrollments[0].course)
       return
     end
   end

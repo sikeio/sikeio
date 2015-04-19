@@ -27,6 +27,8 @@ class Enrollment < ActiveRecord::Base
   validates :course_id, presence: true, uniqueness: {scope: :user_id}
   has_many :checkouts, dependent: :destroy
 
+  scope :activated, -> {where(activated: true)}
+
   before_validation {
     self.reset_token if self.token.nil?
   }
