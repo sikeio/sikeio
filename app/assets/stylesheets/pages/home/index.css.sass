@@ -11,7 +11,6 @@
 #home_index
   line-height: 1.8
   font-family: Heiti SC
-  -webkit-font-smoothing: antialiased
 
   a
     color: #00B7FF
@@ -22,20 +21,21 @@
     .title
       padding: 93px 0 357px
       margin: 0 0 55px
+      text-align: center
       a
         @include L1
+        padding-bottom: 10px
         color: white
         text-align: center
         margin: 0 auto 27px
         display: block
         line-height: 93%
         border-bottom: solid 2px white
-        width: 690px
+        display: inline-block
       p
         @include L2
         margin: 0
         color: white
-        text-align: center
     ul
       list-style: none
       padding: 0
@@ -61,8 +61,6 @@
     .title
       background: image-url("dive.jpg")
       background-size: 100% 100%
-      a
-        width: 580px
   .node
     margin: 105px 0 151px
     .title
