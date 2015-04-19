@@ -56,17 +56,17 @@ ul.missions
         li.mission.done
           i.fa.fa-check-circle
           a href=lesson_url
-            | #{lesson_number.to_s + '. ' + lesson.name}
+            | #{lesson_number.to_s + '. ' + lesson.title}
       - elsif @enrollment.is_released?(lesson) && @enrollment.is_next_uncompleted_lesson?(lesson)
         li.mission.current
           a href=lesson_url
-            | #{lesson_number.to_s + '. ' + lesson.name}
+            | #{lesson_number.to_s + '. ' + lesson.title}
       - elsif @enrollment.is_released?(lesson)
         li.mission.to-be-done
-          | #{lesson_number.to_s + '. ' + lesson.name}
+          | #{lesson_number.to_s + '. ' + lesson.title}
       - else
         li.mission.future
-          | #{lesson_number.to_s + '. ' + lesson.name}
+          | #{lesson_number.to_s + '. ' + lesson.title}
           /使用连接代替
 
 /= render partial: "checkout", locals: {title: @enrollment.next_uncompleted_lesson.name, checkout: :checkout, html_method: :post,
