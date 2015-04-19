@@ -5,7 +5,6 @@ class Course::Updater
     @course = course
     @course_repo_dir = Course::Utils::REPO_DIR + course.name
     @course_xml_repo_dir = Course::Utils::XML_REPO_DIR + course.name + "master"
-    @coures_asset_dir = Course::Utils::ASSET_DIR + course.name
     file_name = course.name + ".xml"
     @course_xml_file_path = @course_xml_repo_dir + file_name
   end
@@ -13,9 +12,9 @@ class Course::Updater
   def update
     remove_releated_file
     clone_file_to_repo
-    data = md_parse
-    write_to_xml_repo(data)
-    update_database
+    result = md_parse
+    write_to_xml_repo(result[:xml])
+    update_database(result[:current_commit_msg])
   end
 
   private
@@ -32,7 +31,7 @@ class Course::Updater
 
   def md_parse
     parse = Course::MdParse.new(course_repo_dir)
-    parse.result
+    {:xml => parse.result, :current_commit_msg => parse.current_commit_msg}
   end
 
   def write_to_xml_repo(data)
@@ -42,7 +41,7 @@ class Course::Updater
     f.close
   end
 
-  def update_database
-    Course::Updater::XMLUpdater.new(course.name).update_course_and_lessons
+  def update_database(current_commit_msg)
+    Course::Updater::XMLUpdater.new(course.name, current_commit_msg).update_course_and_lessons
   end
 end

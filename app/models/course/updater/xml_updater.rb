@@ -1,10 +1,11 @@
 class Course::Updater::XMLUpdater
 
-  attr_reader :course_name, :content
+  attr_reader :course_name, :content, :current_commit_msg
 
-  def initialize(course_name)
+  def initialize(course_name, current_commit_msg)
     raise "No course_name passed in" if !course_name
     @course_name = course_name
+    @current_commit_msg = current_commit_msg
     @content = Course::Content.new(course_name, "master")
   end
 
@@ -18,6 +19,7 @@ class Course::Updater::XMLUpdater
   def update_course_according_to_xml
     course = nil
     course_info = content.course_info
+    course_info[:current_commit] = current_commit_msg
     create_or_update(Course, course_name, course_info)
   end
 
