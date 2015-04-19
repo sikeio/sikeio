@@ -2,10 +2,10 @@ class Lesson::Content
 
   attr_reader :course_name, :version, :lesson_name
 
-  def initialize(temp_name, temp_version, lesson_name)
-    @course_name = temp_name
-    @version = temp_version
+  def initialize(course_name, lesson_name, version="master")
+    @course_name = course_name
     @lesson_name = lesson_name
+    @version = version
   end
 
   def html_page

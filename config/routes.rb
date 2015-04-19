@@ -15,8 +15,6 @@ Rails.application.routes.draw do
   delete '/logout' => 'sessions#destroy'
   get '/test/:id' => 'courses#test'
 
-  get '/lessons/:course_permalink/:lesson_permalink' => 'lessons#show', as: :lesson
-
   post '/checkout/:course_permalink/:lesson_permalink' => 'checkouts#new', as: :check_out
   put '/checkout/:id' => 'checkouts#update', as: :check_out_update
 
@@ -40,7 +38,12 @@ Rails.application.routes.draw do
     collection do
       # get '/get_user_status' => 'courses#get_user_status'
     end
+
+
   end
+
+  get "/courses/:course_id/:id" => "lessons#show", as: :lesson
+
 
   resources :enrollments, only: [:create,:update] do
     member do
