@@ -13,7 +13,6 @@ class Course::MdParse
     FileUtils.mkdir_p(Course::Utils::TEMP_DIR) if !File.exist?(Course::Utils::TEMP_DIR)
   end
 
-
   def result
     save_file_in_temp
     course =<<-THERE
@@ -40,7 +39,15 @@ class Course::MdParse
   end
 
   def lesson_names
-    @lesson_names ||= course_index_dom.css("lesson").map { |node| node["name"] }
+    @lesson_names ||= course_index_dom.css("lesson").map {
+      |node|
+      name = node["name"]
+      if name.blank?
+        puts node
+        raise "<lesson> is missing name attribute"
+      end
+      name
+    }
   end
 
   def course_index_dom
