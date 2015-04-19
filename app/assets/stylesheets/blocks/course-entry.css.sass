@@ -1,8 +1,6 @@
 .course-entry
-  width: 60%
-  padding: 200px 0
-  margin-bottom: 20px
-  margin-top: 20px
+  @include content(auto, 20px)
+  padding: 120px 0
   position: relative
 
 .course-entry--ios
@@ -13,6 +11,7 @@
 
 h1.course-entry__title
   text-decoration: underline
+  font-size: 30px
   display: table
   margin: auto
   color: #FFF
