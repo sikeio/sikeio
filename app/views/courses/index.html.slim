@@ -6,9 +6,8 @@ header.site-header
       |前往课程
 - if @enrollments.length == 0
   .message.u-center-content
-    .speech-bubble
-      p.speech-bubble__text
-        |你还没有加入任何课程，可以考虑下面这些课程~
+
+    | 你还没有加入任何课程，可以考虑下面这些课程~
   - @courses.each do |c|
     = render :partial => 'course_entry', locals: {course_name: c.name, title: c.title, course_link: info_course_path(c), new_course: true}
   .coach-info
