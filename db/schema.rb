@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150416062431) do
+ActiveRecord::Schema.define(version: 20150417071853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20150416062431) do
     t.string   "repo_url"
     t.string   "title"
     t.string   "permalink"
+    t.string   "current_commit"
   end
 
   add_index "courses", ["name"], name: "index_courses_on_name", unique: true, using: :btree
