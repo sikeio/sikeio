@@ -8,6 +8,8 @@ class Course::Updater::RepoUpdater
   end
 
   def update_repo
+    ensure_repo_path
+
     if repo_cloned?
       pull_clone
     else
@@ -22,13 +24,23 @@ class Course::Updater::RepoUpdater
   end
 
   def pull_clone
-    git = Git.open(repo_dir_path)
-    git.pull
+    git "fetch"
+    git "reset", "--hard", "origin/master"
   end
 
   def clone_repo
+    git "clone", url, "."
+  end
+
+  def ensure_repo_path
     FileUtils::mkdir_p(repo_dir_path)
-    Git.clone(url, repo_dir_path)
+  end
+
+  def git(*args)
+    p ["git", *args]
+    Dir.chdir(repo_dir_path) do
+      system "git", *args
+    end
   end
 
 end
