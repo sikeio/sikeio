@@ -34,3 +34,5 @@
 
 # Ignore application configuration
 /config/application.yml
+courses_build/
+*.rdb

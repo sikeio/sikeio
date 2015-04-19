@@ -3,18 +3,23 @@
 //= require fontawesome/css/font-awesome.min.css
 //= require slick.js/slick/slick.css
 
-@import ../../../vendor/bower/bourbon/app/assets/stylesheets/_bourbon.scss
-@import global
 
-@import "blocks/*"
-@import "pages/**/*"
+//= require helpers
+//= require_directory ./blocks
+//= require_tree ./pages
+//= require lessons
 
-@import lessons
+html
+  height: 100%
+  overflow-x: hidden
 
 body
   margin: 0
   font-family: "Hiragino Sans GB"
   font-size: 14px
+
+p
+  font-size: 18px
 
 a
   text-decoration: none
