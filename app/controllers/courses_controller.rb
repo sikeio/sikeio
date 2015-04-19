@@ -26,9 +26,15 @@ class CoursesController < ApplicationController
   def show
     @enrollment = current_user.enrollments.find_by(course: course)
 
+    if @enrollment.nil?
+      flash[:error] = "您没有报名这个课程"
+      redirect_to info_course_path(course)
+      return
+    end
+
     if !@enrollment.activated
       flash[:error] = "您尚未激活该课程"
-      redirect_to :root
+      redirect_to info_course_path(course)
       return
     end
     @send_day = Date.today.day
