@@ -24,6 +24,7 @@ class Course::Updater
   def sync_assets
     puts "making assets avaiable for: #{course.name}"
     from_dir = course_repo_dir
+    # /public/courses/:course_name/:lesson_name
     to_dir = Course::Utils::ASSET_DIR + "courses" + course.name
     system "mkdir", "-p", (Course::Utils::ASSET_DIR + "courses").to_s
     # The trailing "/" indicates to rsync that we want to copy the content to the
