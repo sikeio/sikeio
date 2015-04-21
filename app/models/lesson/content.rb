@@ -30,7 +30,9 @@ class Lesson::Content
     xml = Nokogiri::HTML(content)
     ASSETS_TAG.each do |tag|
       xml.css(tag).each do |node|
-        node["src"] = asset_src(node["src"])
+        if !node["src"] =~ /^(http).*/
+          node["src"] = asset_src(node["src"])
+        end
       end
     end
     xml.css("body").children.to_xhtml

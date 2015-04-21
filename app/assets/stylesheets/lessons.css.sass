@@ -64,7 +64,7 @@ $exercise-code-padding: 20px 0 20px 20px
       height: 45px
       width: 100%
       max-width: none
-  p,h1,ul
+  p,h1,ul,ol
     @include position-center
   h1
     font-size: 36px
@@ -73,6 +73,10 @@ $exercise-code-padding: 20px 0 20px 20px
     margin-bottom: $h1-margin-bottom
     font-family: 'Heiti SC'
     color: #454441
+  ol
+    list-style: decimal inside none
+    padding-left: 0
+    margin: $ul-margin auto
   ul
     padding-left: 0
     margin: $ul-margin auto
