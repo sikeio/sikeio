@@ -10,8 +10,8 @@ $ ->
   #
   # <button class="js-modal-trigger" data-modal-target="#target">
 
-  $modal = $("<div class='js-modal'>").appendTo('body')
-  $overlay = $('<div class="js-modal__overlay">').appendTo($modal)
+  $modal = $("<div class='js-modal'>")
+  $overlay = $('<div class="js-modal__overlay">')
   $overlay.css {
     display: "none"
     position: "fixed"
@@ -32,7 +32,8 @@ $ ->
     if $currentTarget != null
       $currentTarget.hide()
     $currentTarget = $(target)
-    $overlay.show()
+    $modal.appendTo('body')
+    $overlay.appendTo($modal).show()
     $currentTarget.show()
 
   $modal.on "hide", (e) ->
@@ -41,6 +42,7 @@ $ ->
     $currentTarget = null
 
 
-  $(".js-modal-trigger").on "click", ->
-    target = $(this).data("modal-target")
-    $modal.trigger("show",target)
+  $(document)
+    .on 'click', ".js-modal-trigger", ->
+      target = $(this).data("modal-target")
+      $modal.trigger("show",target)
