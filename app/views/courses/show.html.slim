@@ -46,8 +46,12 @@ div.current-mission
 
 ul.missions
   - @enrollment.schedule.course_weeks_sum.times do |num|
+    - course_week_overviews = @enrollment.schedule.course_week_overviews
     p.week
       |#{@enrollment.schedule.course_week_titles[num]}
+    - if @enrollment.week_lesson_released?(num + 1)
+      .week-overview
+         = sanitize course_week_overviews["week#{num + 1}"]
     - week_lessons = @enrollment.schedule.course_weeks[num]
     - week_lessons.each do |lesson|
       - lesson_url = lesson_path(@enrollment.course, lesson)
@@ -57,7 +61,8 @@ ul.missions
           i.fa.fa-check-circle
           a href=lesson_url
             | #{lesson_number.to_s + '. ' + lesson.title}
-      - elsif @enrollment.is_released?(lesson) && @enrollment.is_next_uncompleted_lesson?(lesson)
+      - elsif @enrollment.is_released?(lesson)
+        / && @enrollment.is_next_uncompleted_lesson?(lesson)
         li.mission.current
           a href=lesson_url
             | #{lesson_number.to_s + '. ' + lesson.title}

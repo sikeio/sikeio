@@ -56,4 +56,8 @@ class Course::Schedule
     content.release_day_of_lesson[lesson.name]
   end
 
+  def course_week_overviews
+    content.course_week_overviews
+  end
+
 end

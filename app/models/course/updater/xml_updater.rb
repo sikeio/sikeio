@@ -29,6 +29,12 @@ class Course::Updater::XMLUpdater
       other_attr[:course_id] = course.id
       create_or_update(Lesson, lesson_name, other_attr)
     end
+    extra_lessons_info = content.extra_lessons_info
+    puts "extra_lesons size:" + extra_lessons_info.size.to_s
+    extra_lessons_info.each do |info|
+      info[:course_id] = course.id
+      create_or_update(Lesson, info[:name], info)
+    end
   end
 
   def create_or_update(klass, name_for_finding, attr_info_to_set)

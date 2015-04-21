@@ -1,5 +1,8 @@
 class Lesson::Content
 
+  ASSETS_TAG = ["img", "video"]
+  ASSET_BASE = "/courses/"
+
   attr_reader :course_name, :version, :lesson_name
 
   def initialize(course_name, lesson_name, version="master")
@@ -11,28 +14,30 @@ class Lesson::Content
   def html_page
     html_content = ""
     xml = xml_content
-    puts xml
     xml.children.each do |node|
       if node.name != "exercise"
-        if node.name == "video"
-          html_content << video_html(node)
-        else
           html_content << node.to_xhtml
-        end
       else
         html_content << exercise_html(node)
       end
     end
-    html_content
+    set_assets_src(html_content)
   end
 
   private
 
-  def video_html(node)
-    src = "/" + course_name + "/" + lesson_name + "/" + version + "/" + node["src"]
-    output = <<-THERE
-    <video  autoplay="true" loop="true" controls="true" src=#{src}></video>
-    THERE
+  def set_assets_src(content)
+    xml = Nokogiri::HTML(content)
+    ASSETS_TAG.each do |tag|
+      xml.css(tag).each do |node|
+        node["src"] = asset_src(node["src"])
+      end
+    end
+    xml.css("body").children.to_xhtml
+  end
+
+  def asset_src(src)
+    ASSET_BASE + course_name + "/" + lesson_name + "/" + src
   end
 
   def exercise_html(exercise_node)
@@ -94,16 +99,9 @@ class Lesson::Content
 
     output = <<-THERE
       <div class="screenshot">
-        #{img(screen_node)}
+        <img src=#{screen_node["src"]}/>
         #{other_content}
       </div>
-    THERE
-  end
-
-  def img(node)
-    src = "/" + course_name + "/" + lesson_name + "/" + version + "/" + node["src"]
-    output = <<-THERE
-      <img src=#{src}>
     THERE
   end
 
