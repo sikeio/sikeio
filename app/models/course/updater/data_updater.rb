@@ -1,37 +1,33 @@
-class Course::Updater::XMLUpdater
+class Course::Updater::DataUpdater
 
-  attr_reader :course_name, :content, :current_commit_msg
+  attr_reader :course_name, :content, :current_commit_msg, :course
 
-  def initialize(course_name, current_commit_msg)
-    raise "No course_name passed in" if !course_name
-    @course_name = course_name
+  def initialize(course, current_commit_msg)
+    @course = course
+    @course_name = course.name
     @current_commit_msg = current_commit_msg
-    @content = Course::Content.new(course_name, "master")
+    @content = Course::Content.new(course)
   end
 
   def update_course_and_lessons
-    course = update_course_according_to_xml
-    update_lessons_according_to_xml(course)
+    update_course_according_to_xml
+    update_lessons_according_to_xml
   end
 
   private
 
   def update_course_according_to_xml
-    course = nil
     course_info = content.course_info
     course_info[:current_commit] = current_commit_msg
     create_or_update(Course, course_name, course_info)
   end
 
-  def update_lessons_according_to_xml(course)
+  def update_lessons_according_to_xml
     lessons_info = content.lessons_info
-    lessons_info.each do |lesson_name, other_attr|
-      other_attr[:course_id] = course.id
-      create_or_update(Lesson, lesson_name, other_attr)
-    end
     extra_lessons_info = content.extra_lessons_info
-    puts "extra_lesons size:" + extra_lessons_info.size.to_s
-    extra_lessons_info.each do |info|
+
+    lessons = [lessons_info, extra_lessons_info].flatten
+    lessons.each do |info|
       info[:course_id] = course.id
       create_or_update(Lesson, info[:name], info)
     end

@@ -1,14 +1,14 @@
-class Course::FileRemover
+class Course::ResourceRemover
 
-  attr_reader :asset_path, :xml_repo_path
-  def initialize(course_name)
-    @asset_path = Course::Utils::ASSET_DIR + course_name
-    @xml_repo_path = Course::Utils::XML_REPO_DIR + course_name
+  attr_reader :asset_path, :xml_dir
+  def initialize(course)
+    @asset_path = course.asset_dir
+    @xml_dir = course.xml_dir
   end
 
   def remove_course_releated_file
     delete_all_file(asset_path)
-    delete_all_file(xml_repo_path)
+    delete_all_file(xml_dir)
   end
 
   private

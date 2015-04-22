@@ -15,6 +15,7 @@
 
 # Ignore vim swp file
 *.swp
+*.swo
 
 # Ignore all logfiles and tempfiles.
 /log/*

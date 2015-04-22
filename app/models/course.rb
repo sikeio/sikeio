@@ -16,7 +16,7 @@
 
 class Course < ActiveRecord::Base
 
-  attr_reader :content_version, :xml_file_path, :asset_dir, :temp_dir, :repo_dir
+  attr_reader :content_version, :xml_file_path, :asset_dir, :temp_dir, :repo_dir, :xml_dir
 
   has_many :enrollments, dependent: :restrict_with_exception
 
@@ -33,7 +33,8 @@ class Course < ActiveRecord::Base
     xml_file = course.name + ".xml"
     course.current_version = "master" if course.current_version.blank?
     @xml_file_path = Course::Utils::XML_REPO_DIR + course.name + course.current_version + xml_file
-    @asset_dir = Course::Utils::ASSET_DIR + "courses"
+    @asset_dir = Course::Utils::ASSET_DIR + "courses" + course.name
+    @xml_dir = Course::Utils::XML_REPO_DIR + course.name + course.current_version
     @temp_dir = Course::Utils::TEMP_DIR
     @repo_dir = Course::Utils::REPO_DIR + course.name
     xml_dir = Course::Utils::XML_REPO_DIR + course.name + course.current_version

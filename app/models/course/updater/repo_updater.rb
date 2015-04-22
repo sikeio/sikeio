@@ -2,9 +2,9 @@ class Course::Updater::RepoUpdater
 
   attr_reader :url, :repo_dir_path
 
-  def initialize(url, repo_dir)
-    @url = url
-    @repo_dir_path = repo_dir
+  def initialize(course)
+    @url = course.repo_url
+    @repo_dir_path = course.repo_dir
   end
 
   def update_repo

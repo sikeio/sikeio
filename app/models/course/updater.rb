@@ -1,12 +1,15 @@
 class Course::Updater
-  attr_reader :course, :course_repo_dir, :course_xml_repo_dir, :course_xml_file_path
+  attr_reader :course, :course_repo_dir, :course_xml_file_path, :asset_dir
 
   def initialize(course)
     @course = course
-    @course_repo_dir = Course::Utils::REPO_DIR + course.name
-    @course_xml_repo_dir = Course::Utils::XML_REPO_DIR + course.name + "master"
-    file_name = course.name + ".xml"
-    @course_xml_file_path = @course_xml_repo_dir + file_name
+  end
+
+  def initialize(course)
+    @course = course
+    @course_repo_dir = course.repo_dir
+    @course_xml_file_path = course.xml_file_path
+    @asset_dir = course.asset_dir
   end
 
   def update
@@ -25,7 +28,7 @@ class Course::Updater
     puts "making assets avaiable for: #{course.name}"
     from_dir = course_repo_dir
     # /public/courses/:course_name/:lesson_name
-    to_dir = Course::Utils::ASSET_DIR + "courses" + course.name
+    to_dir = asset_dir
     system "mkdir", "-p", (Course::Utils::ASSET_DIR + "courses").to_s
     # The trailing "/" indicates to rsync that we want to copy the content to the
     # destination without creating an additional sub-directory.
@@ -35,28 +38,27 @@ class Course::Updater
   end
 
   def remove_releated_file
-    Course::FileRemover.new(course.name).remove_course_releated_file
+    Course::ResourceRemover.new(course).remove_course_releated_file
   end
 
 
   def clone_file_to_repo
-    repo_updater = RepoUpdater.new(course.repo_url, course_repo_dir)
+    repo_updater = RepoUpdater.new(course)
     repo_updater.update_repo
   end
 
   def md_parse
-    parse = Course::MdParse.new(course_repo_dir)
-    {:xml => parse.result, :current_commit_msg => parse.current_commit_msg}
+    parse = Course::MdParse.new(course)
+    parse.result
   end
 
   def write_to_xml_repo(data)
-    FileUtils.mkdir_p(course_xml_repo_dir)
     f = File.new(course_xml_file_path, "w")
     f.write(data)
     f.close
   end
 
   def update_database(current_commit_msg)
-    Course::Updater::XMLUpdater.new(course.name, current_commit_msg).update_course_and_lessons
+    Course::Updater::DataUpdater.new(course, current_commit_msg).update_course_and_lessons
   end
 end

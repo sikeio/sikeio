@@ -147,6 +147,8 @@ class Course::MdParse
   end
 
   def compile_xmd(file)
+    puts "file path: "
+    puts file.path
     str = IO.popen(["xmd", file.path]).read
     Nokogiri::HTML(str).css("body")[0].child
   end
@@ -163,13 +165,13 @@ class Course::MdParse
 
   def copy_course_index_md
     file = gcommit.gtree.files["index.xmd"]
-    write_to_temp_file("course", "index", "xmd", file.contents)
+    write_to_temp_file("course", ".xmd", file.contents)
   end
 
   def copy_extra_md
     gcommit.gtree.trees.each do |dir_name, dir|
-      file = dir["index.xmd"] || dir["index.md"]
-      file_name = dir.key(file)
+      file = dir.files["index.xmd"] || dir.files["index.md"]
+      file_name = dir.files.key(file)
       ext = File.extname(file_name)
       write_to_temp_file(dir_name, ext, file.contents)
     end
