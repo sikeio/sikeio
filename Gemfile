@@ -84,5 +84,12 @@ group :development, :test do
   gem 'database_cleaner'
 
   gem 'quiet_assets'
+
+  # for livereload
+  gem 'guard', require: false
+  gem 'guard-livereload', require: false
+  gem 'rb-fsevent', require: false
+  gem 'rack-livereload'
+
 end
 
