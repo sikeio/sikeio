@@ -22,7 +22,7 @@ class Lesson < ActiveRecord::Base
   belongs_to :course
 
   def content
-    @content ||= Content.new(course.name,name)
+    @content ||= Content.new(self.course, self)
   end
 
   def to_param

@@ -3,12 +3,13 @@ class Lesson::Content
   ASSETS_TAG = ["img", "video"]
   ASSET_BASE = "/courses/"
 
-  attr_reader :course_name, :version, :lesson_name
+  attr_reader :course_name, :version, :lesson_name, :course
 
-  def initialize(course_name, lesson_name, version="master")
-    @course_name = course_name
-    @lesson_name = lesson_name
-    @version = version
+  def initialize(course, lesson)
+    @course_name = course.name
+    @lesson_name = lesson.name
+    @course = course
+    @version = course.current_version
   end
 
   def html_page
@@ -122,7 +123,7 @@ class Lesson::Content
 
 
   def xml_content
-    f = Course::FileReader.new(course_name, version)
+    f = Course::FileReader.new(course)
     result = f.read_file
     xml = Nokogiri::HTML(result)
     xml = xml.css("page[name=#{lesson_name}]")[0]
