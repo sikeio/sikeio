@@ -1,10 +1,10 @@
 class Course::FileReader
 
-  attr_reader :course_name, :version, :xml_file, :repo_dir
+  attr_reader :version, :xml_file, :repo_dir, :course
 
-  def initialize(course)
-    @course_name = course.name
-    @version = course.current_version
+  def initialize(course, version = nil)
+    @course = course
+    @version = version || course.current_version
     @xml_file = course.xml_file_path
     @repo_dir = course.repo_dir
   end
@@ -31,7 +31,7 @@ class Course::FileReader
   end
 
   def parse_file
-    parse = Course::MdParse.new(course)
+    parse = Course::MdParse.new(course, version)
     f = File.new(xml_file, "w")
     f.write(parse.result)
     f.close

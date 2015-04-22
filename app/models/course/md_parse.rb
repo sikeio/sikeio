@@ -5,11 +5,11 @@ class Course::MdParse
 
   attr_reader :temp_dir, :repo_dir, :temp_files, :gcommit
 
-  def initialize(course)
+  def initialize(course, version = nil)
     raise "repo does not exist" if !File.exist?(course.repo_dir)
     @temp_dir = course.temp_dir
     @repo_dir = course.repo_dir
-    version = course.current_version
+    version ||= course.current_version
     @gcommit = Git.open(repo_dir).branch(version).gcommit
   end
 
