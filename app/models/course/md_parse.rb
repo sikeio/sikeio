@@ -3,20 +3,30 @@ class Course::MdParse
   WEEK_HEADER = "h2"
   COURSE_TITLE_HEADER = "h1"
 
-  attr_reader :course_base_dir, :version, :temp_dir, :temp_file
+  attr_reader :temp_dir, :repo_dir, :temp_files, :gcommit
 
-  def initialize(repo_dir, version = "master")
-    raise "repo does not exist" if !File.exist?(repo_dir)
-    @version = version
-    @course_base_dir = repo_dir #Pathname
-    @temp_dir = Course::Utils::TEMP_DIR
-    FileUtils.mkdir_p(Course::Utils::TEMP_DIR) if !File.exist?(Course::Utils::TEMP_DIR)
+  def initialize(course)
+    raise "repo does not exist" if !File.exist?(course.repo_dir)
+    @temp_dir = course.temp_dir
+    @repo_dir = course.repo_dir
+    version = course.current_version
+    @gcommit = Git.open(repo_dir).branch(version).gcommit
   end
 
+
   def result
-    save_file_in_temp
+    {
+      xml: output_xml,
+      current_commit_msg: current_commit_msg
+    }
+  end
+
+  private
+
+  def output_xml
+    copy_files_to_temp_dir
     course =<<-THERE
-    <course name="#{course_name}">
+    <course name="#{course_title}">
       #{index_xml}
       #{pages_xml}
     </course>
@@ -26,16 +36,13 @@ class Course::MdParse
   end
 
   def current_commit_msg
-    git = Git.open(course_base_dir)
-    message = git.branch(version).gcommit.message
-    sha = git .branch(version).gcommit.sha
+    message = gcommit.message
+    sha = gcommit.sha
     message + ": " + sha
   end
 
-  private
-
-  def course_name
-    @course_name ||= course_index_dom.css("h1")[0].text
+  def course_title
+    @course_title ||= course_index_dom.css(COURSE_TITLE_HEADER)[0].text
   end
 
   def lesson_names
@@ -51,12 +58,12 @@ class Course::MdParse
   end
 
   def course_index_dom
-    file = temp_file["course"]
+    file = temp_files["course"]
     compile(file)
   end
 
   def clear_temp_dir
-    temp_file.each_value { |f| f.unlink }
+    temp_files.each_value { |f| f.unlink }
   end
 
   def index_xml
@@ -113,7 +120,7 @@ class Course::MdParse
 
   def pages_xml
     pages =""
-    temp_file.each_pair do |dir_name, file|
+    temp_files.each_pair do |dir_name, file|
       if dir_name != "course"
         dom = compile(file)
         page = <<-THERE
@@ -149,44 +156,31 @@ class Course::MdParse
     Nokogiri::HTML(str).css("body")[0]
   end
 
-
-  def save_file_in_temp
-    save_course
-    save_extra
+  def copy_files_to_temp_dir
+    copy_course_index_md
+    copy_extra_md
   end
 
-  def save_course
-    git = Git.open(course_base_dir)
-    FileUtils::mkdir_p(temp_dir)
-    git.branch(version).gcommit.gtree.files.each do |file_name, file|
+  def copy_course_index_md
+    file = gcommit.gtree.files["index.xmd"]
+    write_to_temp_file("course", "index", "xmd", file.contents)
+  end
+
+  def copy_extra_md
+    gcommit.gtree.trees.each do |dir_name, dir|
+      file = dir["index.xmd"] || dir["index.md"]
+      file_name = dir.key(file)
       ext = File.extname(file_name)
-      if ext == ".xmd" || ext == ".md"
-        basename = File.basename(file_name, ext)
-        wirte_to_temp_file("course", basename, ext, file.contents)
-      end
+      write_to_temp_file(dir_name, ext, file.contents)
     end
   end
 
-  def save_extra
-    git = Git.open(course_base_dir)
-    git.branch(version).gcommit.gtree.trees.each do |dir_name, dir|
-      dir.files.each do |file_name, file|
-        ext = File.extname(file_name)
-        if ext == ".xmd" || ext == ".md"
-          basename = File.basename(file_name, ext)
-          wirte_to_temp_file(dir_name, basename, ext, file.contents)
-        end
-      end
-    end
-  end
-
-  # {"course" => f_course, "lesson 1 => s"}
-  def wirte_to_temp_file(key, file_name, ext, contents)
-    @temp_file = {} if !@temp_file
-    f = Tempfile.new([file_name, ext], temp_dir)
+  def write_to_temp_file(key, ext, contents)
+    @temp_files = {} if !@temp_files
+    f = Tempfile.new(["temp", ext], temp_dir)
     f.write(contents)
     f.close
-    @temp_file[key] = f
+    @temp_files[key] = f
   end
 
 end
