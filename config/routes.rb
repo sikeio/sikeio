@@ -72,6 +72,7 @@ Rails.application.routes.draw do
 
     namespace :test do
       post :send_email
+      get :show_flash
     end
 
     resources :users,only:[:index] do

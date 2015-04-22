@@ -5,4 +5,12 @@ class Admin::TestController < Admin::ApplicationController
     TestMailer.hello(email,msg).deliver_now!
     render text: "email sent"
   end
+
+  def show_flash
+    if error = params[:error]
+      flash[:error] = error
+    end
+
+    redirect_to "/"
+  end
 end
