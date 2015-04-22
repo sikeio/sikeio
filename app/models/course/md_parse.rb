@@ -111,22 +111,18 @@ class Course::MdParse
     THERE
   end
 
-  def lesson_dom(lesson_name)
-    file = temp_file[lesson_name]
-    dom = compile(file)
-    dom
-  end
-
   def pages_xml
-    pages = ""
-    lesson_names.each do |lesson_name|
-      lesson_xml_dom = lesson_dom(lesson_name)
-      page = <<-THERE
-      <page name="#{lesson_name}">
-      #{lesson_xml_dom.children.to_xhtml}
+    pages =""
+    temp_file.each_pair do |dir_name, file|
+      if dir_name != "course"
+        dom = compile(file)
+        page = <<-THERE
+      <page name="#{dir_name}">
+        #{dom.children.to_xhtml}
       </page>
-      THERE
-      pages << page
+        THERE
+        pages << page
+      end
     end
 
     <<-THERE
@@ -155,11 +151,11 @@ class Course::MdParse
 
 
   def save_file_in_temp
-    save_course_index
-    save_lesson_index
+    save_course
+    save_extra
   end
 
-  def save_course_index
+  def save_course
     git = Git.open(course_base_dir)
     FileUtils::mkdir_p(temp_dir)
     git.branch(version).gcommit.gtree.files.each do |file_name, file|
@@ -171,7 +167,7 @@ class Course::MdParse
     end
   end
 
-  def save_lesson_index
+  def save_extra
     git = Git.open(course_base_dir)
     git.branch(version).gcommit.gtree.trees.each do |dir_name, dir|
       dir.files.each do |file_name, file|

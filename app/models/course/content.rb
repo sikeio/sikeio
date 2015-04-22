@@ -44,6 +44,7 @@ class Course::Content
     @lessons_info
   end
 
+
   #{lesson_name => day, lesson_name2 => day2}
   def release_day_of_lesson
     return @release_day_of_lesson if @release_day_of_lesson
@@ -58,7 +59,6 @@ class Course::Content
       week_num += 1
     end
     @release_day_of_lesson
-
   end
 
   def lessons_sum
@@ -76,10 +76,25 @@ class Course::Content
     end
   end
 
+
+
   #[week1_title, week2_title]
   def course_week_titles
     return @course_week_titles if @course_week_titles
     @course_week_titles = xml_doc.css("week h2").map { |week_h2_node| week_h2_node.text }
+  end
+
+  def course_week_overviews
+    return @course_week_overviews if @course_week_overviews
+    @course_week_overviews = {}
+    week_num = 0
+    xml_doc.css("week").each do |week_node|
+      week_num += 1
+      week_node.css("> overview").each do |overview_node|
+        @course_week_overviews["week#{week_num}"] = overview_node.children.to_xhtml
+      end
+    end
+    @course_week_overviews
   end
 
   def course_weeks_sum
@@ -87,10 +102,18 @@ class Course::Content
     @course_weeks_sum = xml_doc.css("week").size
   end
 
-  private
-  def repo_path
-    Rails.root + "xml_repo" + course_name + course_version
+  def extra_lessons_info
+    return @extra_lessons_info if @extra_lessons_info
+    lesson_names = xml_doc.css("lesson").map { |node| node["name"] }
+    extra_node = Nokogiri::HTML(xml_file_content).css("page").find_all do |page_node|
+      lesson_names.all?{ |lesson_name| lesson_name != page_node["name"] }
+    end
+    @extra_lessons_info = extra_node.map do |node|
+      {:name => node["name"], :title => node.css("h1")[0].text}
+    end
   end
+
+  private
 
   def xml_file_content
     f = Course::FileReader.new(course_name, course_version)

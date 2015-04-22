@@ -117,7 +117,13 @@ class Enrollment < ActiveRecord::Base
     Time.now.next_week :monday
   end
 
+  def week_lesson_released?(week_num)
+    return false if !any_released?
+    (week_num - 1) * 7 < day_from_start_time
+  end
+
   private
+
 
   def day_from_start_time
     today = Time.now.beginning_of_day.to_date

@@ -73,8 +73,10 @@ $exercise-code-padding: 20px 0 20px 20px
       height: 45px
       width: 100%
       max-width: none
-  p,h1,ul,h2,h3,h4
+
+  p,h1,h2,h3,h4,ul,ol
     @include position-center
+
   h1
     font-size: 36px
     font-weight: 300
@@ -82,6 +84,7 @@ $exercise-code-padding: 20px 0 20px 20px
     margin-bottom: $h1-margin-bottom
     font-family: 'Heiti SC'
     color: #454441
+
   h2
     font-size: 30px
     font-weight: 200
@@ -100,6 +103,12 @@ $exercise-code-padding: 20px 0 20px 20px
     margin-top: $h4-margin-top
     margin-bottom: $h3-margin-bottom
     font-family: 'Heiti SC'
+
+  ol
+    list-style: decimal inside none
+    padding-left: 0
+    margin: $ul-margin auto
+
   ul
     padding-left: 0
     margin: $ul-margin auto

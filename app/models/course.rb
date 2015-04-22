@@ -45,8 +45,15 @@ class Course < ActiveRecord::Base
     Course::Schedule.new(self, version)
   end
 
+  def name=(name)
+    super(name)
+    self.permalink = name.parameterize
+  end
+
+=begin
   def title=(title)
     super(title)
     self.permalink = title.parameterize
   end
+=end
 end
