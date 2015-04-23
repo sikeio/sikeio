@@ -9,7 +9,7 @@ class Enrollment::Schedule
   end
 
   def lessons
-    @lessons ||= content.lessons_info.map do |lesson_attr|
+    content.lessons_info.map do |lesson_attr|
       course.lessons.find_by_name(lesson_attr[:name])
     end
   end
@@ -106,6 +106,21 @@ class Enrollment::Schedule
   def is_last_lesson?(lesson)
     lessons.last == lesson
   end
+
+  def self.once(*method_syms)
+    for sym in method_syms
+      module_eval <<-THERE
+        alias_method :__#{sym}__, :#{sym}
+        private :__#{sym}__
+        def #{sym}(*args, &block)
+          @__#{sym}__ ||= __#{sym}__(*args, &block)
+        end
+        THERE
+    end
+  end
+
+  once :lessons, :lessons_sum, :course_weeks, :course_weeks_sum, :weeks_info
+
 
   private
 

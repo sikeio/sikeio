@@ -20,9 +20,8 @@ class Course::Content
   #[{:name => "name", :title => "title", :overview => "overview" }, {...}]
   #return in order
   def lessons_info
-    return @lessons_info if @lessons_info
 
-    @lessons_info = []
+    temp_lessons_info = []
 
     index_dom.css("week").sort.each do |week_node|
       week_lessons = week_lessons_sort_by_day(week_node)
@@ -31,24 +30,23 @@ class Course::Content
         info[:title] = lesson_title(lesson_node["name"])
         info[:overview] = lesson_node.css("overview").children.to_xhtml.strip
         info[:name] = lesson_node["name"]
-        @lessons_info << info
+        temp_lessons_info << info
       end
     end
 
-    @lessons_info
+    temp_lessons_info
   end
 
   #[{:name => "name", :title => "title"}]
   #without order
   def extra_lessons_info
-    return @extra_lessons_info if @extra_lessons_info
 
     lesson_names = index_dom.css("lesson").map { |node| node["name"] }
     extra_node = xml_dom.css("page").find_all do |page_node|
       lesson_names.all?{ |lesson_name| lesson_name != page_node["name"] }
     end
 
-    @extra_lessons_info = extra_node.map do |node|
+    extra_node.map do |node|
       {:name => node["name"], :title => node.css("h1")[0].text}
     end
   end
@@ -57,8 +55,8 @@ class Course::Content
   #[{:title => "title", :overview => "overview"}, {...}]
   #return in order
   def weeks_info
-    return @weeks_info if @weeks_info
-    @weeks_info = []
+
+    temp_weeks_info = []
     index_dom.css("week").sort.each do |week_node|
       info = {}
       title = week_node.css("> h2")[0].text
@@ -67,34 +65,32 @@ class Course::Content
       info[:title] = title
       info[:overview] = overview
 
-      @weeks_info << info
+      temp_weeks_info << info
     end
 
-    @weeks_info
+    temp_weeks_info
   end
 
 
   #{lesson_name => day, lesson_name2 => day2}
   def release_day_of_lesson
-    return @release_day_of_lesson if @release_day_of_lesson
 
-    @release_day_of_lesson = {}
+    temp_release_day_of_lesson = {}
     week_num = 0
     index_dom.css("week").each do |week_node|
       week_node.css("lesson").each do |lesson_node|
         lesson_release_day = 7 * week_num + lesson_node["day"].to_i
-        @release_day_of_lesson[lesson_node["name"]] = lesson_release_day
+        temp_release_day_of_lesson[lesson_node["name"]] = lesson_release_day
       end
       week_num += 1
     end
-    @release_day_of_lesson
+    temp_release_day_of_lesson
   end
 
   #[[lesson1_name,lesson2_name],[]]
   #return in order
   def course_weeks
-    return @course_weeks if @course_weeks
-    @course_weeks = index_dom.css("week").sort.map do |week_node|
+    index_dom.css("week").sort.map do |week_node|
       week_lessons = week_lessons_sort_by_day(week_node)
       week_lessons.map do |lesson_node|
         lesson_node["name"]
@@ -105,6 +101,20 @@ class Course::Content
   def lesson_content(lesson_name)
     index_dom.css("page[name=#{lesson_name}]")[0].children.to_xhtml
   end
+
+  def self.once(*method_syms)
+    for sym in method_syms
+      module_eval <<-THERE
+        alias_method :__#{sym}__, :#{sym}
+        private :__#{sym}__
+        def #{sym}(*args, &block)
+          @__#{sym}__ ||= __#{sym}__(*args, &block)
+        end
+        THERE
+    end
+  end
+
+  once :course_info, :lessons_info, :extra_lessons_info, :weeks_info, :release_day_of_lesson, :course_weeks
 
   private
 
@@ -137,5 +147,7 @@ class Course::Content
   def index_dom
     @index_dom ||= xml_dom.css("index")[0]
   end
+
+
 
 end
