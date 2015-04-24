@@ -12,37 +12,40 @@ div.status-bar
 
 header
   = image_tag "courses/header.png"
-  <h1>
-     |#{@enrollment.course.title}
-  </h1>
-- current_lesson = @enrollment.schedule.current_lesson
-- if current_lesson && (!@enrollment.schedule.is_completed?(current_lesson))
-  = hidden_field_tag 'day_left', @enrollment.schedule.current_lesson_day_left
-  = hidden_field_tag 'send-day', @send_day
-  div.time-remaining
-    p.time
+  - if @enrollment.schedule.any_released?
+    - latest_released_lesson = @enrollment.schedule.latest_released_lesson
+    - if latest_released_lesson
+      h1
+        span.banner
+          | #{@enrollment.schedule.lesson_number(latest_released_lesson)}
+        | #{latest_released_lesson.title}
+    - else
+      h1
+        | 课程全部结束
+  - else
+    h1
+      |即将开始
+
+/- current_lesson = @enrollment.schedule.current_lesson
+/- if current_lesson && (!@enrollment.schedule.is_completed?(current_lesson))
+/  = hidden_field_tag 'day_left', @enrollment.schedule.current_lesson_day_left
+= hidden_field_tag 'send-day', @send_day
+- if @enrollment.schedule.any_released?
+  - latest_released_lesson = @enrollment.schedule.latest_released_lesson
+  - if latest_released_lesson
+    div.time-remaining
+      p.time
+        | 今日任务
 
 div.current-mission
-  - if @enrollment.schedule.all_completed?
-    h2
-      | Finished
-    div.course-status.completed
-      i.fa.fa-check-circle
-  - else
-    - if current_lesson
-      h2
-        | #{current_lesson.title}
-
-      = sanitize current_lesson.overview
-      - if @enrollment.schedule.is_completed?(current_lesson)
-        div.course-status.completed
-          i.fa.fa-check-circle
-      - else
-        div.course-status.uncompleted
-          i.fa.fa-check-circle.uncompleted
-    - else
-      h2
-        | 即将开始
+  - if @enrollment.schedule.any_released?
+    - latest_released_lesson = @enrollment.schedule.latest_released_lesson
+    - if latest_released_lesson
+      = sanitize latest_released_lesson.overview
+      p.overview-bbs
+        a href="#"
+          i.fa.fa-comments-o.fa-2x
+          |前往讨论
 
 ul.missions
   - weeks_info = @enrollment.schedule.weeks_info
@@ -67,6 +70,13 @@ ul.missions
         li.mission.current
           a href=lesson_url
             | #{lesson_number.to_s + '. ' + lesson.title}
+          span.li-bbs
+            a href="#"
+              i.fa.fa-comments-o.fa-2x
+        - latest_released_lesson = @enrollment.schedule.latest_released_lesson
+        - if lesson == latest_released_lesson
+          = hidden_field_tag 'next_lesson_day_left', @enrollment.schedule.day_util_next_lesson_released
+          .time-left.message.js-time-until-next-lesson-released
       - elsif @enrollment.schedule.is_released?(lesson)
         li.mission.to-be-done
           | #{lesson_number.to_s + '. ' + lesson.title}

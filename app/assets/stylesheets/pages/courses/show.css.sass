@@ -1,3 +1,4 @@
+@import ../../global
 @mixin font-h1
   font-size: 40px
   font-weight: 400
@@ -25,12 +26,23 @@
   margin: auto
 
 #courses_show
+  span.li-bbs
+    float: right
+    & > a
+      color: #000
+  p.overview-bbs
+    text-align: right
+    & > a
+      color: #000
+
+
   margin: 0
   line-height: normal
   font-family: "Times New Roman"
   font-family: Roboto
   font-size: 17.33px
   font-weight: 300
+
 
   .status-bar
     font-size: 20px
@@ -81,8 +93,8 @@
           width: 60px
           height: 60px
           border-radius: 100%
-          top: -14px
-          left: -23px
+          top: -5px
+          left: -12px
           z-index: -1
 
   .time-remaining
@@ -107,6 +119,10 @@
       margin-top: 0
 
   .current-mission
+    ul
+      @include position-center
+      margin: 20px auto
+
     margin-top: 80px
     h2
       @include font-h2
@@ -115,6 +131,7 @@
       margin: 30px auto
     p
       @include position-center
+      margin: 20px auto
 
   .course-status
     text-align: center
@@ -130,6 +147,15 @@
     list-style: none
     padding: 30px 0
     background: #F8FBFF
+
+    .time-left
+      @include position-center
+      position: relative
+      top: -10px
+      max-width: 578px
+      text-align: left
+      padding: 10px 20px
+
     .week
       @include position-center
       color: #454441

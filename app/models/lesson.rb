@@ -30,8 +30,8 @@ class Lesson < ActiveRecord::Base
   end
 
   def name=(name)
-    super(name)
     self.permalink = name.parameterize
+    super(name)
   end
 
 =begin

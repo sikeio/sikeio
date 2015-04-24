@@ -53,6 +53,11 @@ class Enrollment::Schedule
     result
   end
 
+  def lesson_number(lesson)
+    result = lessons.find_index { |l| l == lesson }
+    result += 1 if result
+  end
+
   def pre_lesson(lesson)
     result = nil
     if index = lessons.index(lesson)
@@ -71,6 +76,26 @@ class Enrollment::Schedule
     content.weeks_info
   end
   memoize :weeks_info
+
+  def day_util_next_lesson_released
+    return nil if !(tmp_lesson = latest_released_lesson)
+    return nil if !(tmp_next_lesson = next_lesson(tmp_lesson))
+    release_day_of_lesson(tmp_next_lesson) - day_from_start_time
+  end
+
+  def latest_released_lesson
+    return nil if !any_released? || day_from_start_time > release_day_of_lesson(lessons.last)
+
+    result = lessons.find do |lesson|
+      day_from_start_time <= content.release_day_of_lesson[lesson.name]
+    end
+
+    if day_from_start_time < content.release_day_of_lesson[result.name]
+      result = pre_lesson(result)
+    end
+
+    result
+  end
 
   def all_completed?
     lessons.all? do |lesson|
@@ -129,6 +154,10 @@ class Enrollment::Schedule
 
 
   private
+
+  def week_from_start_time
+    (day_from_start_time - 1) / 7
+  end
 
   def day_from_start_time
     today = Time.now.beginning_of_day.to_date

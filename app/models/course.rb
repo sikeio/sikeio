@@ -82,8 +82,8 @@ class Course < ActiveRecord::Base
   end
 
   def name=(name)
-    super(name)
     self.permalink = name.parameterize
+    super(name)
   end
 
   private
