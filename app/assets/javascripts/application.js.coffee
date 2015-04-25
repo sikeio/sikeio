@@ -39,3 +39,8 @@ $(document).on "ajax:error", (evt,xhr,error) ->
     title: title
     text: text
     type: 'error'
+
+#global flash-message-box click handler
+$(document)
+  .on 'click', '.flash-message-box', ->
+    $(this).fadeOut()
