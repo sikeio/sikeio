@@ -2,11 +2,23 @@ class Course::Content
 
   attr_reader :course, :course_name, :xml_dom, :version
 
+   def self.memoize(*method_syms)
+    for sym in method_syms
+      module_eval <<-THERE
+        alias_method :__#{sym}__, :#{sym}
+        private :__#{sym}__
+        def #{sym}(*args, &block)
+          @__#{sym}__ ||= __#{sym}__(*args, &block)
+        end
+        THERE
+    end
+  end
+
   def initialize(course, version = nil)
     @course = course
     @course_name = course.name
     @version = version
-    @xml_dom =Nokogiri::HTML(xml_file_content)
+    @xml_dom = Nokogiri::HTML(xml_file_content)
   end
 
   #{:desc =>"desc", :title => "title"}
@@ -16,6 +28,7 @@ class Course::Content
       title: course_title
     }
   end
+  memoize :course_info
 
   #[{:name => "name", :title => "title", :overview => "overview" }, {...}]
   #return in order
@@ -36,6 +49,7 @@ class Course::Content
 
     temp_lessons_info
   end
+  memoize :lessons_info
 
   #[{:name => "name", :title => "title"}]
   #without order
@@ -50,6 +64,7 @@ class Course::Content
       {:name => node["name"], :title => node.css("h1")[0].text}
     end
   end
+  memoize :extra_lessons_info
 
 
   #[{:title => "title", :overview => "overview"}, {...}]
@@ -70,6 +85,7 @@ class Course::Content
 
     temp_weeks_info
   end
+  memoize :weeks_info
 
 
   #{lesson_name => day, lesson_name2 => day2}
@@ -86,6 +102,7 @@ class Course::Content
     end
     temp_release_day_of_lesson
   end
+  memoize :release_day_of_lesson
 
   #[[lesson1_name,lesson2_name],[]]
   #return in order
@@ -97,24 +114,12 @@ class Course::Content
       end
     end
   end
+  memoize :course_weeks
 
   def lesson_content(lesson_name)
     index_dom.css("page[name=#{lesson_name}]")[0].children.to_xhtml
   end
 
-  def self.once(*method_syms)
-    for sym in method_syms
-      module_eval <<-THERE
-        alias_method :__#{sym}__, :#{sym}
-        private :__#{sym}__
-        def #{sym}(*args, &block)
-          @__#{sym}__ ||= __#{sym}__(*args, &block)
-        end
-        THERE
-    end
-  end
-
-  once :course_info, :lessons_info, :extra_lessons_info, :weeks_info, :release_day_of_lesson, :course_weeks
 
   private
 

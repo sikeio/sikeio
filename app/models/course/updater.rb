@@ -1,15 +1,15 @@
+require 'forwardable'
+
 class Course::Updater
-  attr_reader :course, :course_repo_dir, :course_xml_file_path, :asset_dir
+
+  extend Forwardable
+
+  attr_reader :course
+
+  def_delegators :@course, :repo_dir, :asset_dir, :xml_file_path
 
   def initialize(course)
     @course = course
-  end
-
-  def initialize(course)
-    @course = course
-    @course_repo_dir = course.repo_dir
-    @course_xml_file_path = course.xml_file_path
-    @asset_dir = course.asset_dir
   end
 
   def update
@@ -26,7 +26,7 @@ class Course::Updater
 
   def sync_assets
     puts "making assets avaiable for: #{course.name}"
-    from_dir = course_repo_dir
+    from_dir = repo_dir
     # /public/courses/:course_name/:lesson_name
     to_dir = asset_dir
     system "mkdir", "-p", (Course::Utils::ASSET_DIR + "courses").to_s
@@ -53,7 +53,7 @@ class Course::Updater
   end
 
   def write_to_xml_repo(data)
-    f = File.new(course_xml_file_path, "w")
+    f = File.new(xml_file_path, "w")
     f.write(data)
     f.close
   end

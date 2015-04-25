@@ -16,8 +16,6 @@
 
 class Course < ActiveRecord::Base
 
-  attr_reader :content_version, :xml_file_path, :asset_dir, :temp_dir, :repo_dir, :xml_dir
-
   has_many :enrollments, dependent: :restrict_with_exception
 
   has_many :lessons
@@ -30,17 +28,41 @@ class Course < ActiveRecord::Base
   validates_uniqueness_of :permalink
 
   after_initialize do |course|
-    xml_file = course.name + ".xml"
     course.current_version = "master" if course.current_version.blank?
-    @xml_file_path = Course::Utils::XML_REPO_DIR + course.name + course.current_version + xml_file
-    @asset_dir = Course::Utils::ASSET_DIR + "courses" + course.name
-    @xml_dir = Course::Utils::XML_REPO_DIR + course.name + course.current_version
-    @temp_dir = Course::Utils::TEMP_DIR
-    @repo_dir = Course::Utils::REPO_DIR + course.name
-    xml_dir = Course::Utils::XML_REPO_DIR + course.name + course.current_version
-    FileUtils.mkdir_p(xml_dir) if !File.exist?(xml_dir)
-    FileUtils.mkdir_p(@asset_dir) if !File.exist?(@asset_dir)
-    FileUtils.mkdir_p(@temp_dir) if !File.exist?(@temp_dir)
+  end
+
+  def xml_file_path
+    return nil if !self.name
+    default_version if !self.current_version
+    xml_file = self.name + ".xml"
+    xml_dir = Course::Utils::XML_REPO_DIR + self.name + self.current_version
+    ensure_dir_exist(xml_dir)
+    xml_dir + xml_file
+  end
+
+  def asset_dir
+    return nil if !self.name
+    dir = Course::Utils::ASSET_DIR + "courses" + self.name
+    ensure_dir_exist(dir)
+    dir
+  end
+
+  def xml_dir
+    return nil if !self.name
+    dir = Course::Utils::XML_REPO_DIR + self.name + self.current_version
+    ensure_dir_exist(dir)
+    dir
+  end
+
+  def temp_dir
+    dir = Course::Utils::TEMP_DIR
+    ensure_dir_exist(dir)
+    dir
+  end
+
+  def repo_dir
+    return nil if !self.name
+    Course::Utils::XML_REPO_DIR + self.name + self.current_version
   end
 
   def self.by_param(id)
@@ -62,6 +84,12 @@ class Course < ActiveRecord::Base
   def name=(name)
     super(name)
     self.permalink = name.parameterize
+  end
+
+  private
+
+  def ensure_dir_exist(dir)
+    FileUtils.mkdir_p(dir) if !File.exist?(dir)
   end
 
 =begin

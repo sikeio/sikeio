@@ -2,6 +2,19 @@ class Enrollment::Schedule
 
   attr_reader :content, :course, :enrollment
 
+  def self.memoize(*method_syms)
+    for sym in method_syms
+      module_eval <<-THERE
+        alias_method :__#{sym}__, :#{sym}
+        private :__#{sym}__
+        def #{sym}(*args, &block)
+          @__#{sym}__ ||= __#{sym}__(*args, &block)
+        end
+        THERE
+    end
+  end
+
+
   def initialize(enrollment)
     @content = Course::Content.new(enrollment.course, enrollment.version)
     @course = enrollment.course
@@ -13,20 +26,24 @@ class Enrollment::Schedule
       course.lessons.find_by_name(lesson_attr[:name])
     end
   end
+  memoize :lessons
 
   def lessons_sum
     content.lessons_info.size
   end
+  memoize :lessons_sum
 
   def course_weeks
     content.course_weeks.map do |week|
       week.map { |lesson_name| course.lessons.find_by_name(lesson_name) }
     end
   end
+  memoize :course_weeks
 
   def course_weeks_sum
     content.course_weeks.size
   end
+  memoize :course_weeks_sum
 
   def next_lesson(lesson)
     result = nil
@@ -53,6 +70,7 @@ class Enrollment::Schedule
   def weeks_info
     content.weeks_info
   end
+  memoize :weeks_info
 
   def all_completed?
     lessons.all? do |lesson|
@@ -107,19 +125,7 @@ class Enrollment::Schedule
     lessons.last == lesson
   end
 
-  def self.once(*method_syms)
-    for sym in method_syms
-      module_eval <<-THERE
-        alias_method :__#{sym}__, :#{sym}
-        private :__#{sym}__
-        def #{sym}(*args, &block)
-          @__#{sym}__ ||= __#{sym}__(*args, &block)
-        end
-        THERE
-    end
-  end
 
-  once :lessons, :lessons_sum, :course_weeks, :course_weeks_sum, :weeks_info
 
 
   private

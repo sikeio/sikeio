@@ -1,14 +1,18 @@
+require 'forwardable'
 class Course::MdParse
+
+  extend Forwardable
 
   WEEK_HEADER = "h2"
   COURSE_TITLE_HEADER = "h1"
 
-  attr_reader :temp_dir, :repo_dir, :temp_files, :gcommit
+  attr_reader :temp_files, :gcommit
+
+  def_delegators :@course, :temp_dir, :repo_dir
 
   def initialize(course, version = nil)
     raise "repo does not exist" if !File.exist?(course.repo_dir)
-    @temp_dir = course.temp_dir
-    @repo_dir = course.repo_dir
+    @course = course
     version ||= course.current_version
     @gcommit = Git.open(repo_dir).branch(version).gcommit
   end
