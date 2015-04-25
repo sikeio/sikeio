@@ -1,6 +1,6 @@
 @import ../../global
 @mixin font-h1
-  font-size: 40px
+  font-size: 35px
   font-weight: 400
 @mixin font-h2
   font-size: 36px
@@ -26,12 +26,18 @@
   margin: auto
 
 #courses_show
+  h1
+    @include position-center
+    @include font-h1
+    text-align: center
+    width: 100%
+    margin: 30px auto
   span.li-bbs
     float: right
     & > a
       color: #000
   p.overview-bbs
-    text-align: right
+    text-align: center
     & > a
       color: #000
 
@@ -61,20 +67,17 @@
       *
         float: right
 
-  header
+  .course-show-head
     font-size: 0
     position: relative
-    @include shadow
+    @include position-center
+    margin: 60px auto auto auto
     img
       width: 100%
     h1
       @include font-h1
       text-decoration: underline
-      z-index: 1
-      color: white
-      position: absolute
-      top: 0
-      bottom: 0
+      color: #454441
       margin: auto
       text-align: center
       height: 1.5em
@@ -132,6 +135,11 @@
     p
       @include position-center
       margin: 20px auto
+  .current-mission__overview
+    p
+      font-size: 14px
+      margin: 10px auto
+      color: #373737
 
   .course-status
     text-align: center

@@ -1,88 +1,86 @@
-div.status-bar
-  .left
-    = image_tag "courses/logo_course.png", class: "logo"
-    p.course-title
+.site-header
+  .logo-title
+    .logo-title__logo href="/"
+      .logo
+    .logo-title__title
       = @enrollment.course.title
-
-  .right
+  .course-site-head-status
     = image_tag "courses/avatar.png", class: "avatar"
-    p.mission-status
+    p.course-site-head-status__mission-status
      | #{@enrollment.schedule.completed_lessons_num}/#{@enrollment.schedule.lessons_sum} Completed
-     /等待添加功能
 
-header
-  = image_tag "courses/header.png"
+.current-mission
+  /= image_tag "courses/header.png"
   - if @enrollment.schedule.any_released?
     - latest_released_lesson = @enrollment.schedule.latest_released_lesson
     - if latest_released_lesson
-      h1
-        span.banner
-          | #{@enrollment.schedule.lesson_number(latest_released_lesson)}
+      h1.current-mission__title
         | #{latest_released_lesson.title}
     - else
-      h1
+      h1.current-mission__title
         | 课程全部结束
   - else
-    h1
+    h1.current-mission__title
       |即将开始
 
 /- current_lesson = @enrollment.schedule.current_lesson
 /- if current_lesson && (!@enrollment.schedule.is_completed?(current_lesson))
 /  = hidden_field_tag 'day_left', @enrollment.schedule.current_lesson_day_left
 = hidden_field_tag 'send-day', @send_day
-- if @enrollment.schedule.any_released?
-  - latest_released_lesson = @enrollment.schedule.latest_released_lesson
-  - if latest_released_lesson
-    div.time-remaining
-      p.time
-        | 今日任务
+/- if @enrollment.schedule.any_released?
+/  - latest_released_lesson = @enrollment.schedule.latest_released_lesson
+/  - if latest_released_lesson
+/    div.time-remaining
+/      p.time
 
 div.current-mission
   - if @enrollment.schedule.any_released?
     - latest_released_lesson = @enrollment.schedule.latest_released_lesson
     - if latest_released_lesson
-      = sanitize latest_released_lesson.overview
+      .current-mission__overview
+        = sanitize latest_released_lesson.overview
       p.overview-bbs
         a href="#"
           span.icon-discuss
           | 前往讨论
 
-ul.missions
+ul.course-missions
   - weeks_info = @enrollment.schedule.weeks_info
   - lesson_number = 0
   - @enrollment.schedule.course_weeks_sum.times do |num|
     - week_info = weeks_info[num]
-    p.week
-      |#{week_info[:title]}
-    - if @enrollment.schedule.week_lesson_released?(num + 1)
-      .week-overview
-         = sanitize week_info[:overview]
-    - week_lessons = @enrollment.schedule.course_weeks[num]
-    - week_lessons.each do |lesson|
-      - lesson_url = lesson_path(@enrollment.course, lesson)
-      - lesson_number += 1
-      - if @enrollment.schedule.is_completed?(lesson)
-        li.mission.done
-          i.fa.fa-check-circle
-          a href=lesson_url
+    .course-missions__week
+      p.course-missions__week__title
+        |#{week_info[:title]}
+      - if @enrollment.schedule.week_lesson_released?(num + 1)
+        .course-missions__week__overview
+           = sanitize week_info[:overview]
+      - week_lessons = @enrollment.schedule.course_weeks[num]
+      - week_lessons.each do |lesson|
+        - lesson_url = lesson_path(@enrollment.course, lesson)
+        - lesson_number += 1
+        - if @enrollment.schedule.is_completed?(lesson)
+          li.course-missions__week__mission.course-missions__week__mission--done
+            i.fa.fa-check-circle
+            a href=lesson_url
+              | #{lesson_number.to_s + '. ' + lesson.title}
+        - elsif @enrollment.schedule.is_released?(lesson)
+          li.mission.course-missions__week__mission
+            a href=lesson_url
+              | #{lesson_number.to_s + '. ' + lesson.title}
+            span.li-bbs
+              a href="#"
+                i.fa.fa-comments-o.fa-2x
+          - latest_released_lesson = @enrollment.schedule.latest_released_lesson
+          - if lesson == latest_released_lesson
+            = hidden_field_tag 'next_lesson_day_left', @enrollment.schedule.day_util_next_lesson_released
+            .time-left.message.js-time-until-next-lesson-released
+        - elsif @enrollment.schedule.is_released?(lesson)
+          li.mission.to-be-done
             | #{lesson_number.to_s + '. ' + lesson.title}
-      - elsif @enrollment.schedule.is_released?(lesson)
-        li.mission.current
-          a href=lesson_url
+        - else
+          li.mission.course-missions__week__mission.course-missions__week__mission--future
             | #{lesson_number.to_s + '. ' + lesson.title}
-          span.li-bbs
-            a href="#"
-              span.icon-discuss
-        - latest_released_lesson = @enrollment.schedule.latest_released_lesson
-        - if lesson == latest_released_lesson
-          = hidden_field_tag 'next_lesson_day_left', @enrollment.schedule.day_util_next_lesson_released
-          .time-left.message.js-time-until-next-lesson-released
-      - elsif @enrollment.schedule.is_released?(lesson)
-        li.mission.to-be-done
-          | #{lesson_number.to_s + '. ' + lesson.title}
-      - else
-        li.mission.future
-          | #{lesson_number.to_s + '. ' + lesson.title}
           /使用连接代替
 
 /= render partial: "checkout", locals: {title: @enrollment.schedule.current_lesson.name, checkout: :checkout, html_method: :post,
