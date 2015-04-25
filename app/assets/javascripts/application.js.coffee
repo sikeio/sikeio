@@ -41,5 +41,11 @@ $(document).on "ajax:error", (evt,xhr,error) ->
     text: text
     type: 'error'
 
+
 #init hightlight.js
 hljs.initHighlightingOnLoad();
+
+#global flash-message-box click handler
+$(document)
+  .on 'click', '.flash-message-box', ->
+    $(this).fadeOut()
