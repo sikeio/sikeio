@@ -41,65 +41,8 @@ class Enrollment < ActiveRecord::Base
     !self.personal_info.nil?
   end
 
-  def next_uncompleted_lesson
-    #得到尚未完成的第一个课程
-    result = schedule.lessons.find do |lesson|
-      !(Checkout.check_out?(self, lesson))
-    end
-  end
-
-  def current_lesson
-    return nil if all_completed? || (!any_released?)
-    lesson = next_uncompleted_lesson
-    return lesson if is_released?(lesson)
-    lesson = schedule.pre_lesson(lesson) while !(is_completed?(lesson))
-    lesson
-  end
-
-  def is_next_uncompleted_lesson?(lesson)
-    lesson == next_uncompleted_lesson
-  end
-
   def schedule
-    if !@schedule
-      if self.version
-        @schedule = self.course.schedule(self.version)
-      else
-        @schedule = self.course.schedule
-      end
-    end
-    @schedule
-  end
-
-  def completed_lessons_num
-    self.checkouts.count
-  end
-
-  def all_completed?
-    schedule.lessons.all? do |lesson|
-      Checkout.check_out?(self, lesson)
-    end
-  end
-
-  def uncompleted_lesson_day_left
-    lesson = schedule.next_lesson(self.next_uncompleted_lesson)
-    next_lesson_start_day = schedule.release_day_of_lesson(lesson)
-
-    next_lesson_start_day - day_from_start_time
-  end
-
-  def is_released?(lesson)
-    day = schedule.release_day_of_lesson(lesson)
-    day_from_start_time >= day
-  end
-
-  def any_released?
-    first_lesson = schedule.lessons.first
-    self.is_released? first_lesson
-  end
-
-  def is_completed?(lesson)
-    Checkout.check_out?(self, lesson)
+    @schedule ||= Enrollment::Schedule.new(self)
   end
 
   def reset_token
@@ -113,21 +56,10 @@ class Enrollment < ActiveRecord::Base
     self.save!
   end
 
+  private
+
   def next_monday
     Time.now.next_week :monday
   end
 
-  def week_lesson_released?(week_num)
-    return false if !any_released?
-    (week_num - 1) * 7 < day_from_start_time
-  end
-
-  private
-
-
-  def day_from_start_time
-    today = Time.now.beginning_of_day.to_date
-    course_start_time = self.start_time.beginning_of_day.to_date
-    (today - course_start_time).to_i + 1
-  end
 end

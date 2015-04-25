@@ -7,66 +7,77 @@ div.status-bar
   .right
     = image_tag "courses/avatar.png", class: "avatar"
     p.mission-status
-     | #{@enrollment.completed_lessons_num}/#{@enrollment.schedule.lessons_sum} Completed
+     | #{@enrollment.schedule.completed_lessons_num}/#{@enrollment.schedule.lessons_sum} Completed
      /等待添加功能
 
 header
   = image_tag "courses/header.png"
-  <h1>
-     |#{@enrollment.course.title}
-  </h1>
-- current_lesson = @enrollment.current_lesson
-- if current_lesson && (!@enrollment.is_completed?(current_lesson))
-  = hidden_field_tag 'day_left', @enrollment.uncompleted_lesson_day_left
-  = hidden_field_tag 'send-day', @send_day
-  div.time-remaining
-    p.time
+  - if @enrollment.schedule.any_released?
+    - latest_released_lesson = @enrollment.schedule.latest_released_lesson
+    - if latest_released_lesson
+      h1
+        span.banner
+          | #{@enrollment.schedule.lesson_number(latest_released_lesson)}
+        | #{latest_released_lesson.title}
+    - else
+      h1
+        | 课程全部结束
+  - else
+    h1
+      |即将开始
+
+/- current_lesson = @enrollment.schedule.current_lesson
+/- if current_lesson && (!@enrollment.schedule.is_completed?(current_lesson))
+/  = hidden_field_tag 'day_left', @enrollment.schedule.current_lesson_day_left
+= hidden_field_tag 'send-day', @send_day
+- if @enrollment.schedule.any_released?
+  - latest_released_lesson = @enrollment.schedule.latest_released_lesson
+  - if latest_released_lesson
+    div.time-remaining
+      p.time
+        | 今日任务
 
 div.current-mission
-  - if @enrollment.all_completed?
-    h2
-      | Finished
-    div.course-status.completed
-      i.fa.fa-check-circle
-  - else
-    - if current_lesson
-      h2
-        | #{current_lesson.title}
-
-      = sanitize current_lesson.overview
-      - if @enrollment.is_completed?(current_lesson)
-        div.course-status.completed
-          i.fa.fa-check-circle
-      - else
-        div.course-status.uncompleted
-          i.fa.fa-check-circle.uncompleted
-    - else
-      h2
-        | 即将开始
+  - if @enrollment.schedule.any_released?
+    - latest_released_lesson = @enrollment.schedule.latest_released_lesson
+    - if latest_released_lesson
+      = sanitize latest_released_lesson.overview
+      p.overview-bbs
+        a href="#"
+          i.fa.fa-comments-o.fa-2x
+          |前往讨论
 
 ul.missions
+  - weeks_info = @enrollment.schedule.weeks_info
+  - lesson_number = 0
   - @enrollment.schedule.course_weeks_sum.times do |num|
-    - course_week_overviews = @enrollment.schedule.course_week_overviews
+    - week_info = weeks_info[num]
     p.week
-      |#{@enrollment.schedule.course_week_titles[num]}
-    - if @enrollment.week_lesson_released?(num + 1)
+      |#{week_info[:title]}
+    - if @enrollment.schedule.week_lesson_released?(num + 1)
       .week-overview
-         = sanitize course_week_overviews["week#{num + 1}"]
+         = sanitize week_info[:overview]
     - week_lessons = @enrollment.schedule.course_weeks[num]
     - week_lessons.each do |lesson|
       - lesson_url = lesson_path(@enrollment.course, lesson)
-      - lesson_number = @enrollment.schedule.lesson_number(lesson)
-      - if @enrollment.is_completed?(lesson)
+      - lesson_number += 1
+      - if @enrollment.schedule.is_completed?(lesson)
         li.mission.done
           i.fa.fa-check-circle
           a href=lesson_url
             | #{lesson_number.to_s + '. ' + lesson.title}
-      - elsif @enrollment.is_released?(lesson)
-        / && @enrollment.is_next_uncompleted_lesson?(lesson)
+      - elsif @enrollment.schedule.is_released?(lesson)
         li.mission.current
           a href=lesson_url
             | #{lesson_number.to_s + '. ' + lesson.title}
-      - elsif @enrollment.is_released?(lesson)
+          span.li-bbs
+            a href="#"
+              i.fa.fa-comments-o.fa-2x
+        - latest_released_lesson = @enrollment.schedule.latest_released_lesson
+        - if lesson == latest_released_lesson
+          = hidden_field_tag 'next_lesson_day_left', @enrollment.schedule.day_util_next_lesson_released
+          .time-left.message.js-time-until-next-lesson-released
+      - elsif @enrollment.schedule.is_released?(lesson)
         li.mission.to-be-done
           | #{lesson_number.to_s + '. ' + lesson.title}
       - else
@@ -74,6 +85,6 @@ ul.missions
           | #{lesson_number.to_s + '. ' + lesson.title}
           /使用连接代替
 
-/= render partial: "checkout", locals: {title: @enrollment.next_uncompleted_lesson.name, checkout: :checkout, html_method: :post,
-                                       url_path: check_out_path(@course, @enrollment.next_uncompleted_lesson) }
+/= render partial: "checkout", locals: {title: @enrollment.schedule.current_lesson.name, checkout: :checkout, html_method: :post,
+                                       url_path: check_out_path(@course, @enrollment.schedule.current_lesson) }
 

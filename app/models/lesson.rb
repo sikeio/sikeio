@@ -22,7 +22,7 @@ class Lesson < ActiveRecord::Base
   belongs_to :course
 
   def content
-    @content ||= Content.new(course.name,name)
+    @content ||= Content.new(self.course, self)
   end
 
   def to_param
@@ -30,8 +30,8 @@ class Lesson < ActiveRecord::Base
   end
 
   def name=(name)
-    super(name)
     self.permalink = name.parameterize
+    super(name)
   end
 
 =begin

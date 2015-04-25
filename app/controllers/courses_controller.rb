@@ -38,7 +38,7 @@ class CoursesController < ApplicationController
       redirect_to info_course_path(course)
       return
     end
-    @send_day = Date.today.day
+    @send_day = Time.now.beginning_of_day.to_f * 1000 # convert to milliseconds for js
     #render '_show'
   end
 

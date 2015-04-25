@@ -1,22 +1,20 @@
 class Course::FileReader
 
-  attr_reader :name, :version, :dir, :xmd_dir, :file, :asset_dir
+  attr_reader :version, :xml_file, :repo_dir, :course
 
-  def initialize(course_name, course_version = "master")
-    raise "pass the file name" if !course_name
-    @name = course_name
-    @version = course_version
-    @dir = Course::Utils::XML_REPO_DIR + course_name + course_version
-    @xmd_dir = Course::Utils::REPO_DIR + course_name
-    @file = course_name + ".xml"
+  def initialize(course, version = nil)
+    @course = course
+    @version = version || course.current_version
+    @xml_file = course.xml_file_path
+    @repo_dir = course.repo_dir
   end
 
   def read_file
     result = nil
-    if File.exist?(dir + file)
+    if File.exist?(xml_file)
       result = read_xml_file
     else
-      if File.exist?(xmd_dir)
+      if File.exist?(repo_dir)
         parse_file
         result = read_xml_file
       end
@@ -27,15 +25,14 @@ class Course::FileReader
   private
 
   def read_xml_file
-    f = File.open(dir + file)
-    result = f.read
-    f.close
-    result
+    File.open(xml_file) do |f|
+      f.read
+    end
   end
 
   def parse_file
-    parse = Course::MdParse.new(xmd_dir)
-    f = File.new(dir + file, "w")
+    parse = Course::MdParse.new(course, version)
+    f = File.new(xml_file, "w")
     f.write(parse.result)
     f.close
   end
