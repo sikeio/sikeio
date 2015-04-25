@@ -44,8 +44,8 @@ div.current-mission
       = sanitize latest_released_lesson.overview
       p.overview-bbs
         a href="#"
-          i.fa.fa-comments-o.fa-2x
-          |前往讨论
+          span.icon-discuss
+          | 前往讨论
 
 ul.missions
   - weeks_info = @enrollment.schedule.weeks_info
@@ -72,7 +72,7 @@ ul.missions
             | #{lesson_number.to_s + '. ' + lesson.title}
           span.li-bbs
             a href="#"
-              i.fa.fa-comments-o.fa-2x
+              span.icon-discuss
         - latest_released_lesson = @enrollment.schedule.latest_released_lesson
         - if lesson == latest_released_lesson
           = hidden_field_tag 'next_lesson_day_left', @enrollment.schedule.day_util_next_lesson_released
