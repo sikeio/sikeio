@@ -43,7 +43,10 @@ $(document).on "ajax:error", (evt,xhr,error) ->
 
 
 #init hightlight.js
-hljs.initHighlightingOnLoad();
+$ ->
+    $('pre code').each (index, block)->
+      if block.className.indexOf('lang-') != -1
+        hljs.highlightBlock(block)
 
 #global flash-message-box click handler
 $(document)
