@@ -4,6 +4,7 @@
 #= require sweetalert/lib/sweet-alert.min.js
 #= require turbolinks
 #= require slick.js/slick/slick.min.js
+#= require highlightjs/highlight.pack.js
 
 #= require_self
 #= require_directory ./blocks
@@ -39,3 +40,6 @@ $(document).on "ajax:error", (evt,xhr,error) ->
     title: title
     text: text
     type: 'error'
+
+#init hightlight.js
+hljs.initHighlightingOnLoad();
