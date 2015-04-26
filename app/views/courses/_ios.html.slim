@@ -12,17 +12,19 @@ header.site-header
 
 
 .jumbotron.jumbotron--ios
-  h1.jumbotron__title
-    img.jumbotron__badge src=image_url('courses/ios/icon.png')
-    | 攀爬第一个高峰
-  .entry-port.entry-port--jumbotron
-    a href="#"
-      i.fa.fa-sign-in.fa-lg
-      |进入课程
+  / h1.jumbotron__title
+  /   img.jumbotron__badge src=image_url('courses/ios/icon.png')
+  /   | 攀爬第一个高峰
+  / .entry-port.entry-port--jumbotron
+  /   a href="#"
+  /     i.fa.fa-sign-in.fa-lg
+  /     |进入课程
+  .jumbotron__centered-content
+    h1 iOS 攀爬第一个高峰
+    a.btn.btn--normal.btn--large.js-modal-trigger data-modal-target=".js-panel--enrolling"
+      | 课程报名质询
 
 
-  a.btn.btn--normal.btn--large.js-modal-trigger data-modal-target=".js-panel--enrolling"
-    | 课程报名质询
 
 .text-content
   h1
