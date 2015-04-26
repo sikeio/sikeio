@@ -47,5 +47,5 @@ hljs.initHighlightingOnLoad();
 
 #global flash-message-box click handler
 $(document)
-  .on 'click', '.flash-message-box', ->
+  .on 'click', '.js-dismissable', ->
     $(this).fadeOut()
