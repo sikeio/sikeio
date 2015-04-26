@@ -9,7 +9,7 @@ head
   = favicon_link_tag "favicon.ico"
   meta name="viewport" content="width=device-width, initial-scale=1"
 body id=page_identifier
-  .flash-message-box
+  .flash-message-box.js-dismissable
     - [:success,:error].each do |type|
       - if flash[type]
         .flash-message class="flash-message--#{type}" = flash[type]
