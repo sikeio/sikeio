@@ -45,6 +45,11 @@ GITHUB_KEY: github key
 
 GITHUB_SECRET: github secret
 
+#Discourse SSO Secret
+DISCOURSE_SSO_SECRET: secret
+
+#Discourse site
+DISCOURSE_HOST: localhost:4000
 
 ########################################################################
 # Production configurations

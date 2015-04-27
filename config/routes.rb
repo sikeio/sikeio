@@ -5,6 +5,9 @@ class AdminConstraint
 end
 
 Rails.application.routes.draw do
+  get '/sso/new'
+  get '/sso/succeed'
+
   require 'sidekiq/web'
   mount Sidekiq::Web => '/admin/sidekiq', :constraints => AdminConstraint.new
 

@@ -1,0 +1,14 @@
+header.site-header.site-header--center
+  .logo-title
+    .logo-title__logo
+      .logo
+    .logo-title__title
+      |Discourse 登录
+
+.action-panel.u-display-center
+  .action-panel__content.u-bg-lightblue
+    .message
+      .speech-bubble
+        | 通过思客来登录Discourse论坛
+    p.u-center-text
+      a.btn.btn--normal href='/auth/github?back_path=#{sso_succeed_path}' data-disable-with="<i class='fa fa-spinner fa-spin'></i> Loading..." GiHub登入
