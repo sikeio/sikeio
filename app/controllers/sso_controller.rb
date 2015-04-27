@@ -12,6 +12,7 @@ class SsoController < ApplicationController
     if login?
       data = {
         name: current_user.name,
+        username: current_user.github.info['nickname'].downcase,
         email: current_user.email,
         nonce: session.delete(:sso_nonce),
         external_id: current_user.id,

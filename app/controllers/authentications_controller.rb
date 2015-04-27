@@ -12,12 +12,15 @@ class AuthenticationsController < ApplicationController
         redirect_to_back_or_default params["back_path"]
       end
     else
-      if current_user
-        create_authentication
+      github_email = auth_info['info']['email']
+      if user = User.find_by(email: github_email)
+        create_authentication(user)
       else
-        flash[:error] = "您当前并未接受思客训练营邀请！请首先报名课程接受邀请。"
-        redirect_to :root
+        user = User.create name: auth_info['info']['nickname'], email: auth_info['info']['email']
+        create_authentication(user)
       end
+      login_as user
+      redirect_to_back_or_default params["back_path"]
     end
   end
 
@@ -35,15 +38,12 @@ class AuthenticationsController < ApplicationController
     request.env["omniauth.params"]
   end
 
-  def create_authentication
-    current_user.update_attribute :email, auth_info['info']['email']
-    current_user.authentications.create(
+  def create_authentication(user)
+    user.authentications.create(
       provider: 'github',
       uid: auth_info["uid"],
       info: auth_info["info"]
     )
-    flash[:info] = "您在思客站点的Email已经更新为#{current_user.email},此后,思客将使用该Email与您进行通信。"
-    redirect_to_back_or_default params["back_path"]
   end
 
 end
