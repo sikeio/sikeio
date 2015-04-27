@@ -30,9 +30,11 @@ class EnrollmentsController < ApplicationController
   end
 
   def invite
-    login_as enrollment.user
-    if @enrollment.has_personal_info?
-      redirect_to pay_enrollment_path(@enrollment)
+    if current_user && enrollment.user != current_user
+      enrollment.update_attribute :user, current_user
+    end
+    if enrollment.has_personal_info?
+      redirect_to pay_enrollment_path(enrollment)
       return
     end
     @course = @enrollment.course

@@ -10,7 +10,7 @@ head
   meta name="viewport" content="width=device-width, initial-scale=1"
 body id=page_identifier
   .flash-message-box.js-dismissable
-    - [:success,:error].each do |type|
+    - [:success, :error, :info].each do |type|
       - if flash[type]
         .flash-message class="flash-message--#{type}" = flash[type]
 
