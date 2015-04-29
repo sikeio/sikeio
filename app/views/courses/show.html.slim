@@ -40,7 +40,7 @@ div.current-mission
       .current-mission__overview
         = sanitize latest_released_lesson.overview
       p.overview-bbs
-        a href="#"
+        a href="#{latest_released_lesson.bbs}"
           span.icon-discuss
           | 前往讨论
 
@@ -69,7 +69,7 @@ ul.course-missions
             a href=lesson_url
               | #{lesson_number.to_s + '. ' + lesson.title}
             span.li-bbs
-              a href="#"
+              a href="#{lesson.bbs}"
                 span.icon-discuss
           - latest_released_lesson = @enrollment.schedule.latest_released_lesson
           - if lesson == latest_released_lesson
