@@ -14,6 +14,11 @@ class Enrollment::Schedule
     end
   end
 
+  def is_course_lesson?(lesson)
+    lessons.any? do |l|
+      l == lesson
+    end
+  end
 
   def initialize(enrollment)
     @content = Course::Content.new(enrollment.course, enrollment.version)

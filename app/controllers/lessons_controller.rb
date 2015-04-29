@@ -11,6 +11,9 @@ class LessonsController < ApplicationController
     content = lesson.content
     # TODO should cache this
     @lesson_html = content.html_page
+    @is_extra_lesson = !enrollment.schedule.is_course_lesson?(lesson)
+    @is_checkout = Checkin.checkin?(enrollment, lesson)
+
   end
 
   private

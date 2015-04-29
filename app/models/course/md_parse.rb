@@ -97,7 +97,7 @@ class Course::MdParse
         nodes_in_week << node.to_xhtml
       elsif node.name == "lesson"
         lesson = <<-THERE
-        <lesson day="#{node["day"]}"  name="#{node["name"]}">
+        <lesson day="#{node["day"]}"  name="#{node["name"]}" bbs="#{node["bbs"]}">
            <overview>#{node.children.to_xhtml}</overview>
         </lesson>
         THERE

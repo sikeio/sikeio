@@ -1,0 +1,41 @@
+.site-header.site-header--center
+  .logo-title
+    .logo-title__logo
+      .logo
+    .logo-title__title
+      |打卡
+
+.action-panel
+  h2.u-center-text
+      | #{@lesson.name}
+  .action-panel__content.u-bg-lightblue
+    = form_for @checkin, url: @url_path, method: @html_method, remote: true, html: {class: 'js-checkin'} do |f|
+      .form__row
+        = f.label :time_cost, "所花时间:"
+        = f.select :time_cost, options_for_select([["1小时以内", 0], ["1小时", 1], ["2小时", 2], ["3小时", 3], ["4小时", 4], ["4小时以上", 5]])
+      .form__row
+        = f.label :degree_of_difficulty, "难度如何"
+        = f.select :degree_of_difficulty, options_for_select([["太简单", 0],["容易", 1], ["适中", 2], ["难", 3], ["太难", 4]])
+      .form__row
+        = f.label :github_repository, "github链接"
+      .form__row
+        = f.text_field :github_repository, placeholder: "https://github.com/..."
+      .form__row
+        = f.label :problem, "我的心得(请用MarkDown格式填写)"
+        .markdown-editor
+          .markdown-editor__markdown
+            header.markdown-editor__header
+              small
+                |MarkDown
+            section.markdown-editor__markdown__content
+              = f.text_area :problem, id: "entry-markdown"
+          .markdown-editor__preview
+            header.markdown-editor__header
+              small
+                |Preview
+            section.markdown-editor__preview__content
+              .rendered-markdown
+      p.u-center-text
+        = f.submit "提交", class: "btn btn--normal"
+
+

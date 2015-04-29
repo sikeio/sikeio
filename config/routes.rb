@@ -18,8 +18,9 @@ Rails.application.routes.draw do
   delete '/logout' => 'sessions#destroy'
   get '/test/:id' => 'courses#test'
 
-  post '/checkout/:course_permalink/:lesson_permalink' => 'checkouts#new', as: :check_out
-  put '/checkout/:id' => 'checkouts#update', as: :check_out_update
+  post '/checkin/:id' => 'checkins#new', as: :checkin
+  put '/checkin/:id' => 'checkins#update', as: :checkin_update
+  get '/checkin/:id' => 'checkins#show', as: :checkin_show
 
   resources :subscribers, only: [:create]
 

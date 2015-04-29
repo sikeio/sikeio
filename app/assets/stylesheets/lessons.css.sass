@@ -73,6 +73,31 @@ $exercise-code-padding: 20px 0 20px 20px
       height: 45px
       width: 100%
       max-width: none
+  .goal
+    text-align: center
+    font-size: 36px
+    margin-top: 80px
+    i
+      color: #616161
+      &:before
+        margin-right: 15px
+    span
+      color: #FF5252
+
+  .completed
+    padding: 60px 0
+    text-align: center
+    i
+      display: block
+      font-size: 5em
+      color: #11D146
+  .uncompleted
+    padding: 60px 0
+    text-align: center
+    i
+      display: block
+      font-size: 5em
+      color: #616161
 
   p,h1,h2,h3,h4,ul,ol
     @include position-center
@@ -208,23 +233,7 @@ $exercise-code-padding: 20px 0 20px 20px
               position: relative
               z-index: 1
 
-    .goal
-      text-align: center
-      font-size: 36px
-      margin-top: 80px
-      i
-        color: #616161
-        &:before
-          margin-right: 15px
-      span
-        color: #FF5252
-    .completed
-      padding: 60px 0
-      text-align: center
-      i
-        display: block
-        font-size: 5em
-        color: #11D146
+
     .conclusion
       background: white
       p

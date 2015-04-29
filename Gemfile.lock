@@ -349,6 +349,7 @@ DEPENDENCIES
   rails (= 4.2.0)
   rb-fsevent
   redcarpet
+  rest-client
   rspec-rails
   sass-globbing
   sass-rails (~> 5.0)

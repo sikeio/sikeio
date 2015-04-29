@@ -3,39 +3,73 @@ class CheckinsController < ApplicationController
   before_action :require_login
 
   def new
-    course = Course.find_by_permalink(params[:course_permalink])
     enrollment = course.enrollments.find_by(user_id: session[:user_id])
-    lesson = course.course_lesson(params[:lesson_permalink])
-
+    raise "course not exist or not enroll" if !enrollment
     checkin_info = checkin_params
     checkin_info[:enrollment_id] = enrollment.id
-    checkin_info[:lesson_name] = lesson.name
+    checkin_info[:lesson_id] = lesson.id
     checkin = Checkin.new(checkin_info)
-    result = {}
-    if check.save
-      render js: "window.location='#{course_path(enrollment.course)}'"
+    begin
+        checkin.save!
+        render json: success_msg(checkin.lesson.bbs)
+    rescue
+        render json: error_msg(checkin.errors.full_messages)
+    end
+  end
+
+  def show
+    enrollment = course.enrollments.find_by(user_id: session[:user_id])
+    raise "course not exist or not enroll" if !enrollment
+    if !Checkin.checkin?(enrollment, lesson)
+      @url_path = checkin_path(lesson)
+      @html_method = :post
+      @checkin = Checkin.new
     else
-      result[:success] = false
-      result[:message] = check.errors.full_messages
-      render json: result
+      @checkin = enrollment.checkins.find_by(lesson_id: @lesson.id)
+      @url_path = checkin_update_path(@checkin)
+      @html_method = :put
     end
   end
 
   def update
     checkin = Checkin.find(params[:id])
     begin
-      checkin.update!(checkout_params)
-      render js: "window.location='#{course_path(checkin.enrollment.course)}'"
+      checkin.update!(checkin_params)
+      render json: success_msg(checkin.lesson.bbs)
     rescue
-      result[:success] = false
-      result[:message] = check.errors.full_messages
-      render json: result
+      render json: error_msg(checkin.errors.full_messages)
     end
   end
 
   private
 
-  def checkin_params
-    params.require(:checkin).permit(:degree_of_difficulty, :github_repository, :solved_problem, :question, :time_cost)
+  def lesson
+    @lesson ||= Lesson.find_by_permalink(params[:id])
   end
-end
+
+  def course
+    @coruse ||= lesson.course
+  end
+
+  def checkin_params
+    params.require(:checkin).permit(:degree_of_difficulty, :github_repository, :problem, :time_cost)
+  end
+
+  def error_msg(msg)
+    result = {}
+    result[:success] = false
+    if msg.blank?
+      result[:message] = "系统错误,请稍后尝试~"
+    else
+      result[:message] = msg
+    end
+    result
+  end
+
+  def success_msg(redirect_url)
+    result = {}
+    result[:success] = true
+    result[:url] = redirect_url
+    result
+  end
+ end
