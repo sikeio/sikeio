@@ -1,4 +1,4 @@
-class CheckoutsController < ApplicationController
+class CheckinsController < ApplicationController
 
   before_action :require_login
 
@@ -7,10 +7,10 @@ class CheckoutsController < ApplicationController
     enrollment = course.enrollments.find_by(user_id: session[:user_id])
     lesson = course.course_lesson(params[:lesson_permalink])
 
-    check_out_info = checkout_params
-    check_out_info[:enrollment_id] = enrollment.id
-    check_out_info[:lesson_name] = lesson.name
-    check = Checkout.new(check_out_info)
+    checkin_info = checkin_params
+    checkin_info[:enrollment_id] = enrollment.id
+    checkin_info[:lesson_name] = lesson.name
+    checkin = Checkin.new(checkin_info)
     result = {}
     if check.save
       render js: "window.location='#{course_path(enrollment.course)}'"
@@ -22,10 +22,10 @@ class CheckoutsController < ApplicationController
   end
 
   def update
-    checkout = Checkout.find(params[:id])
+    checkin = Checkin.find(params[:id])
     begin
-      checkout.update!(checkout_params)
-      render js: "window.location='#{course_path(checkout.enrollment.course)}'"
+      checkin.update!(checkout_params)
+      render js: "window.location='#{course_path(checkin.enrollment.course)}'"
     rescue
       result[:success] = false
       result[:message] = check.errors.full_messages
@@ -35,7 +35,7 @@ class CheckoutsController < ApplicationController
 
   private
 
-  def checkout_params
-    params.require(:checkout).permit(:degree_of_difficulty, :github_repository, :solved_problem, :question, :time_cost)
+  def checkin_params
+    params.require(:checkin).permit(:degree_of_difficulty, :github_repository, :solved_problem, :question, :time_cost)
   end
 end
