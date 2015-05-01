@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   delete '/logout' => 'sessions#destroy'
   get '/test/:id' => 'courses#test'
 
-  post '/checkin/:id' => 'checkins#new', as: :checkin
+  post '/checkin/:id' => 'checkins#create', as: :checkin
   put '/checkin/:id' => 'checkins#update', as: :checkin_update
   get '/checkin/:id' => 'checkins#show', as: :checkin_show
 

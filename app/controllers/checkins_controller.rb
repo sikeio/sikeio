@@ -2,18 +2,18 @@ class CheckinsController < ApplicationController
 
   before_action :require_login
 
-  def new
+  def create
     enrollment = course.enrollments.find_by(user_id: session[:user_id])
     raise "course not exist or not enroll" if !enrollment
     checkin_info = checkin_params
     checkin_info[:enrollment_id] = enrollment.id
     checkin_info[:lesson_id] = lesson.id
     checkin = Checkin.new(checkin_info)
-    begin
-        checkin.save!
-        render json: success_msg(checkin.lesson.bbs)
-    rescue
-        render json: error_msg(checkin.errors.full_messages)
+
+    if checkin.save
+      render json: success_msg(checkin.lesson.bbs)
+    else
+      render_400 checkin.errors
     end
   end
 

@@ -11,7 +11,7 @@ gem 'redcarpet'
 gem 'sidekiq'
 gem 'sinatra', :require => nil
 
-gem 'rest-client'
+gem 'rest-client', :require => "restclient"
 
 # use git
 gem 'git'
