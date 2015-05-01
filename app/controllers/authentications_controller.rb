@@ -2,26 +2,15 @@ class AuthenticationsController < ApplicationController
   protect_from_forgery except: :callback
 
   def callback
-    auth = Authentication.find_by uid: auth_info["uid"]
-    if auth
-      if params["github_binding"]
-        flash[:error] = "此Github账号已经被绑定。请直接登录"
-        redirect_to :root
-      else
-        login_as auth.user
-        redirect_to_back_or_default params["back_path"]
-      end
-    else
-      github_email = auth_info['info']['email']
-      if user = User.find_by(email: github_email)
-        create_authentication(user)
-      else
-        user = User.create name: auth_info['info']['nickname'], email: auth_info['info']['email']
-        create_authentication(user)
-      end
-      login_as user
-      redirect_to_back_or_default params["back_path"]
-    end
+    logger.info({
+      event: "oauth.success",
+      payload: payload,
+      params: auth_params
+    }.to_json)
+
+    auth = find_or_create_authentication
+    login_as auth.user
+    redirect_to_back_or_default auth_params["back_path"]
   end
 
   def fail
@@ -30,20 +19,41 @@ class AuthenticationsController < ApplicationController
 
   private
 
-  def auth_info
+  def payload
     request.env["omniauth.auth"]
   end
 
-  def params
+  def info
+    payload["info"]
+  end
+
+  def auth_params
     request.env["omniauth.params"]
   end
 
-  def create_authentication(user)
-    user.authentications.create(
-      provider: 'github',
-      uid: auth_info["uid"],
-      info: auth_info["info"]
-    )
+  def auth_email
+    info['email'].downcase
+  end
+
+  def find_or_create_user
+    user = User.find_by(email: auth_email)
+
+    if user.nil?
+      user = User.create! name: info['name'], email: auth_email
+    end
+
+    return user
+  end
+
+  def find_or_create_authentication
+    auth = Authentication.find_by uid: payload["uid"]
+    if auth
+      auth.user.update_attributes(email: auth_email)
+      return auth
+    end
+
+    user = find_or_create_user
+    user.authentications.create!(payload)
   end
 
 end
