@@ -15,7 +15,6 @@
 class Checkin < ActiveRecord::Base
   belongs_to :enrollment
 
-  validates :github_repository, format: {with: /(https:\/\/)?github\.com\//, message: "github的格式不正确~"}
   validates :lesson_id, presence: true
 
   after_save :publish

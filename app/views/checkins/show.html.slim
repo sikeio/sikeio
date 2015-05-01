@@ -17,10 +17,6 @@
         = f.label :degree_of_difficulty, "难度如何"
         = f.select :degree_of_difficulty, options_for_select([["太简单", 0],["容易", 1], ["适中", 2], ["难", 3], ["太难", 4]])
       .form__row
-        = f.label :github_repository, "github链接"
-      .form__row
-        = f.text_field :github_repository, placeholder: "https://github.com/..."
-      .form__row
         = f.label :problem, "我的心得(请用MarkDown格式填写)"
         .markdown-editor
           .markdown-editor__markdown
