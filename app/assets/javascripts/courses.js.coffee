@@ -1,48 +1,36 @@
+$ ->
+  $('.js-uncompleted').mouseenter (e)->
+    $(this).removeClass("uncompleted")
+    $(this).addClass("completed")
 
-###
+$ ->
+  $('.js-uncompleted').mouseleave (e)->
+    $(this).removeClass("completed")
+    $(this).addClass("uncompleted")
+
+
 $ ->
   $(document)
     .ready ->
       getClock = ->
-        date = new Date
+        today = new Date
         send_day = Number.parseInt($("#send-day").val())
-        day_left = $("#day_left").val()
-        day_left -= 1 if (send_day != date.getDate())
-        if day_left > 0
-          hour = 24 * day_left - date.getHours() - 1
-          min = 60 - date.getMinutes() - 1
-          sec = 60 - date.getSeconds() - 1
-          $(".time").html("" + hour + "h " + min + "m " + sec + "s")
+        date = new Date(send_day)
+        day_left = $("#current_lesson_day_left").val()
+        delay = Number.parseInt((today - date)/(1000 * 60 * 60 * 24)) #convert to day
+        real_day_left = day_left - delay
+        if real_day_left > 0
+          hour = 24 * real_day_left - today.getHours() - 1
+          min = 60 - today.getMinutes() - 1
+          sec = 60 - today.getSeconds() - 1
+          $(".js-current-mission-time-remainning").html("剩余时间<p>" + hour + "h " + min + "m " + sec + "s</p>")
         else
-          day_left = - day_left
-          hour = 24 * day_left + date.getHours()
-          min = date.getMinutes()
-          sec = date.getSeconds()
-          $(".time-remaining").html("超出时间<p class='time'>" + hour + "h " + min + "m " + sec + "s</p>")
+          real_day_left = - real_day_left
+          hour = 24 * real_day_left + today.getHours()
+          min = today.getMinutes()
+          sec = today.getSeconds()
+          $(".js-current-mission-time-remainning").html("超出时间<p class='current-mission__time-remainning__time'>" + hour + "h " + min + "m " + sec + "s</p>")
       setInterval(getClock, 1000)
-    .on 'ajax:success', '.checkout', (e,data)->
-      if !data.success
-        swal
-          title:"失败"
-          text: data.message.join('\n')
-          type: 'error'
-
-  $('i.fa.fa-check-circle.uncompleted').click (e)->
-    $('#checkout_modal').modal({
-           backdrop: false
-        })
-
-  $('button.close').click (e)->
-    $('#checkout_modal').modal('hide')
-
-  $('i.fa.fa-check-circle.uncompleted').mouseenter (e)->
-    $(this).css("color", "#11D146")
-    $(this).css("cursor", "pointer")
-
-  $('i.fa.fa-check-circle.uncompleted').mouseleave (e)->
-    $(this).css("color", "" )
-    $(this).css("cursor", "")
-###
 
 $ ->
   pageIdentifier = "#courses_info "

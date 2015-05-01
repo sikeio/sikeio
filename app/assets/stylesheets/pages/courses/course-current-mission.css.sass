@@ -1,9 +1,10 @@
 @import ../../global
 
 .current-mission
+  @include content()
+  margin-top: 80px
 
 h1.current-mission__title
-  @include content()
   width: 100%
   font-size: 35px
   font-weight: 400
@@ -11,9 +12,22 @@ h1.current-mission__title
   text-decoration: underline
 
 .current-mission__time-remainning
+  padding-top: 15px
+  font-size: 20px
+  text-align: center
+  width: 280px
+  margin: auto
+  position: relative
+
+p.current-mission__time-remainning__time
+  font-size: 20px
+  margin-top: 0
 
 .current-mission__overview
-  p
-    font-size: 14px
-    margin: 10px auto
-    color: #373737
+
+p.current-mission__overview__bbs
+  font-size: 14px
+  margin: 10px auto
+  color: #373737
+  & > a
+    color: black

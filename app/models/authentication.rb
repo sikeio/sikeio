@@ -13,4 +13,6 @@
 
 class Authentication < ActiveRecord::Base
   belongs_to :user
+
+  scope :github, -> { where(provider: "github")}
 end

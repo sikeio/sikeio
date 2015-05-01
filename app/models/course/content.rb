@@ -30,7 +30,7 @@ class Course::Content
   end
   memoize :course_info
 
-  #[{:name => "name", :title => "title", :overview => "overview" }, {...}]
+  #[{:name => "name", :title => "title", :overview => "overview",:bbs =>"http://.." ,:discourse_topic_id => ""}, {...}]
   #return in order
   def lessons_info
 
@@ -43,6 +43,9 @@ class Course::Content
         info[:title] = lesson_title(lesson_node["name"])
         info[:overview] = lesson_node.css("overview").children.to_xhtml.strip
         info[:name] = lesson_node["name"]
+        info[:bbs] = lesson_node["bbs"]
+        path = URI.parse(lesson_node["bbs"]).path
+        info[:discourse_topic_id] = path.split("/").last
         temp_lessons_info << info
       end
     end

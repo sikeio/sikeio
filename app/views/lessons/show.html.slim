@@ -5,19 +5,21 @@
 
 = sanitize @lesson_html
 
-/ p.goal
-  i.fa.fa-flag
-  | Pass
-  strong
-    | testPathDrawing
+- if !@is_extra_lesson
+  p.goal
+    i.fa.fa-flag
+    | Pass
+    strong
+      | testPathDrawing
 
- div.uncompleted
-  i.fa.fa-check-circle
-  | Completed!
+  - if @is_checkout
+    div.completed
+      a href="#{checkin_show_path(@lesson)}"
+        i.fa.fa-check-circle
+        | Completed!
+  - else
+    div.uncompleted.js-uncompleted
+      a href="#{checkin_show_path(@lesson)}"
+        i.fa.fa-check-circle
+        |打卡
 
- - local_vars = nil
- - if @checkout
-   - local_vars = { title: @lesson.name, url_path: check_out_update_path(@checkout), html_method: :put, checkout: @checkout}
- - else
-   - local_vars = {title: @lesson.name, url_path: check_out_path(@enrollment.course, @lesson), html_method: :post, checkout: :checkout}
- = render partial: "courses/checkout", locals: local_vars

@@ -1,0 +1,51 @@
+.markdown-editor
+  background-color: transparent
+  width: 100%
+
+.markdown-editor__markdown
+  border-style: solid
+  position: relative
+  width: calc(100% - 18px)
+  border-color: #E2E2E2
+  border-width: 1px
+  background-color: #FFF
+
+.markdown-editor__markdown__content
+  margin-top: 40px
+  & > textarea
+    resize: none
+
+
+.markdown-editor__preview
+  margin-top: 20px
+  border-style: solid
+  border-color: #E2E2E2
+  border-width: 1px
+  position: relative
+  width: calc(100% - 18px)
+  background-color: #FFF
+
+
+.markdown-editor__preview__content
+  overflow: auto
+  cursor: default
+  height: 300px
+  margin-top: 40px
+
+header.markdown-editor__header
+  position: absolute
+  top: 0px
+  left: 0px
+  right: 0px
+  z-index: 400
+  height: 40px
+  padding: 10px 15px
+  text-transform: uppercase
+  color: #AAA9A2
+  box-sizing: border-box
+
+.pull-left
+  float: left !important
+
+.pull-right
+  float: right !important

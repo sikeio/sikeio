@@ -14,6 +14,11 @@ class Enrollment::Schedule
     end
   end
 
+  def is_course_lesson?(lesson)
+    lessons.any? do |l|
+      l == lesson
+    end
+  end
 
   def initialize(enrollment)
     @content = Course::Content.new(enrollment.course, enrollment.version)
@@ -99,12 +104,12 @@ class Enrollment::Schedule
 
   def all_completed?
     lessons.all? do |lesson|
-      Checkout.check_out?(enrollment, lesson)
+      Checkin.checkin?(enrollment, lesson)
     end
   end
 
   def is_completed?(lesson)
-    Checkout.check_out?(enrollment, lesson)
+    Checkin.checkin?(enrollment, lesson)
   end
 
   def is_released?(lesson)
@@ -123,7 +128,7 @@ class Enrollment::Schedule
   end
 
   def completed_lessons_num
-    enrollment.checkouts.count
+    enrollment.checkins.count
   end
 
   def current_lesson

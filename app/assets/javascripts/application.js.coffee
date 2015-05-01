@@ -2,9 +2,9 @@
 #= require jquery_ujs
 #= require bootstrap/dist/js/bootstrap.min.js
 #= require sweetalert/lib/sweet-alert.min.js
-#= require turbolinks
 #= require slick.js/slick/slick.min.js
 #= require highlightjs/highlight.pack.js
+#= require ghostdown.js
 
 #= require_self
 #= require_directory ./blocks

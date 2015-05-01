@@ -25,7 +25,7 @@ class Enrollment < ActiveRecord::Base
   validates :token, presence: true
   validates :user_id, presence: true
   validates :course_id, presence: true, uniqueness: {scope: :user_id}
-  has_many :checkouts, dependent: :destroy
+  has_many :checkins
 
   scope :activated, -> {where(activated: true)}
 

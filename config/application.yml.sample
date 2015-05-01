@@ -51,6 +51,9 @@ DISCOURSE_SSO_SECRET: secret
 #Discourse site
 DISCOURSE_HOST: localhost:4000
 
+# Discourse API Token. Generate from (discourse.host/admin/api)
+DISCOURSE_TOKEN: token
+
 ########################################################################
 # Production configurations
 ########################################################################
