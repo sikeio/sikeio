@@ -1,17 +1,15 @@
 # == Schema Information
 #
-# Table name: checkouts
+# Table name: checkins
 #
 #  id                   :integer          not null, primary key
 #  enrollment_id        :integer
-#  lesson_name          :string
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
-#  question             :text
-#  solved_problem       :text
+#  problem              :text
 #  github_repository    :string
-#  degree_of_difficulty :integer
 #  time_cost            :integer
+#  degree_of_difficulty :integer
+#  lesson_id            :integer
+#  discourse_post_id    :integer
 #
 
 class Checkin < ActiveRecord::Base
