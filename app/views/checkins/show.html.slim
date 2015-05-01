@@ -7,7 +7,7 @@
 
 .action-panel
   h2.u-center-text
-      | #{@lesson.name}
+      | #{@lesson.title}
   .action-panel__content.u-bg-lightblue
     = form_for @checkin, url: @url_path, method: @html_method, remote: true, html: {class: 'js-checkin'} do |f|
       .form__row
