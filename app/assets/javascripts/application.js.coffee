@@ -4,7 +4,7 @@
 #= require sweetalert/lib/sweet-alert.min.js
 #= require slick.js/slick/slick.min.js
 #= require highlightjs/highlight.pack.js
-##= require ghostdown.js
+#= require ghostdown.js
 
 #= require_self
 #= require_directory ./blocks
