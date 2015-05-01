@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150419034324) do
+ActiveRecord::Schema.define(version: 20150429171032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,19 +25,18 @@ ActiveRecord::Schema.define(version: 20150419034324) do
     t.json     "info"
   end
 
-  create_table "checkouts", force: :cascade do |t|
-    t.integer  "enrollment_id"
-    t.string   "lesson_name"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.text     "question"
-    t.text     "solved_problem"
-    t.string   "github_repository"
-    t.integer  "degree_of_difficulty"
-    t.integer  "time_cost"
+  create_table "checkins", force: :cascade do |t|
+    t.integer "enrollment_id"
+    t.text    "problem"
+    t.string  "github_repository"
+    t.integer "time_cost"
+    t.integer "degree_of_difficulty"
+    t.integer "lesson_id"
+    t.integer "discourse_post_id"
   end
 
-  add_index "checkouts", ["enrollment_id"], name: "index_checkouts_on_enrollment_id", using: :btree
+  add_index "checkins", ["enrollment_id"], name: "index_checkins_on_enrollment_id", using: :btree
+  add_index "checkins", ["lesson_id"], name: "index_checkins_on_lesson_id", using: :btree
 
   create_table "courses", force: :cascade do |t|
     t.string   "name"
@@ -77,10 +76,12 @@ ActiveRecord::Schema.define(version: 20150419034324) do
     t.string   "name"
     t.string   "title"
     t.text     "overview"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.integer  "course_id"
     t.string   "permalink"
+    t.string   "bbs"
+    t.integer  "discourse_topic_id"
   end
 
   add_index "lessons", ["course_id", "name"], name: "index_lessons_on_course_id_and_name", unique: true, using: :btree
