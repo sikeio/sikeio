@@ -86,6 +86,10 @@ class Course < ActiveRecord::Base
     super(name)
   end
 
+  def compiler
+    Course::Compiler.new(self)
+  end
+
   private
 
   def ensure_dir_exist(dir)
