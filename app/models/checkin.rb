@@ -14,8 +14,15 @@
 
 class Checkin < ActiveRecord::Base
   belongs_to :enrollment
+  belongs_to :lesson
 
   validates :lesson_id, presence: true
+
+  before_save do
+    if self.github_repository.nil?
+      self.github_repository = project_repo_url
+    end
+  end
 
   after_save :publish
 
@@ -34,11 +41,16 @@ class Checkin < ActiveRecord::Base
     !self.discourse_post_id.nil?
   end
 
-  def lesson
-    Lesson.find_by_id(self.lesson_id)
+  def github_repository_name
+    return nil if github_repository.nil?
+    URI.parse(github_repository).path[1..-1]
   end
 
-  private
+  def project_repo_url
+    return nil if lesson.project_name.nil?
+    # <github-username>/besike-<course-name>-<project-name>
+    "https://github.com/#{enrollment.user.github_username}/besike-#{enrollment.course.name}-#{lesson.project_name}"
+  end
 
   def discourse_poster
     @discourse_poster ||= Checkin::DiscoursePoster.new(self)

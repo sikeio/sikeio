@@ -15,7 +15,7 @@ class Checkin::DiscoursePoster
 
   def publish
     topic_id = lesson.discourse_topic_id
-    user_name = checkin.enrollment.user.authentications.github[0].info["nickname"]
+    user_name = checkin.enrollment.user.github_username
 
     if checkin.published?
       api.update_post(checkin.discourse_post_id, user_name, raw_post)
@@ -24,19 +24,22 @@ class Checkin::DiscoursePoster
       checkin.discourse_post_id = post["id"]
       checkin.save
     end
- end
-
-  private
+  end
 
   def raw_post
+    if checkin.github_repository
+      repo = "仓库: [#{checkin.github_repository_name}](#{checkin.github_repository})"
+    end
+
     post = <<-THERE
-+ Repo: [#{checkin.github_repository}](#{checkin.github_repository})
++ #{repo}
 + 耗时: #{TIME_COST[checkin.time_cost]}
 + 难度: #{DIFFCULTY[checkin.degree_of_difficulty]}
 
-+ 课程遇到的问题和解决方法:
+## 课程遇到的问题和解决方法:
+
 #{checkin.problem}
-THERE
+  THERE
   end
 
 end

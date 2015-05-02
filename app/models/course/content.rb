@@ -48,26 +48,32 @@ class Course::Content
   #[{:name => "name", :title => "title", :overview => "overview",:bbs =>"http://.." ,:discourse_topic_id => ""}, {...}]
   #return in order
   def lessons_info
-
     temp_lessons_info = []
 
     index_dom.css("week").sort.each do |week_node|
       week_lessons = week_lessons_sort_by_day(week_node)
       week_lessons.each do |lesson_node|
-        info = {}
-        info[:title] = lesson_title(lesson_node["name"])
-        info[:overview] = lesson_node.css("overview").children.to_xhtml.strip
-        info[:name] = lesson_node["name"]
-        info[:bbs] = lesson_node["bbs"]
-        path = URI.parse(lesson_node["bbs"]).path
-        info[:discourse_topic_id] = path.split("/").last
-        temp_lessons_info << info
+        name = lesson_node["name"]
+        temp_lessons_info << lesson_info(name)
       end
     end
 
     temp_lessons_info
   end
   memoize :lessons_info
+
+  def lesson_info(name)
+    node = xml_dom.css("lesson[name=#{name}]").first
+    info = {}
+    info[:title] = lesson_title(node["name"])
+    info[:overview] = node.css("overview").children.to_xhtml.strip
+    info[:name] = node["name"]
+    info[:bbs] = node["bbs"]
+    info[:project] = node["project"]
+    path = URI.parse(node["bbs"]).path
+    info[:discourse_topic_id] = path.split("/").last
+    return info
+  end
 
   #[{:name => "name", :title => "title"}]
   #without order
@@ -159,8 +165,7 @@ class Course::Content
   end
 
   def lesson_title(lesson_name)
-    page_node = xml_dom.css("page[name=#{lesson_name}]")[0]
-    page_node.css("h1")[0].text
+    page_dom(lesson_name).css("h1").first.text
   end
 
   def index_dom

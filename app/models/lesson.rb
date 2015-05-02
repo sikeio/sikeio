@@ -36,10 +36,7 @@ class Lesson < ActiveRecord::Base
     super(name)
   end
 
-=begin
-  def title=(title)
-    super(title)
-    self.permalink = title.parameterize
+  def project_name
+    course.content.lesson_info(name)[:project]
   end
-=end
 end
