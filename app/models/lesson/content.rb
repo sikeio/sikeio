@@ -123,9 +123,6 @@ class Lesson::Content
 
 
   def xml_content
-    f = Course::FileReader.new(course)
-    result = f.read_file
-    xml = Nokogiri::HTML(result)
-    xml = xml.css("page[name=#{lesson_name}]")[0]
+    course.content.page_dom(lesson_name)
   end
 end

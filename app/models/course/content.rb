@@ -32,6 +32,10 @@ class Course::Content
   end
   memoize :xml
 
+  def page_dom(name)
+    xml_dom.css("page[name=#{name}]")[0]
+  end
+
   #{:desc =>"desc", :title => "title"}
   def course_info
     {
