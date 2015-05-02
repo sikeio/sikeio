@@ -12,6 +12,7 @@
 #  permalink          :string
 #  bbs                :string
 #  discourse_topic_id :integer
+#  project            :string
 #
 
 class Lesson < ActiveRecord::Base
@@ -34,9 +35,5 @@ class Lesson < ActiveRecord::Base
   def name=(name)
     self.permalink = name.parameterize
     super(name)
-  end
-
-  def project_name
-    course.content.lesson_info(name)[:project]
   end
 end

@@ -12,6 +12,7 @@
 #  permalink          :string
 #  bbs                :string
 #  discourse_topic_id :integer
+#  project            :string
 #
 
 RSpec.describe Lesson, :type => :model do
