@@ -18,7 +18,7 @@
     - if current_lesson
       = hidden_field_tag "current_lesson_day_left", @enrollment.schedule.current_lesson_day_left
       h1.current-mission__title.u-center-text
-        | #{current_lesson.title}
+        a(href=lesson_path(@enrollment.course,current_lesson)) #{current_lesson.title}
       div.current-mission__time-remainning
         p.current-mission__time-remainning__time.js-current-mission-time-remainning
       .current-mission__overview
