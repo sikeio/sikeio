@@ -1,6 +1,7 @@
 require 'forwardable'
 
 class Course::ContentUpdater
+  include EventLogging
 
   extend Forwardable
 
@@ -25,6 +26,11 @@ class Course::ContentUpdater
     course.update_attributes current_commit: course.repo.current_commit
 
     sync_assets
+
+    log_event("course.content-update",{
+      course_id: course.id,
+      current_commit: course.current_commit
+    })
   end
 
   def sync_assets
