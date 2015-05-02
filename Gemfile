@@ -77,7 +77,8 @@ group :development, :test do
   gem 'annotate'
 
   # Using Rspec tot test
-  gem 'rspec-rails'
+  # explicit require to help zeus to load rspec. See: https://github.com/burke/zeus/issues/474#issuecomment-89336625
+  gem "rspec-rails", require: "rspec/rails"
 
   # set data to database
   gem 'factory_girl_rails'
