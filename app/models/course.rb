@@ -31,38 +31,23 @@ class Course < ActiveRecord::Base
     course.current_version = "master" if course.current_version.blank?
   end
 
-  def xml_file_path
-    return nil if !self.name
-    default_version if !self.current_version
-    xml_file = self.name + ".xml"
-    xml_dir = Course::Utils::XML_REPO_DIR + self.name + self.current_version
-    ensure_dir_exist(xml_dir)
-    xml_dir + xml_file
-  end
+  REPO_BASE = Rails.root + (ENV["COURSE_BUILD_PATH"] || raise("Must specify a COURSE_BUILD_PATH to build a course"))
+  ASSETS_BASE = Rails.root + "public"
 
-  def asset_dir
-    return nil if !self.name
-    dir = Course::Utils::ASSET_DIR + "courses" + self.name
-    ensure_dir_exist(dir)
-    dir
-  end
-
-  def xml_dir
-    return nil if !self.name
-    dir = Course::Utils::XML_REPO_DIR + self.name + self.current_version
-    ensure_dir_exist(dir)
-    dir
-  end
-
-  def temp_dir
-    dir = Course::Utils::TEMP_DIR
-    ensure_dir_exist(dir)
-    dir
+  def assets_dir
+    ASSETS_BASE + "courses" + self.name
   end
 
   def repo_dir
-    return nil if !self.name
-    Course::Utils::XML_REPO_DIR + self.name + self.current_version
+    REPO_BASE + self.name + self.current_version
+  end
+
+  def xml_path
+    repo_dir + "course.xml"
+  end
+
+  def xml_file_path
+    xml_path
   end
 
   def self.by_param(id)
@@ -86,20 +71,23 @@ class Course < ActiveRecord::Base
     super(name)
   end
 
+  def repo
+    Course::Repo.new(self)
+  end
+
   def compiler
     Course::Compiler.new(self)
   end
 
-  private
-
-  def ensure_dir_exist(dir)
-    FileUtils.mkdir_p(dir) if !File.exist?(dir)
+  def content
+    Course::Content.new(self)
   end
 
-=begin
-  def title=(title)
-    super(title)
-    self.permalink = title.parameterize
+  def compiled?
+    File.exists?(xml_path)
   end
-=end
+
+  def update_content
+    Course::Updater.new(self).update
+  end
 end

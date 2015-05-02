@@ -1,6 +1,7 @@
+# Represents the compiled course.xml
 class Course::Content
 
-  attr_reader :course, :course_name, :xml_dom, :version
+  attr_reader :course, :course_name, :version
 
    def self.memoize(*method_syms)
     for sym in method_syms
@@ -15,11 +16,21 @@ class Course::Content
   end
 
   def initialize(course, version = nil)
+    raise "course is not yet compiled: Course(#{course.id})" if !course.compiled?
     @course = course
     @course_name = course.name
     @version = version
-    @xml_dom = Nokogiri::HTML(xml_file_content)
   end
+
+  def xml_dom
+    Nokogiri::HTML(xml)
+  end
+  memoize :xml_dom
+
+  def xml
+    File.read course.xml_path
+  end
+  memoize :xml
 
   #{:desc =>"desc", :title => "title"}
   def course_info
@@ -139,10 +150,6 @@ class Course::Content
 
   end
 
-  def xml_file_content
-    Course::FileReader.new(course, version).read_file
-  end
-
   def course_title
     xml_dom.css("course")[0]["name"]
   end
@@ -155,7 +162,4 @@ class Course::Content
   def index_dom
     @index_dom ||= xml_dom.css("index")[0]
   end
-
-
-
 end

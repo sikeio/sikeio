@@ -6,23 +6,11 @@ class Course::Compiler
   WEEK_HEADER = "h2"
   COURSE_TITLE_HEADER = "h1"
 
-  attr_reader :gcommit
-
   def_delegators :@course, :repo_dir
 
   def initialize(course, version = nil)
     raise "repo does not exist" if !File.exist?(course.repo_dir)
     @course = course
-    version ||= course.current_version
-    @gcommit = Git.open(repo_dir).branch(version).gcommit
-  end
-
-
-  def result
-    {
-      xml: course_xml,
-      current_commit_msg: current_commit_msg
-    }
   end
 
   # @return {Array<String>} Return name of directories that has an index document
@@ -76,12 +64,6 @@ class Course::Compiler
     THERE
 
     xml
-  end
-
-  def current_commit_msg
-    message = gcommit.message
-    sha = gcommit.sha
-    message + ": " + sha
   end
 
   def course_title

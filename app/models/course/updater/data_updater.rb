@@ -1,15 +1,14 @@
 class Course::Updater::DataUpdater
 
-  attr_reader :course_name, :content, :current_commit_msg, :course
+  attr_reader :course_name, :content, :course
 
-  def initialize(course, current_commit_msg)
+  def initialize(course)
     @course = course
     @course_name = course.name
-    @current_commit_msg = current_commit_msg
-    @content = Course::Content.new(course)
+    @content = course.content
   end
 
-  def update_course_and_lessons
+  def update
     update_course_according_to_xml
     update_lessons_according_to_xml
   end
@@ -18,7 +17,6 @@ class Course::Updater::DataUpdater
 
   def update_course_according_to_xml
     course_info = content.course_info
-    course_info[:current_commit] = current_commit_msg
     create_or_update(Course, course_name, course_info)
   end
 
