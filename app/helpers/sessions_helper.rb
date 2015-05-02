@@ -18,6 +18,10 @@ module SessionsHelper
     !!current_user
   end
 
+  def logged_in?
+    !current_user.nil?
+  end
+
   def require_login
     unless current_user
       flash[:error] = "请首先登陆~"

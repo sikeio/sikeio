@@ -17,4 +17,8 @@ class Authentication < ActiveRecord::Base
   validates :uid, :uniqueness => true
 
   scope :github, -> { where(provider: "github")}
+
+  def nickname
+    info["info"]["nickname"].downcase
+  end
 end

@@ -1,29 +1,29 @@
 class SsoController < ApplicationController
 
+  before_action :require_login, :except => [:new]
+
   def new
+    log_event("discourse-sso.init",params[:sso])
     check_signature
     session[:sso_nonce] = CGI.parse(Base64.decode64(params[:sso]))['nonce'].first
-    if login?
+    if logged_in?
       redirect_to sso_succeed_path
     end
+    # not logged in, should prompt user to login.
   end
 
   def succeed
-    if login?
-      data = {
-        name: current_user.name,
-        username: current_user.github.info['nickname'].downcase,
-        email: current_user.email,
-        nonce: session.delete(:sso_nonce),
-        external_id: current_user.id,
-      }
-      url_encoded_payload, sig = generate_params(data)
-      host = ENV["DISCOURSE_HOST"]
-      redirect_to "http://#{host}/session/sso_login?sso=#{url_encoded_payload}&sig=#{sig}"
-    else
-      flash[:error] = "Discourse登陆失败，请重新尝试。"
-      redirect_to :root
-    end
+    data = {
+      name: current_user.name,
+      username: current_user.github_username,
+      email: current_user.email,
+      nonce: session.delete(:sso_nonce),
+      external_id: current_user.id,
+    }
+    log_event("discourse-sso.success",data)
+    url_encoded_payload, sig = generate_params(data)
+    host = ENV["DISCOURSE_HOST"]
+    redirect_to "http://#{host}/session/sso_login?sso=#{url_encoded_payload}&sig=#{sig}"
   end
 
   private
