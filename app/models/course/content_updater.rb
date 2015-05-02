@@ -1,6 +1,6 @@
 require 'forwardable'
 
-class Course::Updater
+class Course::ContentUpdater
 
   extend Forwardable
 

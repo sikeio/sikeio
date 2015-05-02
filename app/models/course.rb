@@ -87,7 +87,7 @@ class Course < ActiveRecord::Base
     File.exists?(xml_path)
   end
 
-  def update_content
-    Course::Updater.new(self).update
+  def content_update
+    Course::ContentUpdater.new(self).update
   end
 end
