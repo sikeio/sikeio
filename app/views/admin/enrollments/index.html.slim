@@ -30,11 +30,3 @@ table.table.table-bordered.enrollments
             a.btn.btn-info.send-welcome-email href=send_welcome_email_admin_enrollment_path(e) data-remote=true data-method='post'
               | Resend Welcome Email
             a.btn.btn-danger.pay data-method='post' href=set_payment_status_admin_enrollment_path(e) data-remote=true Set Payment Status
-
-.email-panel
-  = form_tag '',class:'form',remote: true
-    textarea.form-control cols=20 rows=10 name='content'
-    .form-grup
-      .btn-group.pull-right
-        button.btn.btn-default.ok type='submit' OK
-        a.btn.btn-default.cancel Cancel

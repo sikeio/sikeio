@@ -7,16 +7,6 @@ $ ->
         title: 'Send Successfully!'
         type: "success"
 
-    .on 'click', pageIdentifier + '.enrollments .send-invitation-email', ->
-      url = $(this).attr 'href'
-      $('.email-panel form').attr 'action', url
-      $('.email-panel').show()
-      $('.email-panel textarea').focus()
-      return false
-
-    .on 'click', pageIdentifier + '.email-panel .cancel', ->
-      $('.email-panel').hide()
-
     .on 'ajax:success', pageIdentifier + '.enrollments .pay', ->
       swal
         title: 'Set Successfully!'

@@ -56,8 +56,6 @@ class Enrollment < ActiveRecord::Base
     self.save!
   end
 
-  private
-
   def next_monday
     Time.now.next_week :monday
   end
