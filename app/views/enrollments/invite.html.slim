@@ -27,7 +27,7 @@ header.site-header.site-header--center
 
     - if @user.has_binded_github
       p.js-bind-success
-        | Github 绑定账号:  #{@user.github.info["nickname"]}
+        | Github 绑定账号:  #{@user.github_username}
       .message
         | Github 已经绑定
     - else
