@@ -12,14 +12,15 @@ $ ->
 
 $ ->
   #pay page
-  # pageIdentifier = "#enrollments_pay "
-  # $(document)
-  #   .on 'click', pageIdentifier + '.js-start-course', ->
-  #     if $('#have-paid').prop('checked')
-  #       $('form').submit()
-  #     else
-  #       swal
-  #         title: '请先通过支付宝付款再开始课程~'
+  # broken!
+  pageIdentifier = "#enrollments_pay "
+  $(document)
+    .on 'click', pageIdentifier + '.js-start-course', ->
+      if $('#have-paid').prop('checked')
+        $('form').submit()
+      else
+        swal
+          title: '请先通过支付宝付款再开始课程~'
 
   #   .on 'keyup', pageIdentifier + 'input.buddy-name', ->
   #     if $(this).val() != ''
