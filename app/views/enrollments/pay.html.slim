@@ -9,27 +9,27 @@ header.site-header.site-header--center
   .u-center-text
     h1.header.header--h1.header--underline 邀请函
     p.u-center-text
-      | 学生 389
+      | 学生 490
       br
-      | 在职 589
+      | 在职 790
 
   h2.header.header--h2 我有小伙伴！
   = form_tag finish_enrollment_path(@enrollment), class: 'form form--no-margin u-bg-lightblue u-padding-15'
     .form__row
       label 小伙伴姓名
       input.buddy-name name="buddy_name"
-      label 拉小伙伴一起学习优惠价 489
+      label 拉小伙伴一起学习优惠价 590
 
   h2.header.header--h2 支付宝
   .u-bg-lightblue.u-padding-15
     p.u-center-text
       | 支付金额:&nbsp;&nbsp;
       span.tuition
-        span.origin =( @enrollment.personal_info["type"] == '学生' ? 389 : 589 )
+        span.origin =( @enrollment.personal_info["type"] == '学生' ? 490 : 790 )
         | &nbsp;
         span.new
           | &nbsp;大洋
-    img.u-display-center src="/assets/alipay.png" alt=""
+    img.u-display-center src=image_url("alipay.png") alt=""
     p.u-center-text
       | 支付宝: 高羊 18688696795
 
