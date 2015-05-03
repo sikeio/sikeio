@@ -31,6 +31,10 @@ REDIS_HOST: localhost
 # Redis DB number for sidekiq
 SIDEKIQ_REDIS_DB: "0"
 
+# New Relic
+NEW_RELIC_LICENSE_KEY: secret
+NEW_RELIC_ENABLED: false
+
 ########################################################################
 # App configurations
 ########################################################################
