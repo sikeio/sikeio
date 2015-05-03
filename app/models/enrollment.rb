@@ -49,7 +49,7 @@ class Enrollment < ActiveRecord::Base
     self.token = SecureRandom.urlsafe_base64
   end
 
-  def start!
+  def activate!
     # next monday at 0:00
     self.start_time = next_monday
     self.activated = true

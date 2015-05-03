@@ -63,8 +63,8 @@ class EnrollmentsController < ApplicationController
   # POST
   def finish
     enrollment.buddy_name = params[:buddy_name]
-    enrollment.activated = true
     enrollment.save
+    enrollment.activate!
     redirect_to course_path(enrollment.course)
   end
 
