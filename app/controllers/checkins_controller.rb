@@ -3,7 +3,6 @@ class CheckinsController < ApplicationController
   before_action :require_login
 
   def create
-    enrollment = course.enrollments.find_by(user_id: session[:user_id])
     raise "course not exist or not enroll" if !enrollment
     checkin_info = checkin_params
     checkin_info[:enrollment_id] = enrollment.id
@@ -18,7 +17,6 @@ class CheckinsController < ApplicationController
   end
 
   def show
-    enrollment = course.enrollments.find_by(user_id: session[:user_id])
     raise "course not exist or not enroll" if !enrollment
     if !Checkin.checkin?(enrollment, lesson)
       @url_path = checkin_path(lesson)
@@ -33,15 +31,23 @@ class CheckinsController < ApplicationController
 
   def update
     checkin = Checkin.find(params[:id])
-    begin
-      checkin.update!(checkin_params)
-      render json: success_msg(checkin.lesson.bbs)
-    rescue
-      render json: error_msg(checkin.errors.full_messages)
+    if current_user.enrollments.any? {|enroll| enroll.id == checkin.enrollment_id }
+      begin
+        checkin.update!(checkin_params)
+        render json: success_msg(checkin.lesson.bbs)
+      rescue
+        render json: error_msg(checkin.errors.full_messages)
+      end
+    else
+      render json: error_msg("更新的打卡信息不存在")
     end
   end
 
   private
+
+  def enrollment
+    @enrollment ||= current_user.enrollments.find_by(course_id: course.id)
+  end
 
   def lesson
     @lesson ||= Lesson.find_by_permalink(params[:id])
