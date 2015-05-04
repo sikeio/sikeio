@@ -47,7 +47,7 @@ class Checkin < ActiveRecord::Base
   end
 
   def project_repo_url
-    return nil if lesson.project_name.nil?
+    return nil if lesson.project.nil?
     # <github-username>/besike-<course-name>-<project-name>
     "https://github.com/#{enrollment.user.github_username}/besike-#{enrollment.course.name}-#{lesson.project}"
   end
