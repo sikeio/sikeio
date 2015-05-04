@@ -13,6 +13,8 @@ gem 'sinatra', :require => nil
 
 gem 'rest-client', :require => "restclient"
 
+gem 'font-awesome-rails'
+
 # use git
 gem 'git'
 
