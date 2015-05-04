@@ -45,6 +45,8 @@ class ApplicationController < ActionController::Base
         msg: msg,
         errors: errors
       }, status: :bad_request
+    else
+      render text: msg
     end
   end
 
