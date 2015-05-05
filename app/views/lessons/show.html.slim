@@ -3,7 +3,7 @@
     = @lesson.title
   = image_tag("lesson/header.png")
 
-= sanitize @lesson_html
+= raw @lesson_html
 
 - if !@is_extra_lesson
   / p.goal
