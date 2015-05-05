@@ -30,16 +30,12 @@ class CheckinsController < ApplicationController
   end
 
   def update
-    checkin = Checkin.find(params[:id])
-    if current_user.enrollments.any? {|enroll| enroll.id == checkin.enrollment_id }
-      begin
-        checkin.update!(checkin_params)
-        render json: success_msg(checkin.lesson.bbs)
-      rescue
-        render json: error_msg(checkin.errors.full_messages)
-      end
-    else
-      render json: error_msg("更新的打卡信息不存在")
+    checkin = current_user.checkins.find(params[:id])
+    begin
+      checkin.update!(checkin_params)
+      render json: success_msg(checkin.lesson.bbs)
+    rescue
+      render json: error_msg(checkin.errors.full_messages)
     end
   end
 
@@ -78,4 +74,4 @@ class CheckinsController < ApplicationController
     result[:url] = redirect_url
     result
   end
- end
+end
