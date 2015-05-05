@@ -2,6 +2,8 @@ class LessonsController < ApplicationController
 
   before_action :require_login
 
+  before_action :ensure_trailing_slash, :only => [:show]
+
   def show
     # schedule = @enrollment.schedule
     # @lesson = schedule.course_lesson(params[:lesson_permalink])

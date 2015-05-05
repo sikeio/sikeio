@@ -52,7 +52,7 @@ ul.course-missions
            = sanitize week_info[:overview]
       - week_lessons = @enrollment.schedule.course_weeks[num]
       - week_lessons.each do |lesson|
-        - lesson_url = lesson_path(@enrollment.course, lesson)
+        - lesson_url = lesson_path(@enrollment.course, lesson, trailing_slash: true)
         - lesson_number += 1
         - if @enrollment.schedule.is_completed?(lesson)
           li.course-missions__week__mission.course-missions__week__mission--done
