@@ -30,8 +30,8 @@ class CheckinsController < ApplicationController
   end
 
   def update
-    checkin = current_user.checkins.find(params[:id])
     begin
+      checkin = current_user.checkins.find(params[:id])
       checkin.update!(checkin_params)
       render json: success_msg(checkin.lesson.bbs)
     rescue
