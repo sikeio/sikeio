@@ -33,12 +33,8 @@ class EnrollmentsController < ApplicationController
     if current_user && enrollment.user != current_user
       enrollment.update_attribute :user, current_user
     end
-    if enrollment.has_personal_info?
-      redirect_to pay_enrollment_path(enrollment)
-      return
-    end
-    @course = @enrollment.course
-    @user = @enrollment.user
+    @course = enrollment.course
+    @user = enrollment.user
   end
 
   def update
