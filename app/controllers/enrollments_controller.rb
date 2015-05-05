@@ -42,8 +42,12 @@ class EnrollmentsController < ApplicationController
   end
 
   def update
-    enrollment.update_attribute :personal_info, params.require(:personal_info).permit(:blog_url, :occupation)
-    redirect_to pay_enrollment_path(@enrollment)
+    if !enrollment.user.has_binded_github
+      redirect_to invite_enrollment_path(@enrollment)
+    else
+      enrollment.update_attribute :personal_info, params.require(:personal_info).permit(:blog_url, :occupation)
+      redirect_to pay_enrollment_path(@enrollment)
+    end
   end
 
   def pay
