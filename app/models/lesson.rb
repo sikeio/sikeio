@@ -36,4 +36,12 @@ class Lesson < ActiveRecord::Base
     self.permalink = name.parameterize
     super(name)
   end
+
+  def project_repo_name_for(user)
+    "#{user.github_username}/besike-#{self.course.name}-#{self.project}"
+  end
+
+  def project_repo_url_for(user)
+    "https://github.com/#{project_repo_name_for(user)}"
+  end
 end
