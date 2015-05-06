@@ -36,13 +36,17 @@ class Checkin::DiscoursePoster
 
   rescue RestClient::Exception => e
     puts "discourse.checkin-fail"
+    p e.response.headers
     puts e.response.to_str
+
 
     log_event("discourse.checkin-fail", {
       checkin_id: checkin.id,
       username: user_name,
       http_code: e.response.code,
-      body: e.response.to_str
+      headers: e.response.headers,
+      # for some reason the charset is not UTF-8. Dunno if discourse is setting charset properly.
+      body: e.response.to_str.force_encoding("UTF-8")
     })
 
     raise e
