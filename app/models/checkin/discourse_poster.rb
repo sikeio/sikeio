@@ -35,6 +35,9 @@ class Checkin::DiscoursePoster
 
 
   rescue RestClient::Exception => e
+    puts "discourse.checkin-fail"
+    puts e.response.to_str
+
     log_event("discourse.checkin-fail", {
       checkin_id: checkin.id,
       username: user_name,
