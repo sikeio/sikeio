@@ -24,7 +24,7 @@ class Checkin < ActiveRecord::Base
     end
   end
 
-  after_save :publish
+  after_commit :publish
 
   def self.checkin?(enroll, temp_lesson)
     return false unless (enroll && temp_lesson)
@@ -34,6 +34,7 @@ class Checkin < ActiveRecord::Base
   end
 
   def publish
+    raise "ahh!"
     discourse_poster.publish
   end
 
