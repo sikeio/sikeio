@@ -3,7 +3,6 @@ class CheckinsController < ApplicationController
   before_action :require_login
 
   def create
-    enrollment = course.enrollments.find_by(user_id: session[:user_id])
     raise "course not exist or not enroll" if !enrollment
     checkin_info = checkin_params
     checkin_info[:enrollment_id] = enrollment.id
@@ -18,7 +17,6 @@ class CheckinsController < ApplicationController
   end
 
   def show
-    enrollment = course.enrollments.find_by(user_id: session[:user_id])
     raise "course not exist or not enroll" if !enrollment
     if !Checkin.checkin?(enrollment, lesson)
       @url_path = checkin_path(lesson)
@@ -32,8 +30,8 @@ class CheckinsController < ApplicationController
   end
 
   def update
-    checkin = Checkin.find(params[:id])
     begin
+      checkin = current_user.checkins.find(params[:id])
       checkin.update!(checkin_params)
       render json: success_msg(checkin.lesson.bbs)
     rescue
@@ -42,6 +40,10 @@ class CheckinsController < ApplicationController
   end
 
   private
+
+  def enrollment
+    @enrollment ||= current_user.enrollments.find_by(course_id: course.id)
+  end
 
   def lesson
     @lesson ||= Lesson.find_by_permalink(params[:id])
@@ -72,4 +74,4 @@ class CheckinsController < ApplicationController
     result[:url] = redirect_url
     result
   end
- end
+end
