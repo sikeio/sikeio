@@ -52,7 +52,7 @@ class EnrollmentsController < ApplicationController
       return
     end
 
-    if !@enrollment.user.has_binded_github || enrollment.personal_info.nil?
+    if !@enrollment.user.has_binded_github || !enrollment.personal_info["occupation"]
       redirect_to invite_enrollment_path(@enrollment)
       return
     end
