@@ -8,10 +8,13 @@ table.table.table-bordered.users
     tr
       th 名称
       th email
+      th
 
   tbody
     - @users.unactivated.each do |u|
       tr
-        td = u.name
-        td = u.email
+        td= u.name
+        td= u.email
+        td
+          = button_to("通灵", admin_user_login_path(u))
 
