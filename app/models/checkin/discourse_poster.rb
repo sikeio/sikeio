@@ -30,8 +30,7 @@ class Checkin::DiscoursePoster
     log_event("discourse.checkin-success",{
       checkin_id: checkin.id,
       username: user_name,
-      post_id: checkin.discourse_post_id,
-      body: e.response.to_str
+      post_id: checkin.discourse_post_id
     })
 
 
