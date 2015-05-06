@@ -86,6 +86,11 @@ group :development, :test do
   # explicit require to help zeus to load rspec. See: https://github.com/burke/zeus/issues/474#issuecomment-89336625
   gem "rspec-rails", require: "rspec/rails"
 
+  gem "capybara"
+  gem "capybara-webkit"
+
+  gem 'rack_session_access'
+
   # set data to database
   gem 'factory_girl_rails'
 

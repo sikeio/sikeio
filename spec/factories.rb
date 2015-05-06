@@ -1,22 +1,16 @@
-FactoryGirl.define do  factory :checkout do
-    
-  end
-  
+FactoryGirl.define do
 
-  factory :check_out  do
-    lesson_name "check_out_lesson"
-  end
-  
   factory :enrollment do
+    transient do
+      user nil
+      course nil
+      info nil
+    end
 
-  end
-
-  factory :lesson_checked, class: Lesson do
-    name "check_out_lesson"
-  end
-
-  factory :lesson_not_checked, class: Lesson do
-    name "no_check_out_lesson"
+    user_id { user }
+    course_id { course }
+    personal_info {"#{info}" if info}
+    start_time { Time.now }
   end
 
   factory :user do
@@ -24,13 +18,14 @@ FactoryGirl.define do  factory :checkout do
     email "test_user@gmail.com"
   end
 
-  factory :test_lesson, class: Lesson do
-    sequence(:name) { |n| "test_lesson_#{n}"}
-  end
+  factory :authentication do
+    transient do
+      user nil
+    end
 
-  factory :test_course, class: Course do
-    name "test_course"
-    current_version "v1"
+    user_id { user }
+    provider { "github" }
+    info { { "info" => { "nickname" => "nick"} } }
   end
 
 end

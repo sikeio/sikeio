@@ -6,4 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Course.create(name:"4 apps in 4 weeks")
+
+course = Course.create(name: "nodejs", title: "nodejs")
+
+Course::Updater::DataUpdater.new(course).update
+

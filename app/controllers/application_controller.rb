@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
   end
 
   def trailing_slash?
-    request.env['REQUEST_URI'].match(/[^\?]+/).to_s.last == '/'
+    request.original_fullpath.match(/[^\?]+/).to_s.last == '/'
   end
 
 end
