@@ -1,4 +1,6 @@
 class Checkin::DiscoursePoster
+  include EventLogging
+
   DIFFCULTY = %w(太简单 容易 适中 难 太难)
   TIME_COST = %w(1小时以内 1小时 2小时 3小时 4小时 4小时以上)
 
@@ -24,6 +26,24 @@ class Checkin::DiscoursePoster
       checkin.discourse_post_id = post["id"]
       checkin.save
     end
+
+    log_event("discourse.checkin-success",{
+      checkin_id: checkin.id,
+      username: user_name,
+      post_id: checkin.discourse_post_id,
+      body: e.response.to_str
+    })
+
+
+  rescue RestClient::Exception => e
+    log_event("discourse.checkin-fail", {
+      checkin_id: checkin.id,
+      username: user_name,
+      http_code: e.response.code,
+      body: e.response.to_str
+    })
+
+    raise e
   end
 
   def raw_post
@@ -36,7 +56,7 @@ class Checkin::DiscoursePoster
 + 耗时: #{TIME_COST[checkin.time_cost]}
 + 难度: #{DIFFCULTY[checkin.degree_of_difficulty]}
 
-## 课程遇到的问题和解决方法:
+### 课程遇到的问题和解决方法:
 
 #{checkin.problem}
   THERE

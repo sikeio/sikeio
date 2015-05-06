@@ -34,7 +34,6 @@ class Checkin < ActiveRecord::Base
   end
 
   def publish
-    raise "ahh!"
     discourse_poster.publish
   end
 
