@@ -51,4 +51,8 @@ class User < ActiveRecord::Base
     github.nickname
   end
 
+  def avatar
+    github.info["info"]["image"]
+  end
+
 end

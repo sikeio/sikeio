@@ -5,7 +5,7 @@
     .logo-title__title
       = @enrollment.course.title
   .course-site-head-status
-    = image_tag "courses/avatar.png", class: "avatar"
+    = image_tag current_user.avatar, class: "avatar"
     p.course-site-head-status__mission-status
      | #{@enrollment.schedule.completed_lessons_num}/#{@enrollment.schedule.lessons_sum} Completed
 
