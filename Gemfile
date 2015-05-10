@@ -71,6 +71,34 @@ end
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+
+
+group :development do
+  # for livereload
+  gem 'guard', require: false
+  gem 'guard-livereload', require: false
+  gem 'rb-fsevent', require: false
+  gem 'rack-livereload'
+end
+
+group :test do
+  # Using Rspec tot test
+  # explicit require to help zeus to load rspec. See: https://github.com/burke/zeus/issues/474#issuecomment-89336625
+  gem "rspec-rails", require: "rspec/rails" # including this in environments other than test seems to break things.
+
+  gem "capybara"
+  gem "capybara-webkit"
+
+  gem 'rack_session_access'
+
+
+  # set data to database
+  gem 'factory_girl_rails'
+
+  # clean the database
+  gem 'database_cleaner'
+end
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -82,28 +110,8 @@ group :development, :test do
   gem 'spring'
   gem 'annotate'
 
-  # Using Rspec tot test
-  # explicit require to help zeus to load rspec. See: https://github.com/burke/zeus/issues/474#issuecomment-89336625
-  gem "rspec-rails", require: "rspec/rails"
-
-  gem "capybara"
-  gem "capybara-webkit"
-
-  gem 'rack_session_access'
-
-  # set data to database
-  gem 'factory_girl_rails'
-
-  # clean the database
-  gem 'database_cleaner'
 
   gem 'quiet_assets'
-
-  # for livereload
-  gem 'guard', require: false
-  gem 'guard-livereload', require: false
-  gem 'rb-fsevent', require: false
-  gem 'rack-livereload'
 
 end
 
