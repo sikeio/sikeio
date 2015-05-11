@@ -17,6 +17,7 @@
 #
 
 class Lesson < ActiveRecord::Base
+  include EventLogging
 
   #validates :name, uniqueness: { case_sensitive: false, scope: :course_id,
   #                               message: "should have uniq name per course" }
@@ -31,6 +32,10 @@ class Lesson < ActiveRecord::Base
 
   def to_param
     self.permalink
+  end
+
+  def position
+    course.content.position_of_lesson(self.name)
   end
 
   def name=(name)
@@ -52,13 +57,20 @@ class Lesson < ActiveRecord::Base
 
   def create_qa_topic
     return if self.discourse_qa_topic_id
-    lesson_index = self.bbs.match(/lesson-(\d+)/)[1]
-    title = "Lesson #{lesson_index} FAQ - #{self.title}"
-    raw = "Lesson #{lesson_index} 问题帖~~小伙伴们有什么问题请在这里提问~~"
-    category = "#{self.course.name.capitalize} 训练营"
+    title = "Lesson #{self.position} FAQ - #{self.title}"
+    raw = "课程有问题在这里提问。"
+    category = "#{self.course.name} 训练营"
     api = Checkin::DiscourseAPI.new
     result = api.create_topic(title, raw, category)
 
     self.update_attribute :discourse_qa_topic_id, result['topic_id']
+  rescue RestClient::Exception => e
+    p e.response.headers
+    puts e.response.to_str
+    log_event("discourse.checkin-fail", {
+      lesson_id: self.id,
+      body: e.response.to_str.force_encoding("UTF-8")
+    })
+    raise e
   end
 end

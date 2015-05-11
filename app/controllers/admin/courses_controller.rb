@@ -32,15 +32,7 @@ class Admin::CoursesController < Admin::ApplicationController
   end
 
   def generate_discourse_topics
-    course
-    begin
-      @course.lessons.each do |lesson|
-        lesson.create_qa_topic
-      end
-      head :ok
-    rescue => e
-      render json:{ 'msg': e.to_s }, status: :bad_request
-    end
+    course.generate_qa_topics
   end
 
   private
