@@ -2,18 +2,18 @@
 #
 # Table name: lessons
 #
-#  id                      :integer          not null, primary key
-#  name                    :string
-#  title                   :string
-#  overview                :text
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
-#  course_id               :integer
-#  permalink               :string
-#  bbs                     :string
-#  discourse_topic_id      :integer
-#  project                 :string
-#  discourse_qa_topic_path :string
+#  id                    :integer          not null, primary key
+#  name                  :string
+#  title                 :string
+#  overview              :text
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  course_id             :integer
+#  permalink             :string
+#  bbs                   :string
+#  discourse_topic_id    :integer
+#  project               :string
+#  discourse_qa_topic_id :integer
 #
 
 class Lesson < ActiveRecord::Base
@@ -47,11 +47,11 @@ class Lesson < ActiveRecord::Base
   end
 
   def discourse_qa_topic_url
-    "http://#{ENV["DISCOURSE_HOST"]}#{self.discourse_qa_topic_path}"
+    "http://#{ENV["DISCOURSE_HOST"]}/t/#{self.discourse_qa_topic_id}"
   end
 
   def create_qa_topic
-    return if self.discourse_qa_topic_path
+    return if self.discourse_qa_topic_id
     lesson_index = self.bbs.match(/lesson-(\d+)/)[1]
     title = "Lesson #{lesson_index} FAQ - #{self.title}"
     raw = "Lesson #{lesson_index} 问题帖~~小伙伴们有什么问题请在这里提问~~"
@@ -59,8 +59,6 @@ class Lesson < ActiveRecord::Base
     api = Checkin::DiscourseAPI.new
     result = api.create_topic(title, raw, category)
 
-    topic_id = result['topic_id']
-    topic_slug = result['topic_slug']
-    self.update_attribute :discourse_qa_topic_path, "/t/#{topic_slug}/#{topic_id}"
+    self.update_attribute :discourse_qa_topic_id, result['topic_id']
   end
 end

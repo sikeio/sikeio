@@ -1,18 +1,17 @@
 class Checkin::DiscourseAPI
   HOST = ENV["DISCOURSE_HOST"]
   TOKEN = ENV["DISCOURSE_TOKEN"]
-  USERNAME = ENV["DISCOURSE_USERNAME"]
 
   MYAPI = "#{HOST}/myapi"
 
-  def create_topic(title,raw,category)
+  def create_topic(title, raw, category, username = ENV['DISCOURSE_ADMIN'])
     # raw:and we are going to say something quite random
     # reply_to_post_number:
     # category:category_name
     # archetype:regular
     # title:hello world this is a new topic
     if raw.empty?
-      raise "Raw can't be empty!"
+      raise "Cant't create discourse topic with empty content!"
     end
     url = "#{HOST}/posts"
     r = RestClient.post url, {
@@ -24,7 +23,7 @@ class Checkin::DiscourseAPI
     }, {
       :accept => :json,
       :params => {
-        :api_username => USERNAME,
+        :api_username => username,
         :api_key => TOKEN
       }
     }

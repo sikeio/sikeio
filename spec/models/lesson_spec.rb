@@ -2,18 +2,18 @@
 #
 # Table name: lessons
 #
-#  id                      :integer          not null, primary key
-#  name                    :string
-#  title                   :string
-#  overview                :text
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
-#  course_id               :integer
-#  permalink               :string
-#  bbs                     :string
-#  discourse_topic_id      :integer
-#  project                 :string
-#  discourse_qa_topic_path :string
+#  id                    :integer          not null, primary key
+#  name                  :string
+#  title                 :string
+#  overview              :text
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  course_id             :integer
+#  permalink             :string
+#  bbs                   :string
+#  discourse_topic_id    :integer
+#  project               :string
+#  discourse_qa_topic_id :integer
 #
 
 RSpec.describe Lesson, :type => :model do
