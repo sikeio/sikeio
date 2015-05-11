@@ -1,25 +1,30 @@
 class Checkin::DiscourseAPI
   HOST = ENV["DISCOURSE_HOST"]
   TOKEN = ENV["DISCOURSE_TOKEN"]
+  USERNAME = ENV["DISCOURSE_USERNAME"]
 
   MYAPI = "#{HOST}/myapi"
 
-  def create_topic(user_name,title,raw,category)
+  def create_topic(title,raw,category)
     # raw:and we are going to say something quite random
     # reply_to_post_number:
     # category:category_name
     # archetype:regular
     # title:hello world this is a new topic
+    if raw.empty?
+      raise "Raw can't be empty!"
+    end
     url = "#{HOST}/posts"
     r = RestClient.post url, {
       raw: raw,
       title: title,
       archetype: "regular",
-      category: category
+      category: category,
+      skip_validations: true
     }, {
       :accept => :json,
       :params => {
-        :api_username => user_name,
+        :api_username => USERNAME,
         :api_key => TOKEN
       }
     }

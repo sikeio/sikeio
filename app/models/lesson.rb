@@ -2,17 +2,18 @@
 #
 # Table name: lessons
 #
-#  id                 :integer          not null, primary key
-#  name               :string
-#  title              :string
-#  overview           :text
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
-#  course_id          :integer
-#  permalink          :string
-#  bbs                :string
-#  discourse_topic_id :integer
-#  project            :string
+#  id                      :integer          not null, primary key
+#  name                    :string
+#  title                   :string
+#  overview                :text
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  course_id               :integer
+#  permalink               :string
+#  bbs                     :string
+#  discourse_topic_id      :integer
+#  project                 :string
+#  discourse_qa_topic_path :string
 #
 
 class Lesson < ActiveRecord::Base
@@ -43,5 +44,22 @@ class Lesson < ActiveRecord::Base
 
   def project_repo_url_for(user)
     "https://github.com/#{project_repo_name_for(user)}"
+  end
+
+  def discourse_qa_topic_url
+    "http://#{ENV["DISCOURSE_HOST"]}#{self.discourse_qa_topic_path}"
+  end
+
+  def create_qa_topic
+    lesson_index = self.bbs.match(/lesson-(\d+)/)[1]
+    title = "Lesson #{lesson_index} FAQ - #{self.title}"
+    raw = "Lesson #{lesson_index} 问题贴~~小伙伴们有什么问题请在这里提问~~"
+    category = "#{self.course.name.capitalize} Bootcamp"
+    api = Checkin::DiscourseAPI.new
+    result = api.create_topic(title, raw, category)
+
+    topic_id = result['topic_id']
+    topic_slug = result['topic_slug']
+    self.update_attribute :discourse_qa_topic_path, "/t/#{topic_slug}/#{topic_id}"
   end
 end
