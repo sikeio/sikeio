@@ -30,9 +30,9 @@
           | 请把代码推到 #{current_lesson.project_repo_name_for(current_user)}
           br
           br
-          a href="#{current_lesson.bbs}"
+          a target="_blank" href="#{current_lesson.discourse_qa_topic_url}"
             span.icon-discuss
-            | 前往讨论
+            | 问题讨论
 
     - else
       h1.current-mission__title.u-center-text
@@ -62,7 +62,7 @@ ul.course-missions
             a href=lesson_url
               | #{lesson_number.to_s + '. ' + lesson.title}
             span.li-bbs
-              a href="#{lesson.bbs}"
+              a target="_blank" href="#{lesson.discourse_qa_topic_url}"
                 span.icon-discuss
           - latest_released_lesson = @enrollment.schedule.latest_released_lesson
           - if lesson == latest_released_lesson
@@ -73,7 +73,7 @@ ul.course-missions
             a href=lesson_url
               | #{lesson_number.to_s + '. ' + lesson.title}
             span.li-bbs
-              a href="#{lesson.bbs}"
+              a target="_blank" href="#{lesson.discourse_qa_topic_url}"
                 span.icon-discuss
           - latest_released_lesson = @enrollment.schedule.latest_released_lesson
           - if lesson == latest_released_lesson

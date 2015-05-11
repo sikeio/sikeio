@@ -5,6 +5,10 @@
 
 = raw @lesson_html
 
+.discourse-qa-link
+  span.icon-discuss
+  a target="_blank" href=@lesson.discourse_qa_topic_url 我要提问
+
 - if !@is_extra_lesson
   / p.goal
     i.fa.fa-flag

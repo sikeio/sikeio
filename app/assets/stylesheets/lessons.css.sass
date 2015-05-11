@@ -156,6 +156,15 @@ $exercise-code-padding: 20px 0 20px 20px
       display: block
       overflow: auto
 
+  .discourse-qa-link
+    position: fixed
+    top: 100px
+    left: 5%
+    text-align: center
+    span
+      display: block
+    a
+      text-decoration: underline
 
   .exercise
     background: #F8FBFF
@@ -246,6 +255,11 @@ $exercise-code-padding: 20px 0 20px 20px
   @media only screen  and (max-width : 1000px)
     .indicator
       display: none
+    .discourse-qa-link
+      position: initial
+      width: 100px
+      margin: auto
+      margin-top: 20px
   @media only screen  and (max-width : 800px)
     .screenshot > h2
       margin-left: 10px !important
