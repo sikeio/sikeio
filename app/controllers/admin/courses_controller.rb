@@ -34,7 +34,7 @@ class Admin::CoursesController < Admin::ApplicationController
   private
 
   def course_params
-     params.require(:course).permit(:name, :repo_url, :current_version)
+     params.require(:course).permit(:name, :repo_url, :current_version, :free)
   end
 
   def course

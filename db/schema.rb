@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150502094203) do
+ActiveRecord::Schema.define(version: 20150511092606) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,13 +41,14 @@ ActiveRecord::Schema.define(version: 20150502094203) do
   create_table "courses", force: :cascade do |t|
     t.string   "name"
     t.string   "desc"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.string   "current_version"
     t.string   "repo_url"
     t.string   "title"
     t.string   "permalink"
     t.string   "current_commit"
+    t.boolean  "free",            default: false
   end
 
   add_index "courses", ["name"], name: "index_courses_on_name", unique: true, using: :btree

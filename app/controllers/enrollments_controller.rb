@@ -42,7 +42,12 @@ class EnrollmentsController < ApplicationController
       redirect_to invite_enrollment_path(@enrollment)
     else
       enrollment.update_attribute :personal_info, params.require(:personal_info).permit(:blog_url, :occupation)
-      redirect_to pay_enrollment_path(@enrollment)
+      if enrollment.course.free && enrollment.reload.personal_info["occupation"]
+        enrollment.activate!
+        redirect_to course_path(enrollment.course)
+      else
+        redirect_to pay_enrollment_path(@enrollment)
+      end
     end
   end
 
