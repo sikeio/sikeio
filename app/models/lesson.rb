@@ -51,10 +51,11 @@ class Lesson < ActiveRecord::Base
   end
 
   def create_qa_topic
+    return if self.discourse_qa_topic_path
     lesson_index = self.bbs.match(/lesson-(\d+)/)[1]
     title = "Lesson #{lesson_index} FAQ - #{self.title}"
-    raw = "Lesson #{lesson_index} 问题贴~~小伙伴们有什么问题请在这里提问~~"
-    category = "#{self.course.name.capitalize} Bootcamp"
+    raw = "Lesson #{lesson_index} 问题帖~~小伙伴们有什么问题请在这里提问~~"
+    category = "#{self.course.name.capitalize} 训练营"
     api = Checkin::DiscourseAPI.new
     result = api.create_topic(title, raw, category)
 

@@ -14,6 +14,7 @@ table.table.table-bordered
       th
         |
       th
+      th
   - i = 0
   - @courses.each do |course|
     - i += 1
@@ -35,6 +36,8 @@ table.table.table-bordered
             = label_tag "New Version"
             = text_field_tag "version"
             = submit_tag "Clone and Update repo"
+        td
+          a.btn.btn-info.js-generate-discourse-topics href=generate_discourse_topics_admin_course_path(course) data-remote=true data-method='POST' data-disable-with="<i class='fa fa-spinner fa-spin'></i> Please Wait..." Generate Discourse Topics
 
 div class="modal fade" aria-hidden="true" id="addModal" role="dialog" tabindex="-1"
   .modal-dialog

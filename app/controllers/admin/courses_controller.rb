@@ -31,6 +31,18 @@ class Admin::CoursesController < Admin::ApplicationController
     redirect_to admin_courses_path
   end
 
+  def generate_discourse_topics
+    course
+    begin
+      @course.lessons.each do |lesson|
+        lesson.create_qa_topic
+      end
+      head :ok
+    rescue => e
+      render json:{ 'msg': e.to_s }, status: :bad_request
+    end
+  end
+
   private
 
   def course_params
