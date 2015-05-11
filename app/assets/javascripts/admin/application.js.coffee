@@ -4,6 +4,7 @@
 #= require sweetalert/lib/sweet-alert.min.js
 
 #= require_self
+#= require ../global
 #= require_tree .
 
 

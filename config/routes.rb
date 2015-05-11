@@ -95,6 +95,7 @@ Rails.application.routes.draw do
       member do
         get :info
         post 'clone_and_update' => 'courses#clone_and_update'
+        post 'generate_discourse_topics'
       end
     end
   end

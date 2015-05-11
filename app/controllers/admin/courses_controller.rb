@@ -31,6 +31,10 @@ class Admin::CoursesController < Admin::ApplicationController
     redirect_to admin_courses_path
   end
 
+  def generate_discourse_topics
+    course.generate_qa_topics
+  end
+
   private
 
   def course_params

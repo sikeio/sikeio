@@ -4,22 +4,26 @@ class Checkin::DiscourseAPI
 
   MYAPI = "#{HOST}/myapi"
 
-  def create_topic(user_name,title,raw,category)
+  def create_topic(title, raw, category, username = ENV['DISCOURSE_ADMIN'])
     # raw:and we are going to say something quite random
     # reply_to_post_number:
     # category:category_name
     # archetype:regular
     # title:hello world this is a new topic
+    if raw.empty?
+      raise "Cant't create discourse topic with empty content!"
+    end
     url = "#{HOST}/posts"
     r = RestClient.post url, {
       raw: raw,
       title: title,
       archetype: "regular",
-      category: category
+      category: category,
+      skip_validations: true
     }, {
       :accept => :json,
       :params => {
-        :api_username => user_name,
+        :api_username => username,
         :api_key => TOKEN
       }
     }

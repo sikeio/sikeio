@@ -60,6 +60,16 @@ class Course::Content
 
     temp_lessons_info
   end
+
+  #
+  def position_of_lesson(name)
+    if i = lessons_info.index { |info| info[:name] == name }
+      return i + 1
+    end
+
+    raise "cannot find lesson position by name: #{name}"
+  end
+
   memoize :lessons_info
 
   def lesson_info(name)
