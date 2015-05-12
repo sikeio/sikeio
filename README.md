@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/sikeio/sikeio.svg?)](https://travis-ci.org/sikeio/sikeio)
 #sike site
 
 ##How to run this app
