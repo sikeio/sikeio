@@ -26,10 +26,13 @@ $ ->
           $(".js-current-mission-time-remainning").html("剩余时间<p>" + hour + "h " + min + "m " + sec + "s</p>")
         else
           real_day_left = - real_day_left
-          hour = 24 * real_day_left + today.getHours()
+          hour = today.getHours()
           min = today.getMinutes()
           sec = today.getSeconds()
-          $(".js-current-mission-time-remainning").html("超出时间<p class='current-mission__time-remainning__time'>" + hour + "h " + min + "m " + sec + "s</p>")
+          if real_day_left > 0
+            $(".js-current-mission-time-remainning").html("超出时间<p class='current-mission__time-remainning__time'>" + real_day_left + "d " + hour + "h " + min + " m</p>")
+          else
+            $(".js-current-mission-time-remainning").html("超出时间<p class='current-mission__time-remainning__time'>" + hour + "h " + min + "m " + sec + "s</p>")
       setInterval(getClock, 1000)
 
 $ ->
