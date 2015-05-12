@@ -1,4 +1,4 @@
-#sike site
+# sike.io
 
 [![Build Status](https://travis-ci.org/sikeio/sikeio.svg?branch=master)](https://travis-ci.org/sikeio/sikeio)
 
@@ -7,9 +7,9 @@
 + Copy [config/application.yml.sample](config/application.yml.sample) to `config/application.yml`.
 
 + bundle install
-- rake db:setup
-- bower install
-- foreman start
++ rake db:setup
++ bower install
++ foreman start
 
 # Course Building
 
