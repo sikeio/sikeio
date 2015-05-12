@@ -21,7 +21,6 @@ RSpec.describe Course, :type => :model do
   before(:each) do
     @user = FactoryGirl.create :user
   end
-=end
   let(:test_lessson_sum) { 8 }
   let(:test_change_lessons_sum) { 9 }
   let(:test_lessons) do
@@ -67,7 +66,6 @@ RSpec.describe Course, :type => :model do
     end
   end
 
-=begin
   describe "#release_day_of_lesson" do
     it 'returns the lesson release day from start time' do
       #lesson = Lesson.find_by_name("test_lesson_1")
@@ -76,7 +74,6 @@ RSpec.describe Course, :type => :model do
       expect(course.release_day_of_lesson(lesson)).to eq(8)
     end
   end
-=end
 
   describe "#lessons_sum" do
     it 'returns the sum of this lessons' do
@@ -126,4 +123,5 @@ RSpec.describe Course, :type => :model do
   after(:each) do
     FactoryGirl.reload
   end
+=end
 end
