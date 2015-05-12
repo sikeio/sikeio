@@ -23,8 +23,10 @@ describe Course::Compiler do
            "create-npm-package",
            "dependence-injection",
            "extending-request-response",
+           "function",
            "mini-harp-preprocessor",
            "mini-harp-server",
+           "mylodash-function-utilities",
            "path-matcher",
            "path-matcher-fancy",
            "router-chaining",
@@ -40,7 +42,7 @@ describe Course::Compiler do
     it("compiles all pages into a list of <page> tags") do
       xml = compiler.pages_xml
       expect(xml).to be_a(String)
-      puts xml
+      #puts xml
     end
   end
 
@@ -48,14 +50,14 @@ describe Course::Compiler do
     it("includes references to all lessons, organized in <week> tags") do
       xml = compiler.weeks_xml
       expect(xml).to be_a(String)
-      puts xml
+      #puts xml
     end
   end
 
   describe "#course_xml" do
     it("compiles the course into a single xml") do
       xml = compiler.course_xml
-      puts xml
+      #puts xml
     end
   end
 end

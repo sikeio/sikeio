@@ -92,7 +92,6 @@ feature "enrollment flow" do
         click_on("下一步")
         expect(page.current_path).to eq(pay_enrollment_path(enrollment))
       end
-
     end
 
     feature "invalid page operation" do
@@ -117,25 +116,24 @@ feature "enrollment flow" do
         click_on('Github 绑定')
         expect(page.current_path).to eq(root_path)
       end
-
     end
-
   end
 
   feature "pay", js: true do
     given(:personal_info) { {"blog_url" => "blog.com", "occupation" => "无业" } }
+    background do
+      page.set_rack_session(user_id: user.id)
+      FactoryGirl.create(:authentication, user: user.id)
+      enrollment.update(personal_info: personal_info)
+    end
 
     scenario 'User whose enrollment has already activate intend to visit pay page' do
       enrollment.update(activated: true)
-      page.set_rack_session(user_id: user.id)
       visit pay_enrollment_path(enrollment)
       expect(page.current_path).to eq(course_path(enrollment.course) + "/")
     end
 
     scenario 'User pays successful' do
-      page.set_rack_session(user_id: user.id)
-      FactoryGirl.create(:authentication, user: user.id)
-      enrollment.update(personal_info: personal_info)
       visit pay_enrollment_path(enrollment)
 
       page.execute_script("$('input').show()") # capybara connot click hidden checkbox.  shit!
@@ -146,14 +144,10 @@ feature "enrollment flow" do
     end
 
     scenario 'User intends to complete paying without choose check box' do
-      page.set_rack_session(user_id: user.id)
-      FactoryGirl.create(:authentication, user: user.id)
-      enrollment.update(personal_info: personal_info)
       visit pay_enrollment_path(enrollment)
       click_on("开始课程")
       expect(page).to have_content("请先通过支付宝付款再开始课程")
     end
-
   end
 end
 
