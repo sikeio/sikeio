@@ -38,7 +38,7 @@ class EnrollmentsController < ApplicationController
   end
 
   def update
-    enrollment.update_attribute :personal_info, params.require(:personal_info).permit(:blog_url, :occupation)
+    enrollment.update_attribute :personal_info, params.require(:personal_info).permit(:blog_url, :occupation, :gender)
 
     if !user_info_completed?
       redirect_to_invite
@@ -86,7 +86,7 @@ class EnrollmentsController < ApplicationController
   end
 
   def user_info_completed?
-    enrollment.user.has_binded_github && (!enrollment.personal_info["occupation"].blank?)
+    enrollment.user.has_binded_github && (!enrollment.personal_info["occupation"].blank?) && (!enrollment.personal_info["gender"].blank?)
   end
 
   def redirect_to_invite
