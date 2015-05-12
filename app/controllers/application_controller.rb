@@ -4,6 +4,22 @@ class ApplicationController < ActionController::Base
 
   include EventLogging
 
+  # 301 Permanent Redirect from besike.com to sike.io
+  if Rails.env.production?
+    before_filter :sikeio_redirect
+
+    def sikeio_redirect
+      # p [request.host,request.path]
+      if request.host == "besike.com"
+        uri = URI.parse(request.url)
+        uri.host = "sike.io"
+        redirect_to uri.to_s, status: 301
+        return false
+      end
+      return true
+    end
+  end
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
