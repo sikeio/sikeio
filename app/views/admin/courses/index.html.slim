@@ -12,6 +12,8 @@ table.table.table-bordered
       th
         |Current Version
       th
+        |Free
+      th
         |
       th
       th
@@ -29,6 +31,11 @@ table.table.table-bordered
             = f.text_field :repo_url
           td
             = f.text_field :current_version
+          td
+            = f.label "免费"
+            = f.radio_button :free, "true"
+            = f.label "付费"
+            = f.radio_button :free, "false"
           td
             = f.submit "Edit"
         td

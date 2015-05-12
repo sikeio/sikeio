@@ -12,6 +12,7 @@
 #  title           :string
 #  permalink       :string
 #  current_commit  :string
+#  free            :boolean         default: false
 #
 
 class Course < ActiveRecord::Base
