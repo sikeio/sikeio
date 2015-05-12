@@ -9,7 +9,7 @@ development:
 
 test:
   <<: *default
-  database: sike_test
+  database: sike_test<%= ENV['TEST_ENV_NUMBER'] %>
 
 production:
   <<: *default
