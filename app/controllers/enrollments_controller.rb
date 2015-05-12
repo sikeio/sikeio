@@ -38,27 +38,29 @@ class EnrollmentsController < ApplicationController
   end
 
   def update
-    if !enrollment.user.has_binded_github
-      redirect_to invite_enrollment_path(@enrollment)
-    else
-      enrollment.update_attribute :personal_info, params.require(:personal_info).permit(:blog_url, :occupation)
-      if enrollment.course.free && enrollment.reload.personal_info["occupation"]
-        enrollment.activate!
-        redirect_to course_path(enrollment.course)
-      else
-        redirect_to pay_enrollment_path(@enrollment)
-      end
-    end
-  end
+    enrollment.update_attribute :personal_info, params.require(:personal_info).permit(:blog_url, :occupation)
 
-  def pay
-    if enrollment.activated
-      redirect_to course_path(@enrollment.course)
+    if !user_info_completed?
+      redirect_to_invite
       return
     end
 
-    if !@enrollment.user.has_binded_github || !enrollment.personal_info["occupation"]
-      redirect_to invite_enrollment_path(@enrollment)
+    if enrollment.course.free
+      activate_course
+      return
+    end
+
+    redirect_to pay_enrollment_path(@enrollment)
+  end
+
+  def pay
+    if !user_info_completed?
+      redirect_to_invite
+      return
+    end
+
+    if enrollment.activated
+      redirect_to course_path(@enrollment.course)
       return
     end
 
@@ -69,8 +71,7 @@ class EnrollmentsController < ApplicationController
   def finish
     enrollment.buddy_name = params[:buddy_name]
     enrollment.save
-    enrollment.activate!
-    redirect_to course_path(enrollment.course)
+    activate_course
   end
 
 
@@ -78,6 +79,19 @@ class EnrollmentsController < ApplicationController
 
   class InvalidEnrollmentTokenError < RuntimeError ; end
   class InvalidPersonalInfoError < RuntimeError ; end
+
+  def activate_course
+    enrollment.activate!
+    redirect_to course_path(enrollment.course)
+  end
+
+  def user_info_completed?
+    enrollment.user.has_binded_github && enrollment.personal_info["occupation"]
+  end
+
+  def redirect_to_invite
+    redirect_to invite_enrollment_path(@enrollment)
+  end
 
   def course
     @course ||= Course.by_param!(params[:course_id])
