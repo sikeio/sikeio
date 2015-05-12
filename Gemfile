@@ -79,15 +79,17 @@ group :development do
   gem 'guard-livereload', require: false
   gem 'rb-fsevent', require: false
   gem 'rack-livereload'
+
 end
 
 group :test do
   # Using Rspec tot test
   # explicit require to help zeus to load rspec. See: https://github.com/burke/zeus/issues/474#issuecomment-89336625
-  gem "rspec-rails", require: "rspec/rails" # including this in environments other than test seems to break things.
+  gem "rspec-rails"# require: "rspec/rails" # including this in environments other than test seems to break things.
 
   gem "capybara"
   gem "capybara-webkit"
+
 
   gem 'rack_session_access'
 
@@ -102,6 +104,9 @@ end
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+
+   #Speedup Test::Unit + RSpec + Cucumber + Spinach by running parallel on multiple CPU cores.
+  gem "parallel_tests"
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'

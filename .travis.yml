@@ -1,0 +1,23 @@
+language: ruby
+cache: bundler
+rvm:
+- 2.2.0
+bundler_args: "--without production"
+addons:
+  postgresql: '9.3'
+before_script:
+- psql -c 'create database travis_ci_test;' -U postgres
+- rake parallel:create --trace
+- rake db:migrate
+- rake parallel:prepare --trace
+- rake parallel:seed --trace
+script:
+- xvfb-run -a rake parallel:spec
+before_install:
+- npm install -g bower
+- npm install -g marked
+- npm install -g xmd
+- bower install
+- openssl aes-256-cbc -K $encrypted_118cb17471fa_key -iv $encrypted_118cb17471fa_iv
+  -in test_init.tar.enc -out test_init.tar -d
+- tar xvf test_init.tar
