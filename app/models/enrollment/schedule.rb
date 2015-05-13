@@ -113,6 +113,7 @@ class Enrollment::Schedule
   end
 
   def is_released?(lesson)
+    return false if !lesson
     day = release_day_of_lesson(lesson)
     day_from_start_time >= day
   end
@@ -131,10 +132,23 @@ class Enrollment::Schedule
     enrollment.checkins.count
   end
 
+  def most_recently_completed_lesson
+    lessons.find_all do |lesson|
+      is_completed?(lesson)
+    end.last
+  end
+
   def current_lesson
-    lessons.find do |lesson|
-      is_released?(lesson) && (!is_completed?(lesson))
+    return @current_lesson if  @current_lesson
+    lesson = next_lesson(most_recently_completed_lesson)
+    if !is_released?(lesson)
+      lesson = nil
     end
+
+    if lesson == nil
+      lesson = first_uncompeletd_lesson
+    end
+    @current_lesson = lesson
   end
 
   def current_lesson_day_left
@@ -145,6 +159,8 @@ class Enrollment::Schedule
         next_lesson_start_day = release_day_of_lesson(lesson)
 
         time = next_lesson_start_day - day_from_start_time
+      else
+        time = 1
       end
     end
 
@@ -155,10 +171,13 @@ class Enrollment::Schedule
     lessons.last == lesson
   end
 
-
-
-
   private
+
+  def first_uncompeletd_lesson
+    lessons.find do |lesson|
+      is_released?(lesson) && (!is_completed?(lesson))
+    end
+  end
 
   def week_from_start_time
     (day_from_start_time - 1) / 7
