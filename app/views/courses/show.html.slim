@@ -39,7 +39,7 @@
         | 开放的课程已经全部完成
   - else
     h1.current-mission__title.u-center-text
-      |即将开始
+      | 即将在 #{@enrollment.start_time.strftime("%m/%d/%Y")} 开始
 
 ul.course-missions
   - weeks_info = @enrollment.schedule.weeks_info
