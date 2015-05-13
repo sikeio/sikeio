@@ -24,7 +24,9 @@ class Checkin < ActiveRecord::Base
     end
   end
 
-  after_commit :publish
+  after_commit do |checkin|
+    PublishTopicJob.perform_later(checkin)
+  end
 
   def self.checkin?(enroll, temp_lesson)
     return false unless (enroll && temp_lesson)

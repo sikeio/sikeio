@@ -23,8 +23,7 @@ class Checkin::DiscoursePoster
       api.update_post(checkin.discourse_post_id, user_name, raw_post)
     else
       post = api.create_post(topic_id, user_name, raw_post)
-      checkin.discourse_post_id = post["id"]
-      checkin.save
+      checkin.update_columns(discourse_post_id: post["id"]) # to skip after_commit callback
     end
 
     log_event("discourse.checkin-success",{
