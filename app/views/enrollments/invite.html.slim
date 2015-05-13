@@ -3,14 +3,16 @@ header.site-header.site-header--center
     a.logo-title__logo href="/"
       .logo
     h1.logo-title__title
-      | #{@course.name}
+      | #{@course.title}
 
 .u-center-content
   .underline-header
     h1 邀请函
 
   p
-    | 感谢你申请#{@course.name}。很欢迎你加入我们一起学习！
+    | 感谢你申请 【#{@course.title}】。
+  p
+    | 很欢迎你加入我们一起学习！
 
   p = @course.desc
 
@@ -19,9 +21,9 @@ header.site-header.site-header--center
 
   .u-bg-lightblue.u-padding-15
     p
-      | 训练营使用Github做技术交流。
+      | 训练营使用 Github 做技术交流。
     span.github-tip
-      | 没有Github账号的请先去
+      | 没有 Github 账号的请先去
       a.u-color-red href="https://github.com/" 注册
       | 。
 
@@ -39,9 +41,16 @@ header.site-header.site-header--center
   h2
     | 2. 个人信息
   = form_for @enrollment, class: 'form form--no-margin u-bg-lightblue u-padding-15 js-enrollment-update-personal-info-form'
+    - if @user && @user.name.blank?
+      .form__row
+        label
+          | 姓名
+        input.blog-url name='user[name]'
+
     .form__row
       label 博客
       input.blog-url name='personal_info[blog_url]'
+
     .form__row
       label 性别
       .radio
@@ -79,7 +88,11 @@ header.site-header.site-header--center
           | 无业游民
 
       p.u-center-text
-        button.btn.btn--normal. type='submit' 下一步
+        button.btn.btn--normal. type='submit'
+          - if @course.free
+            | 开始课程
+          - else
+            | 下一步
 
 footer.site-footer
   .logo

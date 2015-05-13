@@ -15,7 +15,8 @@ class UserMailer < ApplicationMailer
   def invite(enrollment)
     titles = {
       # "ios" => "【思客教学】 iOS 训练营邀请",
-      "nodejs" => "【思客教学】 NodeJS 训练营邀请"
+      "nodejs" => "【思客教学】 NodeJS 训练营邀请",
+      "css0to1" => "【思客教学】 CSS 从 0 到 1 迷你训练营邀请",
     }
 
     course_name = enrollment.course.name

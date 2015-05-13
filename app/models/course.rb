@@ -98,4 +98,18 @@ class Course < ActiveRecord::Base
   def content_update
     Course::ContentUpdater.new(self).update
   end
+
+  def enroll_by_email(email)
+    user = User.find_by email: email
+    if user.nil?
+      user = User.create!(email: email)
+    end
+
+    enrollment = Enrollment.find_by user_id: user.id, course_id: self.id
+    if enrollment.nil?
+      enrollment = Enrollment.create! user: user, course: self
+    end
+
+    enrollment
+  end
 end

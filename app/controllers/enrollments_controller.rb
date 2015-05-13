@@ -38,6 +38,16 @@ class EnrollmentsController < ApplicationController
   end
 
   def update
+    user = enrollment.user
+    if user.name.blank?
+      name = params[:user][:name]
+      if name.present?
+        user.update_attribute :name, name
+      else
+        flash[:error] = "请输入你的姓名"
+      end
+    end
+
     enrollment.update_attribute :personal_info, params.require(:personal_info).permit(:blog_url, :occupation, :gender)
 
     if !user_info_completed?
@@ -82,6 +92,7 @@ class EnrollmentsController < ApplicationController
 
   def activate_course
     enrollment.activate!
+    login_as enrollment.user
     redirect_to course_path(enrollment.course)
   end
 
