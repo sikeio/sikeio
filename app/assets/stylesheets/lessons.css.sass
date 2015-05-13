@@ -73,6 +73,11 @@ $exercise-code-padding: 20px 0 20px 20px
       height: 45px
       width: 100%
       max-width: none
+
+  img
+    border: 1px solid #DADADA
+    padding: 10px
+
   .goal
     text-align: center
     font-size: 36px
@@ -99,7 +104,10 @@ $exercise-code-padding: 20px 0 20px 20px
       font-size: 5em
       color: #616161
 
-  p,h1,h2,h3,h4,ul,ol
+  & > p,h1,h2,h3,h4,ul,ol
+    @include position-center
+
+  blockquote > p
     @include position-center
 
   h1
@@ -131,13 +139,12 @@ $exercise-code-padding: 20px 0 20px 20px
 
   ol
     list-style: decimal inside none
-    padding-left: 0
+    padding-left: 10
     margin: $ul-margin auto
-
   ul
-    padding-left: 0
+    padding-left: 10
     margin: $ul-margin auto
-  p
+  & > p
     margin: $p-margin auto
     line-height: $p-lineheight
   img,video
@@ -147,9 +154,12 @@ $exercise-code-padding: 20px 0 20px 20px
   code
     font-family: menlo
     font-size: 16px
+  & > pre
+    @include position-center
+
   pre
     background: rgba(204,204,204,0.1)
-    @include position-center
+
     code
       padding: 0 30px
       line-height: $code-lineheight
