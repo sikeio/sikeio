@@ -44,7 +44,7 @@ class Lesson < ActiveRecord::Base
   end
 
   def project_repo_name_for(user)
-    "#{user.github_username}/besike-#{self.course.name}-#{self.project}"
+    "#{user.github_username}/sike-#{self.course.name}-#{self.project}"
   end
 
   def project_repo_url_for(user)
