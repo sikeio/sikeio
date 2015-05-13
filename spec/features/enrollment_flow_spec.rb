@@ -72,7 +72,7 @@ feature "enrollment flow" do
       OmniAuth.config.mock_auth[:github] = nil
     end
 
-    given(:personal_info) { {"blog_url" => "blog.com", "occupation" => "无业" } }
+    given(:personal_info) { {"blog_url" => "blog.com", "occupation" => "无业", "gender" => "妹子" } }
 
 
     feature "valid page operation" do
@@ -89,6 +89,7 @@ feature "enrollment flow" do
         visit invite_enrollment_path(enrollment)
         find_field("personal_info[blog_url]").set(personal_info["blog_url"])
         choose("学生")
+        choose("妹子")
         click_on("下一步")
         expect(page.current_path).to eq(pay_enrollment_path(enrollment))
       end
@@ -96,17 +97,27 @@ feature "enrollment flow" do
 
     feature "invalid page operation" do
 
-      scenario 'Intend to go to pay page without filling personal info' do
-        visit invite_enrollment_path(enrollment)
-        FactoryGirl.create(:authentication, user: user.id)
-        click_on("下一步")
-        expect(page.current_path).to eq(invite_enrollment_path(enrollment))
-      end
-
       scenario 'Intend to go to pay page without binding github' do
         visit invite_enrollment_path(enrollment)
         find_field("personal_info[blog_url]").set(personal_info["blog_url"])
         choose("学生")
+        choose("妹子")
+        expect(page.current_path).to eq(invite_enrollment_path(enrollment))
+      end
+
+      scenario 'Intend to go to pay page without choose occupation' do
+        visit invite_enrollment_path(enrollment)
+        FactoryGirl.create(:authentication, user: user.id)
+        choose("妹子")
+        click_on("下一步")
+        expect(page.current_path).to eq(invite_enrollment_path(enrollment))
+      end
+
+      scenario 'Intend to go to pay page without choose gender' do
+        visit invite_enrollment_path(enrollment)
+        FactoryGirl.create(:authentication, user: user.id)
+        choose("学生")
+        click_on("下一步")
         expect(page.current_path).to eq(invite_enrollment_path(enrollment))
       end
 
@@ -120,7 +131,7 @@ feature "enrollment flow" do
   end
 
   feature "pay", js: true do
-    given(:personal_info) { {"blog_url" => "blog.com", "occupation" => "无业" } }
+    given(:personal_info) { {"blog_url" => "blog.com", "occupation" => "无业", "gender" => "妹子"} }
     background do
       page.set_rack_session(user_id: user.id)
       FactoryGirl.create(:authentication, user: user.id)
