@@ -139,11 +139,18 @@ $exercise-code-padding: 20px 0 20px 20px
 
   ol
     list-style: decimal inside none
-    padding-left: 10
-    margin: $ul-margin auto
+    _padding-left: 10
+  & > ol
+    margin: 30px auto 50px auto
+
   ul
-    padding-left: 10
-    margin: $ul-margin auto
+  & > ul
+    margin: 30px auto 50px auto
+
+  li
+    margin-bottom: 10px
+    margin-top: 10px
+
   & > p
     margin: $p-margin auto
     line-height: $p-lineheight
