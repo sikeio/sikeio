@@ -53,17 +53,12 @@ class Lesson::Content
     output =  <<-THERE
     <div class="exercise">
       #{exercise_title(exercise_node)}
-      <ol class='steps'>
+      <ol class='exercise__steps'>
         #{ol_content}
       </ol>
-      <div class="goal">
-        <i class="fa falflag">Pass</i>
-        <span>testPathDrawing</span>
-      </div>
 
-      <div class="completed">
+      <div class="checkin checkin--uncompleted">
         <i class="fa fa-check-circle"></i>
-        Completed!
       </div>
     </div>
     THERE
@@ -74,6 +69,7 @@ class Lesson::Content
 
     exercise_step_node.children.each do |node|
       if node.name != "screenshot"
+        li_content << node.to_xhtml
       elsif node.name == "video"
           li_content << video_html(node)
       else
@@ -82,7 +78,7 @@ class Lesson::Content
     end
 
     output = <<-THERE
-      <li class="step">
+      <li class="exercise__steps__step">
         #{li_content}
       </li>
     THERE
@@ -101,7 +97,7 @@ class Lesson::Content
     end
 
     output = <<-THERE
-      <div class="screenshot">
+      <div class="exercise__steps__step__screenshot">
         <img src=#{screen_node["src"]}/>
         #{other_content}
       </div>

@@ -5,7 +5,7 @@
 = raw @lesson_html
 
 .discourse-qa-link
-  span.icon-discuss
+  span.icon-discuss.discourse-qa-link__icon
   a target="_blank" href=@lesson.discourse_qa_topic_url 我要提问
 
 - if !@is_extra_lesson
@@ -21,7 +21,7 @@
         i.fa.fa-check-circle
         | Completed!
   - else
-    div.uncompleted.js-uncompleted
+    div.checkin.checkin--uncompleted.js-uncompleted
       a href="#{checkin_show_path(@lesson)}"
         i.fa.fa-check-circle
         |打卡

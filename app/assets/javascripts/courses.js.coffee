@@ -1,12 +1,12 @@
 $ ->
   $('.js-uncompleted').mouseenter (e)->
-    $(this).removeClass("uncompleted")
-    $(this).addClass("completed")
+    $(this).removeClass("checkin--uncompleted")
+    $(this).addClass("checkin--completed")
 
 $ ->
   $('.js-uncompleted').mouseleave (e)->
-    $(this).removeClass("completed")
-    $(this).addClass("uncompleted")
+    $(this).removeClass("checkin--completed")
+    $(this).addClass("checkin--uncompleted")
 
 
 $ ->

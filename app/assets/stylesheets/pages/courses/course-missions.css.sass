@@ -1,71 +1,69 @@
 @import ../../global
-ul.course-missions
-  list-style: none
-  padding: 30px 0
-  background: #F8FBFF
-  color: #454441
-  line-height: normal
-  font-family: "Times New Roman"
-  font-family: Roboto
-  font-size: 17.33px
-  font-weight: 300
 
-.course-missions__week
-  @include content()
+#courses_show
+  ul.course-missions
+    list-style: none
+    padding: 30px 0
+    background: #F8FBFF
+    color: #454441
+    line-height: normal
+    font-family: "Times New Roman"
+    font-family: Roboto
+    font-size: 17.33px
+    font-weight: 300
 
-  margin-top: 80px
-  margin-bottom: 30px
-  &:first-child
-    margin-top: 0
+  .course-missions__week
+    @include content()
 
-.time-left
-  @include content()
-  position: relative
-  top: -10px
-  max-width: 578px
-  text-align: left
-  padding: 10px 20px
+    margin-top: 80px
+    margin-bottom: 30px
+    &:first-child
+      margin-top: 0
+
+  .time-left
+    @include content()
+    position: relative
+    top: -10px
+    max-width: 578px
+    text-align: left
+    padding: 10px 20px
 
 
 
-p.course-missions__week__title
-  font-size: 20px
-
-.course-missions__week__overview
-  @include content()
-  & > p
-    font-size: 15px
+  p.course-missions__week__title
+    font-size: 20px
 
 .course-missions img
   @include content()
 
-li.course-missions__week__mission
-  @include content()
-  position: relative
-  background: white
-  line-height: 200%
-  border: solid 1px #CBCCCE
-  padding: 10px 20px
-  box-sizing: border-box
-  margin-bottom: 25px
-  &:last-child
-    margin-bottom: 0
-  & > span.li-bbs
-    float: right
-    & > a
-      color: black
+
+  li.course-missions__week__mission
+    @include content()
+    position: relative
+    background: white
+    line-height: 200%
+    border: solid 1px #CBCCCE
+    padding: 10px 20px
+    box-sizing: border-box
+    margin-bottom: 25px
+    &:last-child
+      margin-bottom: 0
+    & > span.li-bbs
+      float: right
+      & > a
+        color: black
 
 
-li.course-missions__week__mission--future
-  color: #BFBFBF
+  li.course-missions__week__mission--future
+    color: #BFBFBF
 
-li.course-missions__week__mission--to-be-done
-  color: #F00
+  li.course-missions__week__mission--to-be-done
+    color: #F00
 
-li.course-missions__week__mission--done
-  i
-    font-size: 1.5em
-    position: absolute
-    left: -50px
-    color: #11D146
+  li.course-missions__week__mission--done
+    i
+      font-size: 1.5em
+      position: absolute
+      left: -50px
+      color: #11D146
 
