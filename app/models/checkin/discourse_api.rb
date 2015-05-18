@@ -57,11 +57,11 @@ class Checkin::DiscourseAPI
       post: {
         raw: raw,
         archetype: "regular",
-        skip_validations: true
       },
     }, {
         :accept => :json,
         :params => {
+          :skip_validations => true,
           :api_username => user_name,
           :api_key => TOKEN
         }
@@ -74,10 +74,10 @@ class Checkin::DiscourseAPI
     r = RestClient.post thread_url, {
       :topic_id => topic_id,
       :raw => raw,
-      :skip_validations => true,
     }, {
         :accept => :json,
         :params => {
+          :skip_validations => true,
           :api_username => user_name,
           :api_key => TOKEN
         }
