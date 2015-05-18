@@ -1,0 +1,5 @@
+<%= @user.name %> 你好:
+
+欢迎你加入我们一起学习 CSS。我们 <%= @next_monday.strftime "%Y/%m/%d" %> 周一开始这个迷你课程，一共有三个课程。
+
+请点这个链接接受邀请：<%= invite_enrollment_url(@enrollment) %>
