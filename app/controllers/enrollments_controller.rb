@@ -43,8 +43,6 @@ class EnrollmentsController < ApplicationController
       name = params[:user][:name]
       if name.present?
         user.update_attribute :name, name
-      else
-        flash[:error] = "请输入你的姓名"
       end
     end
 
@@ -97,7 +95,21 @@ class EnrollmentsController < ApplicationController
   end
 
   def user_info_completed?
-    enrollment.user.has_binded_github && (!enrollment.personal_info["occupation"].blank?) && (!enrollment.personal_info["gender"].blank?)
+    if enrollment.user.name.blank?
+      flash[:error] = "请输入您的姓名"
+      return false
+    elsif !enrollment.user.has_binded_github
+      flash[:error] = "请绑定Github"
+      return false
+    elsif enrollment.personal_info["gender"].blank?
+      flash[:error] = "请选择您的性别"
+      return false
+    elsif enrollment.personal_info["occupation"].blank?
+      flash[:error] = "请选择您的职业"
+      return false
+    else
+      return true
+    end
   end
 
   def redirect_to_invite

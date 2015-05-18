@@ -6,8 +6,10 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-
-course = Course.create(name: "nodejs", title: "nodejs")
+course = Course.find_by(name: "nodejs")
+unless course
+  course = Course.create(name: "nodejs", title: "nodejs")
+end
 
 Course::Updater::DataUpdater.new(course).update
 
