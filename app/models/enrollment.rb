@@ -51,7 +51,9 @@ class Enrollment < ActiveRecord::Base
 
   def activate!
     # next monday at 0:00
-    self.start_time = next_monday
+    if self.start_time.nil?
+      self.start_time = next_monday
+    end
     self.activated = true
     self.save!
   end
