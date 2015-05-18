@@ -10,6 +10,7 @@
 #  degree_of_difficulty :integer
 #  lesson_id            :integer
 #  discourse_post_id    :integer
+#  timestamps           :datetime
 #
 
 class Checkin < ActiveRecord::Base
@@ -21,6 +22,9 @@ class Checkin < ActiveRecord::Base
   before_save do
     if self.github_repository.nil?
       self.github_repository = project_repo_url
+    end
+    if self.timestamps.nil?
+      self.timestamps = Time.now
     end
   end
 
