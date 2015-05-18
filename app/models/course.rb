@@ -35,9 +35,10 @@ class Course < ActiveRecord::Base
   REPO_BASE = Rails.root + (ENV["COURSE_BUILD_PATH"] || raise("Must specify a COURSE_BUILD_PATH to build a course"))
   ASSETS_BASE = Rails.root + "public"
 
-  def generate_qa_topics
+  def generate_discourse_topics
     self.content.lessons_info.each { |info|
       lesson = self.lessons.find_by(name: info[:name])
+      lesson.create_checkin_topic
       lesson.create_qa_topic
     }
   end

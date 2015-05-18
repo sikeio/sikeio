@@ -55,11 +55,23 @@ class Lesson < ActiveRecord::Base
     "http://#{ENV["DISCOURSE_HOST"]}/t/#{self.discourse_qa_topic_id}"
   end
 
+  def create_checkin_topic
+    return if self.discourse_topic_id
+    title = "Lesson #{self.position} 打卡 - #{self.title}"
+    raw = "课程打卡在这里"
+    category = "#{self.course.name} FAQ"
+
+    api = Checkin::DiscourseAPI.new
+    result = api.create_topic(title, raw, category)
+
+    self.update_attribute :discourse_topic_id, result['topic_id']
+  end
+
   def create_qa_topic
     return if self.discourse_qa_topic_id
     title = "Lesson #{self.position} FAQ - #{self.title}"
     raw = "课程有问题在这里提问。"
-    category = "#{self.course.name} 训练营"
+    category = "#{self.course.name} FAQ"
     api = Checkin::DiscourseAPI.new
     result = api.create_topic(title, raw, category)
 

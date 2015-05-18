@@ -32,7 +32,7 @@ class Admin::CoursesController < Admin::ApplicationController
   end
 
   def generate_discourse_topics
-    course.generate_qa_topics
+    course.generate_discourse_topics
   end
 
   private
