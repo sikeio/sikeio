@@ -19,10 +19,10 @@ class Checkin::DiscourseAPI
       title: title,
       archetype: "regular",
       category: category,
-      skip_validations: true
     }, {
       :accept => :json,
       :params => {
+        skip_validations: true,
         :api_username => username,
         :api_key => TOKEN
       }
@@ -38,6 +38,7 @@ class Checkin::DiscourseAPI
     },{
       :accept => :json,
       :params => {
+        skip_validations: true,
         :api_username => username,
         :api_key => TOKEN
       }
