@@ -4,6 +4,14 @@
 // mixin
 ////////////////////////////////////////////////////////////////////////////////
 
+@mixin link-display
+  text-decoration: none
+  &:link
+    color: #33B2E3
+  &:visited
+    color: #93867F
+
+
 @mixin clearfix
   &:after
     content: ''

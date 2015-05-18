@@ -1,3 +1,6 @@
+//= require_directory ./lesson
+@import global
+
 $content-width: 80%
 $content-max-width: 700px
 $body-fontsize: 18px
@@ -50,6 +53,8 @@ $code-lineheight: 150%
   color: #373737
   overflow: auto
   overflow-x: hidden
+  a
+    @include link-display
   header
     @include image-mask
     font-size: 0
@@ -168,4 +173,5 @@ $code-lineheight: 150%
   @media only screen  and (max-width : 280px)
     header
       h1
+
 
