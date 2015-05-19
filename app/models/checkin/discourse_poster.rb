@@ -17,7 +17,7 @@ class Checkin::DiscoursePoster
 
   def publish
     topic_id = lesson.discourse_topic_id
-    user_name = checkin.enrollment.user.github_username
+    user_name = checkin.enrollment.user.github_username.gsub(/-/, "_")
 
     if checkin.published?
       api.update_post(checkin.discourse_post_id, user_name, raw_post)
