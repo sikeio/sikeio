@@ -1,0 +1,124 @@
+$code-lineheight: 150%
+$exercise-code-padding: 20px 0 20px 20px
+$exercise-p-margin: 30px
+
+$content-width: 80%
+$content-max-width: 700px
+
+@mixin show-number
+  counter-increment: list
+  content: counter(list)
+  display: block
+  position: absolute
+  font-weight: 400
+
+
+@mixin position-center
+  width: $content-width
+  max-width: $content-max-width
+  margin: auto
+
+
+#lessons_show
+  .exercise
+    background: #F8FBFF
+    padding-top: 40px
+    pre
+      @include position-center
+      background: white
+      code
+        line-height: $code-lineheight
+        width: 100%
+        padding: $exercise-code-padding
+        display: block
+    h1
+      font-family: 'Roboto'
+      font-size: 20px
+      font-weight: 300
+      margin-top: 0
+      color: #454441
+      margin-bottom: 50px
+      position: relative
+      .indicator
+        font-size: 20px
+        font-weight: 400
+        position: absolute
+        left: -20%
+        top: 0
+    p
+      margin: $exercise-p-margin auto
+
+
+  .exercise__concusion
+    background: white
+    p
+      @include position-center
+      padding: 30px 0
+      font-family: 'Open Sans'
+      font-weight: 400
+
+  .exercise__steps
+    counter-reset: list
+    list-style: none
+    padding: 0
+
+
+  .exercise__steps__step
+    > p
+      position: relative
+      &:before
+        @include show-number
+        left: -30px
+        top: 0
+    p,pre
+      width: 100%
+    img
+      position: relative
+      z-index: 100
+      display: block
+      margin: auto
+
+
+  .exercise__steps__step__screenshot
+    margin-top: 50px
+    h2
+      font-size: 18px
+      font-style: italic
+      font-weight: 500
+      margin-top: 60px
+      margin-bottom: 40px
+      text-align: center
+    ol
+      position: relative
+      padding-top: 30px
+      padding-bottom: 30px
+      &:before
+        content: ''
+        display: block
+        width: 100%
+        height: calc(100% + 150px)
+        position: absolute
+        left: 0
+        bottom: 0
+        background: white
+        border-top: #E5F0FF solid 1px
+        border-bottom: #E5F0FF solid 1px
+      li
+        line-height: 200%
+        @include position-center
+        position: relative
+        z-index: 1
+
+  @media only screen  and (max-width : 800px)
+    .exercise__steps__step__screenshot > h2
+      margin-left: 10px !important
+      margin-right: 10px !important
+    .exercise__steps__step > p
+      margin-left: 50px !important
+      margin-right: 10px !important
+
+
+
+
+
+
