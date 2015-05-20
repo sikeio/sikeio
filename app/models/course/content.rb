@@ -77,6 +77,7 @@ class Course::Content
     info = {}
     info[:title] = lesson_title(node["name"])
     info[:overview] = node.css("overview").children.to_xhtml.strip
+    info[:old_name] = node["old-name"]
     info[:name] = node["name"]
     info[:project] = node["project"]
     return info
