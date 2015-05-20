@@ -10,7 +10,7 @@ class CheckinsController < ApplicationController
     checkin = Checkin.new(checkin_info)
 
     if checkin.save
-      render json: success_msg(checkin.lesson.bbs)
+      render json: success_msg(checkin.lesson.discourse_checkin_topic_url)
     else
       render_400 checkin.errors
     end
@@ -33,7 +33,7 @@ class CheckinsController < ApplicationController
     begin
       checkin = current_user.checkins.find(params[:id])
       checkin.update!(checkin_params)
-      render json: success_msg(checkin.lesson.bbs)
+      render json: success_msg(checkin.lesson.discourse_checkin_topic_url)
     rescue
       render json: error_msg(checkin.errors.full_messages)
     end
