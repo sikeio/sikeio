@@ -101,7 +101,7 @@ class Course::Compiler
         nodes_in_week << node.to_xhtml
       elsif node.name == "lesson"
         lesson = <<-THERE
-        <lesson day="#{node["day"]}" name="#{node["name"]}" bbs="#{node["bbs"]}" project="#{node["project"]}">
+        <lesson day="#{node["day"]}" name="#{node["name"]}" project="#{node["project"]}">
            <overview>#{node.children.to_xhtml}</overview>
         </lesson>
         THERE
