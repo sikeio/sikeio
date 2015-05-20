@@ -51,6 +51,10 @@ class Lesson < ActiveRecord::Base
     "https://github.com/#{project_repo_name_for(user)}"
   end
 
+  def discourse_checkin_topic_url
+    "http://#{ENV["DISCOURSE_HOST"]}/t/#{self.discourse_topic_id}"
+  end
+
   def discourse_qa_topic_url
     "http://#{ENV["DISCOURSE_HOST"]}/t/#{self.discourse_qa_topic_id}"
   end
@@ -64,7 +68,7 @@ class Lesson < ActiveRecord::Base
     api = Checkin::DiscourseAPI.new
     result = api.create_topic(title, raw, category)
 
-    self.update_attribute :discourse_topic_id, result['topic_id']
+    self.update(discourse_topic_id: result['topic_id'])
   end
 
   def create_qa_topic
