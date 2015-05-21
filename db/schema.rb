@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150512110056) do
+ActiveRecord::Schema.define(version: 20150521135607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,7 +33,8 @@ ActiveRecord::Schema.define(version: 20150512110056) do
     t.integer  "degree_of_difficulty"
     t.integer  "lesson_id"
     t.integer  "discourse_post_id"
-    t.datetime "timestamps"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "checkins", ["enrollment_id"], name: "index_checkins_on_enrollment_id", using: :btree
