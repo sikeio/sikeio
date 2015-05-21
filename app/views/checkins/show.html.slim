@@ -12,10 +12,40 @@
     = form_for @checkin, url: @url_path, method: @html_method, remote: true, html: {class: 'js-checkin'} do |f|
       .form__row
         = f.label :time_cost, "所花时间:"
-        = f.select :time_cost, options_for_select([["1小时以内", 0], ["1小时", 1], ["2小时", 2], ["3小时", 3], ["4小时", 4], ["4小时以上", 5]])
+        = f.select :time_cost, options_for_select([["1小时以内", 0], ["1小时", 1], ["2小时", 2], ["3小时", 3], ["4小时", 4], ["4小时以上", 5]], @checkin.time_cost), include_blank: true
+
       .form__row
         = f.label :degree_of_difficulty, "难度如何"
-        = f.select :degree_of_difficulty, options_for_select([["太简单", 0],["容易", 1], ["适中", 2], ["难", 3], ["太难", 4]])
+        .radio
+          = f.radio_button :degree_of_difficulty, 0, class: "radio__input"
+          label.radio__label for="checkin_degree_of_difficulty_0"
+            span.radio__label__span
+            | 太简单
+
+        .radio
+          = f.radio_button :degree_of_difficulty, 1, class: "radio__input"
+          label.radio__label for="checkin_degree_of_difficulty_1"
+            span.radio__label__span
+            | 容易
+
+        .radio
+          = f.radio_button :degree_of_difficulty, 2, class: "radio__input"
+          label.radio__label for="checkin_degree_of_difficulty_2"
+            span.radio__label__span
+            | 适中
+
+        .radio
+          = f.radio_button :degree_of_difficulty, 3, class: "radio__input"
+          label.radio__label for="checkin_degree_of_difficulty_3"
+            span.radio__label__span
+            | 难
+
+        .radio
+          = f.radio_button :degree_of_difficulty, 4, class: "radio__input"
+          label.radio__label for="checkin_degree_of_difficulty_4"
+            span.radio__label__span
+            | 太难
+
       .form__row
         = f.label :problem, "我的心得(请用MarkDown格式填写)"
         .markdown-editor

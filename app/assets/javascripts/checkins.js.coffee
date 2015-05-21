@@ -6,6 +6,6 @@ $ ->
         window.location.replace(data.url)
       else
         swal
-          title: "错误~"
+          title: "有点小问题~"
           text: data.message
           type: "error"
