@@ -1,6 +1,7 @@
 class CheckinsController < ApplicationController
 
   before_action :require_login
+  before_action :param_validate, only: [:create, :update]
 
   def create
     raise "course not exist or not enroll" if !enrollment
@@ -40,6 +41,14 @@ class CheckinsController < ApplicationController
   end
 
   private
+
+  def param_validate
+    if params[:checkin][:time_cost].blank?
+      render json: error_msg("请告诉我们您完成课程所用的时间~")
+    elsif params[:checkin][:degree_of_difficulty].blank?
+      render json: error_msg("请告诉我们您认为课程难度如何~")
+    end
+  end
 
   def enrollment
     @enrollment ||= current_user.enrollments.find_by(course_id: course.id)
