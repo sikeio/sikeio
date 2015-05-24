@@ -1,26 +1,15 @@
 @import ../global
 
 .coach-info
-  @include clearfix
-  @include content()
   margin-top: 100px
 
-h1.coach-info__title
-  font-size: 36px
-  font-weight: 300
-  text-align: center
-  margin: auto
+.coach-info__wechat-add
+  margin: 0 auto
+  padding-right: 20px
 
-@media screen and (min-width: $content-max-width)
+@media (min-width: 480px)
   .coach-info__wechat-add
-    width: 185px
     float: left
-    padding: 30px 0px
 
-  .coach-info__content
-    float: left
-    width: 395px
-    margin-left: 40px
-
-
-
+.coach-info__content
+  overflow: hidden
