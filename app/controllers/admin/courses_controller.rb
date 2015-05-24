@@ -8,6 +8,31 @@ class Admin::CoursesController < Admin::ApplicationController
     @course = Course.new
   end
 
+  def show
+    course
+  end
+
+  def delete_invite
+    invite = CourseInvite.find_by(id: params[:id])
+    if invite
+      temp_course = invite.course
+      invite.destroy
+      redirect_to admin_course_path(temp_course)
+      return
+    else
+      redirect_to admin_courses_path
+      return
+    end
+  end
+
+  def create_invite
+    invite = CourseInvite.new(course_id: course.id)
+    if !invite.save
+      flash[:error] = invite.errors
+    end
+    redirect_to admin_course_path(course)
+  end
+
   def create
     course_info = course_params
     # create a course with temporarily generated permalink

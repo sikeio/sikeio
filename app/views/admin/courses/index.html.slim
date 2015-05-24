@@ -4,6 +4,8 @@ table.table.table-bordered
   thead
     tr
       th
+        | Invite
+      th
         |#
       th
         |Course Name
@@ -22,6 +24,9 @@ table.table.table-bordered
     - i += 1
     tbody
       tr
+        td
+          a href=admin_course_path(course)
+            |#{course.name}
         = form_for course, url: admin_course_path(course), method: :put do |f|
           td
             | #{i}

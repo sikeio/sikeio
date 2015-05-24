@@ -17,6 +17,8 @@
 
 class Course < ActiveRecord::Base
 
+  has_many :course_invites
+
   has_many :enrollments, dependent: :restrict_with_exception
 
   has_many :lessons

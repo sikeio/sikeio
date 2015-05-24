@@ -1,4 +1,5 @@
 class EnrollmentsController < ApplicationController
+
   def create
     if params[:name].blank? || params[:email].blank?
       render_400 "请输入你的姓名和邮箱"
@@ -29,10 +30,40 @@ class EnrollmentsController < ApplicationController
     end
   end
 
+  def enroll
+    @course_invite = CourseInvite.find_by(token: params[:id])
+    if !@course_invite
+      render_404
+    end
+
+    if current_user
+      temp_enrollment = Enrollment.find_or_create_by! user_id: current_user.id, course_id: @course_invite.course_id
+
+      if temp_enrollment.activated?
+        redirect_to course_path(temp_enrollment.course)
+        return
+      end
+
+      @course = @course_invite.course
+      @user = current_user
+      @enrollment = temp_enrollment
+    else
+      @enrollment = Enrollment.new course_id: @course_invite.course_id
+      @course = @course_invite.course
+    end
+    render 'invite'
+  end
+
   def invite
     if current_user && enrollment.user != current_user
       enrollment.update_attribute :user, current_user
     end
+
+    if enrollment.activated?
+      redirect_to course_path(enrollment.course)
+      return
+    end
+
     @course = enrollment.course
     @user = enrollment.user
   end
