@@ -76,6 +76,8 @@ Rails.application.routes.draw do
     post '/login' => "sessions#create"
     delete '/logout' => 'sessions#destroy'
     delete '/invite_delete/:id' => 'courses#delete_invite' , as: :invite_delete
+    post '/start_time/:id' => 'courses#start_at_this_week', as: :start_time
+    post '/delete_start_time/:id' => 'courses#delete_start_time' , as: :delete_start_time
 
     namespace :test do
       post :send_email

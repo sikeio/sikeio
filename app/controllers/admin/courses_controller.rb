@@ -12,11 +12,28 @@ class Admin::CoursesController < Admin::ApplicationController
     course
   end
 
+  def start_at_this_week
+    if course_invite
+      course_invite.start_at_this_week
+      redirect_to admin_course_path(course_invite.course)
+      return
+    else
+      redirect_to admin_course_path(course_invite.cousre)
+      return
+    end
+  end
+
+  def delete_start_time
+    if course_invite
+      course_invite.update(start_time: nil)
+    end
+    redirect_to admin_course_path(course_invite.course)
+  end
+
   def delete_invite
-    invite = CourseInvite.find_by(id: params[:id])
-    if invite
-      temp_course = invite.course
-      invite.destroy
+    if course_invite
+      temp_course = course_invite.course
+      course_invite.destroy
       redirect_to admin_course_path(temp_course)
       return
     else
@@ -61,6 +78,10 @@ class Admin::CoursesController < Admin::ApplicationController
   end
 
   private
+
+  def course_invite
+    @course_invite ||= CourseInvite.find_by(id: params[:id])
+  end
 
   def course_params
      params.require(:course).permit(:name, :repo_url, :current_version, :free)
