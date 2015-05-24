@@ -1,13 +1,11 @@
 header.site-header
-  .logo-title
-    a.logo-title__logo href="/"
-      .logo
-    h1.logo-title__title
-      | iOS 基础教程
-  .entry-port.entry-port--head
-    a href=course_path(course)
-      i.fa.fa-sign-in.fa-lg
-      |进入课程
+  a.site-header__root href="/"
+  h1.site-header__title
+    | iOS 基础教程
+
+  a.site-header__login href=course_path(course)
+    i.fa.fa-sign-in.fa-lg
+    | 进入课程
 
 
 
