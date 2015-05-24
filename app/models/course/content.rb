@@ -77,13 +77,9 @@ class Course::Content
     info = {}
     info[:title] = lesson_title(node["name"])
     info[:overview] = node.css("overview").children.to_xhtml.strip
+    info[:old_name] = node["old-name"]
     info[:name] = node["name"]
     info[:project] = node["project"]
-    if (!node["bbs"].blank?)
-      info[:bbs] = node["bbs"]
-      path = URI.parse(node["bbs"]).path
-      info[:discourse_topic_id] = path.split("/").last
-    end
     return info
   end
 

@@ -17,7 +17,9 @@ class Course::Updater::DataUpdater
 
   def update_course_according_to_xml
     course_info = content.course_info
-    create_or_update(Course, course_name, course_info)
+    course_info[:name] = course_name
+
+    create_or_update(Course, course_info)
   end
 
   def update_lessons_according_to_xml
@@ -27,19 +29,32 @@ class Course::Updater::DataUpdater
     lessons = [lessons_info, extra_lessons_info].flatten
     lessons.each do |info|
       info[:course_id] = course.id
-      create_or_update(Lesson, info[:name], info)
+
+      old_name = info.delete(:old_name)
+      if old_name.blank?
+        create_or_update(Lesson, info)
+      else
+        lesson_rename(old_name, info)
+      end
+
     end
   end
 
-  def create_or_update(klass, name_for_finding, attr_info_to_set)
-    klass_instance = klass.find_by_name(name_for_finding)
-    if klass_instance
-      klass_instance.update(attr_info_to_set)
-    else
-      attr_info_to_set[:name] = name_for_finding
-      klass_instance = klass.new(attr_info_to_set)
-      klass_instance.save
-    end
+  def create_or_update(klass, attributes)
+    klass_instance = klass.find_or_initialize_by(name: attributes[:name])
+
+    klass_instance.update!(attributes)
     klass_instance
   end
+
+  def lesson_rename(old_name, attributes)
+    lesson = Lesson.find_by_name(old_name)
+    if lesson
+      lesson.update(attributes)
+    else
+      raise "Lesson Change Name Error: the lesson #{old_name} is not exists"
+    end
+  end
+
 end
+

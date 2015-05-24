@@ -83,7 +83,6 @@ ActiveRecord::Schema.define(version: 20150521135607) do
     t.datetime "updated_at",            null: false
     t.integer  "course_id"
     t.string   "permalink"
-    t.string   "bbs"
     t.integer  "discourse_topic_id"
     t.string   "project"
     t.integer  "discourse_qa_topic_id"
