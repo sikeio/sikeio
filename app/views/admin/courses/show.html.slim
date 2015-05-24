@@ -1,0 +1,22 @@
+= form_tag create_invite_admin_course_path(@course), method: :post
+  = submit_tag "new invite"
+table.table.table-bordered
+  thead
+    tr
+      th
+        |#
+      th
+        |URL
+      th
+        | Delete
+  - i = 1
+  - @course.course_invites.each do |invite|
+    tbody
+      tr
+        td
+          | #{i}
+        td
+          | #{enroll_enrollment_url(invite.token)}
+        td
+          = form_tag admin_invite_delete_path(invite), method: :delete
+            = submit_tag "Delete"

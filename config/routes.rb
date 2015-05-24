@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
+
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   delete '/logout' => 'sessions#destroy'
@@ -51,6 +52,7 @@ Rails.application.routes.draw do
 
   resources :enrollments, only: [:create,:update] do
     member do
+      get 'enroll'
       get 'invite'
       get 'pay'
       post 'finish'
@@ -73,6 +75,7 @@ Rails.application.routes.draw do
     get '/login' => "sessions#new"
     post '/login' => "sessions#create"
     delete '/logout' => 'sessions#destroy'
+    delete '/invite_delete/:id' => 'courses#delete_invite' , as: :invite_delete
 
     namespace :test do
       post :send_email
@@ -93,6 +96,7 @@ Rails.application.routes.draw do
 
     resources :courses do
       member do
+        post 'create_invite'
         get :info
         post 'clone_and_update' => 'courses#clone_and_update'
         post 'generate_discourse_topics'
