@@ -9,128 +9,131 @@ header.site-header
 
 
 
-.jumbotron.jumbotron--ios
-  .jumbotron__centered-content
-    h1 iOS 攀爬第一个高峰
-    a.btn.btn--normal.btn--large.js-modal-trigger data-modal-target=".js-panel--enrolling"
-      | 课程报名质询
+.course-info
+  .jumbotron.jumbotron--ios
+    .jumbotron__centered-content
+      h1 iOS 攀爬第一个高峰
+      a.btn.btn--normal.btn--large.js-modal-trigger data-modal-target=".js-panel--enrolling"
+        | 课程报名质询
 
 
+  section.course-info__section
+    .container
+      h1
+        | 陡峭的学习坡度
+      p
+        | iOS 开发是一件非常好玩的事。它有设计精良的 API，丰富的历史，活跃的生态圈，注重用户体验和设计的文化，而且全球有超过 10亿台 iOS 设备是你的画布。
+      p
+        | 但对一个初学者，iOS 的学习路上会遇到很多的问题：
+      ol
+        li
+          | iOS 版本之间的不同。
+        li
+          | 快 10 年的历史包袱，容易搜索到过期的信息。
+        li
+          | 苹果官方文档太多细节，不好消化。
+        li
+          | 新技术的相对不成熟，Swift 语言本身的不稳定， 再加上 XCode 常崩溃。
+        li
+          | 庞大的 API，令人眼花缭乱，不知从何下手。
+      h1.emphasize
+        | “减少在坑里浪费的时间"
+      p
+        | 在初学的过程可能会为很多零零碎碎的问题费劲心思，而无法去体会 iOS/Cocoa 的蓝图理念。这个课程把学习线路策划好，把浪费时间的坑填好，让你可以专注学习真正有价值的知识点。
 
-.container.text-content
-  h1
-    | 陡峭的学习坡度
-  p
-    | iOS 开发是一件非常好玩的事。它有设计精良的 API，丰富的历史，活跃的生态圈，注重用户体验和设计的文化，而且全球有超过 10亿台 iOS 设备是你的画布。
-  p
-    | 但对一个初学者，iOS 的学习路上会遇到很多的问题：
-  ol
-    li
-      | iOS 版本之间的不同。
-    li
-      | 快 10 年的历史包袱，容易搜索到过期的信息。
-    li
-      | 苹果官方文档太多细节，不好消化。
-    li
-      | 新技术的相对不成熟，Swift 语言本身的不稳定， 再加上 XCode 常崩溃。
-    li
-      | 庞大的 API，令人眼花缭乱，不知从何下手。
-  h1.emphasize
-    | “减少在坑里浪费的时间"
-  p
-    | 在初学的过程可能会为很多零零碎碎的问题费劲心思，而无法去体会 iOS/Cocoa 的蓝图理念。这个课程把学习线路策划好，把浪费时间的坑填好，让你可以专注学习真正有价值的知识点。
+  section.course-info__section.course-info__section--blue
+    .container
+      h1
+        | 写代码才是硬道理
+      p
+        | 看了书或者教程之后会觉得自己好像懂了，但实际要去做什么东西却又满脑子浆糊。其实问题很简单，多写代码就好了。
+      p
+        | 这个课程要求你折腾代码。和其他教程最大的不同是不给你可以工作的代码，只给你发布任务。你必须研读 API 文档和博文，了解以后才能实现功能。
+      h1.emphasize
+        | “天天向上”
 
-.container.text-content.text-content--blue
-  h1
-    | 写代码才是硬道理
-  p
-    | 看了书或者教程之后会觉得自己好像懂了，但实际要去做什么东西却又满脑子浆糊。其实问题很简单，多写代码就好了。
-  p
-    | 这个课程要求你折腾代码。和其他教程最大的不同是不给你可以工作的代码，只给你发布任务。你必须研读 API 文档和博文，了解以后才能实现功能。
-  h1.emphasize
-    | “天天向上”
+      p
+        | 我们会一起开发四个应用， 一步一步地提升开发难度。课程的每天都有任务，让你天天都能有一些提升。
 
-  p
-    | 我们会一起开发四个应用， 一步一步地提升开发难度。课程的每天都有任务，让你天天都能有一些提升。
+      .iphone-demo.js-iphone-demo
+        img.iphone-demo__left-btn.js-iphone-demo__left src=image_url('courses/ios/left.png')
+        img.iphone-demo__right-btn.js-iphone-demo__right src=image_url('courses/ios/right.png')
+        .iphone-demo__slides.js-iphone-demo__slides
+          div
+            img src=image_url('app demo 1.png')
+          div
+            img src=image_url('app demo 2.png')
+          div
+            img src=image_url('app demo 3.png')
+          div
+            img src=image_url('app demo 4.png')
 
-  .iphone-demo.js-iphone-demo
-    img.iphone-demo__left-btn.js-iphone-demo__left src=image_url('courses/ios/left.png')
-    img.iphone-demo__right-btn.js-iphone-demo__right src=image_url('courses/ios/right.png')
-    .iphone-demo__slides.js-iphone-demo__slides
-      div
-        img src=image_url('app demo 1.png')
-      div
-        img src=image_url('app demo 2.png')
-      div
-        img src=image_url('app demo 3.png')
-      div
-        img src=image_url('app demo 4.png')
+  / section.course-info__section.text-content--imagebg
+  section.course-info__section.course-info__section--starrynight
+    .container
+      h1.h1--large
+        | 飞向宇宙浩瀚无垠
+      p
+        | 个别的知识点都相对好学，只要看了 API 的教程都能学会。但真实 App 并不受限于个别教程的知识范围，你还要知道如何配合使用不同的 API：
+      ul
+        li
+          | 如何结合高层的 UIKit 和低层的 CoreGraphics 绘图 API
+        li
+          | 如何混合使用 Storyboard 和代码构建视图
+        li
+          | 如何混合手动 layout 和 auto layout
+        li
+          | 如何混合使用 auto layout 和动画效果
+      p
+        | iOS 的知识一环扣一环。我们课程里做的 App 会有许多功能需要你去同时应用多个知识点。通过这些练习，你能融会贯通 UIKit 的核心技术。
 
-.text-content.text-content--imagebg
-  .container
-    h1.text-content__title--large
-      | 飞向宇宙浩瀚无垠
-    p
-      | 个别的知识点都相对好学，只要看了 API 的教程都能学会。但真实 App 并不受限于个别教程的知识范围，你还要知道如何配合使用不同的 API：
-    ul
-      li
-        | 如何结合高层的 UIKit 和低层的 CoreGraphics 绘图 API
-      li
-        | 如何混合使用 Storyboard 和代码构建视图
-      li
-        | 如何混合手动 layout 和 auto layout
-      li
-        | 如何混合使用 auto layout 和动画效果
-    p
-      | iOS 的知识一环扣一环。我们课程里做的 App 会有许多功能需要你去同时应用多个知识点。通过这些练习，你能融会贯通 UIKit 的核心技术。
+      h1.emphasize
+        | 成为一个有自信的 iOS 开发者
+      p
+        | 不只是基础，我们要带你更进一步。
+      ul
+        li
+          | 测试驱动开发
+        li
+          | 自定义视图需要注意的事项
+        li
+          | 使用 Cocoa 编程模式
+        li
+          | iOS 最佳实践
+      p
+        | 来吧，让我们一起走上 iOS Native 开发这条不归路！
 
-    h1.emphasize
-      | 成为一个有自信的 iOS 开发者
-    p
-      | 不只是基础，我们要带你更进一步。
-    ul
-      li
-        | 测试驱动开发
-      li
-        | 自定义视图需要注意的事项
-      li
-        | 使用 Cocoa 编程模式
-      li
-        | iOS 最佳实践
-    p
-      | 来吧，让我们一起走上 iOS Native 开发这条不归路！
+  .course-info__section
+    p.u-center-text
+      a.btn.btn--normal.btn--large.js-modal-trigger data-modal-target=".js-panel--enrolling"
+        | 课程报名质询
 
-.container.text-content
-  p.u-center-text
-    a.btn.btn--normal.btn--large.js-modal-trigger data-modal-target=".js-panel--enrolling"
-      | 课程报名质询
+  .container.coach-info
+    h1 导师介绍
 
-.container.coach-info
-  h1 导师介绍
+    .coach-info__wechat-add
+      .wechat-add
+        img.wechat-add__qr src="#{image_path("courses/weixin.png")}"
+        | 微信：hayeah666
 
-  .coach-info__wechat-add
-    .wechat-add
-      img.wechat-add__qr src="#{image_path("courses/weixin.png")}"
-      | 微信：hayeah666
+    .coach-info__content
+      p
+        | 我叫 Howard，台湾同胞一枚。小时候随家人移民加拿大。2011 年远程工作，边旅行边赚钱。那一年第一次来到了天朝。我写了篇有关这个经历的博文 <a href="http://metacircus.com/writings/2011/09/19/from-the-office-to-travelling-the-world.html">From The Office to Travelling The World</a>。
 
-  .coach-info__content
-    p
-      | 我叫 Howard，台湾同胞一枚。小时候随家人移民加拿大。2011 年远程工作，边旅行边赚钱。那一年第一次来到了天朝。我写了篇有关这个经历的博文 <a href="http://metacircus.com/writings/2011/09/19/from-the-office-to-travelling-the-world.html">From The Office to Travelling The World</a>。
+      p
+        | 2012 年觉得生活太安逸，决定来中国发展，发现难度瞬间提升为 Hard。在深圳和朋友创立了小象网，做创意纸品，婚纱相册之类的产品。现在已盈利，处稳定发展状态。
 
-    p
-      | 2012 年觉得生活太安逸，决定来中国发展，发现难度瞬间提升为 Hard。在深圳和朋友创立了小象网，做创意纸品，婚纱相册之类的产品。现在已盈利，处稳定发展状态。
+      p
+        |2013 夏，搬到成都和女朋友在一起。
 
-    p
-      |2013 夏，搬到成都和女朋友在一起。
-
-    p
-      |Github:
-      a href="http://github.com/hayeah"
-        |  http://github.com/hayeah
-      br
-      |Blog:
-      a href="http://metacircus.com"
-        |  http://metacircus.com
+      p
+        |Github:
+        a href="http://github.com/hayeah"
+          |  http://github.com/hayeah
+        br
+        |Blog:
+        a href="http://metacircus.com"
+          |  http://metacircus.com
 
 
 footer.site-footer

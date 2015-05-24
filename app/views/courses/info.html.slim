@@ -1,5 +1,7 @@
 span.data-course-id.u-hidden=@course_name
-.__content
-  = render partial: @course_name, locals: { course: @course }
+
+
+= render partial: @course_name, locals: { course: @course }
+
 .__panel
   = render 'panel', course: @course
