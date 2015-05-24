@@ -23,9 +23,6 @@ class Checkin < ActiveRecord::Base
     if self.github_repository.nil?
       self.github_repository = project_repo_url
     end
-    if self.timestamps.nil?
-      self.timestamps = Time.now
-    end
   end
 
   after_commit do |checkin|
