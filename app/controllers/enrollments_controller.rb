@@ -43,6 +43,7 @@ class EnrollmentsController < ApplicationController
         redirect_to course_path(temp_enrollment.course)
         return
       end
+      temp_enrollment.update(start_time: @course_invite.start_time) if @course_invite.start_time
 
       @course = @course_invite.course
       @user = current_user

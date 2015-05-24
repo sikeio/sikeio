@@ -8,6 +8,12 @@ table.table.table-bordered
       th
         |URL
       th
+        |Start Time
+      th
+        |Start at this week
+      th
+        |Delete start time
+      th
         | Delete
   - i = 1
   - @course.course_invites.each do |invite|
@@ -18,5 +24,14 @@ table.table.table-bordered
         td
           | #{enroll_enrollment_url(invite.token)}
         td
+          | #{invite.start_time}
+        td
+          = form_tag admin_start_time_path(invite), method: :post
+            = submit_tag "Start at this Week"
+        td
+          = form_tag admin_delete_start_time_path(invite), method: :post
+            = submit_tag "Delete Start Time"
+        td
           = form_tag admin_invite_delete_path(invite), method: :delete
             = submit_tag "Delete"
+
