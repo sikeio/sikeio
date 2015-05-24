@@ -1,25 +1,22 @@
-header.site-header.site-header--center
-  .logo-title
-    a.logo-title__logo href="/"
-      .logo
-    h1.logo-title__title
-      | #{@course.title}
+.container
+  header.site-header
+    a.site-header__root href="/"
+    h1.site-header__title= @course.title
 
-.u-center-content
-  .underline-header
-    h1 邀请函
+  .course-invite
+    h1.emphasize 邀请函
 
-  p
-    | 感谢你申请 【#{@course.title}】。
-  p
-    | 很欢迎你加入我们一起学习！
+    p
+      | 感谢你申请 【#{@course.title}】。
+    p
+      | 很欢迎你加入我们一起学习！
 
-  p = @course.desc
+    p = @course.desc
 
-  h2.
-    |1. 绑定 Github 账号
+  h2 1. 绑定 Github 账号
 
-  .u-bg-lightblue.u-padding-15
+  // .u-bg-lightblue.u-padding-15
+  .action-panel
     p
       | 训练营使用 Github 做技术交流。
     span.github-tip
@@ -33,70 +30,23 @@ header.site-header.site-header--center
       .message
         | Github 已经绑定
     - else
-      p.u-center-text
-        - if @course_invite
-          a.btn.btn--normal.js-bind-github href="/auth/github?back_path=#{enroll_enrollment_path(@course_invite.token)}&github_binding=true" data-disable-with="<i class='fa fa-spinner fa-spin'></i> Loading..."
-            | Github 绑定
-        - else
-          a.btn.btn--normal.js-bind-github href="/auth/github?back_path=#{invite_enrollment_path(@enrollment)}&github_binding=true" data-disable-with="<i class='fa fa-spinner fa-spin'></i> Loading..."
-            | Github 绑定
+      - if @course_invite
+        - callback_url = enroll_enrollment_path(@course_invite.token)
+      - else
+        - callback_url = invite_enrollment_path(@enrollment)
+
+      .action-panel__actions
+        a.btn.btn--normal.js-bind-github(
+          href="/auth/github?back_path=#{callback_url}&github_binding=true"
+          data-disable-with="<i class='fa fa-spinner fa-spin'></i> Loading...")
+          | Github 绑定
 
 
-  h2
-    | 2. 个人信息
-  = form_for @enrollment, class: 'form form--no-margin u-bg-lightblue u-padding-15 js-enrollment-update-personal-info-form'
-    - if @user && @user.name.blank?
-      .form__row
-        label
-          | 姓名
-        input.blog-url name='user[name]'
 
-    .form__row
-      label 博客
-      input.blog-url name='personal_info[blog_url]'
+  h2 2. 个人信息
 
-    .form__row
-      label 性别
-      .radio
-        input.radio__input type='radio' id='gender_radio1' name='personal_info[gender]' value="汉子"
-        label.radio__label for='gender_radio1'
-          span.radio__label__span
-          | 汉子
-      .radio
-        input.radio__input type='radio' id='gender_radio2' name='personal_info[gender]' value="妹子"
-        label.radio__label for='gender_radio2'
-          span.radio__label__span
-          | 妹子
-      .radio
-        input.radio__input type='radio' id='gender_radio3' name='personal_info[gender]' value="不清楚"
-        label.radio__label for='gender_radio3'
-          span.radio__label__span
-          | 不清楚
-
-    .form__row
-      label 职业
-      .radio
-        input.radio__input type='radio' id='radio1' name='personal_info[occupation]' value="在职"
-        label.radio__label for='radio1'
-          span.radio__label__span
-          | 在职
-      .radio
-        input.radio__input type='radio' id='radio2' name='personal_info[occupation]' value="学生"
-        label.radio__label for='radio2'
-          span.radio__label__span
-          | 学生
-      .radio
-        input.radio__input type='radio' id='radio3' name='personal_info[occupation]' value="无业游民"
-        label.radio__label for='radio3'
-          span.radio__label__span
-          | 无业游民
-
-      p.u-center-text
-        button.btn.btn--normal. type='submit'
-          - if @course.free
-            | 开始课程
-          - else
-            | 下一步
+  .action-panel
+    = render "personal_info_form"
 
 footer.site-footer
   .logo
