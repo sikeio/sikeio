@@ -1,0 +1,23 @@
+@import "../../../../vendor/bower/bourbon/app/assets/stylesheets/helpers/*";
+@import "../../../../vendor/bower/bourbon/app/assets/stylesheets/css3/background-image";
+
+.course-info__section {
+  padding-top: 30px;
+  padding-bottom: 70px;
+}
+
+.course-info__section h1 {
+  text-align: center;
+}
+
+.course-info__section--blue {
+  background: #F8FBFF;
+}
+
+.course-info__section--starrynight {
+  @include background-image(linear-gradient(rgba(0,0,0,0)  0%, rgba(0,0,0,40) 100%), image-url("courses/ios/bg2.jpg"));
+  /*background-image: image-url("courses/ios/bg2.jpg");*/
+  background-size: cover;
+  background-position: center;
+  color: white;
+}

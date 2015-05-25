@@ -1,0 +1,42 @@
+.site-header {
+  position: relative;
+  padding: 10px;
+  color: #656565;
+}
+
+.site-header > * {
+  vertical-align: middle;
+}
+
+a.site-header__root {
+  display: inline-block;
+  width: 50px;
+  height: 60px;
+  background-image: image-url("logo2.png");
+  background-size: 50px 57px;
+  background-repeat: no-repeat;
+}
+
+h1.site-header__title{
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+
+  font-size: 24px;
+}
+
+a.site-header__login {
+  color: #656565;
+  float: right;
+  height: 60px;
+  line-height: 60px;
+  i {
+    padding-right: 5px;
+  }
+}
+
+.site-header--center {
+  padding-left: 0;
+}
+
+
