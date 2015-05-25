@@ -4,7 +4,7 @@ class CourseInvite < ActiveRecord::Base
   validates_uniqueness_of :token
 
   before_save do
-    self.token = SecureRandom.hex
+    self.token = SecureRandom.hex if self.token == nil
   end
 
 
