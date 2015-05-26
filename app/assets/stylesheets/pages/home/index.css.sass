@@ -52,11 +52,7 @@
   width: 600px
   margin: 0 auto
 
-@media (max-width: 480px)
-  #home_index .wrap
-    width: 100%
-    margin: 0 auto
-    padding: 0 15px
+
 
 #home_index .l-question
   ul
@@ -80,6 +76,8 @@
   h2
     float: left
     margin-right: 40px
+    margin-top: 18px
+    margin-bottom: 0px
     width: 200px
     text-align: right
     font-size: 20px
@@ -89,13 +87,6 @@
 
   p:last-child
     margin-bottom: 0
-
-@media (max-width: 480px)
-  #home_index .l-question h2
-    float: none
-
-  #home_index .l-question li
-    background-position: 220px 0, left
 
 
 #home_index .l-slogan
@@ -108,22 +99,6 @@
     font-size: 32px
     text-align: center
 
-@media (min-width: 480px)
-  #home_index .l-slogan:before
-    content: ''
-    position: absolute
-    top: -50%
-    width: 100%
-    height: 200%
-    z-index: -1
-    background-color: #FAFAFA
-    border-top: 1px solid #eee
-    border-bottom: 1px solid #eee
-    -webkit-transform: skew(0, -5deg)
-    -moz-transform: skew(0, -5deg)
-    -ms-transform: skew(0, -5deg)
-    -o-transform: skew(0, -5deg)
-    transform: skew(0, -5deg)
 
 #home_index .l-mentor
   color: #eee
@@ -150,12 +125,6 @@
     a
       color: #ae4f4f
 
-@media (max-width: 480px)
-  #home_index .l-mentor .avatar
-    float: none
-    display: block
-    margin: 0px auto
-
 #home_index
   line-height: 1.8
   font-family: Heiti SC
@@ -167,7 +136,7 @@
   .courses
     padding: 0
     .title
-      padding: 93px 0 357px
+      padding: 8% 0 22%
       margin: 0 0 55px
       text-align: center
       a
@@ -208,12 +177,14 @@
   .ios
     .title
       background: image-url("dive.jpg")
-      background-size: 100% 100%
+      background-size: cover
+      background-position: center
   .node
     margin: 105px 0 151px
     .title
       background: image-url("hero.jpg")
-      background-size: 100% 100%
+      background-size: cover
+      background-position: center
 
   section
     padding: 100px 0
@@ -323,3 +294,123 @@
         float: left
       a
         color: #d2d8e2
+
+@media (max-width: 480px)
+  #home_index .l-mentor .avatar
+    float: none
+    display: block
+    margin: 0px auto
+
+@media (min-width: 480px)
+  #home_index .l-slogan:before
+    content: ''
+    position: absolute
+    top: -50%
+    width: 100%
+    height: 200%
+    z-index: -1
+    background-color: #FAFAFA
+    border-top: 1px solid #eee
+    border-bottom: 1px solid #eee
+    -webkit-transform: skew(0, -5deg)
+    -moz-transform: skew(0, -5deg)
+    -ms-transform: skew(0, -5deg)
+    -o-transform: skew(0, -5deg)
+    transform: skew(0, -5deg)
+
+@media (max-width: 480px)
+  #home_index .l-question h2
+    float: none
+    text-align: left
+    font-weight: bold
+
+
+  #home_index .l-question li
+    background-position: 220px 0, left
+
+
+@media (max-width: 620px)
+  #home_index .wrap
+    width: 100%
+    margin: 0 auto
+    padding: 0 15px
+
+@media (max-width: 960px) and (min-width: 720px)
+
+  #home_index .courses .title a
+    font-size: 50px
+  #home_index .courses .title p
+    font-size: 30px
+
+@media (max-width: 720px) and (min-width: 480px)
+  #home_index .courses
+    margin: 50px 0 100px
+  #home_index .courses .title
+    & > a
+      font-size: 40px
+    & > p
+      font-size: 25px
+
+  #home_index .courses ul.introduction
+    padding: 0 10%
+
+  #home_index .courses ul.left
+    padding: 0 10%
+
+  #home_index .courses ul.right
+    padding: 0 10%
+
+@media (max-width: 720px)
+  #home_index .courses .title
+    & > span
+      display: block
+    & > p
+      & > span.context
+        display: block
+      & > span.mark
+        display: none
+  #home_index .courses ul.introduction
+    margin: 0
+    width: 100%
+    float: none
+    display: block
+
+  #home_index .courses ul.left
+    margin: 0
+    width: 100%
+    float: none
+    display: block
+
+  #home_index .courses ul.right
+    margin: 0
+    width: 100%
+    float: none
+    display: block
+
+
+
+
+@media (max-width: 480px)
+  #home_index .courses
+    margin: 40px 0 80px
+    .title
+      padding: 39px 0 106px
+      & > a
+        font-size: 40px
+        & > span
+          display: block
+          padding: 5px 0
+      & > p
+        font-size: 18px
+
+  #home_index .courses ul.introduction
+    padding: 0 20px
+
+  #home_index .courses ul.left
+    padding: 0 20px
+
+  #home_index .courses ul.right
+    padding: 0 20px
+
+
+

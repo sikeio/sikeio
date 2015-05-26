@@ -1,50 +1,49 @@
-header.site-header.site-header--center
-  .logo-title
-    a.logo-title__logo href="/"
-      .logo
-    h1.logo-title__title
+.container
+  header.site-header.site-header--center
+    a.site-header__root href="/"
+    h1.site-header__title
       | #{@course.name}
 
 
-  .u-center-text
-    h1.header.header--h1.header--underline 邀请函
-    p.u-center-text
-      | 学生 490
-      br
-      | 在职 790
+    .u-center-text
+      h1.header.header--h1.header--underline 邀请函
+      p.u-center-text
+        | 学生 490
+        br
+        | 在职 790
 
-  h2.header.header--h2 我有小伙伴！
-  = form_tag finish_enrollment_path(@enrollment), class: 'form form--no-margin u-bg-lightblue u-padding-15'
-    .form__row
-      label 小伙伴姓名
-      input.buddy-name name="buddy_name"
-      label 拉小伙伴一起学习优惠价 590
+    h2.header.header--h2 我有小伙伴！
+    = form_tag finish_enrollment_path(@enrollment), class: 'form form--no-margin u-bg-lightblue u-padding-15'
+      .form__row
+        label 小伙伴姓名
+        input.buddy-name name="buddy_name"
+        label 拉小伙伴一起学习优惠价 590
 
-  h2.header.header--h2 支付宝
-  .u-bg-lightblue.u-padding-15
-    p.u-center-text
-      | 支付金额:&nbsp;&nbsp;
-      span.tuition
-        span.origin =( @enrollment.personal_info["type"] == '学生' ? 490 : 790 )
-        | &nbsp;
-        span.new
-          | &nbsp;大洋
-    img.u-display-center src=image_url("alipay.png") alt=""
-    p.u-center-text
-      | 支付宝: 高羊 18682696795
+    h2.header.header--h2 支付宝
+    .u-bg-lightblue.u-padding-15
+      p.u-center-text
+        | 支付金额:&nbsp;&nbsp;
+        span.tuition
+          span.origin =( @enrollment.personal_info["type"] == '学生' ? 490 : 790 )
+          | &nbsp;
+          span.new
+            | &nbsp;大洋
+      img.u-display-center src=image_url("alipay.png") alt=""
+      p.u-center-text
+        | 支付宝: 高羊 18682696795
 
-    .u-center-text.u-padding-15
-      button.btn.btn--normal.btn--large.js-start-course 开始课程
+      .u-center-text.u-padding-15
+        button.btn.btn--normal.btn--large.js-start-course 开始课程
 
-    .u-center-text.u-padding-15
-      .checkbox
-        input.checkbox__input type='checkbox' id='have-paid'
-        label.checkbox__label for='have-paid'
-          span.checkbox__label__span
-          | &nbsp;&nbsp;我已经通过支付宝付款了
+      .u-center-text.u-padding-15
+        .checkbox
+          input.checkbox__input type='checkbox' id='have-paid'
+          label.checkbox__label for='have-paid'
+            span.checkbox__label__span
+            | &nbsp;&nbsp;我已经通过支付宝付款了
 
-footer.site-footer
-  .logo
+  footer.site-footer
+    .logo
 
 
 

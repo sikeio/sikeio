@@ -21,3 +21,9 @@
   background-position: center;
   color: white;
 }
+
+@media (max-width: 480px) {
+  .course-info__section {
+    padding-bottom: 30px;
+  }
+}
