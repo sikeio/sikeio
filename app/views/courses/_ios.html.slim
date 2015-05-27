@@ -13,8 +13,9 @@ header.site-header
   .jumbotron.jumbotron--ios
     .jumbotron__centered-content
       h1 iOS 攀爬第一个高峰
-      a.btn.btn--normal.btn--large.js-modal-trigger data-modal-target=".js-panel--enrolling"
+      a.btn.btn--normal.btn--large href=new_enrollment_path(course_id: course.permalink)
         | 课程报名质询
+
 
 
   section.course-info__section
@@ -105,8 +106,9 @@ header.site-header
 
   .course-info__section
     p.u-center-text
-      a.btn.btn--normal.btn--large.js-modal-trigger data-modal-target=".js-panel--enrolling"
+      a.btn.btn--normal.btn--large href=new_enrollment_path(course_id: course.permalink)
         | 课程报名质询
+
 
   .container.coach-info
     h1 导师介绍

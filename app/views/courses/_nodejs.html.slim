@@ -11,7 +11,7 @@ header.site-header
     h1 NodeJS 高速道路
 
 
-    a.btn.btn--normal.btn--large.js-modal-trigger data-modal-target=".js-panel--enrolling"
+    a.btn.btn--normal.btn--large href=new_enrollment_path(course_id: course.permalink)
       | 课程报名质询
 
 section.course-info__section
@@ -94,7 +94,7 @@ section.course-info__section
 
 .course-info__section
   p.u-center-text
-    a.btn.btn--normal.btn--large.js-modal-trigger data-modal-target=".js-panel--enrolling"
+    a.btn.btn--normal.btn--large href=new_enrollment_path(course_id: course.permalink)
       | 课程报名质询
 
 .container.coach-info
