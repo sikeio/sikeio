@@ -88,13 +88,16 @@ class EnrollmentsController < ApplicationController
       if name.present?
         user.update_attribute :name, name
       else
-        flash[:error] = "请输入你的姓名"
+        flash[:error] = "请输入你的姓名~"
+        redirect_to_invite
+        return
       end
     end
 
     enrollment.update_attribute :personal_info, params.require(:personal_info).permit(:blog_url, :occupation, :gender)
 
     if !user_info_completed?
+      flash[:error] = "请输入完整信息~"
       redirect_to_invite
       return
     end
