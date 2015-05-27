@@ -23,8 +23,8 @@ class User < ActiveRecord::Base
   validates :email,{
     presence: true,
     # http://davidcel.is/blog/2012/09/06/stop-validating-email-addresses-with-regex/
-    format: { with: /@/ },
-    uniqueness: true
+    format: { with: /@/ , message: "Email 格式不正确~"},
+    uniqueness: { message: "该Email 已被使用~"}
   }
 
   # validates :name,presence:{message: '不能为空~'}

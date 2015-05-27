@@ -1,8 +1,11 @@
 .jumbotron
   // maintain aspect ratio
   // see: http://stackoverflow.com/questions/1495407/css-maintain-div-aspect-ratio?
+  position: relative
   width: 100%
-  padding-bottom: 40%
+  padding-bottom: 20%
+  padding-top: 10%
+  vertical-align: center
 
   color: white
 
@@ -10,16 +13,13 @@
   background-color: rgba(0,0,0,0.3)
   background-blend-mode: multiply
   background-size: cover
+  background-position: center
+  background-repeat: no-repeat
 
 // center and vertically aligned
 // see: http://phrogz.net/css/vertical-align/
 .jumbotron__centered-content
   text-align: center
-  position: absolute
-  top: 50%
-  left: 50%
-  margin-right: -50%
-  transform: translate(-50%,-50%)
 
 .jumbotron__content
   position: absolute
@@ -34,4 +34,12 @@
 
 .jumbotron--nodejs
   background-image: image-url("courses/nodejs/bg.jpg")
+
+@media (max-width: 480px)
+  .jumbotron
+    padding: 50px 0 96px
+
+  .jumbotron h1
+    font-size: 25px
+
 
