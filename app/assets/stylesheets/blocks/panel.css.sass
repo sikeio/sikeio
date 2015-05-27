@@ -11,8 +11,17 @@ div.panel
   display: none
   box-sizing: border-box
 
-  width: 600px
+  max-width: 600px
+  width: 80%
   height: 520px
 
   background: white
   padding: 15px 25px
+
+
+@media (max-width: 720px)
+  div.panel
+    height: 80%
+    overflow-y: scroll
+
+

@@ -14,9 +14,10 @@ img.speech-bubble__portrait
   margin-left: 40px
   color: #686868
   float: left
-  width: 440px
+  width: calc(80% - 40px)
   box-sizing: border-box
   background: #FEFAEF
+  font-size: 14px
 
   border-radius: 30px
   position: relative
@@ -31,3 +32,13 @@ img.speech-bubble__portrait
     //border-right: 30px solid #FEFAEF
     //border-top: 15px solid transparent
     //border-bottom: 15px solid transparent
+
+@media (max-width: 480px)
+  img.speech-bubble__portrait
+    float: none
+    margin: auto
+
+  .speech-bubble__text
+    float: none
+    width: 100%
+    margin: auto

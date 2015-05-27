@@ -1,14 +1,11 @@
-header.site-header.site-header--center
-  .logo-title
-    .logo-title__logo
-      .logo
-    .logo-title__title
-      |前往课程
+.container
+  header.site-header
+    a.site-header__root href="/"
+    h1.site-header__title
+      | 用户登录
 
-.action-panel.u-display-center
-  .action-panel__content.u-bg-lightblue
+  .action-panel
     .message
-      .speech-bubble
-        | 如果你已经接受了思客训练营的邀请，请通过GitHub登入。
-    p.u-center-text
-      a.btn.btn--normal href='/auth/github?back_path=#{courses_path}' GitHub登入
+      | 如果你已经接受了思客训练营的邀请，请通过 Github 登入。
+    .action-panel__actions
+      a.btn.btn--normal href='/auth/github?back_path=#{courses_path}' Github 登入

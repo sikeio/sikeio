@@ -8,7 +8,7 @@ head
   = csrf_meta_tags
   = favicon_link_tag "favicon.ico"
   meta name="viewport" content="width=device-width, initial-scale=1"
-body id=page_identifier
+body id=page_identifier class="sike-global"
   .flash-message-box.js-dismissable
     - [:success, :error, :info].each do |type|
       - if flash[type]

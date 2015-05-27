@@ -1,7 +1,20 @@
 @import ../global
 .action-panel
-  @include content(20px)
+  background-color: #F8FBFF
+  padding: 10px 20px
 
+.action-panel__actions
+  text-align: center
+  padding: 20px 0 20px
+
+.action-panel__actions ul
+  list-style: none
+  padding: 0px
+  width: calc(100% - 50px)
+
+.action-panel__actions li
+  display: inline-block
+  padding: 10px 10px
 
 h1.action-panel__title
   font-size: 20px
@@ -11,3 +24,6 @@ h1.action-panel__title
 .action-panel__content
   padding: 20px
 
+@media (max-width: 480px)
+  .action-panel__actions ul
+    width: 100%
