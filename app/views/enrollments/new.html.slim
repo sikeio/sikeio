@@ -22,10 +22,10 @@
         .action-panel__actions
           ul
             li
-              button.btn--normal type='submit' 申请加入
+              button.btn--normal type='submit' 申请
             li
-              a.btn.btn--normal href="/"
-                |返回主页
+              a.btn.btn--normal href=info_course_path(@course)
+                |返回
   - else
     .action-panel
       .speech-bubble

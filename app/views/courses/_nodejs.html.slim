@@ -11,8 +11,11 @@ header.site-header
     h1 NodeJS 高速道路
 
 
-    a.btn.btn--normal.btn--large href=new_enrollment_path(course_id: course.permalink)
-      | 课程报名质询
+    = form_tag enrollments_path, method: :post, class: 'input-box'
+      input type="hidden" value="#{course.permalink}" name="course_id"
+      input type="text" name='email' placeholder="name@domain.com" class="input-box__text"
+      input type="submit" value="订阅课程" class="input-box__button"
+
 
 section.course-info__section
   .container
@@ -94,8 +97,10 @@ section.course-info__section
 
 .course-info__section
   p.u-center-text
-    a.btn.btn--normal.btn--large href=new_enrollment_path(course_id: course.permalink)
-      | 课程报名质询
+    = form_tag enrollments_path, method: :post, class: 'input-box'
+      input type="hidden" value="#{course.permalink}" name="course_id"
+      input type="text" name='email' placeholder="name@domain.com" class="input-box__text"
+      input type="submit" value="订阅课程" class="input-box__button"
 
 .container.coach-info
   h1.coach-info__title
