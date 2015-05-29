@@ -2,8 +2,8 @@
 @import "../../../../vendor/bower/bourbon/app/assets/stylesheets/css3/background-image";
 
 .course-info__section {
-  padding-top: 30px;
-  padding-bottom: 70px;
+  padding-top: 1.6666667em;
+  padding-bottom: 3.888889em;
 }
 
 .course-info__section h1 {
@@ -22,8 +22,3 @@
   color: white;
 }
 
-@media (max-width: 480px) {
-  .course-info__section {
-    padding-bottom: 30px;
-  }
-}

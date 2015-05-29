@@ -2,36 +2,41 @@
 
 .course-entry
   @include content(30px)
-  padding: 120px 0
+  padding: 6.666667em 0
   position: relative
 
 .course-entry--ios
   background-image: image-url("courses/ios/bg1.jpg")
+  background-size: cover
+  background-position: center
 
 .course-entry--nodejs
   background-image: image-url("courses/nodejs/bg1.jpg")
+  background-size: cover
+  background-position: center
 
 h1.course-entry__title
   text-decoration: underline
-  font-size: 30px
+  font-size: 1.666667em
   display: table
   margin: auto
   color: #FFF
   position: relative
-  left: 45px
+  left: 1.5em
   & > a
     color: #FFF
 
 img.course-entry__badge
   position: absolute
-  left: -80px
-  top: -10px
+  left: -2.666667em
+  top: -0.3333333em
+  max-height: 150%
 
 .course-entry__link
   position: absolute
-  right: 40px
-  bottom: 20px
-  font-size: 20px
+  right: 2em
+  bottom: 1em
+  font-size: 1.1111111em
   color: #FFFFFF
   & > a
     color: #FFF
