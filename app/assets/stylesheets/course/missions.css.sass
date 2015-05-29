@@ -1,27 +1,22 @@
-@import ../global
-
 #courses_show
   ul.course-missions
     list-style: none
-    padding: 30px 0
+    padding: 1.73110214em 0
     background: #F8FBFF
     color: #454441
     line-height: normal
     font-family: "Times New Roman"
     font-family: Roboto
-    font-size: 17.33px
+    font-size: 0.9627778em
     font-weight: 300
 
   .course-missions__week
-    @include content()
-
-    margin-top: 80px
-    margin-bottom: 30px
+    margin-top: 4.444444em
+    margin-bottom: 1.66666667em
     &:first-child
       margin-top: 0
 
   .time-left
-    @include content()
     position: relative
     top: -10px
     max-width: 578px
@@ -31,21 +26,19 @@
 
 
   p.course-missions__week__title
-    font-size: 20px
+    font-size: 1.1111111em
 
   .course-missions img
-    @include content()
 
 
   li.course-missions__week__mission
-    @include content()
     position: relative
     background: white
     line-height: 200%
     border: solid 1px #CBCCCE
-    padding: 10px 20px
+    padding: 0.5555556em 1.1111111em
     box-sizing: border-box
-    margin-bottom: 25px
+    margin-bottom: 1.38888889em
     &:last-child
       margin-bottom: 0
     & > span.li-bbs
@@ -60,10 +53,22 @@
   li.course-missions__week__mission--to-be-done
     color: #F00
 
-  li.course-missions__week__mission--done
-    i
-      font-size: 1.5em
-      position: absolute
-      left: -50px
-      color: #11D146
+
+@media (max-width: 679px)
+  #courses_show
+    li.course-missions__week__mission--done
+      border-width: 2px
+      border-color: #11D146
+      box-shadow: 0 0 1em #11D146
+      & > i
+        display: none
+
+@media (min-width: 680px)
+  #courses_show
+    li.course-missions__week__mission--done
+      i
+        font-size: 1.5em
+        position: absolute
+        left: -1.92307692em
+        color: #11D146
 

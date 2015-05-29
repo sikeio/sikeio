@@ -6,41 +6,46 @@
 
   - if !@success_info
     .action-panel
-      .speech-bubble
-        img.speech-bubble__portrait src=image_url('courses/avatar.png')
-        .speech-bubble__text
-          | 嗨~我是Howard 很高兴认识你。我希望先了解你的技术背景和学习动机，再知道这个训练营是否对你有帮助。
-          br
-          br
-          | 请在下面留下你的邮箱，我会在2天内和你联系。
+      .action-panel__row
+        .speech-bubble
+          img.speech-bubble__portrait src=image_url('courses/avatar.png')
+          .speech-bubble__text
+            | 嗨~我是Howard 很高兴认识你。我希望先了解你的技术背景和学习动机，再知道这个训练营是否对你有帮助。
+            br
+            br
+            | 请在下面留下你的邮箱，我会在2天内和你联系。
 
-      = form_tag '/enrollments', method: :post, class: :form
+      = form_tag '/enrollments', method: :post
         input name="course_id" type="hidden" value="#{@course.permalink}"
-        p.form__row
+        .action-panel__row
           label 邮箱
           input name="email"
-        .action-panel__actions
-          ul
-            li
-              button.btn--normal type='submit' 申请
-            li
-              a.btn.btn--normal href=info_course_path(@course)
-                |返回
+        .action-panel__row
+          .action-panel__actions
+            ul
+              li
+                button.btn--normal type='submit' 申请
+              li
+                a.btn.btn--normal href=info_course_path(@course)
+                  |返回
   - else
     .action-panel
-      .speech-bubble
-        img.speech-bubble__portrait src=image_url('courses/avatar.png')
-        .speech-bubble__text
-          | 邮件将尽快发出，期待和你交流!
-          br
-          | 我的个人微信账号是 hayeah666，有问题可以加我~
+      .action-panel__row
+        .speech-bubble
+          img.speech-bubble__portrait src=image_url('courses/avatar.png')
+          .speech-bubble__text
+            | 邮件将尽快发出，期待和你交流!
+            br
+            | 我的个人微信账号是 hayeah666，有问题可以加我~
 
-      .wechat-add
-        img.wechat-add__qr src=image_url('courses/weixin.png')
-        .wechat-add__account
-          | 微信：hayeah666
-      .action-panel__actions
-        a.btn.btn--normal href="/"
-          |返回主页
+      .action-panel__row
+        .wechat-add
+          img.wechat-add__qr src=image_url('courses/weixin.png')
+          .wechat-add__account
+            | 微信：hayeah666
+      .action-panel__row
+        .action-panel__actions
+          a.btn.btn--normal href="/"
+            |返回主页
 
 

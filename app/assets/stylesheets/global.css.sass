@@ -22,7 +22,6 @@ body
     display: block
     clear: both
 
-$content-max-width: 620px
 // define a centered content block that has top and bottom margin
 @mixin content($margin: "",$margin-bottom: "")
   @if $margin == "" && $margin-bottom == ""
@@ -34,7 +33,6 @@ $content-max-width: 620px
   @if $margin != "" && $margin-bottom != ""
     margin: $margin auto $margin-bottom auto
 
-  max-width: $content-max-width
 
 
 
