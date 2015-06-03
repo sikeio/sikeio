@@ -4,11 +4,12 @@ class Checkin::DiscoursePoster
   DIFFCULTY = %w(太简单 容易 适中 难 太难)
   TIME_COST = %w(1小时以内 1小时 2小时 3小时 4小时 4小时以上)
 
-  attr_reader :checkin, :lesson
+  attr_reader :checkin, :lesson, :user
 
   def initialize(checkin)
     @checkin = checkin
     @lesson = checkin.lesson
+    @user = checkin.enrollment.user
   end
 
   def api
@@ -17,7 +18,9 @@ class Checkin::DiscoursePoster
 
   def publish
     topic_id = lesson.discourse_topic_id
-    user_name = checkin.enrollment.user.github_username.gsub(/-/, "_")
+
+    user.ensure_discourse_user
+    user_name = user.discourse_username
 
     if checkin.published?
       api.update_post(checkin.discourse_post_id, user_name, raw_post)
