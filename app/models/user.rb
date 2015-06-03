@@ -82,7 +82,7 @@ class User < ActiveRecord::Base
   class CreateDiscourseUserFail < RuntimeError ; end
 
   def self.get_discourse_users
-    url = ENV["DISCOURSE_HOST"] + "/admin/users/list/active.json"
+    url = ENV["DISCOURSE_HOST"] + "/admin/users.json"
     r = RestClient.get url, :params => {:api_key => ENV["DISCOURSE_TOKEN"], :api_username => ENV["DISCOURSE_ADMIN"]}
     JSON.parse(r.body)
   end
