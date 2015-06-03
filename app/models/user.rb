@@ -56,13 +56,15 @@ class User < ActiveRecord::Base
   end
 
   def ensure_discourse_user
-    return if self.discourse_user_id
+    return if self.discourse_user_id || self.authentications.blank?
 
     username = self.github_username.gsub(/-/, "_")
-    temp_discoure_user_id = create_discourse_user(username)
-
-    if !temp_discoure_user_id
-      raise CreateDiscourseUserFail
+    temp_discourse_user = discourse_user(username)
+    temp_discoure_user_id = nil
+    if temp_discourse_user
+      temp_discoure_user_id = temp_discourse_user["id"]
+    else
+      temp_discoure_user_id = create_discourse_user(username)
     end
 
     self.update!(discourse_user_id: temp_discoure_user_id, discourse_username: username)
@@ -71,9 +73,7 @@ class User < ActiveRecord::Base
   def self.ensure_discourse_users
     users = self.where(discourse_user_id: nil)
     users.each do |u|
-      if !u.authentications.blank?
-        self.find_or_create_discourse_user(u)
-      end
+      u.ensure_discourse_user
     end
   end
 
@@ -83,25 +83,13 @@ class User < ActiveRecord::Base
 
   class CreateDiscourseUserFail < RuntimeError ; end
 
-  def self.get_discourse_users
-    url = ENV["DISCOURSE_HOST"] + "/admin/users/list/all.json"
-    r = RestClient.get url, :params => {:api_key => ENV["DISCOURSE_TOKEN"], :api_username => ENV["DISCOURSE_ADMIN"]}
-    JSON.parse(r.body)
-  end
-
-  def self.find_or_create_discourse_user(user)
-    discourse_users = self.get_discourse_users
-    index = discourse_users.find_index do |d_user|
-      d_user["username"] == user.github_username.gsub(/-/, "_")
-    end
-
-    if index
-      tmp_discourse_user = discourse_users[index]
-      id = tmp_discourse_user["id"]
-      discourse_username = tmp_discourse_user["username"]
-      user.update!(discourse_user_id: id, discourse_username: discourse_username)
-    else
-      user.ensure_discourse_user
+  def discourse_user(username)
+    url = ENV["DISCOURSE_HOST"] + "/admin/users/#{username}.json"
+    begin
+      r = RestClient.get url, :params => {:api_key => ENV["DISCOURSE_TOKEN"], :api_username => ENV["DISCOURSE_ADMIN"]}
+      return JSON.parse(r.body)
+    rescue => e
+      return nil
     end
   end
 
