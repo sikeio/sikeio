@@ -64,9 +64,6 @@
                 |Preview
             section.markdown-editor__preview__content
               .rendered-markdown
-      .uploaded-images.u-hidden
-        - @checkin.uploaded_images.each do |image|
-          input name="checkin[uploaded_images][]" value=image
       p.u-center-text
         = f.submit "提交", class: "btn btn--normal"
 

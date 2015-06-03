@@ -10,7 +10,7 @@ $ ->
     chunk_size: '4mb',
     uptoken_url: "/qiniu/uptoken"
     domain: "http://7xjfes.com1.z0.glb.clouddn.com/",
-    unique_names: true,
+    save_key: true,
     auto_start: true,
     init:
       'BeforeUpload': (up, file)->
@@ -26,8 +26,6 @@ $ ->
         domain = up.getOption('domain')
         res = JSON.parse(info)
         FileURL = domain + res.key;
-
-        $("<input type='hidden' name='checkin[uploaded_images][]' value=#{res.key}>").appendTo('form.js-checkin .uploaded-images')
 
         markdownImg = "![](#{FileURL})"
         doc = $('#entry-markdown').data('editor').getDoc()
