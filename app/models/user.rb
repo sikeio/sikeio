@@ -57,15 +57,19 @@ class User < ActiveRecord::Base
 
   def ensure_discourse_user
     return if self.discourse_user_id || self.authentications.blank?
+    api = Checkin::DiscourseAPI.new
 
     username = self.github_username.gsub(/-/, "_")
-    temp_discourse_user = discourse_user(username)
+    temp_discourse_user = api.discourse_user(username)
     temp_discoure_user_id = nil
+
     if temp_discourse_user
       temp_discoure_user_id = temp_discourse_user["id"]
     else
-      temp_discoure_user_id = create_discourse_user(username)
+      temp_discoure_user_id = api.create_discourse_user(username, self.email)
     end
+
+    raise CreateDiscourseUserFail if !temp_discoure_user_id
 
     self.update!(discourse_user_id: temp_discoure_user_id, discourse_username: username)
   end
@@ -77,40 +81,8 @@ class User < ActiveRecord::Base
     end
   end
 
-
-
   private
 
   class CreateDiscourseUserFail < RuntimeError ; end
-
-  def discourse_user(username)
-    url = ENV["DISCOURSE_HOST"] + "/admin/users/#{username}.json"
-    begin
-      r = RestClient.get url, :params => {:api_key => ENV["DISCOURSE_TOKEN"], :api_username => ENV["DISCOURSE_ADMIN"]}
-      return JSON.parse(r.body)
-    rescue => e
-      return nil
-    end
-  end
-
-
-  def create_discourse_user(username)
-    url = ENV["DISCOURSE_HOST"] + "/users"
-
-    r = RestClient.post url, {
-      :username => username,
-      :email => self.email,
-      :password => SecureRandom.hex(10), # Find a way to generate password
-      :active => true
-    },{
-      :accept => :json,
-      :params => {
-        :api_key => ENV["DISCOURSE_TOKEN"],
-        :api_username => ENV["DISCOURSE_ADMIN"]
-      }
-    }
-    result = JSON.parse(r.body)
-    result["user_id"]
-  end
 
 end

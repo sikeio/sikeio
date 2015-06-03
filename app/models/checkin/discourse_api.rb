@@ -1,8 +1,38 @@
 class Checkin::DiscourseAPI
   HOST = ENV["DISCOURSE_HOST"]
   TOKEN = ENV["DISCOURSE_TOKEN"]
+  ADMIN = ENV["DISCOURSE_ADMIN"]
 
   MYAPI = "#{HOST}/myapi"
+
+  def discourse_user(username)
+    url = HOST + "/admin/users/#{username}.json"
+    begin
+      r = RestClient.get url, :params => {:api_key => TOKEN, :api_username => ADMIN}
+      return JSON.parse(r.body)
+    rescue => e
+      return nil
+    end
+  end
+
+  def create_discourse_user(username, email)
+    url = ENV["DISCOURSE_HOST"] + "/users"
+
+    r = RestClient.post url, {
+      :username => username,
+      :email => email,
+      :password => SecureRandom.hex(10), # Find a way to generate password
+      :active => true
+    },{
+      :accept => :json,
+      :params => {
+        :api_key => TOKEN,
+        :api_username => ADMIN
+      }
+    }
+    result = JSON.parse(r.body)
+    result["user_id"]
+  end
 
   def create_topic(title, raw, category, username = ENV['DISCOURSE_ADMIN'])
     # raw:and we are going to say something quite random
