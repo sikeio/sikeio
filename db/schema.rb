@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(version: 20150603084036) do
     t.integer "degree_of_difficulty"
     t.integer "lesson_id"
     t.integer "discourse_post_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "checkins", ["enrollment_id"], name: "index_checkins_on_enrollment_id", using: :btree
