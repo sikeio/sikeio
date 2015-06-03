@@ -8,9 +8,15 @@ class CheckinsController < ApplicationController
     checkin_info = checkin_params
     checkin_info[:enrollment_id] = enrollment.id
     checkin_info[:lesson_id] = lesson.id
+
+    images_should_be_deleted = checkin_info[:uploaded_images].select do |image|
+      ! checkin_info[:problem].include? image
+    end
+    checkin_info[:uploaded_images] -= images_should_be_deleted
     checkin = Checkin.new(checkin_info)
 
     if checkin.save
+      delete_extra_images(images_should_be_deleted)
       render json: success_msg(checkin.lesson.discourse_checkin_topic_url)
     else
       render_400 checkin.errors
@@ -33,7 +39,15 @@ class CheckinsController < ApplicationController
   def update
     begin
       checkin = current_user.checkins.find(params[:id])
-      checkin.update!(checkin_params)
+
+      images_should_be_deleted = checkin_params[:uploaded_images].select do |image|
+        ! checkin_params[:problem].include? image
+      end
+      new_params = checkin_params
+      new_params[:uploaded_images] -=  images_should_be_deleted
+      checkin.update!(new_params)
+
+      delete_extra_images(images_should_be_deleted)
       render json: success_msg(checkin.lesson.discourse_checkin_topic_url)
     rescue
       render json: error_msg(checkin.errors.full_messages)
@@ -63,7 +77,7 @@ class CheckinsController < ApplicationController
   end
 
   def checkin_params
-    params.require(:checkin).permit(:degree_of_difficulty, :github_repository, :problem, :time_cost)
+    params.require(:checkin).permit(:degree_of_difficulty, :github_repository, :problem, :time_cost, uploaded_images: [])
   end
 
   def error_msg(msg)
@@ -82,5 +96,9 @@ class CheckinsController < ApplicationController
     result[:success] = true
     result[:url] = redirect_url
     result
+  end
+
+  def delete_extra_images(images_should_be_deleted)
+    QiniuDeleteFilesJob.perform_later(images_should_be_deleted)
   end
 end

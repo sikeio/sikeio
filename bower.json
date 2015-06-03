@@ -23,6 +23,9 @@
     "vex": "~2.3.0",
     "slick.js": "~1.5.0",
     "bourbon": "~4.2.2",
-    "highlightjs": "~8.5.0"
+    "highlightjs": "~8.5.0",
+    "qiniu": "~1.0.5-beta",
+    "plupload": "~2.1.4",
+    "progressbar.js": "~0.8.1"
   }
 }

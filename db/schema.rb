@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150602085802) do
+ActiveRecord::Schema.define(version: 20150603022008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,15 +26,14 @@ ActiveRecord::Schema.define(version: 20150602085802) do
   end
 
   create_table "checkins", force: :cascade do |t|
-    t.integer  "enrollment_id"
-    t.text     "problem"
-    t.string   "github_repository"
-    t.integer  "time_cost"
-    t.integer  "degree_of_difficulty"
-    t.integer  "lesson_id"
-    t.integer  "discourse_post_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "enrollment_id"
+    t.text    "problem"
+    t.string  "github_repository"
+    t.integer "time_cost"
+    t.integer "degree_of_difficulty"
+    t.integer "lesson_id"
+    t.integer "discourse_post_id"
+    t.string  "uploaded_images",      default: [], array: true
   end
 
   add_index "checkins", ["enrollment_id"], name: "index_checkins_on_enrollment_id", using: :btree

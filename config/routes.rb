@@ -67,6 +67,10 @@ Rails.application.routes.draw do
     get 'login_status' => 'api#login_status'
   end
 
+  scope 'qiniu',format: :json do
+    get 'uptoken' => 'qiniu#uptoken'
+  end
+
 
   namespace 'admin' do
     get '/' => "dashboard#index", as: :dashboard

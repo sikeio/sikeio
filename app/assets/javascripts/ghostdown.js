@@ -3230,7 +3230,7 @@ window.CodeMirror = (function() {
     if (val == "nocursor") {onBlur(cm); cm.display.input.blur();}
     else if (!val) resetInput(cm, true);
   });
-  option("dragDrop", true);
+  option("dragDrop", false);
 
   option("cursorBlinkRate", 530);
   option("cursorScrollMargin", 0);
@@ -6351,13 +6351,14 @@ var Showdown={extensions:{}},forEach=Showdown.forEach=function(a,b){if(typeof a.
             tabMode: 'indent',
             lineWrapping: true
         });
+    $('#entry-markdown').data('editor', editor);
 
     // Really not the best way to do things as it includes Markdown formatting along with words
     function updateWordCount() {
         var wordCount = document.getElementsByClassName('entry-word-count')[0],
             editorValue = editor.getValue();
 
-        if (editorValue.length) {
+        if (wordCount && editorValue.length) {
             wordCount.innerHTML = editorValue.match(/\S+/g).length + ' words';
         }
     }
