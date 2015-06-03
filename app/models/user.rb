@@ -71,7 +71,9 @@ class User < ActiveRecord::Base
   def self.ensure_discourse_users
     users = self.where(discourse_user_id: nil)
     users.each do |u|
-      self.find_or_create_discourse_user(u)
+      if !u.authentications.blank?
+        self.find_or_create_discourse_user(u)
+      end
     end
   end
 
@@ -82,7 +84,7 @@ class User < ActiveRecord::Base
   class CreateDiscourseUserFail < RuntimeError ; end
 
   def self.get_discourse_users
-    url = ENV["DISCOURSE_HOST"] + "/admin/users.json"
+    url = ENV["DISCOURSE_HOST"] + "/admin/users/list/all.json"
     r = RestClient.get url, :params => {:api_key => ENV["DISCOURSE_TOKEN"], :api_username => ENV["DISCOURSE_ADMIN"]}
     JSON.parse(r.body)
   end
