@@ -26,6 +26,7 @@
     "highlightjs": "~8.5.0",
     "qiniu": "~1.0.5-beta",
     "plupload": "~2.1.4",
-    "progressbar.js": "~0.8.1"
+    "progressbar.js": "~0.8.1",
+    "jquery.qrcode": "~0.12.0"
   }
 }

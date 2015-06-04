@@ -8,6 +8,7 @@
 #= require plupload/js/plupload.full.min.js
 #= require qiniu/src/qiniu.min.js
 #= require progressbar.js/dist/progressbar.min.js
+#= require jquery.qrcode/dist/jquery.qrcode.min.js
 
 #= require_self
 #= require_directory ./blocks
