@@ -17,8 +17,6 @@ table.table.table-bordered
         |Reminder Scheduled at
       th
         |Last Visit Time
-      th
-        |Number of Lessons from Current
   - @enrollments.each do |e|
     tbody
       tr
@@ -38,6 +36,4 @@ table.table.table-bordered
           |#{e.reminder_scheduled_at}
         td
           |#{e.last_visit_time}
-        td
-          |#{e.number_of_lessons_from_current}
 

@@ -6,6 +6,6 @@ class AddReminderInfoToEnrollments < ActiveRecord::Migration
     add_column :enrollments, :reminder_state, :string
     add_column :enrollments, :reminder_count, :integer, :default => 0
     add_column :enrollments, :reminder_disabled, :boolean, :default => false
-    add_column :enrollments, :number_of_lessons_from_current, :integer, :default => 0
+    remove_column :enrollments, :has_sent_invitation_email
   end
 end

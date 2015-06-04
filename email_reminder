@@ -3,5 +3,6 @@
 ENV['RAILS_ENV'] = "production"
 require './config/environment.rb'
 
-Enrollment.send_reminder_email
+Enrollment.refresh_reminder_states
+Enrollment.send_reminder_emails
 

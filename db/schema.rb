@@ -67,26 +67,24 @@ ActiveRecord::Schema.define(version: 20150603135243) do
   add_index "courses", ["permalink"], name: "index_courses_on_permalink", unique: true, using: :btree
 
   create_table "enrollments", force: :cascade do |t|
-    t.integer  "user_id",                                        null: false
-    t.integer  "course_id",                                      null: false
+    t.integer  "user_id",                               null: false
+    t.integer  "course_id",                             null: false
     t.string   "version"
     t.datetime "start_time"
     t.datetime "enroll_time"
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
-    t.string   "token",                                          null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.string   "token",                                 null: false
     t.json     "personal_info"
-    t.boolean  "activated",                      default: false
-    t.boolean  "has_sent_invitation_email",      default: false
-    t.boolean  "paid",                           default: false
+    t.boolean  "activated",             default: false
+    t.boolean  "paid",                  default: false
     t.string   "buddy_name"
     t.datetime "last_visit_time"
     t.datetime "invitation_sent_time"
     t.datetime "reminder_scheduled_at"
     t.string   "reminder_state"
-    t.integer  "reminder_count",                 default: 0
-    t.boolean  "reminder_disabled",              default: false
-    t.integer  "number_of_lessons_from_current", default: 0
+    t.integer  "reminder_count",        default: 0
+    t.boolean  "reminder_disabled",     default: false
   end
 
   add_index "enrollments", ["course_id"], name: "index_enrollments_on_course_id", using: :btree

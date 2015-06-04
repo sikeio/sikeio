@@ -11,49 +11,21 @@ class Enrollment::Reminder
   end
 
   def refresh_reminder_state
-    update_number_of_lessons_from_current
     if not_activated_state?
-      if enrollment.reminder_state != "not_activated"
-        enrollment.update(reminder_state: "not_activated")
-        reset_state
-      end
+      set_reminder_state("not_activated")
     elsif not_first_checkin_state?
-      if enrollment.reminder_state != "not_first_checkin_state"
-        enrollment.update(reminder_state: "not_first_checkin_state")
-        reset_state
-      end
+      set_reminder_state("no_first_checkin")
     elsif checkin_late_state?
-      if enrollment.reminder_state != "checkin_late"
-        enrollment.update(reminder_state: "checkin_late")
-        reset_state
-      end
+      set_reminder_state("checkin_late")
     else
-      if enrollment.reminder_state
-        enrollment.update(reminder_state: nil, reminder_count: 0, reminder_scheduled_at: nil, reminder_disabled: false)
-      end
+      set_reminder_state(nil)
     end
-  end
-
-  def update_visit_time
-    enrollment.update!(last_visit_time: Time.now)
   end
 
   def update_last_checkin_time
     enrollment.update!(last_checkin_time: Time.now)
   end
 
-  def update_number_of_lessons_from_current
-    return if !enrollment.schedule.any_released?
-    schedule = enrollment.schedule
-    current_lesson = schedule.current_lesson
-    latest_released_lesson = schedule.latest_released_lesson
-    if current_lesson
-      number_of_lessons_from_current = schedule.lesson_number(latest_released_lesson) - schedule.lesson_number(current_lesson) + 1
-      enrollment.update(number_of_lessons_from_current: number_of_lessons_from_current)
-    else
-      enrollment.update(number_of_lessons_from_current: 0)
-    end
-  end
 
   def send_reminder_email
     return if enrollment.reminder_disabled? || (!enrollment.reminder_state)
@@ -69,28 +41,41 @@ class Enrollment::Reminder
 
     reminder_count = enrollment.reminder_count + 1
     enrollment.update(reminder_count: reminder_count)
-    set_reminder_var
+    schedule_next_reminder
   end
 
   private
 
-  def set_reminder_var
+  def set_reminder_state(state)
+    if enrollment.reminder_state != state
+      enrollment.update(reminder_state: state)
+      schedule_next_reminder(true)
+      if state == nil
+        enrollment.update(reminder_scheduled_at: nil)
+      end
+    end
+  end
+
+  def schedule_next_reminder(reset = false)
+    if reset
+      enrollment.update(reminder_count: 0, reminder_disabled: false)
+    end
+
     reminder_count = enrollment.reminder_count
+
     if reminder_count >= MAX_REMINDER_COUNT
       enrollment.update(reminder_scheduled_at: nil, reminder_disabled: true)
     else
-      reminder_scheduled_at = SCHEDULE[reminder_count].days.since
+      reminder_scheduled_at = SCHEDULE[reminder_count].days.since.beginning_of_day
       enrollment.update(reminder_scheduled_at: reminder_scheduled_at)
     end
   end
 
-  def reset_state
-    reminder_scheduled_at = SCHEDULE[0].days.since.beginning_of_day
-    enrollment.update(reminder_count: 0, reminder_scheduled_at: reminder_scheduled_at, reminder_disabled: false)
-  end
-
   def not_activated_state?
-    return false if enrollment.activated? || (!enrollment.invitation_sent_time)
+    if enrollment.activated? || !enrollment.invitation_sent_time
+      return false
+    end
+
     if enrollment.invitation_sent_time < 2.days.ago
       return true
     else
@@ -99,7 +84,7 @@ class Enrollment::Reminder
   end
 
   def not_first_checkin_state?
-    if enrollment.activated? && (enrollment.checkins.count == 0) && enrollment.schedule.any_released?
+    if enrollment.activated? && enrollment.checkins.count == 0 && enrollment.schedule.any_released?
       return true
     else
       return false
@@ -107,8 +92,11 @@ class Enrollment::Reminder
   end
 
   def checkin_late_state?
-    return false if !enrollment.last_visit_time
-    if (enrollment.last_visit_time < 2.days.ago) && (enrollment.number_of_lessons_from_current >= 2)
+    if !enrollment.last_visit_time
+      return false
+    end
+
+    if (enrollment.last_visit_time < 2.days.ago) && (enrollment.schedule.number_of_lessons_from_current >= 2)
       return true
     else
       return false
