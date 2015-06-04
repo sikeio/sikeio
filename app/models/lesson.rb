@@ -10,7 +10,6 @@
 #  updated_at            :datetime         not null
 #  course_id             :integer
 #  permalink             :string
-#  bbs                   :string
 #  discourse_topic_id    :integer
 #  project               :string
 #  discourse_qa_topic_id :integer

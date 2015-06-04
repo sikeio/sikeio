@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: course_invites
+#
+#  id         :integer          not null, primary key
+#  token      :string           not null
+#  course_id  :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  start_time :datetime
+#
+
 class CourseInvite < ActiveRecord::Base
   belongs_to :course
 

@@ -10,7 +10,8 @@
 #  degree_of_difficulty :integer
 #  lesson_id            :integer
 #  discourse_post_id    :integer
-#  timestamps           :datetime
+#  created_at           :datetime
+#  updated_at           :datetime
 #
 
 class Checkin < ActiveRecord::Base

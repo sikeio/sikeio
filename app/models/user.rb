@@ -9,6 +9,8 @@
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  has_been_activated :boolean          default(FALSE)
+#  discourse_user_id  :integer
+#  discourse_username :string
 #
 
 class User < ActiveRecord::Base
