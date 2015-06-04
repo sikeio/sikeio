@@ -8,6 +8,7 @@ class CheckinsController < ApplicationController
     checkin_info = checkin_params
     checkin_info[:enrollment_id] = enrollment.id
     checkin_info[:lesson_id] = lesson.id
+
     checkin = Checkin.new(checkin_info)
 
     if checkin.save

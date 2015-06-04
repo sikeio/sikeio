@@ -61,6 +61,11 @@ DISCOURSE_TOKEN: token
 # Discourse API Admin Username
 DISCOURSE_ADMIN: howard
 
+# Qiniu
+QINIU_SECRET_KEY: qiniu secret key
+QINIU_ACCESS_KEY: qiniu access key
+QINIU_BUCKET: qiniu bucket for uploading images
+
 ########################################################################
 # Production configurations
 ########################################################################

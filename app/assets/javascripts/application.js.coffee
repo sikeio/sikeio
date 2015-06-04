@@ -5,6 +5,9 @@
 #= require slick.js/slick/slick.min.js
 #= require highlightjs/highlight.pack.js
 #= require ghostdown.js
+#= require plupload/js/plupload.full.min.js
+#= require qiniu/src/qiniu.min.js
+#= require progressbar.js/dist/progressbar.min.js
 
 #= require_self
 #= require_directory ./blocks

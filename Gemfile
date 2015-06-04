@@ -59,6 +59,8 @@ gem 'sass-globbing'
 
 gem 'pry-rails'
 
+gem 'qiniu'
+
 group :production do
   gem 'newrelic_rpm'
 end
