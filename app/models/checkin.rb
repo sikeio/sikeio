@@ -59,4 +59,16 @@ class Checkin < ActiveRecord::Base
   def discourse_poster
     @discourse_poster ||= Checkin::DiscoursePoster.new(self)
   end
+
+  def course
+    self.enrollment.course
+  end
+
+  def lesson
+    self.course.lessons.find self.lesson_id
+  end
+
+  def difficulty
+    ["太简单", "容易", "适中", "难", "太难"][self.degree_of_difficulty]
+  end
 end

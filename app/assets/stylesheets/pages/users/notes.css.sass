@@ -1,0 +1,90 @@
+@import ../../global
+#users_notes
+
+  ul
+    padding: 0
+  li
+    list-style: none
+  a
+    text-decoration: none
+
+  .left-panel
+    width: 30%
+    position: fixed
+    left: 0
+    top: 0
+    height: 100%
+    background: #F8FBFF
+    text-align: center
+
+    .avatar
+      width: 72px
+      border-radius: 100%
+    .user-name
+      margin-top: 0
+
+    .socials
+      @include clearfix
+      margin: 50px 0
+      li
+        float: left
+        width: 33.3%
+        font-size: 12px
+        a
+          color: #868686
+
+    .courses li
+      margin: 15px 0
+      span
+        font-size: 14px
+        color: white
+        padding: 5px 10px
+        border-radius: 5px
+
+
+  .right-panel
+    width: 70%
+    float: right
+    .note
+      margin: 30px
+      padding-bottom: 15px
+      border-bottom: solid 1px #CBCBCB
+      .course
+        padding-left: 10px
+        border-left: solid 5px blue
+        font-size: 14px
+      .title
+        margin-top: 5px
+      .meta
+        font-size: 14px
+        color: #868686
+        span
+          margin-right: 12px
+      .content
+        margin-top: 10px
+      .operations
+        text-align: right
+        a
+          font-size: 14px
+          color: #5A5A5A
+          margin-right: 20px
+          i
+            font-size: 1.5em
+            padding-right: 5px
+            position: relative
+            top: 2px
+  @media screen and (max-width: 800px)
+    .left-panel
+      width: 100%
+      position: static
+      h1
+        margin-top: 0
+        padding-top: 30px
+    .right-panel
+      width: 100%
+      float: none
+
+
+
+
+
