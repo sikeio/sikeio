@@ -1,0 +1,17 @@
+.left-panel
+  h1
+    a href=user_notes_path(@user) 学习笔记
+  img.avatar src=@user.avatar
+  p.user-name = @user.github_username
+  ul.socials
+    li
+      a href=@user.github.info["info"]["urls"]["GitHub"] Github
+    li
+      a href="#" Twitter
+    li
+      a href=@user.github.info["info"]["urls"]["Blog"] Blog
+
+  .courses
+    - @user.courses.each do |course|
+      li
+        span style="background-color:#{course.color}" = course.title

@@ -65,10 +65,14 @@ class Checkin < ActiveRecord::Base
   end
 
   def lesson
-    self.course.lessons.find self.lesson_id
+    Lesson.find self.lesson_id
   end
 
   def difficulty
     ["太简单", "容易", "适中", "难", "太难"][self.degree_of_difficulty]
+  end
+
+  def to_param
+    "#{course.title}+#{lesson.title}-#{id}".gsub " ","-"
   end
 end

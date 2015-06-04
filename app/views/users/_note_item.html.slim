@@ -1,0 +1,18 @@
+.note
+  .course style="border-color:#{checkin.course.color}" = checkin.course.title
+  h2.title = checkin.lesson.title
+  .meta
+    span = checkin.created_at.strftime("%Y.%m.%d")
+    span = checkin.difficulty
+    span = "费时：#{checkin.time_cost}h"
+  .content
+    == render_markdown(checkin.problem)
+
+  - if current_user == checkin.enrollment.user
+    .operations
+      a.edit href=checkin_show_path(checkin.lesson)
+        i.fa.fa-pencil-square-o
+        | 编辑
+      a.share href="javascript:void(0)" data-url=checkin.to_param
+        i.fa.fa-share-square-o
+        | 分享成果

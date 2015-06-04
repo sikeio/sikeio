@@ -1,37 +1,4 @@
-.left-panel
-  h1 学习笔记
-  img.avatar src=@user.avatar
-  p.user-name = @user.github_username
-  ul.socials
-    li
-      a href=@user.github.info["info"]["urls"]["GitHub"] Github
-    li
-      a href="#" Twitter
-    li
-      a href=@user.github.info["info"]["urls"]["Blog"] Blog
-
-  .courses
-    - @user.courses.each do |course|
-      li
-        span style="background-color:#{course.color}" = course.title
-
+= render partial: "left_panel"
 .right-panel
   - @user.checkins.order(created_at: :desc).each do |checkin|
-    .note
-      .course style="border-color:#{checkin.course.color}" = checkin.course.title
-      h2.title = checkin.lesson.title
-      .meta
-        span = checkin.created_at.strftime("%Y.%m.%d")
-        span = checkin.difficulty
-        span = "费时：#{checkin.time_cost}h"
-      .content
-        == render_markdown(checkin.problem)
-      .operations
-        a.edit href=checkin_show_path(checkin.lesson)
-          i.fa.fa-pencil-square-o
-          | 编辑
-        a.share href="javascript:void(0)"
-          i.fa.fa-share-square-o
-          | 分享成果
-
-
+    = render partial: "note_item",locals: {checkin: checkin}

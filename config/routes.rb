@@ -26,7 +26,9 @@ Rails.application.routes.draw do
 
   resources :subscribers, only: [:create]
 
-  get '/@:github_username' => 'users#notes'
+  get '/@:github_username' => 'users#notes', as: :user_notes
+  get '/@:github_username/:checkin' => 'users#note', as: :user_note
+
   resources :users,only:[:show] do
     member do
       get '/activation' => 'users#activation'

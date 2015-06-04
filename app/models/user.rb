@@ -88,6 +88,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def to_param
+    self.github_username
+  end
+
   private
 
   class CreateDiscourseUserFail < RuntimeError ; end
