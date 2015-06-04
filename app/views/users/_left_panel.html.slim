@@ -14,4 +14,4 @@
   .courses
     - @user.courses.each do |course|
       li
-        span style="background-color:#{course.color}" = course.title
+        a style="background-color:#{course.color}" href=info_course_path(course) = course.title
