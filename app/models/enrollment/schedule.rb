@@ -89,7 +89,8 @@ class Enrollment::Schedule
   end
 
   def latest_released_lesson
-    return nil if !any_released? || day_from_start_time > release_day_of_lesson(lessons.last)
+    return nil if !any_released?
+    return lessons.last if day_from_start_time > release_day_of_lesson(lessons.last)
 
     result = lessons.find do |lesson|
       day_from_start_time <= content.release_day_of_lesson[lesson.name]

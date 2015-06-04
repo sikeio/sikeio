@@ -81,3 +81,24 @@ div class="modal fade" aria-hidden="true" id="addModal" role="dialog" tabindex="
       .modal-footer
 
 
+table.table.table-bordered
+  thead
+    tr
+      th
+        |课程
+      th
+        |需要提醒的用户数量
+      th
+        |详细情况
+  - @courses.each do |course|
+    tbody
+      tr
+        td
+          |#{course.name}
+        td
+          |#{Enrollment.reminder_needed(course).count}
+        td
+          a href=admin_reminder_enrollments_path(course)
+            |详细查看
+
+

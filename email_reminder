@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+ENV['RAILS_ENV'] = "production"
+require './config/environment.rb'
+
+Enrollment.send_reminder_email
+

@@ -28,6 +28,9 @@ class Enrollment < ActiveRecord::Base
   has_many :checkins
 
   scope :activated, -> {where(activated: true)}
+  scope :not_activated_state, -> {where(reminder_state: "not_activated")}
+  scope :no_first_checkin_state, -> {where(reminder_state: "no_first_checkin")}
+  scope :checkin_late_state, -> {where(reminder_state: "checkin_late")}
 
   before_validation {
     self.reset_token if self.token.nil?
@@ -39,6 +42,10 @@ class Enrollment < ActiveRecord::Base
 
   def has_personal_info?
     !self.personal_info.nil?
+  end
+
+  def reminder
+    @reminder ||= Enrollment::Reminder.new(self)
   end
 
   def schedule
@@ -62,4 +69,39 @@ class Enrollment < ActiveRecord::Base
     Time.now.next_week :monday
   end
 
+  def self.not_activate_enrollments(course)
+    course.enrollments.each do |e|
+      e.reminder.refresh_reminder_state
+    end
+    course.enrollments.not_activated_state
+  end
+
+  def self.no_first_checkin_enrollments(course)
+    course.enrollments.each do |e|
+      e.reminder.refresh_reminder_state
+    end
+    course.enrollments.no_first_checkin_state
+  end
+
+  def self.checkin_late_enrollments(course)
+    course.enrollments.each do |e|
+      e.reminder.refresh_reminder_state
+    end
+    course.enrollments.checkin_late_state
+  end
+
+  def self.reminder_needed(course)
+    course.enrollments.each do |e|
+      e.reminder.refresh_reminder_state
+    end
+    course.enrollments.where("reminder_state is not NULL")
+  end
+
+  def self.send_reminder_email
+    Enrollment.all.each do |e|
+      e.reminder.refresh_reminder_state
+    end
+    enrolls = Enrollment.where("reminder_scheduled_at < ?", Time.now)
+    enrolls.each {|e| e.reminder.send_reminder_email}
+  end
 end

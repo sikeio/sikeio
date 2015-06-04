@@ -12,6 +12,10 @@ class Admin::CoursesController < Admin::ApplicationController
     course
   end
 
+  def reminder_enrollments
+    @enrollments = Enrollment.reminder_needed(course)
+  end
+
   def start_at_this_week
     if course_invite
       course_invite.start_at_this_week
