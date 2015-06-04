@@ -51,6 +51,11 @@ class User < ActiveRecord::Base
     github.nickname
   end
 
+  def self.find_by_github_username(username)
+    auth = Authentication.where(" info -> 'info' ->> 'nickname' = '#{username}' ").first
+    return auth && auth.user
+  end
+
   def avatar
     github.info["info"]["image"]
   end
