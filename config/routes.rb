@@ -28,6 +28,7 @@ Rails.application.routes.draw do
 
   get '/@:github_username' => 'users#notes', as: :user_notes
   get '/@:github_username/:checkin' => 'users#note', as: :user_note
+  post '/@:github_username' => 'users#update_personal_info', as: :update_user
 
   resources :users,only:[:show] do
     member do

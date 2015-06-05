@@ -5,13 +5,19 @@
   p.user-name = @user.github_username
   ul.socials
     li
-      a href=@user.github.info["info"]["urls"]["GitHub"] Github
+      a href=@user.github.info["info"]["urls"]["GitHub"] target="_blank" Github
     li
-      a href=@user.personal_info.try(:[], "twitter") Twitter
+      a href="https://twitter.com/#{@user.personal_info.try(:[], "twitter")}" target="_blank" Twitter
     li
-      a href=@user.personal_info.try(:[], "blog") Blog
+      a href=@user.personal_info.try(:[], "blog") target="_blank" Blog
   p.intro
     = @user.personal_info.try(:[], "intro")  || "目前还没有填写个人简介喔~~"
+
+  - if current_user == @user
+    .edit
+      a href="javascript:void(0)" data-url=update_user_path(@user)
+        i.fa.fa-pencil-square-o
+        | Edit
 
   .courses
     - @user.courses.each do |course|

@@ -73,6 +73,6 @@ class Checkin < ActiveRecord::Base
   end
 
   def to_param
-    "#{course.title}+#{lesson.title}-#{id}".gsub " ","-"
+    "#{lesson.title}-#{id}".gsub " ","-"
   end
 end
