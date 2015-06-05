@@ -86,6 +86,7 @@ Rails.application.routes.draw do
     delete '/invite_delete/:id' => 'courses#delete_invite' , as: :invite_delete
     post '/start_time/:id' => 'courses#start_at_this_week', as: :start_time
     post '/delete_start_time/:id' => 'courses#delete_start_time' , as: :delete_start_time
+    get '/reminder_enrollments/:id' => 'courses#reminder_enrollments', as: :reminder_enrollments
 
     namespace :test do
       post :send_email

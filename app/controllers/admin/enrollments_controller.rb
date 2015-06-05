@@ -6,7 +6,7 @@ class Admin::EnrollmentsController < Admin::ApplicationController
 
   def send_invitation_email
     UserMailer.invite(enrollment).deliver_later
-    enrollment.update_attribute :has_sent_invitation_email, true
+    enrollment.update(invitation_sent_time: Time.now)
     head :ok
   end
 

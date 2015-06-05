@@ -1,0 +1,50 @@
+table.table.table-bordered
+  thead
+    tr
+      th
+        |用户名
+      th
+        |GitHub用户名
+      th
+        |Email
+      th
+        |Reminder State
+      th
+        |Reminder Count
+      th
+        |Reminder Disabled
+      th
+        |Invitation Sent Time
+      th
+        |Reminder Scheduled at
+      th
+        |Last Visit Time
+      th
+        |Course Start Time
+  - @enrollments.each do |e|
+    tbody
+      tr
+        td
+          |#{e.user.name}
+        td
+          - if !e.user.authentications.blank?
+            |#{e.user.github_username}
+          - else
+            |未绑定GitHub
+        td
+          |#{e.user.email}
+        td
+          |#{e.reminder_state}
+        td
+          |#{e.reminder_count}
+        td
+          |#{e.reminder_disabled}
+        td
+          |#{e.invitation_sent_time}
+        td
+          |#{e.reminder_scheduled_at}
+        td
+          |#{e.last_visit_time}
+        td
+          |#{e.start_time}
+

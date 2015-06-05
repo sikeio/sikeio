@@ -38,6 +38,7 @@ class CoursesController < ApplicationController
       redirect_to info_course_path(course)
       return
     end
+    @enrollment.update!(last_visit_time: Time.now)
     @send_day = Time.now.beginning_of_day.to_f * 1000 # convert to milliseconds for js
     #render '_show'
   end
