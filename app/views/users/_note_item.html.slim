@@ -1,6 +1,9 @@
 .note-item
-  .course style="border-color:#{checkin.course.color}" = checkin.course.title
-  h2.title = checkin.lesson.title
+  .course style="border-color:#{checkin.course.color}"
+    a href=course_link(checkin.course) = checkin.course.title
+
+  h2.title
+    a href=lesson_link(checkin.lesson) = checkin.lesson.title
   .meta
     span = checkin.created_at.strftime("%Y.%m.%d")
     span = checkin.difficulty

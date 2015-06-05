@@ -7,11 +7,15 @@
     li
       a href=@user.github.info["info"]["urls"]["GitHub"] Github
     li
-      a href="#" Twitter
+      a href=@user.personal_info.try(:[], "twitter") Twitter
     li
-      a href=@user.github.info["info"]["urls"]["Blog"] Blog
+      a href=@user.personal_info.try(:[], "blog") Blog
+  p.intro
+    = @user.personal_info.try(:[], "intro")  || "目前还没有填写个人简介喔~~"
 
   .courses
     - @user.courses.each do |course|
       li
-        a style="background-color:#{course.color}" href=info_course_path(course) = course.title
+        a style="background-color:#{course.color}" href=course_link(course) = course.title
+
+  .logo
