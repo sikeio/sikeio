@@ -41,6 +41,10 @@ class Enrollment < ActiveRecord::Base
     !self.personal_info.nil?
   end
 
+  def reminder
+    @reminder ||= Enrollment::Reminder.new(self)
+  end
+
   def schedule
     @schedule ||= Enrollment::Schedule.new(self)
   end
@@ -62,4 +66,21 @@ class Enrollment < ActiveRecord::Base
     Time.now.next_week :monday
   end
 
+  def self.reminder_needed(course)
+    course.enrollments.each do |e|
+      e.reminder.refresh_reminder_state
+    end
+    course.enrollments.where("reminder_state is not NULL")
+  end
+
+  def self.refresh_reminder_states
+    self.all.each do |e|
+      e.reminder.refresh_reminder_state
+    end
+  end
+
+  def self.send_reminder_emails
+    enrolls = Enrollment.where("reminder_scheduled_at < ?", Time.now)
+    enrolls.each {|e| e.reminder.send_reminder_email}
+  end
 end

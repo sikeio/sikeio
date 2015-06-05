@@ -34,4 +34,60 @@ class UserMailer < ApplicationMailer
 
   end
 
+  def checkin_late(enrollment)
+    titles = {
+      # "ios" => "【思客教学】 iOS 训练营邀请",
+      "nodejs" => "【思客教学】 NodeJS 训练营邀请",
+      "css0to1" => "【思客教学】 CSS 从 0 到 1 迷你训练营邀请",
+    }
+
+    course_name = enrollment.course.name
+    title = titles[course_name] || raise("no invite email defiend for: #{course_name}")
+    @user = enrollment.user
+
+
+    mail \
+      to: @user.email,
+      subject: title,
+      template_name: "checkin_late"
+  end
+
+  def reinvite(enrollment)
+    titles = {
+      # "ios" => "【思客教学】 iOS 训练营邀请",
+      "nodejs" => "【思客教学】 NodeJS 训练营邀请",
+      "css0to1" => "【思客教学】 CSS 从 0 到 1 迷你训练营邀请",
+    }
+
+    course_name = enrollment.course.name
+    title = titles[course_name] || raise("no invite email defiend for: #{course_name}")
+    @user = enrollment.user
+
+
+    mail \
+      to: @user.email,
+      subject: title,
+      template_name: "reinvite"
+
+  end
+
+  def no_first_checkin(enrollment)
+    titles = {
+      # "ios" => "【思客教学】 iOS 训练营邀请",
+      "nodejs" => "【思客教学】 NodeJS 训练营邀请",
+      "css0to1" => "【思客教学】 CSS 从 0 到 1 迷你训练营邀请",
+    }
+
+    course_name = enrollment.course.name
+    title = titles[course_name] || raise("no invite email defiend for: #{course_name}")
+    @user = enrollment.user
+
+
+    mail \
+      to: @user.email,
+      subject: title,
+      template_name: "no_first_checkin"
+
+  end
+
 end

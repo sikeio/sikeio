@@ -24,8 +24,8 @@ table.table.table-bordered.enrollments
         td.paid = e.paid
         td
           .btn-group-vertical
-            a.btn.btn-primary.send-invitation-email href=send_invitation_email_admin_enrollment_path(e) class=(e.has_sent_invitation_email ? 'btn-success' : '') data-remote=true data-method='post'
-              | #{e.has_sent_invitation_email ? 'Resend' : 'Send'}
+            a.btn.btn-primary.send-invitation-email href=send_invitation_email_admin_enrollment_path(e) class=(e.invitation_sent_time ? 'btn-success' : '') data-remote=true data-method='post'
+              | #{e.invitation_sent_time ? 'Resend' : 'Send'}
               | &nbsp;Invitation Email
             a.btn.btn-info.send-welcome-email href=send_welcome_email_admin_enrollment_path(e) data-remote=true data-method='post'
               | Resend Welcome Email

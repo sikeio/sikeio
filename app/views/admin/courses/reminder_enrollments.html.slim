@@ -1,0 +1,39 @@
+table.table.table-bordered
+  thead
+    tr
+      th
+        |GitHub用户名
+      th
+        |Email
+      th
+        |Reminder State
+      th
+        |Reminder Count
+      th
+        |Reminder Disabled
+      th
+        |Invitation Sent Time
+      th
+        |Reminder Scheduled at
+      th
+        |Last Visit Time
+  - @enrollments.each do |e|
+    tbody
+      tr
+        td
+          |#{e.user.github_username}
+        td
+          |#{e.user.email}
+        td
+          |#{e.reminder_state}
+        td
+          |#{e.reminder_count}
+        td
+          |#{e.reminder_disabled}
+        td
+          |#{e.invitation_sent_time}
+        td
+          |#{e.reminder_scheduled_at}
+        td
+          |#{e.last_visit_time}
+

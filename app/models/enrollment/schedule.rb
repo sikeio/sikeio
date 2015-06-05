@@ -83,13 +83,19 @@ class Enrollment::Schedule
   memoize :weeks_info
 
   def day_util_next_lesson_released
-    return nil if !(tmp_lesson = latest_released_lesson)
-    return nil if !(tmp_next_lesson = next_lesson(tmp_lesson))
+     if !(tmp_lesson = latest_released_lesson)
+       return nil
+     end
+     if !(tmp_next_lesson = next_lesson(tmp_lesson))
+       return nil
+     end
+
     release_day_of_lesson(tmp_next_lesson) - day_from_start_time
   end
 
   def latest_released_lesson
-    return nil if !any_released? || day_from_start_time > release_day_of_lesson(lessons.last)
+    return nil if !any_released?
+    return lessons.last if day_from_start_time > release_day_of_lesson(lessons.last)
 
     result = lessons.find do |lesson|
       day_from_start_time <= content.release_day_of_lesson[lesson.name]
@@ -169,6 +175,17 @@ class Enrollment::Schedule
 
   def is_last_lesson?(lesson)
     lessons.last == lesson
+  end
+
+  def number_of_lessons_from_current
+    if !any_released?
+      return 0
+    end
+    if current_lesson
+      return lesson_number(latest_released_lesson) - lesson_number(current_lesson) + 1
+    else
+      return 0
+    end
   end
 
   private
