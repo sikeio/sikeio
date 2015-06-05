@@ -67,9 +67,6 @@ class Enrollment < ActiveRecord::Base
   end
 
   def self.reminder_needed(course)
-    course.enrollments.each do |e|
-      e.reminder.refresh_reminder_state
-    end
     course.enrollments.where("reminder_state is not NULL")
   end
 
