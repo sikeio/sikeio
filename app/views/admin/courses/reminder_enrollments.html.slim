@@ -19,6 +19,8 @@ table.table.table-bordered
         |Reminder Scheduled at
       th
         |Last Visit Time
+      th
+        |Course Start Time
   - @enrollments.each do |e|
     tbody
       tr
@@ -43,4 +45,6 @@ table.table.table-bordered
           |#{e.reminder_scheduled_at}
         td
           |#{e.last_visit_time}
+        td
+          |#{e.start_time}
 
