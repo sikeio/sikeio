@@ -23,13 +23,17 @@ Rails.application.routes.draw do
   put '/checkin/:id' => 'checkins#update', as: :checkin_update
   get '/checkin/:id' => 'checkins#show', as: :checkin_show
 
+
   resources :subscribers, only: [:create]
+
+  get '/@:github_username' => 'users#notes', as: :user_notes
+  get '/@:github_username/:checkin' => 'users#note', as: :user_note
+  post '/@:github_username' => 'users#update_personal_info', as: :update_user
 
   resources :users,only:[:show] do
     member do
       get '/activation' => 'users#activation'
       post '/activation' => 'users#activate'
-      get '/' => 'users#dashboard',as: :dashboard
     end
   end
 

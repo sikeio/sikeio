@@ -15,6 +15,7 @@ table.table.table-bordered
         |Current Version
       th
         |Free
+      th Color
       th
         |
       th
@@ -41,8 +42,10 @@ table.table.table-bordered
             = f.radio_button :free, "true"
             = f.label "付费"
             = f.radio_button :free, "false"
+          td style="background:#{course.color}"
+            = f.text_field :color
           td
-            = f.submit "Edit"
+            = f.submit "Submit"
         td
           = form_tag clone_and_update_admin_course_path(course), method: :post
             = label_tag "New Version"

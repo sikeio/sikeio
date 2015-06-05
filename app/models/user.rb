@@ -9,6 +9,8 @@
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  has_been_activated :boolean          default(FALSE)
+#  discourse_user_id  :integer
+#  discourse_username :string
 #
 
 class User < ActiveRecord::Base
@@ -51,6 +53,11 @@ class User < ActiveRecord::Base
     github.nickname
   end
 
+  def self.find_by_github_username(username)
+    auth = Authentication.where(" info -> 'info' ->> 'nickname' = '#{username}' ").first
+    return auth && auth.user
+  end
+
   def avatar
     github.info["info"]["image"]
   end
@@ -79,6 +86,10 @@ class User < ActiveRecord::Base
     users.each do |u|
       u.ensure_discourse_user
     end
+  end
+
+  def to_param
+    self.github_username
   end
 
   private

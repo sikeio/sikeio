@@ -1,0 +1,4 @@
+= render partial: "left_panel"
+.right-panel
+  - @user.checkins.order(created_at: :desc).each do |checkin|
+    = render partial: "note_item",locals: {checkin: checkin}

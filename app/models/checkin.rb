@@ -10,7 +10,8 @@
 #  degree_of_difficulty :integer
 #  lesson_id            :integer
 #  discourse_post_id    :integer
-#  timestamps           :datetime
+#  created_at           :datetime
+#  updated_at           :datetime
 #
 
 class Checkin < ActiveRecord::Base
@@ -57,5 +58,21 @@ class Checkin < ActiveRecord::Base
 
   def discourse_poster
     @discourse_poster ||= Checkin::DiscoursePoster.new(self)
+  end
+
+  def course
+    self.enrollment.course
+  end
+
+  def lesson
+    Lesson.find self.lesson_id
+  end
+
+  def difficulty
+    ["太简单", "容易", "适中", "难", "太难"][self.degree_of_difficulty]
+  end
+
+  def to_param
+    "#{lesson.title}-#{id}".gsub " ","-"
   end
 end

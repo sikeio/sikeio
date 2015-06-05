@@ -12,6 +12,8 @@
 #  title           :string
 #  permalink       :string
 #  current_commit  :string
+#  free            :boolean          default(FALSE)
+#  color           :string
 #
 
 require "rails_helper"

@@ -61,6 +61,8 @@ gem 'pry-rails'
 
 gem 'qiniu'
 
+gem 'redcarpet'
+
 group :production do
   gem 'newrelic_rpm'
 end

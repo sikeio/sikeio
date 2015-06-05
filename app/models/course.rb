@@ -12,7 +12,8 @@
 #  title           :string
 #  permalink       :string
 #  current_commit  :string
-#  free            :boolean         default: false
+#  free            :boolean          default(FALSE)
+#  color           :string
 #
 
 class Course < ActiveRecord::Base
