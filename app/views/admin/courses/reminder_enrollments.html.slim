@@ -2,6 +2,8 @@ table.table.table-bordered
   thead
     tr
       th
+        |用户名
+      th
         |GitHub用户名
       th
         |Email
@@ -21,7 +23,12 @@ table.table.table-bordered
     tbody
       tr
         td
-          |#{e.user.github_username}
+          |#{e.user.name}
+        td
+          - if !e.user.authentications.blank?
+            |#{e.user.github_username}
+          - else
+            |未绑定GitHub
         td
           |#{e.user.email}
         td
