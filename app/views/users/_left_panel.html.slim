@@ -4,14 +4,16 @@
   img.avatar src=@user.avatar
   p.user-name = @user.github_username
   ul.socials
-    li
+    - number = @user.personal_info.nil? ? 1 : 3
+    li style="width:#{100.0 / number}%"
       a href=@user.github.info["info"]["urls"]["GitHub"] target="_blank" Github
-    li
-      a href="https://twitter.com/#{@user.personal_info.try(:[], "twitter")}" target="_blank" Twitter
-    li
-      a href=@user.personal_info.try(:[], "blog") target="_blank" Blog
+    - if !@user.personal_info.nil?
+      li style="width:#{100.0 / number}%"
+        a href="https://twitter.com/#{@user.personal_info["twitter"]}" target="_blank" Twitter
+      li style="width:#{100.0 / number}%"
+        a href=@user.personal_info["blog"] target="_blank" Blog
   p.intro
-    = @user.personal_info.try(:[], "intro")  || "目前还没有填写个人简介喔~~"
+    = @user.personal_info.try(:[], "intro")
 
   - if current_user == @user
     .edit
