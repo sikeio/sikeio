@@ -16,5 +16,8 @@ table.table.table-bordered.users
         td= u.name
         td= u.email
         td
-          = button_to("通灵", admin_user_login_path(u))
+          - if u.authentications.blank?
+            |Github未绑定
+          - else
+            = button_to("通灵", admin_user_login_path(u))
 
