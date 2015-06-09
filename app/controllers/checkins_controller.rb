@@ -37,7 +37,11 @@ class CheckinsController < ApplicationController
       checkin.update!(checkin_params)
       render json: success_msg(checkin.lesson.discourse_checkin_topic_url)
     rescue
-      render json: error_msg(checkin.errors.full_messages)
+      if checkin
+        render json: error_msg(checkin.errors.full_messages)
+      else
+        render json: error_msg("所要更新的打卡不存在~")
+      end
     end
   end
 
