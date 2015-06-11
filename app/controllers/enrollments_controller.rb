@@ -1,6 +1,5 @@
 class EnrollmentsController < ApplicationController
 
-
   def new
     if !course
       render_404
@@ -39,6 +38,13 @@ class EnrollmentsController < ApplicationController
     else
       UserMailer.welcome(enrollment).deliver_later
       redirect_to  new_enrollment_path(course_id: course.permalink, successed: true)
+
+      if cookies.signed[:distinct_id]
+        mixpanel_alias(enrollment.id, cookies.signed[:distinct_id])
+        cookies.delete :distinct_id
+      end
+
+      mixpanel_track(enrollment.id, "Created Enrollment", {"Course" => enrollment.course.name})
     end
   end
 
@@ -49,21 +55,37 @@ class EnrollmentsController < ApplicationController
     end
 
     if current_user
-      temp_enrollment = Enrollment.find_or_create_by! user_id: current_user.id, course_id: @course_invite.course_id
+      temp_enrollment = Enrollment.find_or_initialize_by user_id: current_user.id, course_id: @course_invite.course_id
 
       if temp_enrollment.activated?
         redirect_to course_path(temp_enrollment.course)
         return
+      end
+
+      if temp_enrollment.new_record?
+        temp_enrollment.save!
+
+        if cookies.signed[:distinct_id]
+          mixpanel_alias(temp_enrollment.id, cookies.signed[:distinct_id])
+          cookies.delete :distinct_id
+        end
+        mixpanel_track(temp_enrollment.id, "Created Enrollment", {"Course" => temp_enrollment.course.name})
       end
       temp_enrollment.update(start_time: @course_invite.start_time) if @course_invite.start_time
 
       @course = @course_invite.course
       @user = current_user
       @enrollment = temp_enrollment
+
+      mixpanel_track(@enrollment.id, "Visited Inviting Page", {"Course" => enrollment.course.name})
+
     else
       @enrollment = Enrollment.new course_id: @course_invite.course_id
       @course = @course_invite.course
+
+      anonymous_track
     end
+
     render 'invite'
   end
 
@@ -79,6 +101,8 @@ class EnrollmentsController < ApplicationController
 
     @course = enrollment.course
     @user = enrollment.user
+
+    mixpanel_track(enrollment.id, "Visited Inviting Page", {"Course" => @course.name})
   end
 
   def update
@@ -122,6 +146,8 @@ class EnrollmentsController < ApplicationController
     end
 
     @course = @enrollment.course
+
+    mixpanel_track(@enrollment.id, "Visited Payment Page", {"Course" => @course.name})
   end
 
   # POST
@@ -129,6 +155,10 @@ class EnrollmentsController < ApplicationController
     enrollment.buddy_name = params[:buddy_name]
     enrollment.save
     activate_course
+
+    charge = enrollment.personal_info["occupation"] == "学生" ? 490 : 790
+    mixpanel_track(enrollment.id, "Finished Payment", {"Charge" => charge,
+                                                       "Course" => enrollment.course.name})
   end
 
 

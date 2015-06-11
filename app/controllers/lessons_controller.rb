@@ -16,6 +16,8 @@ class LessonsController < ApplicationController
     @is_extra_lesson = !enrollment.schedule.is_course_lesson?(lesson)
     @is_checkout = Checkin.checkin?(enrollment, lesson)
     enrollment.update!(last_visit_time: Time.now)
+
+    mixpanel_track(enrollment.id, "Visited Lesson Show Page", { "Course" => enrollment.course.name })
   end
 
   private

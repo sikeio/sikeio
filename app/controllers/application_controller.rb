@@ -4,6 +4,16 @@ class ApplicationController < ActionController::Base
 
   include EventLogging
 
+
+  def anonymous_track
+    if !cookies[:distinct_id]
+      cookies.permanent.signed[:distinct_id] = SecureRandom.uuid()
+      referrer = request.referrer || "direct"
+      utm_source = params["utm_source"] || "direct"
+      mixpanel_register({ "Referer" => referrer, "UTM" => utm_source })
+    end
+  end
+
   # 301 Permanent Redirect from besike.com to sike.io
   if Rails.env.production?
     before_filter :sikeio_redirect
@@ -76,6 +86,41 @@ class ApplicationController < ActionController::Base
 
   def trailing_slash?
     request.original_fullpath.match(/[^\?]+/).to_s.last == '/'
+  end
+
+  def tracker
+    @tracker ||= Mixpanel::Tracker.new(ENV["MIXPANEL_TOKEN"])
+  end
+
+  def mixpanel_register(properties)
+    if cookies.signed[:properties]
+      origin_properties = JSON.parse(cookies.signed[:properties])
+      new_properties = origin_properties.merge(properties)
+      cookies.permanent.signed[:properties] = JSON.generate(new_properties)
+    else
+      cookies.permanent.signed[:properties] = JSON.generate(properties)
+    end
+  end
+
+  def mixpanel_track(distinct_id, event, properties = nil)
+    if properties
+      new_properties = get_properties.merge(properties)
+      MixpanelTrackJob.perform_later(distinct_id, event, new_properties)
+    else
+      MixpanelTrackJob.perform_later(distinct_id, event, get_properties)
+    end
+  end
+
+  def mixpanel_alias(alias_id, real_id)
+    tracker.alias(alias_id, real_id)
+  end
+
+  def get_properties
+    if cookies.signed[:properties]
+      return JSON.parse(cookies.signed[:properties])
+    else
+      return {}
+    end
   end
 
 end

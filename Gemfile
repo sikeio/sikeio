@@ -7,7 +7,6 @@ gem 'omniauth-github'
 
 
 gem 'slim-rails'
-gem 'redcarpet'
 gem 'sidekiq'
 gem 'sinatra', :require => nil
 
@@ -62,6 +61,8 @@ gem 'pry-rails'
 gem 'qiniu'
 
 gem 'redcarpet'
+
+gem 'mixpanel-ruby'
 
 group :production do
   gem 'newrelic_rpm'
