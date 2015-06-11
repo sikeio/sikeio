@@ -14,7 +14,7 @@ $ ->
     auto_start: true,
     init:
       'BeforeUpload': (up, file)->
-        $("<div class='progress #{file.id}'>").appendTo('.markdown-editor__progress')
+        $("<div class='progress #{file.id}'>").appendTo('.progress-container')
         line = new ProgressBar.Line(".#{file.id}", {color: '#33B2E3'})
         $(".#{file.id}").data 'progress', line
 
