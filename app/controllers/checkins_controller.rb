@@ -19,9 +19,10 @@ class CheckinsController < ApplicationController
   end
 
   def show
-    raise "course not exist or not enroll" if !enrollment
-    if !Checkin.checkin?(enrollment, lesson)
-      @url_path = checkin_path(lesson)
+    get_info
+    raise "course not exist or not enroll" if !@enrollment
+    if !Checkin.checkin?(@enrollment, @lesson)
+      @url_path = checkin_path(@lesson)
       @html_method = :post
       @checkin = Checkin.new
     else
@@ -50,9 +51,17 @@ class CheckinsController < ApplicationController
   def param_validate
     if params[:checkin][:time_cost].blank?
       render json: error_msg("请告诉我们您完成课程所用的时间~")
+    elsif (false if Float(params[:checkin][:time_cost]) rescue true)
+      render json: error_msg("请填写合法的时间值~")
     elsif params[:checkin][:degree_of_difficulty].blank?
       render json: error_msg("请告诉我们您认为课程难度如何~")
     end
+  end
+
+  def get_info
+    enrollment
+    lesson
+    course
   end
 
   def enrollment
@@ -64,7 +73,7 @@ class CheckinsController < ApplicationController
   end
 
   def course
-    @coruse ||= lesson.course
+    @course ||= lesson.course
   end
 
   def checkin_params

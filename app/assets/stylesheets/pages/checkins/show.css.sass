@@ -1,0 +1,74 @@
+@import ../../global
+#checkins_show
+  header
+    padding: 20px
+    .logo
+      display: inline-block
+    .content
+      margin-left: 20px
+      display: inline-block
+      .lesson-title
+        margin: 10px 0
+        font-size: 24px
+  form
+    @include clearfix
+    max-width: 1000px
+    margin: auto
+    section
+      float: left
+      width: 50%
+      padding: 0 20px
+      margin-bottom: 20px
+      .wrapper
+        border: solid 1px #979797
+        height: 600px
+        overflow: auto
+    .edit
+      .top-info
+        a
+          font-size: 14px
+          margin-left: auto
+          text-decoration: underline
+      .CodeMirror
+        //we need to calculate this value according to tips' height
+        height: 526px
+      .progress-container
+        .progress
+          margin: 10px 0
+          margin-right: 20px
+          &:before
+            content: "上传进度："
+          svg
+            width: 100%
+            height: 2px
+            margin-bottom: 5px
+      .tips
+        margin: 0
+        position: absolute
+        bottom: 0
+        width: 100%
+        background: #FFF4DE
+        color: #9B9B9B
+        padding-top: 10px
+        padding-bottom: 10px
+    .preview
+      .wrapper
+        padding: 0 10px
+    .bottom
+      clear: both
+      background: #F8FBFF
+      padding: 20px 0
+      .time
+        width: 220px
+        justify-content: space-around
+        margin-left: 30px
+        input
+          width: 60px
+      .difficulty
+        width: 120px
+        justify-content: space-around
+        margin-left: 30px
+      .submit
+        border-radius: 0
+        width: 170px
+        margin-left: 30px
