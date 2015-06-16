@@ -21,7 +21,7 @@ class Admin::UsersController < Admin::ApplicationController
   private
 
   def user
-    user ||= User.find(params[:user_id])
+    user ||= User.find_by_github_username(params[:user_id])
   end
 
 

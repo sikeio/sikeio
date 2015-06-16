@@ -8,6 +8,7 @@ $ ->
       "render": "image"
       "size": 160
       "text": $(this).parent().data('url')
+      "background": "#FFF"
 
   $('.share a').click ->
     $(this).closest('.share').find('.qrcode').toggle()
