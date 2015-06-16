@@ -1,5 +1,3 @@
-require 'mixpanel-ruby'
-
 class MixpanelTrackJob < ActiveJob::Base
   queue_as :default
 
