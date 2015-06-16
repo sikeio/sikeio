@@ -1,5 +1,6 @@
 class CoursesController < ApplicationController
 
+  before_action :anonymous_track, only: [:info]
   before_action :require_login, except: [:info]
 #  before_action :require_course_exists,except:[:list,:create_enroll]
 #  before_action :require_take_part_in,only:[:show]
@@ -22,6 +23,7 @@ class CoursesController < ApplicationController
       render_404("No such course: #{@course_name}")
       return
     end
+    mixpanel_track(cookies[:distinct_id], "Visited Home Page")
   end
 
   def show

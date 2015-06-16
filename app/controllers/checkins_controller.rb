@@ -12,6 +12,8 @@ class CheckinsController < ApplicationController
     checkin = Checkin.new(checkin_info)
 
     if checkin.save
+      mixpanel_track(checkin.enrollment.id, "Create Checkin")
+
       render json: success_msg(checkin.lesson.discourse_checkin_topic_url)
     else
       render_400 checkin.errors

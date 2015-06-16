@@ -62,6 +62,8 @@ gem 'qiniu'
 
 gem 'redcarpet', '>= 3.3.0'
 
+gem 'mixpanel-ruby'
+
 group :production do
   gem 'newrelic_rpm'
 end
