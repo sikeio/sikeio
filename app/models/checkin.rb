@@ -27,7 +27,7 @@ class Checkin < ActiveRecord::Base
   end
 
   after_commit do |checkin|
-    #PublishTopicJob.perform_later(checkin)
+    PublishTopicJob.perform_later(checkin)
   end
 
   def self.checkin?(enroll, temp_lesson)
