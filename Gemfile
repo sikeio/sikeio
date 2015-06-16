@@ -62,7 +62,7 @@ gem 'qiniu'
 
 gem 'redcarpet', '>= 3.3.0'
 
-gem 'mixpanel-ruby'
+gem 'mixpanel-ruby', require: true
 
 group :production do
   gem 'newrelic_rpm'
