@@ -3,6 +3,7 @@ class MixpanelTrackJob < ActiveJob::Base
 
   def perform(id, event, properties)
     tracker = Mixpanel::Tracker.new(ENV["MIXPANEL_TOKEN"])
+    raise ENV["MIXPANEL_TOKEN"]
     tracker.track(id, event, properties)
   end
 end
