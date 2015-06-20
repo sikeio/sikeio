@@ -1,29 +1,49 @@
 @import ../global
 .action-panel
   background-color: #F8FBFF
-  padding: 10px 20px
+  padding: 0.555556em 1.111111em
+
+.action-panel__row
+  width: 100%
+  margin: 1em 0.8em
+
+  & > label
+    display: block
+    width: 100%
+    margin-bottom: 0.2777778em
+    text-align: left
+
+  & > input
+    display: block
+    margin-bottom: 0.5555556em
+    width: 90.74%
+    color: black
+    height: 2em
+    border: 1px solid #E2E2E2
+    line-height: 150%
+    padding: 0 0.833333em
+
+    & > select
+      width: 25%
+
 
 .action-panel__actions
   text-align: center
-  padding: 20px 0 20px
 
 .action-panel__actions ul
   list-style: none
   padding: 0px
-  width: calc(100% - 50px)
+  width: 90.74%
+
 
 .action-panel__actions li
   display: inline-block
   padding: 10px 10px
 
 h1.action-panel__title
-  font-size: 20px
+  font-size: 1.5em
   color: #595959
-  margin: 0 0 0 10px
+  margin: 0.8em 0 0.4em
+  color: #656565
 
-.action-panel__content
-  padding: 20px
 
-@media (max-width: 480px)
-  .action-panel__actions ul
-    width: 100%

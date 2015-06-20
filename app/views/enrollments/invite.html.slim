@@ -13,7 +13,7 @@
 
     p = @course.desc
 
-  h2 1. 绑定 Github 账号
+  h1.action-panel__title 1. 绑定 Github 账号
 
   // .u-bg-lightblue.u-padding-15
   .action-panel
@@ -43,13 +43,14 @@
 
 
 
-  h2 2. 个人信息
+  h1.action-panel__title 2. 个人信息
 
   .action-panel
     = render "personal_info_form"
 
 footer.site-footer
-  .logo
+  img.site-footer__logo src=image_url('logo2.png')
+
 
 javascript:
   if($('.js-bind-success').length == 0 ){
