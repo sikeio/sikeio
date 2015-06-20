@@ -30,7 +30,7 @@
   }
 
   p {
-    line-height: 1.8
+    line-height: 1.8em;
   }
 
   ul li {
@@ -41,17 +41,11 @@
     max-width: 620px;
     width: 100%;
     margin: 0 auto;
-    padding: 0 1.1111em;
   }
 }
 
-@media (min-width: 960px) {
-  .sike-global {
-    font-size: 19px;
-  }
-}
 
-@media (min-width: 720px) and (max-width: 960px) {
+@media (min-width: 720px) {
   .sike-global {
     font-size: 18px;
   }
@@ -63,16 +57,9 @@
   }
 }
 
-@media (min-width: 480px) and (max-width: 619px) {
+@media (max-width: 619px) {
   .sike-global {
     font-size: 15px;
-  }
-}
-
-@media (max-width: 479px) {
-  .sike-global {
-    font-size: 14px;
-
     h1 {
       font-size: 2em;
     }
@@ -80,6 +67,8 @@
     .h1--large {
       font-size: 2.66667em;
     }
-
+    .container {
+      padding: 0 1.11111em
+    }
   }
 }
