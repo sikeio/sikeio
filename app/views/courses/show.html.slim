@@ -25,7 +25,7 @@
           = sanitize current_lesson.overview
           p.current-mission__overview__bbs.u-center-text
 
-            | 请把代码推到 #{current_lesson.project_repo_name_for(current_user)}
+            | 请把代码推到 #{current_lesson.project_repo_name_for(@enrollment)}
             br
             br
             a target="_blank" href="#{current_lesson.discourse_qa_topic_url}"

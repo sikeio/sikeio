@@ -42,12 +42,20 @@ class Lesson < ActiveRecord::Base
     super(name)
   end
 
-  def project_repo_name_for(user)
-    "#{user.github_username}/sike-#{self.course.name}-#{self.project}"
+  def project_repo_name_for(enroll)
+    if enroll.partnership_account
+      "#{enroll.partnership_account}/sike-#{self.course.name}-#{self.project}"
+    else
+      "#{enroll.user.github_username}/sike-#{self.course.name}-#{self.project}"
+    end
   end
 
-  def project_repo_url_for(user)
-    "https://github.com/#{project_repo_name_for(user)}"
+  def project_repo_url_for(enroll)
+    if enroll.partnership_account
+      "https://git.oschina.net/#{project_repo_name_for(enroll)}"
+    else
+      "https://github.com/#{project_repo_name_for(enroll)}"
+    end
   end
 
   def discourse_checkin_topic_url

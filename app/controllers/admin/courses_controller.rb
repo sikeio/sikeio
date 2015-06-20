@@ -47,7 +47,7 @@ class Admin::CoursesController < Admin::ApplicationController
   end
 
   def create_invite
-    invite = CourseInvite.new(course_id: course.id)
+    invite = CourseInvite.new(course_id: course.id, partnership_name: params[:partner])
     if !invite.save
       flash[:error] = invite.errors
     end

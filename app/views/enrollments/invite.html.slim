@@ -46,7 +46,12 @@
   h1.action-panel__title 2. 个人信息
 
   .action-panel
-    = render "personal_info_form"
+    - partner = nil
+    - token = nil
+    - if @course_invite
+      - partner = @course_invite.partnership_name
+      - token = @course_invite.token
+    = render partial: "personal_info_form", locals: {partner: partner, token: token}
 
 footer.site-footer
   img.site-footer__logo src=image_url('logo2.png')

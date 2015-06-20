@@ -72,6 +72,7 @@ class EnrollmentsController < ApplicationController
         mixpanel_track(temp_enrollment.id, "Created Enrollment", {"Course" => temp_enrollment.course.name})
       end
       temp_enrollment.update(start_time: @course_invite.start_time) if @course_invite.start_time
+      temp_enrollment.update(partnership_name: @course_invite.partnership_name) if !@course_invite.partnership_name.blank?
 
       @course = @course_invite.course
       @user = current_user
@@ -106,6 +107,13 @@ class EnrollmentsController < ApplicationController
   end
 
   def update
+    redirect_path = nil
+    if params[:partner]
+      redirect_path = enroll_enrollment_path(id: params[:partner])
+    else
+      redirect_path = invite_enrollment_path(enrollment)
+    end
+
     user = enrollment.user
     if user.name.blank?
       name = params[:user][:name]
@@ -113,8 +121,18 @@ class EnrollmentsController < ApplicationController
         user.update_attribute :name, name
       else
         flash[:error] = "请输入你的姓名~"
-        redirect_to_invite
+        redirect_to redirect_path
         return
+      end
+    end
+
+    if params[:partner]
+      if params[:partnership_account].blank?
+        flash[:error] = "请输入您的账号"
+        redirect_to redirect_path
+        return
+      else
+        enrollment.update(:partnership_account => params[:partnership_account])
       end
     end
 
@@ -122,7 +140,7 @@ class EnrollmentsController < ApplicationController
 
     if !user_info_completed?
       flash[:error] = "请输入完整信息~"
-      redirect_to_invite
+      redirect_to redirect_path
       return
     end
 
@@ -131,12 +149,16 @@ class EnrollmentsController < ApplicationController
       return
     end
 
-    redirect_to pay_enrollment_path(@enrollment)
+    redirect_to pay_enrollment_path(@enrollment, partner: params[:partner])
   end
 
   def pay
     if !user_info_completed?
-      redirect_to_invite
+      if params[:partner]
+        redirect_to enroll_enrollment_path(params[:partner])
+      else
+        redirect_to_invite
+      end
       return
     end
 
