@@ -56,6 +56,8 @@
         padding: 0 10px
     .bottom
       clear: both
+      display: flex
+      align-items: center
       background: #F8FBFF
       padding: 20px 0
       .time
@@ -72,3 +74,26 @@
         border-radius: 0
         width: 170px
         margin-left: 30px
+
+  @media (max-width: 620px)
+    header .content
+      margin-left: 0px
+    form
+      section
+        float: none
+        width: 100%
+        padding: 0 1.111em
+        .wrapper
+          height: 300px
+      .edit
+        .CodeMirror
+          height: 200px
+      .bottom
+        width: 100%
+        display: table
+        margin: auto
+        vertical-align: left
+        .time, .difficulty, .submit
+          display: block
+          width: 50%
+          margin: 15px auto

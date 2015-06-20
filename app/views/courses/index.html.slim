@@ -1,51 +1,24 @@
-header.site-header.site-header--center
-  .logo-title
-    .logo-title__logo
-      .logo
-    .logo-title__title
+.container
+  header.site-header
+    a.site-header__root
+    h1.site-header__title
       |前往课程
-- if @enrollments.length == 0
-  .message.u-center-content
+  - if @enrollments.length == 0
+    .message.u-center-content
 
-    | 你还没有加入任何课程，可以考虑下面这些课程~
-  - @courses.each do |c|
-    = render :partial => 'course_entry', locals: {course_name: c.name, title: c.title, course_link: info_course_path(c), new_course: true}
-  .coach-info
-    h1.coach-info__title
-      |导师介绍
-    .coach-info__wechat-add
-      .wechat-add
-        img.wechat-add__qr src="#{image_path("courses/weixin.png")}"
-        .wechat-add__account
-          |微信：hayeah666
-    .coach-info__content
-      .text-content
-        p
-          |我叫 Howard，台湾同胞一枚。小时候随家人移民加拿大。2011 年远程工作，边旅行边赚钱。那一年第一次来到了天朝。我写了篇有关这个经历的博文 <a href="http://metacircus.com/writings/2011/09/19/from-the-office-to-travelling-the-world.html">From The Office to Travelling The World</a>。
+      | 你还没有加入任何课程，可以考虑下面这些课程~
+    - @courses.each do |c|
+      = render :partial => 'course_entry', locals: {course_name: c.name, title: c.title, course_link: info_course_path(c), new_course: true}
 
-        p
-          |2012 年觉得生活太安逸，决定来中国发展，发现难度瞬间提升为 Hard。在深圳和朋友创立了小象网，做创意纸品，婚纱相册之类的产品。现在已盈利，处稳定发展状态。
+    = render "coach_info"
 
-        p
-          |2013 夏，搬到成都和女朋友在一起。
-
-        p
-          |Github:
-          a href="http://github.com/hayeah"
-            |  http://github.com/hayeah
-          br
-          |Blog:
-          a href="http://metacircus.com"
-            |  http://metacircus.com
-
-
-- else
-  - @enrollments.each do |e|
-    = render :partial => 'course_entry', locals: {course_name: e.course.name, course_link: course_path(e.course),
+  - else
+    - @enrollments.each do |e|
+      = render :partial => 'course_entry', locals: {course_name: e.course.name, course_link: course_path(e.course),
                                                    new_course: false, title: e.course.title}
 
-footer.site-footer
-  img.site-footer__logo src=image_url('logo2.png')
+  footer.site-footer
+    img.site-footer__logo src=image_url('logo2.png')
 
 
 

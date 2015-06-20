@@ -1,15 +1,15 @@
-= form_for @enrollment, class: 'form form--no-margin js-enrollment-update-personal-info-form'
+= form_for @enrollment, class: 'js-enrollment-update-personal-info-form'
   - if @user && @user.name.blank?
-    .form__row
+    .action-panel__row
       label
         | 姓名
       input.blog-url name='user[name]'
 
-  .form__row
+  .action-panel__row
     label 博客
     input.blog-url name='personal_info[blog_url]'
 
-  .form__row
+  .action-panel__row
     label 性别
     .radio
       input.radio__input type='radio' id='gender_radio1' name='personal_info[gender]' value="汉子"
@@ -27,7 +27,7 @@
         span.radio__label__span
         | 不清楚
 
-  .form__row
+  .action-panel__row
     label 职业
     .radio
       input.radio__input type='radio' id='radio1' name='personal_info[occupation]' value="在职"
@@ -45,9 +45,10 @@
         span.radio__label__span
         | 无业游民
 
-  .action-panel__actions
-    button.btn.btn--normal type='submit'
-      - if @course.free
-        | 开始课程
-      - else
-        | 下一步
+  .action-panel__row
+    .action-panel__actions
+      button.btn.btn--normal type='submit'
+        - if @course.free
+          | 开始课程
+        - else
+          | 下一步
