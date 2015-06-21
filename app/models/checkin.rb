@@ -53,7 +53,7 @@ class Checkin < ActiveRecord::Base
   def project_repo_url
     return nil if lesson.project.blank?
     # <github-username>/besike-<course-name>-<project-name>
-    lesson.project_repo_url_for(enrollment.user)
+    lesson.project_repo_url_for(enrollment)
   end
 
   def discourse_poster

@@ -1,4 +1,5 @@
 = form_tag create_invite_admin_course_path(@course), method: :post
+  = text_field_tag "partner"
   = submit_tag "new invite"
 table.table.table-bordered
   thead
@@ -9,6 +10,8 @@ table.table.table-bordered
         |URL
       th
         |Start Time
+      th
+        |Partner
       th
         |Start at this week
       th
@@ -25,6 +28,8 @@ table.table.table-bordered
           | #{enroll_enrollment_url(invite.token)}
         td
           | #{invite.start_time}
+        td
+          | #{invite.partnership_name}
         td
           = form_tag admin_start_time_path(invite), method: :post
             = submit_tag "Start at this Week"

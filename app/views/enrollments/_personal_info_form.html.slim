@@ -4,6 +4,12 @@
       label
         | 姓名
       input.blog-url name='user[name]'
+  - if !partner.blank?
+    .action-panel__row
+      label
+        |#{partner}账号
+      input.blog_url name='partnership_account'
+      = hidden_field_tag 'partner', token
 
   .action-panel__row
     label 博客
