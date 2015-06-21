@@ -31,6 +31,12 @@
       a href="#{checkin_show_path(@lesson)}"
         i.fa.fa-check-circle
         |打卡
+.sike-qr
+  p
+    |你喜欢这个课程吗？
+  p
+    |扫描二维码和朋友分享
+  = image_tag("sikeio.png", class: "sike-qr-hidden")
 
 .message
   | 请把本课代码推到 #{@lesson.project_repo_name_for(@enrollment)}
