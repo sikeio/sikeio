@@ -188,14 +188,12 @@ class EnrollmentsController < ApplicationController
   end
 
   def info_update
-    if params[:partnership_account].blank?
+    if !enrollment.partnership_name.blank? && params[:partnership_account].blank?
       render json: {success: false, message: "个性地址不能为空~"}
-    else
-    enrollment.update_attribute :personal_info, params.require(:personal_info).permit(:blog_url, :occupation, :gender)
-      enrollment.update(partnership_account: params[:partnership_account], personal_info: params.require(:personal_info).permit(:blog_url, :occupation, :gender))
-      render json: {success: true, url: course_path(enrollment.course)}
+      return
     end
-
+    enrollment.update(partnership_account: params[:partnership_account], personal_info: params.require(:personal_info).permit(:blog_url, :occupation, :gender))
+    render json: {success: true, url: course_path(enrollment.course)}
   end
 
 

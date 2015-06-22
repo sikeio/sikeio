@@ -3,7 +3,7 @@
     a.site-header__root href="/"
     h1.site-header__title= "个人信息"
 
-  = form_for @enrollment, method: :patch, url: info_update_enrollment_path(@enrollment), remote: true, html: {class: "js-enroll-show"} do |f|
+  = form_for @enrollment, method: :patch, url: info_update_enrollment_path(@enrollment), remote: true, html: {class: "action-panel js-enroll-show"} do |f|
     - if @enrollment.partnership_name
       .action-panel__row
         label
