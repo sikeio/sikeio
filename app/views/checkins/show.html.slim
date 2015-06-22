@@ -7,7 +7,12 @@ header.site-header
 = form_for @checkin, url: @url_path, method: @html_method, remote: true, html: {class: 'js-checkin'} do |f|
   section.edit
     .top-info.u-vertical-center
-      p.title 我的学习笔记
+      - if ["css0to1", "design101"].include?(@course.name)
+        p.title
+          |我的学习笔记
+          <strong>(请上传作品截图)</strong>
+      - else
+        p.title 我的学习笔记
       a href="https://help.github.com/articles/github-flavored-markdown/" target="_blank" Markdown 语法
     .progress-container
     .wrapper#upload-area
