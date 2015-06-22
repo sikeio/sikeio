@@ -1,0 +1,91 @@
+.container
+  header.site-header
+    a.site-header__root href="/"
+    h1.site-header__title= "个人信息"
+
+  = form_for @enrollment, method: :patch, url: info_update_enrollment_path(@enrollment), remote: true, html: {class: "action-panel js-enroll-show"} do |f|
+    - if @enrollment.partnership_name
+      .action-panel__row
+        label
+          |#{@enrollment.partnership_name}个性地址
+        input.blog_url name='partnership_account' value="#{@enrollment.partnership_account}"
+        .action-panel__tips
+          p
+            |提示:&nbsp;&nbsp;请不要填写个性地址共有部分。
+          p
+            |例如:
+          p
+            |完整个性地址是:
+          p.u-center-text
+            |https://git.oschina.net/hayeah
+          p
+            |只需填写:&nbsp;&nbsp;&nbsp;hayeah
+
+    .action-panel__row
+      label 博客(可选)
+      input.blog-url name='personal_info[blog_url]' value='#{@enrollment.personal_info["blog_url"]}'
+
+    .action-panel__row
+      label 性别
+      .radio
+        - if @enrollment.personal_info["gender"] == "汉子"
+          input.radio__input type='radio' id='gender_radio1' name='personal_info[gender]' value="汉子" checked="checked"
+        - else
+          input.radio__input type='radio' id='gender_radio1' name='personal_info[gender]' value="汉子"
+        label.radio__label for='gender_radio1'
+          span.radio__label__span
+          | 汉子
+      .radio
+        - if @enrollment.personal_info["gender"] == "妹子"
+          input.radio__input type='radio' id='gender_radio2' name='personal_info[gender]' value="妹子" checked="checked"
+        - else
+          input.radio__input type='radio' id='gender_radio2' name='personal_info[gender]' value="妹子"
+        label.radio__label for='gender_radio2'
+          span.radio__label__span
+          | 妹子
+      .radio
+        - if @enrollment.personal_info["gender"] == "不清楚"
+          input.radio__input type='radio' id='gender_radio3' name='personal_info[gender]' value="不清楚" checked="checked"
+        - else
+          input.radio__input type='radio' id='gender_radio3' name='personal_info[gender]' value="不清楚"
+        label.radio__label for='gender_radio3'
+          span.radio__label__span
+          | 不清楚
+
+    .action-panel__row
+      label 职业
+      .radio
+        - if @enrollment.personal_info["occupation"] == "在职"
+          input.radio__input type='radio' id='radio1' name='personal_info[occupation]' value="在职" checked="checked"
+        - else
+          input.radio__input type='radio' id='radio1' name='personal_info[occupation]' value="在职"
+        label.radio__label for='radio1'
+          span.radio__label__span
+          | 在职
+      .radio
+        - if @enrollment.personal_info["occupation"] == "学生"
+          input.radio__input type='radio' id='radio2' name='personal_info[occupation]' value="学生" checked="checked"
+        - else
+          input.radio__input type='radio' id='radio2' name='personal_info[occupation]' value="学生"
+        label.radio__label for='radio2'
+          span.radio__label__span
+          | 学生
+      .radio
+        - if @enrollment.personal_info["occupation"] == "无业游民"
+          input.radio__input type='radio' id='radio3' name='personal_info[occupation]' value="无业游民" checked="checked"
+        - else
+          input.radio__input type='radio' id='radio3' name='personal_info[occupation]' value="无业游民"
+        label.radio__label for='radio3'
+          span.radio__label__span
+          | 无业游民
+
+      .action-panel__row
+        .action-panel__actions
+          ul
+            li
+              = f.submit "修改", class: "btn btn--normal"
+            li
+              a.btn.btn--normal href=course_path(@enrollment.course)
+                |返回
+
+

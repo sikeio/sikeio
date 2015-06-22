@@ -54,12 +54,13 @@ Rails.application.routes.draw do
   get "/courses/:course_id/:id" => "lessons#show", as: :lesson
 
 
-  resources :enrollments, only: [:create,:update, :new] do
+  resources :enrollments, only: [:create,:update, :new, :show] do
     member do
       get 'enroll'
       get 'invite'
       get 'pay'
       post 'finish'
+      patch 'info_update'
     end
   end
 
