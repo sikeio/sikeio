@@ -128,7 +128,7 @@ class EnrollmentsController < ApplicationController
 
     if params[:partner]
       if params[:partnership_account].blank?
-        flash[:error] = "请输入您的账号"
+        flash[:error] = "请输入您的个性地址"
         redirect_to redirect_path
         return
       else
