@@ -7,8 +7,19 @@
   - if !partner.blank?
     .action-panel__row
       label
-        |#{partner}账号
+        |#{partner}个性地址
       input.blog_url name='partnership_account'
+      .action-panel__tips
+        p
+          |提示:&nbsp;&nbsp;请不要填写个性地址共有部分。
+        p
+          |例如:
+        p
+          |完整个性地址是:
+        p.u-center-text
+          |https://git.oschina.net/hayeah
+        p
+          |只需填写:&nbsp;&nbsp;&nbsp;hayeah
       = hidden_field_tag 'partner', token
 
   .action-panel__row
