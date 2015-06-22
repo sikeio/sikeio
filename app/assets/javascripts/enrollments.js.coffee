@@ -32,6 +32,24 @@ $ ->
   #         $('.tuition .new').text ''
   #         $('.tuition .origin').removeClass 'u-invalid-text'
 
+$ ->
+  #pay page
+  # broken!
+  pageIdentifier = "#enrollments_show "
+  $(document)
+    .on "ajax:success", pageIdentifier + ".js-enroll-show", (e, data) ->
+      if data.success
+        swal
+          title: "更新成功!"
+          type: "success"
+          closeOnConfirm: data.url
+        window.location.replace(data.url)
+      else
+        swal
+          title: "更新失败!"
+          text: data.message
+          type: "error"
+
 
 
 
