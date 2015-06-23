@@ -6,6 +6,7 @@ class HomeController < ApplicationController
     @ios_course = Course.find_by(name: "ios")
     @nodejs_course = Course.find_by(name: "nodejs")
 
+    mixpanel_register(share: params[:share] || "direct")
     mixpanel_track(cookies.signed[:distinct_id], "Visited Home Page")
   end
 
