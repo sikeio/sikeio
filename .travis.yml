@@ -12,7 +12,7 @@ before_script:
 - rake parallel:prepare --trace
 - rake parallel:seed --trace
 script:
-- xvfb-run -a rake  parallel:spec[authentications]
+- xvfb-run -a rake parallel:spec[authentications]
 before_install:
 - npm install -g bower
 - npm install -g marked
