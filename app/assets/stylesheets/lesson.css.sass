@@ -142,10 +142,24 @@ $code-lineheight: 150%
   & > p
     margin: $p-margin auto
     line-height: $p-lineheight
-  img,video
+  img
     max-width: 100%
     display: block
     margin: auto
+
+  video
+    width: 30%
+    display: block
+    margin: auto
+
+  .video-modal 
+    .modal-dialog 
+      width: 70%!important
+      .modal-body 
+        padding: 5px
+        video
+          width: 100%!important
+
   code
     font-family: menlo
     font-size: 16px
