@@ -4,7 +4,7 @@ $ ->
     browse_button: 'pickfiles',
     container: 'upload-area',
     drop_element: 'upload-area',
-    max_file_size: '4mb',
+    max_file_size: '10mb',
     flash_swf_url: '/plupload/Moxie.swf',
     dragdrop: true,
     chunk_size: '4mb',
