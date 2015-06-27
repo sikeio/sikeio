@@ -38,10 +38,11 @@ $ ->
 
 
       'Error': (up, err, errTip)->
+        error = JSON.parse(err)
         swal
           type: 'error'
           title: "文件上传出错误！"
-          text: err
+          text: error.error
 
   pageIdentifier = "#checkins_show "
   $(document)
