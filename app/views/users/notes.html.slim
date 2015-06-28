@@ -1,4 +1,18 @@
 = render partial: "left_panel"
 .right-panel
+  - if @user == current_user
+    - enrollments = @user.enrollments
+    - uncompletes = enrollments.find_all do |e|
+      - e.schedule.any_released? && !e.schedule.all_completed?
+
+    - if !uncompletes.blank?
+      .mission-show
+        h2.mission-show__title 当前未完成的任务
+        = hidden_field_tag "send-day", @send_day
+        - num = 0
+        - uncompletes.each do |e|
+          - num += 1
+          = render partial: "uncomplete", locals:{e: e, num: num}
+
   - @user.checkins.order(created_at: :desc).each do |checkin|
-    = render partial: "note_item",locals: {checkin: checkin}
+    = render partial: "note_item",locals: {checkin: checkin }

@@ -1,0 +1,14 @@
+.mission-show__item
+  - current_lesson = e.schedule.current_lesson
+  - course = e.course
+  .uncomplete-mission__course-info
+    .course-color style="border-color:#{course.color}"
+      a  href=course_link(course) = course.title
+      span
+        |(#{e.schedule.completed_lessons_num}/#{e.schedule.lessons_sum})
+  .uncomplete-mission__content
+    a href=lesson_path(course, current_lesson)
+      |#{num}. #{current_lesson.title}
+.uncomplete-mission__time.js-time-left
+  = hidden_field_tag "#{course.permalink}", e.schedule.current_lesson_day_left, {class: "current_lesson_day_left"}
+  p.time-show

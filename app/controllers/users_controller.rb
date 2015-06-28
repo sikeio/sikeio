@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
   def notes
     get_user
+     @send_day = Time.now.beginning_of_day.to_f * 1000 # convert to milliseconds for js
   end
 
   def note
@@ -23,8 +24,17 @@ class UsersController < ApplicationController
     return @user if defined? @user
     @user = User.find_by_github_username(params[:github_username])
     if @user.nil?
-      flash[:error] = "不存在该用户!"
-      redirect_to root_path
+      if params[:github_username] == "$self$"
+        @user = current_user
+      else
+        if current_user
+          flash.now[:error] = "用户不存在~"
+          @user = current_user
+        else
+          flash[:error] = "用户不存在~"
+          redirect_to root_path
+        end
+      end
     end
   end
 
