@@ -9,10 +9,8 @@
       .mission-show
         h2.mission-show__title 当前未完成的任务
         = hidden_field_tag "send-day", @send_day
-        - num = 0
         - uncompletes.each do |e|
-          - num += 1
-          = render partial: "uncomplete", locals:{e: e, num: num}
+          = render partial: "uncomplete", locals:{e: e}
 
   - @user.checkins.order(created_at: :desc).each do |checkin|
     = render partial: "note_item",locals: {checkin: checkin }
