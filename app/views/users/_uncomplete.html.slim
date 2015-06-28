@@ -1,5 +1,6 @@
 .mission-show__item
   - current_lesson = e.schedule.current_lesson
+  - num = e.schedule.lesson_number(current_lesson)
   - course = e.course
   .uncomplete-mission__course-info
     .course-color style="border-color:#{course.color}"
