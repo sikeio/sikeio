@@ -120,6 +120,7 @@ class Enrollment::Schedule
 
   def is_released?(lesson)
     return false if !lesson
+    return false if enrollment.start_time.blank?
     day = release_day_of_lesson(lesson)
     day_from_start_time >= day
   end
@@ -166,7 +167,7 @@ class Enrollment::Schedule
 
         time = next_lesson_start_day - day_from_start_time
       else
-        time = 1
+        time = course_weeks_sum * 7 - day_from_start_time
       end
     end
 

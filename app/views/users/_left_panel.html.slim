@@ -18,8 +18,7 @@
   - if current_user == @user
     .edit
       a href="javascript:void(0)" data-url=update_user_path(@user)
-        i.fa.fa-pencil-square-o
-        | Edit
+        i.fa.fa-cog.fa-lg
 
   .courses
     - @user.courses.each do |course|
@@ -27,3 +26,4 @@
         a style="background-color:#{course.color}" href=course_link(course) = course.title
 
   .logo
+    = image_tag("courses/logo_course.png")
