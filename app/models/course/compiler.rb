@@ -58,6 +58,7 @@ class Course::Compiler
   def course_xml
     xml = <<-THERE
     <course name="#{course_title}">
+      #{overview_xml}
       #{index_xml}
       #{pages_xml}
     </course>
@@ -74,6 +75,21 @@ class Course::Compiler
     Dir[repo_dir].select {}
   end
 
+  def overview_xml
+    node = dom_for_index.css(COURSE_TITLE_HEADER)[0].next_sibling
+    course_overview = nil
+    while node
+      if node.name == WEEK_HEADER
+        break
+      end
+      if node.name == "overview"
+        course_overview = node.to_xhtml
+        break
+      end
+    end
+    course_overview
+  end
+
   def index_xml
     <<-THERE
     <index>
@@ -82,11 +98,21 @@ class Course::Compiler
     THERE
   end
 
+  def has_week_defined?
+    !dom_for_index.css("> #{WEEK_HEADER}").blank?
+  end
+
   def weeks_xml
     weeks = ""
     xml = dom_for_index
-    node = xml.child
     nodes_in_week = nil
+    node = nil
+    if has_week_defined?
+      node = xml.css("> #{WEEK_HEADER}")[0]
+    else
+      nodes_in_week = ""
+      node = xml.css("> lesson")[0]
+    end
     while node
       if node.name == WEEK_HEADER
         if nodes_in_week
