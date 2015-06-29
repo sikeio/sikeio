@@ -4,7 +4,26 @@ header.site-header
     .b-course-title style="border-color:#{@course.color};" = @course.title
     h1.lesson-title = "打卡 - #{@lesson.title}"
 
+.message
+  p
+    | 请把本课代码推到 #{@lesson.project_repo_name_for(@enrollment)}
+  p
+    - if @enrollment.partnership_name.blank?
+      a  href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/001374385852170d9c7adf13c30429b9660d0eb689dd43a000"
+        |怎么把代码推到GitHub?
+    - else
+      a  href="http://www.powerapp.io/powerapp/doc/41.htm"
+        |怎么把代码推到OSChina?
+
+
+
 = form_for @checkin, url: @url_path, method: @html_method, remote: true, html: {class: 'js-checkin'} do |f|
+  h1.checkin-title
+    i.fa.fa-check-circle.fa-2x
+    |&nbsp;&nbsp;打卡
+    span
+      a href="#{lesson_path(@lesson.course, @lesson)}"
+        | #{@lesson.title}
   section.edit
     .top-info.u-vertical-center
       - if ["css0to1", "design101"].include?(@course.name)
@@ -31,10 +50,12 @@ header.site-header
   .bottom.u-vertical-center
     .time.u-vertical-center
       = f.label :time_cost, "花费时间"
-      = f.text_field :time_cost
-      span 小时
+      span
+        = f.text_field :time_cost
+        |小时
     .difficulty.u-vertical-center
       = f.label :degree_of_difficulty, "难度"
       = f.select :degree_of_difficulty, options_for_select([["太简单", 0], ["容易", 1], ["适中", 2], ["难", 3], ["太难", 4]], @checkin.degree_of_difficulty), include_blank: true
+
 
     = f.submit "打卡", class: "submit btn btn--normal"
