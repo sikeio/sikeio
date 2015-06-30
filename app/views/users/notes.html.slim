@@ -1,16 +1,24 @@
 = render partial: "left_panel"
 .right-panel
-  - if @user == current_user
-    - enrollments = @user.enrollments
-    - uncompletes = enrollments.find_all do |e|
-      - e.schedule.any_released? && !e.schedule.all_completed?
+  - if @user.enrollments.blank?
+    h2.no-enroll-message
+      | 你还没有加入任何课程
+    .to_home
+      a href="/"
+        | 返回思客主页
 
-    - if !uncompletes.blank?
-      .mission-show
-        h2.mission-show__title 当前未完成的任务
-        = hidden_field_tag "send-day", @send_day
-        - uncompletes.each do |e|
-          = render partial: "uncomplete", locals:{e: e}
+  - else
+    - if @user == current_user
+      - enrollments = @user.enrollments
+      - uncompletes = enrollments.find_all do |e|
+        - e.schedule.any_released? && !e.schedule.all_completed?
 
-  - @user.checkins.order(created_at: :desc).each do |checkin|
-    = render partial: "note_item",locals: {checkin: checkin }
+      - if !uncompletes.blank?
+        .mission-show
+          h2.mission-show__title 当前未完成的任务
+          = hidden_field_tag "send-day", @send_day
+          - uncompletes.each do |e|
+            = render partial: "uncomplete", locals:{e: e}
+
+    - @user.checkins.order(created_at: :desc).each do |checkin|
+      = render partial: "note_item",locals: {checkin: checkin }

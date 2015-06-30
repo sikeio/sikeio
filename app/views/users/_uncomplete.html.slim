@@ -7,7 +7,7 @@
       a  href=course_link(course) = course.title
       span
         |(#{e.schedule.completed_lessons_num}/#{e.schedule.lessons_sum})
-  .uncomplete-mission__content
+  .uncomplete-mission__content.uncomplete-mission__content--note
     a href=lesson_path(course, current_lesson)
       |#{num}. #{current_lesson.title}
 .uncomplete-mission__time.js-time-left

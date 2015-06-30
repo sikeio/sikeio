@@ -1,12 +1,4 @@
 
-.message
-  | 请把本课代码推到 #{@lesson.project_repo_name_for(@enrollment)}
-  - if @enrollment.partnership_name.blank?
-    a class="u-display-left" href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/001374385852170d9c7adf13c30429b9660d0eb689dd43a000"
-      |怎么把代码推到GitHub?
-  - else
-    a class="u-display-left" href="http://www.powerapp.io/powerapp/doc/41.htm"
-      |怎么把代码推到OSChina?
 
 = raw @lesson_html
 
@@ -15,11 +7,8 @@
   a target="_blank" href=@lesson.discourse_qa_topic_url 我要提问
 
 - if !@is_extra_lesson
-  / p.goal
-    i.fa.fa-flag
-    | Pass
-    strong
-      | testPathDrawing
+  h1.end The End
+
 
   - if @is_checkout
     div.checkin.checkin--completed
@@ -32,18 +21,7 @@
         i.fa.fa-check-circle
         |打卡
 .sike-qr
-  p
-    |你喜欢这个课程吗？
-  p
-    |扫描二维码和朋友分享
   = image_tag("lesson-qr.png")
-
-.message
-  | 请把本课代码推到 #{@lesson.project_repo_name_for(@enrollment)}
-  - if @enrollment.partnership_name.blank?
-    a class="u-display-left" href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/001374385852170d9c7adf13c30429b9660d0eb689dd43a000"
-      |怎么把代码推到GitHub?
-  - else
-    a class="u-display-left" href="http://www.powerapp.io/powerapp/doc/41.htm"
-      |怎么把代码推到OSChina?
+  p.wechat-message
+    |你喜欢思客的课程吗？微信转发，拉朋友入坑！
 

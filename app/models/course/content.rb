@@ -39,7 +39,7 @@ class Course::Content
   #{:desc =>"desc", :title => "title"}
   def course_info
     {
-      desc: nil,
+      desc: course_overview,
       title: course_title
     }
   end
@@ -106,7 +106,9 @@ class Course::Content
     temp_weeks_info = []
     index_dom.css("week").sort.each do |week_node|
       info = {}
-      title = week_node.css("> h2")[0].text
+      title_nodes = week_node.css("> h2")
+      title = title_nodes.blank? ? "" : title_nodes[0].text
+
       overview_node = week_node.css("> overview")[0]
       overview = overview_node ? overview_node.children.to_xhtml : ""
       info[:title] = title
@@ -170,6 +172,10 @@ class Course::Content
 
   def course_title
     xml_dom.css("course")[0]["name"]
+  end
+
+  def course_overview
+    xml_dom.css("course > overview")[0].children.to_xhtml
   end
 
   def lesson_title(lesson_name)

@@ -55,27 +55,12 @@ $code-lineheight: 150%
   overflow-x: hidden
   a
     @include link-display
-  header
-    @include image-mask
-    font-size: 0
-    position: relative
-    margin-bottom: 80px
-    img
-      width: 100%
-    h1
-      font-size: 40px
-      font-weight: 400
-      text-decoration: underline
-      z-index: 1
-      color: white
-      position: absolute
-      top: 0
-      bottom: 0
-      margin: auto
-      text-align: center
-      height: 45px
-      width: 100%
-      max-width: none
+  p.wechat-message
+    padding-top: 20px
+    padding-bottom: 100px
+  h1.end
+    text-align: center
+    margin-bottom: 0
 
   img
     border: 1px solid #DADADA
@@ -152,10 +137,10 @@ $code-lineheight: 150%
     display: block
     margin: auto
 
-  .video-modal 
-    .modal-dialog 
+  .video-modal
+    .modal-dialog
       width: 70%
-      .modal-body 
+      .modal-body
         padding: 5px
         video
           width: 100%

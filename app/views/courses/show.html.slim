@@ -1,44 +1,32 @@
-.site-header
-  a.site-header__root
-  h1.site-header__title
-      = @enrollment.course.title
-  .course-site-head-status
-    a.course-site-head-status__logout href=logout_path data-method="DELETE"
-      i.fa.fa-sign-out
-    a  href=enrollment_path(@enrollment)
-      = image_tag current_user.avatar, class: "avatar"
-    p.course-site-head-status__mission-status
-     | #{@enrollment.schedule.completed_lessons_num}/#{@enrollment.schedule.lessons_sum} Completed
 
 = hidden_field_tag "send-day", @send_day
 
 .container
-  .current-mission
-    /= image_tag "courses/header.png"
-    - if @enrollment.schedule.any_released?
+  .course-describe
+    h1.course-describe__title
+      | #{@enrollment.course.title}
+    h3.course-describe__mission-status
+      - if @enrollment.schedule.any_released?
+        |#{@enrollment.schedule.completed_lessons_num}/#{@enrollment.schedule.lessons_sum}&nbsp;&nbsp;已完成
+      - else
+        | 即将在 #{@enrollment.start_time.strftime("%m/%d/%Y")} 开始
+    .course-describe__overview
+      = raw @enrollment.course.desc
+    - if @enrollment.schedule.any_released? && !@enrollment.schedule.all_completed?
       - current_lesson = @enrollment.schedule.current_lesson
       - if current_lesson
-        = hidden_field_tag "current_lesson_day_left", @enrollment.schedule.current_lesson_day_left
-        h1.current-mission__title.u-center-text
-          a(href=lesson_path(@enrollment.course,current_lesson)) #{current_lesson.title}
-        p.current-mission__time-remainning__time.js-current-mission-time-remainning
-        .current-mission__overview
-          = sanitize current_lesson.overview
-          p.current-mission__overview__bbs.u-center-text
+        .course-describe__uncomplete-mission
+          h2
+            |当前未完成任务
+          - course = @enrollment.course
+          - num = @enrollment.schedule.lesson_number(current_lesson)
+          .uncomplete-mission__content
+            a href=lesson_path(course, current_lesson)
+              |#{num}. #{current_lesson.title}
+          .uncomplete-mission__time.js-time-left
+            = hidden_field_tag "#{course.permalink}" , @enrollment.schedule.current_lesson_day_left, {class: "current_lesson_day_left"}
+            p.time-show
 
-            | 请把代码推到 #{current_lesson.project_repo_name_for(@enrollment)}
-            br
-            br
-            a target="_blank" href="#{current_lesson.discourse_qa_topic_url}"
-              span.icon-discuss
-              | 问题讨论
-
-      - else
-        h1.current-mission__title.u-center-text
-          | 开放的课程已经全部完成
-    - else
-      h1.current-mission__title.u-center-text
-        | 即将在 #{@enrollment.start_time.strftime("%m/%d/%Y")} 开始
 
 ul.course-missions
   .container

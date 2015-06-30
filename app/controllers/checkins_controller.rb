@@ -1,4 +1,5 @@
 class CheckinsController < ApplicationController
+  layout "logined", except: [:info]
 
   before_action :require_login
   before_action :param_validate, only: [:create, :update]

@@ -1,23 +1,30 @@
 @import ../../global
 #checkins_show
-  header
-    padding: 20px
-    .logo
-      display: inline-block
-    .content
-      margin-left: 20px
-      display: inline-block
-      .lesson-title
-        margin: 10px 0
-        font-size: 24px
+  label
+    font-weight: 100
+    margin: 0
+  .message
+    text-align: left
+    padding-left: 2.22222em
   form
     @include clearfix
-    max-width: 1000px
     margin: auto
+    h1.checkin-title
+      font-size: 1.333333em
+      margin-bottom: 1.6666667em
+      margin-top: 0.8333333em
+      padding: 0 1.6666667em
+      & > i
+        color: #11D146
+        vertical-align: -15%
+      & > span
+        display: inline-block
+        margin-left: 0.5em
+
     section
       float: left
       width: 50%
-      padding: 0 20px
+      padding: 0 2.22222em
       margin-bottom: 20px
       .wrapper
         border: solid 1px #979797
@@ -66,19 +73,26 @@
         margin-left: 30px
         input
           width: 60px
+          margin-right: 15px
       .difficulty
         width: 140px
         justify-content: space-around
         margin-left: 30px
       .submit
         border-radius: 0
-        width: 170px
+        width: 150px
         margin-left: 30px
 
   @media (max-width: 620px)
+    .message
+      padding-left: 1.111em
+
     header .content
       margin-left: 0px
     form
+      h1.checkin-title
+        padding: 0px 1em
+
       section
         float: none
         width: 100%
@@ -97,3 +111,15 @@
           display: block
           width: 50%
           margin: 15px auto
+          & > span
+            display: inline-block
+            & > input
+              width: 80px
+              margin-right: 5px
+          & > select
+            margin-right: 35px
+          & > label
+            width: 70px
+
+
+
