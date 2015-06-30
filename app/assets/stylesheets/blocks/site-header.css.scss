@@ -38,6 +38,21 @@ h1.site-header__title {
 
 h1.site-header__title--layout {
   font-size: 20px;
+  width: auto;
+  & > a {
+    text-decoration: none;
+    &:link{
+      color: #505050;
+    }
+
+    &:hover {
+      color: black;
+    }
+
+    &:visited {
+      color: #505050;
+    }
+  }
 }
 
 .site-header__personal-info {
@@ -54,6 +69,7 @@ h1.site-header__title--layout {
     display: inline-block;
     vertical-align: middle;
     & > span {
+      font-size: 14px;
       vertical-align: middle;
       margin-left: 6px;
 
@@ -66,6 +82,11 @@ a#header-user-name {
   &:link {
     color: #505050;
   }
+
+  &:visited {
+    color: #505050;
+  }
+
   &:hover {
     color: black;
   }
@@ -73,6 +94,9 @@ a#header-user-name {
 
 a#header-setting {
   &:link {
+    color: #999;
+  }
+  &:visited {
     color: #999;
   }
   &:hover {
@@ -96,7 +120,8 @@ a.site-header__login {
 }
 
 @media (max-width: 620px) {
-  #header-user-name {
+  a#header-user-name {
+    margin-right: 0px;
     & > span {
       display: none;
     }
