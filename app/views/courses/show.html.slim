@@ -1,14 +1,3 @@
-.site-header
-  a.site-header__root
-  h1.site-header__title
-      = @enrollment.course.title
-  .course-site-head-status
-    a.course-site-head-status__logout href=logout_path data-method="DELETE"
-      i.fa.fa-sign-out
-    a  href=enrollment_path(@enrollment)
-      = image_tag current_user.avatar, class: "avatar"
-    p.course-site-head-status__mission-status
-     | #{@enrollment.schedule.completed_lessons_num}/#{@enrollment.schedule.lessons_sum} Completed
 
 = hidden_field_tag "send-day", @send_day
 

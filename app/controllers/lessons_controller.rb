@@ -1,4 +1,5 @@
 class LessonsController < ApplicationController
+  layout "logined", except: [:info]
 
   before_action :require_login
 

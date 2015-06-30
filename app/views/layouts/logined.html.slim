@@ -1,0 +1,30 @@
+doctype html
+head
+  title 思客教学
+  = stylesheet_link_tag    'application', media: 'all'
+  = stylesheet_link_tag    '/sike-fonts/styles.css'
+
+  = javascript_include_tag 'application'
+  = csrf_meta_tags
+  = favicon_link_tag "favicon.ico"
+  meta name="viewport" content="width=device-width, initial-scale=1"
+body id=page_identifier class="sike-global"
+  .flash-message-box.js-dismissable
+    - [:success, :error, :info].each do |type|
+      - if flash[type]
+        .flash-message class="flash-message--#{type}" = flash[type]
+  header.layout-header
+    .site-header.site-header--layout id="site-header-layout"
+      a.site-header__root.site-header__root--layout href="#"
+      h1.site-header__title.site-header__title--layout
+        | NodeJS Express Way
+      .site-header__personal-info
+        a href="#{user_notes_path(current_user.github_username)}" id="header-user-name"
+          = image_tag current_user.avatar
+          span
+            |@#{current_user.github_username}
+        a href="#{enrollment_path(@enrollment)}" id="header-setting"
+          i.fa.fa-cog.fa-2x
+
+
+  == yield

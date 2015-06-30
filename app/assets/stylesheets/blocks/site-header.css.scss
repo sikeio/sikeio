@@ -4,6 +4,10 @@
   color: #656565;
 }
 
+.site-header--layout {
+  border-bottom: 1px solid #F2F2F2
+}
+
 .site-header > * {
   vertical-align: middle;
 }
@@ -17,13 +21,65 @@ a.site-header__root {
   background-repeat: no-repeat;
 }
 
-h1.site-header__title{
+a.site-header__root--layout {
+  background-size: 39px 44.46px;
+  height: 44.46px;
+  width: 39px;
+}
+
+h1.site-header__title {
   display: inline-block;
   margin: 0;
   padding: 0;
 
   font-size: 1.3333333em;
 }
+
+h1.site-header__title--layout {
+  font-size: 20px;
+}
+
+.site-header__personal-info {
+  float: right;
+  display: inline-block;
+  &  img {
+    width: 44.46px;
+    border-radius: 100%;
+    border: 0;
+    padding: 0;
+    display: inline;
+  }
+  & > a {
+    display: inline-block;
+    vertical-align: middle;
+    & > span {
+      vertical-align: middle;
+      margin-left: 6px;
+
+    }
+  }
+}
+a#header-user-name {
+  font-weight: bold;
+  margin-right: 20px;
+  &:link {
+    color: #505050;
+  }
+  &:hover {
+    color: black;
+  }
+}
+
+a#header-setting {
+  &:link {
+    color: #999;
+  }
+  &:hover {
+    color: black;
+  }
+}
+
+
 
 a.site-header__login {
   color: #656565;
@@ -38,4 +94,13 @@ a.site-header__login {
   padding-left: 0;
 }
 
-
+@media (max-width: 620px) {
+  #header-user-name {
+    & > span {
+      display: none;
+    }
+  }
+  #header-setting {
+    display: none;
+  }
+}

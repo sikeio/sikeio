@@ -1,4 +1,5 @@
 class CoursesController < ApplicationController
+  layout "logined", except: [:info]
 
   before_action :anonymous_track, only: [:info]
   before_action :require_login, except: [:info]
