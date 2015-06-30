@@ -15,9 +15,10 @@ body id=page_identifier class="sike-global"
         .flash-message class="flash-message--#{type}" = flash[type]
   header.layout-header
     .site-header.site-header--layout id="site-header-layout"
-      a.site-header__root.site-header__root--layout href="#"
+      a.site-header__root.site-header__root--layout href="/"
       h1.site-header__title.site-header__title--layout
-        | NodeJS Express Way
+        a href="#{course_path(@enrollment.course)}"
+          | #{@enrollment.course.title}
       .site-header__personal-info
         a href="#{user_notes_path(current_user.github_username)}" id="header-user-name"
           = image_tag current_user.avatar

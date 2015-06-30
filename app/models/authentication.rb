@@ -19,6 +19,6 @@ class Authentication < ActiveRecord::Base
   scope :github, -> { where(provider: "github")}
 
   def nickname
-    info["info"]["nickname"].downcase
+    info["info"]["nickname"]
   end
 end
