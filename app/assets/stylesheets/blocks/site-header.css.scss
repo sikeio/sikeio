@@ -4,9 +4,6 @@
   color: #656565;
 }
 
-.site-header--layout {
-  border-bottom: 1px solid #F2F2F2
-}
 
 .site-header > * {
   vertical-align: middle;
@@ -21,11 +18,6 @@ a.site-header__root {
   background-repeat: no-repeat;
 }
 
-a.site-header__root--layout {
-  background-size: 39px 44.46px;
-  height: 44.46px;
-  width: 39px;
-}
 
 h1.site-header__title {
   display: inline-block;
@@ -36,24 +28,6 @@ h1.site-header__title {
   font-size: 1.3333333em;
 }
 
-h1.site-header__title--layout {
-  font-size: 20px;
-  width: auto;
-  & > a {
-    text-decoration: none;
-    &:link{
-      color: #505050;
-    }
-
-    &:hover {
-      color: black;
-    }
-
-    &:visited {
-      color: #505050;
-    }
-  }
-}
 
 .site-header__personal-info {
   float: right;
@@ -76,35 +50,6 @@ h1.site-header__title--layout {
     }
   }
 }
-a#header-user-name {
-  font-weight: bold;
-  margin-right: 20px;
-  &:link {
-    color: #505050;
-  }
-
-  &:visited {
-    color: #505050;
-  }
-
-  &:hover {
-    color: black;
-  }
-}
-
-a#header-setting {
-  &:link {
-    color: #999;
-  }
-  &:visited {
-    color: #999;
-  }
-  &:hover {
-    color: black;
-  }
-}
-
-
 
 a.site-header__login {
   color: #656565;

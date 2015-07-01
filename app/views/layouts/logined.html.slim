@@ -13,18 +13,17 @@ body id=page_identifier class="sike-global"
     - [:success, :error, :info].each do |type|
       - if flash[type]
         .flash-message class="flash-message--#{type}" = flash[type]
-  header.layout-header
-    .site-header.site-header--layout id="site-header-layout"
-      a.site-header__root.site-header__root--layout href="/"
-      h1.site-header__title.site-header__title--layout
-        a href="#{course_path(@enrollment.course)}"
-          | #{@enrollment.course.title}
-      .site-header__personal-info
-        a href="#{user_notes_path(current_user.github_username)}" id="header-user-name"
+  header id="logined-layout-header"
+    .logined-layout-header
+      a.logined-layout-header__root href="/"
+      a href="#{course_path(@enrollment.course)}" class="logined-layout-header__title"
+        | #{@enrollment.course.title}
+      .logined-layout-header__personal-info
+        a href="#{user_notes_path(current_user.github_username)}" id="logined-layout-header-user-name"
           = image_tag current_user.avatar
           span
             |@#{current_user.github_username}
-        a href="#{enrollment_path(@enrollment)}" id="header-setting"
+        a href="#{enrollment_path(@enrollment)}" id="logined-layout-header-setting"
           i.fa.fa-cog.fa-2x
 
 
