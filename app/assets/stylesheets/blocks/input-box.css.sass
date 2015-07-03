@@ -1,3 +1,4 @@
+$line-height: 32px
 .input-box
   text-align: center
 
@@ -6,11 +7,13 @@
   right: -0.55556em
 
   display: inline-block
-  color: #FC6265
+  color: #AFB6C0
   padding: 0.5714em
-  border: 1px solid #FC6265
+  border: 1px solid #CF616F
   border-radius: 6px
   margin-bottom: 10px
+
+  line-height: $line-height
 
 .input-box__button
   position: relative
@@ -19,8 +22,12 @@
   color: #fff
   padding: 0.5714em
   font-weight: bold
-  background-color: #FC6265
-  border: 1px solid #FC6265
+  background-color: #CF616F
+  border: 1px solid #CF616F
   border-radius: 6px
 
+  line-height: $line-height
 
+@media (max-width: 480px)
+  .input-box__text
+    width: 200px

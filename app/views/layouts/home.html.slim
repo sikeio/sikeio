@@ -1,0 +1,117 @@
+doctype html
+head
+  title 思客教学
+  = stylesheet_link_tag    'application', media: 'all'
+  = stylesheet_link_tag    '/sike-fonts/styles.css'
+
+  = javascript_include_tag 'application'
+  = csrf_meta_tags
+  = favicon_link_tag "favicon.ico"
+  meta name="viewport" content="width=device-width, initial-scale=1"
+body id=page_identifier class="sike-global"
+  .flash-message-box.js-dismissable
+    - [:success, :error, :info].each do |type|
+      - if flash[type]
+        .flash-message class="flash-message--#{type}" = flash[type]
+  - background = {"home" => "#32425C", "design" => "courses/design/design.png", "css" => "courses/css/css.png", "ios" => "courses/ios/ios.png", "nodejs" => "courses/nodejs/nodejs.png"}
+
+  - title = {"home" => "满足您的技术情怀", "design" => "用 Sketch 做出逼格破表的设计", "css" => "你也可以写出简洁优美的 CSS", "nodejs" => "NodeJS 高速道路", "ios" => "iOS 攀爬第一个高峰"}
+
+  header id="header-home-layout" style="background-image: url(#{asset_path(background[@course_show])})"
+    .header-home-layout__nav
+      - if @course_show != "home"
+        a.header-home-layout__nav__back href="/"
+          i.fa.fa-angle-left.fa-3x
+          |&nbsp;&nbsp;返回主页
+
+      .header-home-layout__nav__status
+        - if current_user
+          .header-user-logined-status
+            a href="#{user_notes_path(current_user)}"
+              = image_tag current_user.avatar
+              span
+                |@#{current_user.github_username}
+        - else
+          a.header-user-unlogined-status href="#{login_path}"
+            |登入
+
+    = image_tag "logo.png" , class: "header-home-layout__logo"
+    .header-home-layout__title-wrap
+      - title_class = "header-home-layout__title "
+      - if @course_show != "home"
+        - title_class += "header-home-layout__title--course"
+      h1 class="#{title_class}"
+        |#{title[@course_show]}
+        - if @course_show == "home"
+          p 专注 IT 领域远程学徒式
+
+    = form_tag subscribers_path, remote:true, class:'input-box header-home-layout__enroll'
+      input type="text" name='email' placeholder="name@domain.com" class="input-box__text"
+      - submit_text = "申请免费课程"
+      - if @course_show == "home"
+        - submit_text = "订阅迷你课程"
+      input type="submit" value="#{submit_text}" class="input-box__button"
+
+    ul.header-home-layout__navbar
+      li
+        a href="#{root_path(course: "css")}"
+          |前端
+      li
+        a href="#{root_path(course: "ios")}"
+          |iOS
+      li
+        a href="#{root_path(course: "design")}"
+          |设计
+      li
+        a href="#{root_path(course: "nodejs")}"
+          |NodeJS
+
+
+  == yield
+
+
+  div id="footer-home-layout__intro"
+    .footer-home-layout__intro
+      .footer-home-layout__avatar
+        = image_tag("howard-yeh.jpg", alt: "avatar")
+      .footer-home-layout__content
+        h2 导师介绍
+        p
+          | 我叫 Howard，台湾同胞一枚。
+          | 小时候随家人移民加拿大。
+          | 2011 年远程工作，边旅行边赚钱。
+          | 那一年第一次来到了天朝。
+          | 我写了篇有关这个经历的博文
+          a href="http://metacircus.com/writings/2011/09/19/from-the-office-to-travelling-the-world.html" From The Office to Travelling The World
+          |  。
+          | 2012 年觉得生活太安逸，决定来中国发展，发现难度瞬间提升为 Hard。
+          | 在深圳和朋友创立了
+          a href="http://www.puffant.com" 小象网
+          |  ，做创意纸品，婚纱相册之类的产品。
+          | 现在已盈利，处稳定发展状态。
+          | 2013 夏，搬到成都和女朋友在一起。
+        p Github: http://github.com/hayeah
+        p Blog: http://metacircus.com
+
+  div id="footer-home-layout__enroll"
+    h2 如果你对远程学徒教学有兴趣，欢迎订阅我们的免费课程：
+    = form_tag subscribers_path, remote:true, class:'input-box'
+      - submit_text = "申请免费课程"
+      - if @course_show == "home"
+        - submit_text = "订阅迷你课程"
+      input type="text" class="input-box__text" name='email' placeholder="name@domain.com"
+      input type="submit" class="input-box__button" value="#{submit_text}"
+    p.notice 我们绝不泄露你的邮箱，你可以随时取消订阅
+
+  footer id="footer-home-layout__footer"
+    .footer-home-layout__footer
+      .footer-logo
+        a href="#"
+          img src=image_path("footer-logo.png") width="59" alt="思客"
+      .copyright ©2015 思客
+      nav.contact
+        ul
+          li
+            a href="mailto:contact@besike.com" 联系我们
+          li
+            a href="http://bbs.sike.io" 交流论坛

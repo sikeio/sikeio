@@ -1,16 +1,3 @@
-nav.l-main-nav
-  a href="http://bbs.sike.io" 交流论坛
-
-header.l-main-header
-  .home-logo
-    = image_tag("logo.png", width: '88', alt: "思客")
-  h1
-    |满足你的技术情怀
-    p.slogan 专注 IT 领域远程学徒式教学
-  = form_tag subscribers_path, remote:true, class:'subscribe'
-    input type="text" name='email' placeholder="name@domain.com"
-    input type="submit" value="订阅迷你课程"
-
 section.wrap.l-question
   ul
     li
@@ -56,52 +43,3 @@ section.wrap.l-introduction
       li 习惯：每天都加强一点点。
       li 友好：没有人会骂你是小白。
 
-- if @ios_course
-  = render "#{@ios_course.name}_info", course: @ios_course
-
-- if @nodejs_course
-  = render "#{@nodejs_course.name}_info", course: @nodejs_course
-
-
-section.l-mentor
-  .wrap
-    .avatar
-      = image_tag("howard-yeh.jpg", alt: "avatar")
-    .content
-      h2 导师介绍
-      p
-        | 我叫 Howard，台湾同胞一枚。
-        | 小时候随家人移民加拿大。
-        | 2011 年远程工作，边旅行边赚钱。
-        | 那一年第一次来到了天朝。
-        | 我写了篇有关这个经历的博文
-        a href="http://metacircus.com/writings/2011/09/19/from-the-office-to-travelling-the-world.html" From The Office to Travelling The World
-        |  。
-        | 2012 年觉得生活太安逸，决定来中国发展，发现难度瞬间提升为 Hard。
-        | 在深圳和朋友创立了
-        a href="http://www.puffant.com" 小象网
-        |  ，做创意纸品，婚纱相册之类的产品。
-        | 现在已盈利，处稳定发展状态。
-        | 2013 夏，搬到成都和女朋友在一起。
-      p Github: http://github.com/hayeah
-      p Blog: http://metacircus.com
-
-section.wrap.l-subscribe
-  h2 如果你对远程学徒教学有兴趣，欢迎订阅我们的免费课程：
-  = form_tag subscribers_path,remote:true,class:'subscribe'
-    input type="text" name='email' placeholder="name@domain.com"
-    input type="submit" value="订阅迷你课程"
-  p.notice 我们绝不泄露你的邮箱，你可以随时取消订阅
-
-footer
-  .wrap
-    .footer-logo
-      a href="#"
-        img src=image_path("footer-logo.png") width="59" alt="思客"
-    .copyright ©2015 思客
-    nav.l-footer-nav
-      ul
-        li
-          a href="mailto:contact@besike.com" 联系我们
-        li
-          a href="http://bbs.sike.io" 交流论坛

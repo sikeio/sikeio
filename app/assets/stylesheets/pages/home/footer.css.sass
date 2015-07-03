@@ -1,0 +1,112 @@
+$max-width: 620px
+div#footer-home-layout__intro
+  margin: 0 auto
+  background: #000 image-url("bg-mentor.png") repeat
+  width: 100%
+  .footer-home-layout__intro
+    margin: auto
+    max-width: $max-width
+    width: 100%
+    color: #EEE
+    background-size: 141px 142px
+    padding: 100px 0
+
+    .footer-home-layout__avatar
+      float: left
+      width: 85px
+      height: 85px
+
+      margin: 132px 40px 0 0
+
+      & > img
+        width: 100%
+        border: 2px solid #fff
+        border-radius: 85px
+
+    .footer-home-layout__content
+      overflow: hidden
+      h2
+        font-size: 32px
+        color: #CF616F
+
+
+div#footer-home-layout__enroll
+  position: relative
+  margin: auto
+  max-width: $max-width
+  text-align: center
+  color: #444
+  padding-bottom: 200px
+  overflow: hidden
+  h2
+    font-size: 20px
+    font-weight: normal
+  form
+    padding-top: 10px
+    padding-bottom: 10px
+  .notice
+    font-size: 14px
+
+  &:after
+    position: absolute
+    left: 50%
+    bottom: -350px
+    margin-left: -350px
+    content: ''
+    width: 700px
+    height: 700px
+    background-color: #f0f3f8
+    border-radius: 2000px
+    transform: translateY(30%)
+    -webkit-transform: translateY(30%)
+
+
+
+footer#footer-home-layout__footer
+  position: relative
+  height: 30px
+  background-color: #32425c
+  color: #d2d8e2
+  font-size: 12px
+  line-height: 30px
+  .footer-logo
+    height: 30px
+    text-align: center
+    img
+      position: absolute
+      left: 50%
+      bottom: 0
+      width: 59px
+      height: 47px
+      margin-left: -30px
+  .footer-home-layout__footer
+    position: relative
+    max-width: $max-width
+    margin: 0 auto
+  .copyright
+    position: absolute
+    top: 0
+    left: 0
+  .contact
+    position: absolute
+    top: 0
+    right: 0
+    ul
+      margin: 0
+      list-style: none
+    li
+      margin-left: 10px
+      float: left
+    a
+      color: #d2d8e2
+
+div#footer-home-layout__intro
+  @media (max-width: 480px)
+    .footer-home-layout__intro
+      padding-left: 20px
+      padding-right: 20px
+      & >.footer-home-layout__avatar
+        float: none
+        display: block
+        margin: 0px auto
+
