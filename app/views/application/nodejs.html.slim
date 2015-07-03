@@ -1,0 +1,82 @@
+section.course-info__section.course-info__section--large-padding
+  .container
+    section
+      h1
+        | 高性能，高并发
+      ul
+        li Google V8 引擎让 JS 效率有了一个级别的提升
+        li 互联网的成长提高了并发的要求
+        li 新一代的互联网产品有更多实时性协作的需求
+        li 庞大的 JS Web 开发社区用 JS 来写脚本和服务
+        li npm 让分享 JS 代码更容易
+      p
+        | NodeJS 的技术架构很简单，只用单线程 non-blocking 事件 IO 来支持高并发的需求。
+      p
+        | 因为 NodeJS 避免使用线程来处理并发请求，每个链接只需要很少的内存，让你轻轻松松支持成千上百个用户同时使用你的服务。NodeJS 非常适合拿来实现 API 或者实时应用的后端，Trello 就是一个很经典的案例。
+
+    section
+      h1.emphasize
+        | “异步编程不容易适应”
+
+      p
+        | 但学习 NodeJS 有一些特别的难处：
+
+      ul
+        li  NodeJS 的标准库相对狭窄，有用的工具都必须从 npm 获得。
+        li  异步回调的编程风格不好适应。
+      p
+        | 在这个课程我们会通过实现一个完整的项目来熟悉 NodeJS 的异步编程模式。你对 Javascript 要有基本的了解。
+
+section.course-info__section.course-info__section--blue.course-info__section--large-padding
+  .container
+    section
+      h1
+        | 写代码才是硬道理
+      p
+        | 看了书或者教程之后会觉得自己好像懂了，但实际要去做什么东西却又满脑子浆糊。其实问题很简单，多写代码就好了。
+      p
+        | 这个课程要求你折腾代码。和其他教程最大的不同是不给你可以工作的代码，只给你发布任务。你必须研读 API 文档和博文，了解以后才能实现功能。
+
+    section
+      h1.emphasize
+        | “天天向上”
+      p
+        | 我们会一起仿照一个 Express Web 框架。 课程的每天都有任务，让你天天都能有一些提升。通过这些任务我们可以接触到 NodeJS 的编程模式，并且深度了解 Express 的原理。
+
+section.course-info__section.course-info__section--large-padding
+  .container
+    .course-toc
+      h1
+        | 课程大纲
+
+      h2.course-toc__heading
+        | 暖身周
+
+      ul.course-toc__items
+        li 写一个简单的 NPM package
+        li 用 mocha 写测试
+        li 用 CoffeeScript 写 NPM package
+        li 实现 JS 类 （练习原型链）
+
+      h2.course-toc__heading
+        | 第一周 - 中间件机制
+      ul.course-toc__items
+        li 实现穷人的 HarpJS （练习使用 middleware）
+        li 实现 Connect 的中间件机制
+
+      h2.course-toc__heading
+        | 第二周 - Express
+      ul.course-toc__items
+        li 实现 Express 路由
+        li 实现路径匹配
+        li 实现 HTTP 动词
+        li 实现 @luin 的 dependency injection 中间件 （可选）
+
+      h2.course-toc__heading
+        | 第三周 - HTTP 协议
+      ul.course-toc__items
+        li 实现 content negotiation
+        li 实现 conditional get
+        li 实现档案下载
+        li 实现档案上传
+

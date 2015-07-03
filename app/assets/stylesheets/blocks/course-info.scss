@@ -2,8 +2,29 @@
 @import "../../../../vendor/bower/bourbon/app/assets/stylesheets/css3/background-image";
 
 .course-info__section {
-  padding-top: 1.6666667em;
-  padding-bottom: 3.888889em;
+  margin: 100px 0;
+  & img {
+    max-width: 100%;
+  }
+
+  & section {
+    padding-bottom: 30px
+  }
+}
+
+.course-info__section--large-padding {
+  p {
+    margin-bottom: 36px;
+  }
+
+  ul {
+    margin-bottom: 36px;
+  }
+}
+
+.course-info__section--home {
+  margin: 0px;
+  padding: 100px 0;
 }
 
 .course-info__section h1 {
@@ -15,10 +36,27 @@
 }
 
 .course-info__section--starrynight {
-  @include background-image(linear-gradient(rgba(0,0,0,0)  0%, rgba(0,0,0,40) 100%), image-url("courses/ios/bg2.jpg"));
+   background-image: (linear-gradient(rgba(0,0,0,0)  0%, rgba(0,0,0,40) 100%), image-url("courses/ios/bg2.jpg"));
   /*background-image: image-url("courses/ios/bg2.jpg");*/
   background-size: cover;
   background-position: center;
   color: white;
 }
 
+@media (max-width: 620px) {
+  .course-info__section--home {
+    padding: 30px 0;
+  }
+  .course-info__section {
+    margin: 30px 0;
+  }
+  .course-info__section--large-padding {
+    p {
+      margin-bottom: 10px;
+    }
+
+    ul {
+      margin-bottom: 10px;
+    }
+  }
+}

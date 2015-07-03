@@ -10,8 +10,10 @@ $ ->
   #
   # <button class="js-modal-trigger" data-modal-target="#target">
 
-  $modal = $("<div class='js-modal'>")
-  $overlay = $('<div class="js-modal__overlay">')
+  $close = $("a.js-modal-close")
+
+  $modal = $("div.js-modal")
+  $overlay = $('div.js-modal__overlay')
   $overlay.css {
     display: "none"
     position: "fixed"
@@ -32,7 +34,6 @@ $ ->
     if $currentTarget != null
       $currentTarget.hide()
     $currentTarget = $(target)
-    $modal.appendTo('body')
     $overlay.appendTo($modal).show()
     $currentTarget.show()
 
@@ -40,6 +41,10 @@ $ ->
     $overlay.hide()
     $currentTarget.hide()
     $currentTarget = null
+
+  $(document)
+    .on 'click', ".js-modal-close", ->
+      $modal.trigger("hide")
 
 
   $(document)

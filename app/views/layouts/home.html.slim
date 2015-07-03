@@ -13,9 +13,9 @@ body id=page_identifier class="sike-global"
     - [:success, :error, :info].each do |type|
       - if flash[type]
         .flash-message class="flash-message--#{type}" = flash[type]
-  - background = {"home" => "#32425C", "design" => "courses/design/design.png", "css" => "courses/css/css.png", "ios" => "courses/ios/ios.png", "nodejs" => "courses/nodejs/nodejs.png"}
+  - background = {"home" => "#32425C", "design101" => "courses/design/design.png", "css0to1" => "courses/css/css.png", "ios" => "courses/ios/ios.png", "nodejs" => "courses/nodejs/nodejs.png"}
 
-  - title = {"home" => "满足您的技术情怀", "design" => "用 Sketch 做出逼格破表的设计", "css" => "你也可以写出简洁优美的 CSS", "nodejs" => "NodeJS 高速道路", "ios" => "iOS 攀爬第一个高峰"}
+  - title = {"home" => "满足您的技术情怀", "design101" => "用 Sketch 做出逼格破表的设计", "css0to1" => "你也可以写出简洁优美的 CSS", "nodejs" => "NodeJS 高速道路", "ios" => "iOS 攀爬第一个高峰"}
 
   header id="header-home-layout" style="background-image: url(#{asset_path(background[@course_show])})"
     .header-home-layout__nav
@@ -45,29 +45,46 @@ body id=page_identifier class="sike-global"
         - if @course_show == "home"
           p 专注 IT 领域远程学徒式
 
-    = form_tag subscribers_path, remote:true, class:'input-box header-home-layout__enroll'
-      input type="text" name='email' placeholder="name@domain.com" class="input-box__text"
-      - submit_text = "申请免费课程"
-      - if @course_show == "home"
-        - submit_text = "订阅迷你课程"
-      input type="submit" value="#{submit_text}" class="input-box__button"
+    = render partial: "enroll_form", locals: {course_permalink: @course_show, extra_class: 'header-home-layout__enroll'}
 
     ul.header-home-layout__navbar
       li
-        a href="#{root_path(course: "css")}"
-          |前端
+        - if @course_show == "css0to1"
+          a style="text-decoration: underline;"
+            |前端
+        - else
+          a href="#{root_path(course: "css0to1")}"
+            |前端
       li
-        a href="#{root_path(course: "ios")}"
-          |iOS
+        - if @course_show == "ios"
+          a style="text-decoration: underline;"
+            | iOS
+        - else
+          a href="#{root_path(course: "ios")}"
+            |iOS
       li
-        a href="#{root_path(course: "design")}"
-          |设计
+        - if @course_show == "design101"
+          a style="text-decoration: underline;"
+            |设计
+        - else
+          a href="#{root_path(course: "design101")}"
+            |设计
       li
-        a href="#{root_path(course: "nodejs")}"
-          |NodeJS
+        - if @course_show == "nodejs"
+          a style="text-decoration: underline;"
+            |NodeJS
+        - else
+          a href="#{root_path(course: "nodejs")}"
+            |NodeJS
 
 
   == yield
+
+
+  - if @course_show == "home"
+    = render partial: "slogan", locals: {background: false}
+  - else
+    = render partial: "slogan", locals: {background: true}
 
 
   div id="footer-home-layout__intro"
@@ -95,12 +112,9 @@ body id=page_identifier class="sike-global"
 
   div id="footer-home-layout__enroll"
     h2 如果你对远程学徒教学有兴趣，欢迎订阅我们的免费课程：
-    = form_tag subscribers_path, remote:true, class:'input-box'
-      - submit_text = "申请免费课程"
-      - if @course_show == "home"
-        - submit_text = "订阅迷你课程"
-      input type="text" class="input-box__text" name='email' placeholder="name@domain.com"
-      input type="submit" class="input-box__button" value="#{submit_text}"
+
+    = render partial: "enroll_form", locals: {course_permalink: @course_show, extra_class: ""}
+
     p.notice 我们绝不泄露你的邮箱，你可以随时取消订阅
 
   footer id="footer-home-layout__footer"
@@ -115,3 +129,7 @@ body id=page_identifier class="sike-global"
             a href="mailto:contact@besike.com" 联系我们
           li
             a href="http://bbs.sike.io" 交流论坛
+  - title = "迷你课程"
+  - if !@course.blank?
+    - title = @course.title
+  = render partial: "success_panel", locals: {title: title}

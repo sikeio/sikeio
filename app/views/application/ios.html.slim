@@ -1,28 +1,6 @@
-header.site-header
-  a.site-header__root href="/"
-  h1.site-header__title
-    | iOS 基础教程
-
-  a.site-header__login href=course_path(course)
-    i.fa.fa-sign-in.fa-lg
-    | 进入课程
-
-
-
-.course-info
-  .jumbotron.jumbotron--ios
-    .jumbotron__centered-content
-      h1 iOS 攀爬第一个高峰
-      = form_tag enrollments_path, method: :post, class: 'input-box'
-        input type="hidden" value="#{course.permalink}" name="course_id"
-        input type="text" name='email' placeholder="name@domain.com" class="input-box__text"
-        input type="submit" value="订阅课程" class="input-box__button"
-
-
-
-
-  section.course-info__section
-    .container
+section.course-info__section.course-info__section--large-padding
+  .container
+    section
       h1
         | 陡峭的学习坡度
       p
@@ -40,19 +18,22 @@ header.site-header
           | 新技术的相对不成熟，Swift 语言本身的不稳定， 再加上 XCode 常崩溃。
         li
           | 庞大的 API，令人眼花缭乱，不知从何下手。
+    section
       h1.emphasize
         | “减少在坑里浪费的时间"
       p
         | 在初学的过程可能会为很多零零碎碎的问题费劲心思，而无法去体会 iOS/Cocoa 的蓝图理念。这个课程把学习线路策划好，把浪费时间的坑填好，让你可以专注学习真正有价值的知识点。
 
-  section.course-info__section.course-info__section--blue
-    .container
+section.course-info__section.course-info__section--blue.course-info__section--large-padding style="margin-bottom: 0px;"
+  .container
+    section
       h1
         | 写代码才是硬道理
       p
         | 看了书或者教程之后会觉得自己好像懂了，但实际要去做什么东西却又满脑子浆糊。其实问题很简单，多写代码就好了。
       p
         | 这个课程要求你折腾代码。和其他教程最大的不同是不给你可以工作的代码，只给你发布任务。你必须研读 API 文档和博文，了解以后才能实现功能。
+    section
       h1.emphasize
         | “天天向上”
 
@@ -73,8 +54,9 @@ header.site-header
             img src=image_url('app demo 4.png')
 
 
-  section.course-info__section.course-info__section--starrynight
-    .container
+section.course-info__section.course-info__section--starrynight.course-info__section--large-padding style="margin: 0px;"
+  .container
+    section
       h1.h1--large
         | 飞向宇宙浩瀚无垠
       p
@@ -91,6 +73,7 @@ header.site-header
       p
         | iOS 的知识一环扣一环。我们课程里做的 App 会有许多功能需要你去同时应用多个知识点。通过这些练习，你能融会贯通 UIKit 的核心技术。
 
+    section
       h1.emphasize
         | 成为一个有自信的 iOS 开发者
       p
@@ -107,20 +90,6 @@ header.site-header
       p
         | 来吧，让我们一起走上 iOS Native 开发这条不归路！
 
-  .course-info__section
-    p.u-center-text
-      = form_tag enrollments_path, method: :post, class: 'input-box'
-        input type="hidden" value="#{course.permalink}" name="course_id"
-        input type="text" name='email' placeholder="name@domain.com" class="input-box__text"
-        input type="submit" value="订阅课程" class="input-box__button"
-
-  .container
-    = render "coach_info"
-
-footer.site-footer
-  img.site-footer__logo src=image_url('logo2.png')
-
-
 javascript:
   var $demo = $('.js-iphone-demo');
   $demo.find(".js-iphone-demo__slides").slick({
@@ -128,3 +97,4 @@ javascript:
     prevArrow: $demo.find(".js-iphone-demo__left"),
     nextArrow: $demo.find(".js-iphone-demo__right")
   });
+
