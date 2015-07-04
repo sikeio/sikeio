@@ -18,6 +18,13 @@ a.site-header__root {
   background-repeat: no-repeat;
 }
 
+a.site-header__root--panel {
+  display: block;
+  position: absolute;
+  left: 25px;
+  top: 15px;
+}
+
 
 h1.site-header__title {
   display: inline-block;
@@ -28,6 +35,13 @@ h1.site-header__title {
   font-size: 1.3333333em;
 }
 
+h1.site-header__title--panel {
+  display: table-cell;
+  padding-left: 60px;
+  padding-right: 15px;
+  vertical-align: middle;
+  height: 60px;
+}
 
 .site-header__personal-info {
   float: right;
@@ -65,13 +79,9 @@ a.site-header__login {
 }
 
 @media (max-width: 620px) {
-  a#header-user-name {
-    margin-right: 0px;
-    & > span {
-      display: none;
-    }
+   h1.site-header__title--panel {
+    height: 50px;
+    padding-left: 50px
   }
-  #header-setting {
-    display: none;
-  }
+
 }

@@ -1,43 +1,31 @@
 class EnrollmentsController < ApplicationController
 
-  def new
-    if !course
-      render_404
-    end
-    if params[:successed] == "true"
-      @success_info = true
-    end
-  end
-
   def create
     if params[:email].blank?
-      flash[:error] = "请输入你邮箱"
-      redirect_to  new_enrollment_path(course_id: course.permalink)
+      render_400 "请输入你的邮箱"
       return
     end
 
     user = User.find_or_initialize_by(email: params[:email])
     if !user.save
-      flash[:error] = user.errors.values.flatten.to_s
-      redirect_to  new_enrollment_path(course_id: course.permalink)
+      render_400 "申请失败", user.errors
       return
     end
 
     @enrollment = Enrollment.find_or_initialize_by user_id: user.id, course_id: course.id
     # already enrolled
     if !enrollment.new_record?
-      redirect_to  new_enrollment_path(course_id: course.permalink, successed: true)
+      head :ok
       return
     end
 
     # create new enrollment
     if !enrollment.save
       flash[:error] = enrollment.errors.values.flatten.to_s
-      redirect_to  new_enrollment_path(course_id: course.permalink)
-      return
+      render_400 "申请失败", enrollment.errors
     else
       UserMailer.welcome(enrollment).deliver_later
-      redirect_to  new_enrollment_path(course_id: course.permalink, successed: true)
+      head :ok
 
       if cookies.signed[:distinct_id]
         mixpanel_alias(enrollment.id, cookies.signed[:distinct_id])

@@ -1,0 +1,13 @@
+- path = enrollments_path
+- if course_permalink == "home"
+  - path = subscribers_path
+- css_class = extra_class + " input-box js-panel--enrolling__form"
+
+= form_tag path, remote:true, class: css_class
+  - if course_permalink != "home"
+    = hidden_field_tag "course_id", course_permalink
+  input type="text" name='email' placeholder="name@domain.com" class="input-box__text"
+  - submit_text = "申请免费课程"
+  - if course_permalink == "home"
+    - submit_text = "订阅迷你课程"
+  input type="submit" value="#{submit_text}" class="input-box__button"
