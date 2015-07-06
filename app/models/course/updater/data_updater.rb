@@ -41,6 +41,7 @@ class Course::Updater::DataUpdater
   end
 
   def create_or_update(klass, attributes)
+    klass_instance = nil
     if !attributes[:course_id].blank?
       klass_instance = klass.find_or_initialize_by(name: attributes[:name], course_id: attributes[:course_id])
     else
