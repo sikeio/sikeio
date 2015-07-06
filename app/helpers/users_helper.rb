@@ -4,7 +4,7 @@ module UsersHelper
     if current_user
       course_path(course)
     else
-      info_course_path(course)
+      root_path(course: course.permalink)
     end
   end
 
@@ -12,7 +12,7 @@ module UsersHelper
     if current_user
       lesson_path(lesson.course, lesson)
     else
-      info_course_path(lesson.course)
+      root_path(course: lesson.course.permalink)
     end
   end
 

@@ -37,17 +37,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :courses,only:[:index,:show] do
-
-    member do
-      get 'start'
-      get 'info'
-    end
-
-    collection do
-      # get '/get_user_status' => 'courses#get_user_status'
-    end
-
+  resources :courses,only:[:show] do
 
   end
 
