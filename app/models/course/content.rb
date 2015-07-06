@@ -175,7 +175,11 @@ class Course::Content
   end
 
   def course_overview
-    xml_dom.css("course > overview")[0].children.to_xhtml
+    overview_html = ""
+    if !xml_dom.css("course > overview")[0].blank?
+      overview_html = xml_dom.css("course > overview")[0].children.to_xhtml
+    end
+    return overview_html
   end
 
   def lesson_title(lesson_name)
