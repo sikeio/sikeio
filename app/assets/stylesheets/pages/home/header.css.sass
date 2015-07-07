@@ -89,14 +89,16 @@ header#header-home-layout
       display: table-cell
       margin: 0
       text-align: center
-      background-color: rgba(0, 0, 0, 0.7)
       line-height: 4em
       vertical-align: middle
-      border: 1px solid #979797
       width: 25%
       & > a
+        background-color: rgba(0, 0, 0, 0.7)
         color: white
         display: block
+        border: 1px solid #979797
+        &:hover
+          background-color: rgba(70, 70, 70, 0.7)
     &:after
       content: ""
       display: block
