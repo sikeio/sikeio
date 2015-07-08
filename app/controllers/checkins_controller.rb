@@ -5,7 +5,11 @@ class CheckinsController < ApplicationController
   before_action :param_validate, only: [:create, :update]
 
   def create
-    raise "course not exist or not enroll" if !enrollment
+    if !enrollment_valid?(enrollment)
+      flash[:error] = nil
+      raise "course not exist or not enroll"
+    end
+
     checkin_info = checkin_params
     checkin_info[:enrollment_id] = enrollment.id
     checkin_info[:lesson_id] = lesson.id
@@ -23,7 +27,10 @@ class CheckinsController < ApplicationController
 
   def show
     get_info
-    raise "course not exist or not enroll" if !@enrollment
+    if !enrollment_valid?(@enrollment)
+      flash[:error] = nil
+      raise "course not exist or not enroll"
+    end
     if !Checkin.checkin?(@enrollment, @lesson)
       @url_path = checkin_path(@lesson)
       @html_method = :post

@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
 
   include SessionsHelper
 
+  include EnrollmentHelper
+
   include EventLogging
 
 
