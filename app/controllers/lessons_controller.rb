@@ -11,8 +11,7 @@ class LessonsController < ApplicationController
     # if Checkout.check_out?(@enrollment, @lesson)
     #   @checkout = @enrollment.checkouts.find_by(lesson_name: @lesson.name)
     # end
-    if !enrollment.activated?
-      flash[:error] = "您尚未激活该课程~"
+    if !enrollment_valid?(enrollment)
       redirect_to root_path(course: enrollment.course.permalink)
       return
     end

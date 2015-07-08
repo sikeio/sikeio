@@ -10,17 +10,11 @@ class CoursesController < ApplicationController
   def show
     @enrollment = current_user.enrollments.find_by(course: course)
 
-    if @enrollment.nil?
-      flash[:error] = "您没有报名这个课程"
+    if !enrollment_valid?(@enrollment)
       redirect_to root_path(course: course.permalink)
       return
     end
 
-    if !@enrollment.activated
-      flash[:error] = "您尚未激活该课程"
-      redirect_to root_path(course: course.permalink)
-      return
-    end
     @enrollment.update!(last_visit_time: Time.now)
     @send_day = Time.now.beginning_of_day.to_f * 1000 # convert to milliseconds for js
     #render '_show'
