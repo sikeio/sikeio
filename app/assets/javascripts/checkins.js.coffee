@@ -7,7 +7,6 @@ $ ->
     max_file_size: '10mb',
     flash_swf_url: '/plupload/Moxie.swf',
     dragdrop: true,
-    chunk_size: '4mb',
     uptoken_url: "/qiniu/uptoken",
     domain: "http://7xjfes.com1.z0.glb.clouddn.com/",
     save_key: true,
