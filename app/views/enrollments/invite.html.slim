@@ -1,7 +1,4 @@
 .container
-  header.site-header
-    a.site-header__root href="/"
-    h1.site-header__title= @course.title
 
   .course-invite
     h1.emphasize 邀请函
@@ -52,10 +49,6 @@
       - partner = @course_invite.partnership_name
       - token = @course_invite.token
     = render partial: "personal_info_form", locals: {partner: partner, token: token}
-
-footer.site-footer
-  img.site-footer__logo src=image_url('logo2.png')
-
 
 javascript:
   if($('.js-bind-success').length == 0 ){
