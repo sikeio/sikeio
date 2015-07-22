@@ -95,7 +95,7 @@ class EnrollmentsController < ApplicationController
       if !enrollment.invitation_sent_time # 对于已经激活的用户，进入本界面的邮件就算是邀请邮件
         enrollment.update(invitation_sent_time: Time.now)
       end
-      redirect_to course_path(enrollment.course)
+      redirect_to invite_enrollment_path(enrollment)
     end
 
     if current_user && enrollment.user.introduce_submit? &&enrollment.user.introduce_submit_enrollment != enrollment.token
