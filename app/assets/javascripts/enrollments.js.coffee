@@ -51,7 +51,19 @@ $ ->
           type: "error"
 
 
+$ ->
+  #apply page
+  pageIdentifier = "#enrollments_apply "
+  $(document)
+    .ready ->
+      autoSave = ->
+        autosave = $(pageIdentifier + "input#autosave").val()
+        if autosave == true.toString()
+          form = $(pageIdentifier + "form")
+          name = form.find("input[name='user[name]']").val()
+          introduce = form.find("textarea[name='user[introduce]']").val()
+          token = $(pageIdentifier + "input#token").val()
+          $.post "/users/autosave", {token: token, user: {name: name, introduce: introduce}}, () ->
+            $(pageIdentifier + "#autosave-tips").html("已保存")
 
-
-
-
+      setInterval(autoSave, 10000)
