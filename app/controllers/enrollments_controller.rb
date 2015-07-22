@@ -95,13 +95,13 @@ class EnrollmentsController < ApplicationController
       if !enrollment.invitation_sent_time # 对于已经激活的用户，进入本界面的邮件就算是邀请邮件
         enrollment.update(invitation_sent_time: Time.now)
       end
-      redirect_to course_path(enrollment.course)
+      redirect_to invite_enrollment_path(enrollment)
     end
 
     if current_user && enrollment.user.introduce_submit? &&enrollment.user.introduce_submit_enrollment != enrollment.token
       #处理用户申请课程后，正在等待审核的过程中，用户在此期间申请其他课程。
-      send_time = rand(1..5).minutes
-      AutoActivatedJob.perform_later(enrollment)
+      send_time = 1.minutes
+      AutoActivatedJob.set(wait: send_time).perform_later(enrollment)
 
     end
   end
