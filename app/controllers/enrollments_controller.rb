@@ -89,6 +89,7 @@ class EnrollmentsController < ApplicationController
 
   def apply
     enrollment
+    @course = enrollment.course
 
     synchronize_user
 
