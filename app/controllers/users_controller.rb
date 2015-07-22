@@ -15,7 +15,7 @@ class UsersController < ApplicationController
 
 
     if !enrollment.user.introduce_submit? && enrollment.user.introduce.length > (92 + 10)
-      send_time = 1.minutes
+      send_time = rand(30..60).minutes
       AutoActivatedJob.set(wait: send_time).perform_later(enrollment)
     end
 
