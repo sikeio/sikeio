@@ -100,8 +100,8 @@ class EnrollmentsController < ApplicationController
 
     if current_user && enrollment.user.introduce_submit? &&enrollment.user.introduce_submit_enrollment != enrollment.token
       #处理用户申请课程后，正在等待审核的过程中，用户在此期间申请其他课程。
-      send_time = rand(1..5).minutes
-      AutoActivatedJob.perform_later(enrollment)
+      send_time = 1.minutes
+      AutoActivatedJob.set(wait: send_time).perform_later(enrollment)
 
     end
   end
