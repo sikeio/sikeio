@@ -1,4 +1,5 @@
 class EnrollmentsController < ApplicationController
+  layout "enrollment", except: [:show]
 
   def create
     if params[:email].blank?
