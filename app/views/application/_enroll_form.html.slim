@@ -7,7 +7,7 @@
   - if course_permalink != "home"
     = hidden_field_tag "course_id", course_permalink
   input type="text" name='email' placeholder="name@domain.com" class="input-box__text"
-  - submit_text = "申请免费课程"
+  - submit_text = "申请加入课程"
   - if course_permalink == "home"
     - submit_text = "订阅迷你课程"
   input type="submit" value="#{submit_text}" class="input-box__button"

@@ -49,7 +49,7 @@ class AuthenticationsController < ApplicationController
     user = User.find_by(email: auth_email)
 
     if user.nil?
-      user = User.create! name: info['name'] || info['nickname'], email: auth_email
+      user = User.create! email: auth_email
     end
 
     return user

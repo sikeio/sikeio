@@ -1,0 +1,71 @@
+.container
+  header.site-header
+    a.site-header__root href="/"
+    h1.site-header__title = "#{@enrollment.course.title}"
+
+  h1.apply-title
+    |申请加入#{@enrollment.course.title}
+
+  - if !@enrollment.user.introduce_submit?
+    .apply-info
+      p
+        |在开始之前，我们希望能更进一步认识你，请回答以下问题：
+      ul
+        li
+          |你的工作/专业是什么？
+        li
+          |你看过哪些有意思的技术书籍？
+        li
+          |你解决最难的技术问题是什么?
+        li
+          |为什么想加入思客学习？
+      p
+        |期待和你一起进步!
+
+    h1.action-panel__title 1. 绑定 GitHub 账号
+    .action-panel
+      p
+        | 训练营使用 GitHub 做技术交流。
+      span.github-tip
+        | 没有 GitHub 账号的请先去
+        a.u-color-red href="https://github.com/" 注册
+        | 。
+
+      - if @enrollment.user && @enrollment.user.has_binded_github
+        p.js-bind-success
+          | GitHub 绑定账号:  #{@enrollment.user.github_username}
+        .message
+          | GitHub 已经绑定
+      - else
+        - callback_url = apply_enrollment_path(@enrollment)
+        .action-panel__actions
+          a.btn.btn--middle.js-bind-github(
+            href="/auth/github?back_path=#{callback_url}&github_binding=true"
+            data-disable-with="<i class='fa fa-spinner fa-spin'></i> Loading...")
+            | GitHub 绑定
+
+
+
+    h1.action-panel__title 2. 自我介绍
+    = hidden_field_tag 'autosave', "true"
+    = render partial: "introduce_form", locals: {enrollment: @enrollment, update: false}
+    javascript:
+      if($('.js-bind-success').length == 0 ){
+        $('form input,form button').attr('disabled', true)
+        $('form').css('opacity',0.3)
+     }
+      else{
+        $('.github-tip').hide()
+     }
+
+  - else
+    .apply-info
+      .message
+        |申请已经递交，我们24小时内会发送邮件通知你
+    = render partial: "introduce_form", locals: {enrollment: @enrollment, update: true}
+
+
+  footer.site-footer
+    img.site-footer__logo src=image_url('logo2.png')
+
+
