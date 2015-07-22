@@ -1,7 +1,4 @@
 .container
-  header.site-header
-    a.site-header__root href="/"
-    h1.site-header__title = "#{@enrollment.course.title}"
 
   h1.apply-title
     |申请加入#{@enrollment.course.title}
@@ -65,7 +62,5 @@
     = render partial: "introduce_form", locals: {enrollment: @enrollment, update: true}
 
 
-  footer.site-footer
-    img.site-footer__logo src=image_url('logo2.png')
 
 
