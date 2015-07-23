@@ -11,6 +11,11 @@
 #  has_been_activated :boolean          default(FALSE)
 #  discourse_user_id  :integer
 #  discourse_username :string
+#  introduce          :text
+#  activated          :boolean
+#  sent_welcome_email :datetime
+#  introduce_submit   :boolean
+#  introduce_submit_enrollment   :string
 #
 
 class User < ActiveRecord::Base
