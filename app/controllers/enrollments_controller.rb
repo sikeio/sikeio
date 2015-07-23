@@ -219,7 +219,8 @@ class EnrollmentsController < ApplicationController
       render json: {success: false, message: "个性地址不能为空~"}
       return
     end
-    enrollment.update(partnership_account: params[:partnership_account], personal_info: params.require(:personal_info).permit(:blog_url, :occupation, :gender))
+    enrollment.update(partnership_account: params[:partnership_account])
+    enrollment.user.update(personal_info: params.require(:personal_info).permit(:blog_url, :occupation, :gender))
     render json: {success: true, url: course_path(enrollment.course)}
   end
 
