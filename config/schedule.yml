@@ -1,0 +1,4 @@
+bearychat_weekly_report_sender_job:
+  cron: "0 0 17 ? * MON-FRI"
+  class: "BearychatWeeklyReportSenderJob"
+  queue: default

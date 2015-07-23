@@ -11,3 +11,12 @@ end
 Sidekiq.configure_client do |config|
   config.redis = { url: redis_url }
 end
+
+# config sidekiq cron
+schedule_file = "config/schedule.yml"
+if File.exists?(schedule_file)
+  Sidekiq::Cron::Job.load_from_hash YAML.load_file(schedule_file)
+else
+  raise 'can not find config/schedule.yml file'
+end
+

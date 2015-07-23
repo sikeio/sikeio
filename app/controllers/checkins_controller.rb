@@ -17,8 +17,9 @@ class CheckinsController < ApplicationController
     checkin = Checkin.new(checkin_info)
 
     if checkin.save
-      mixpanel_track(checkin.enrollment.id, "Create Checkin")
 
+      mixpanel_track(checkin.enrollment.id, "Create Checkin")
+      BearychatMsgSenderJob.perform_later "checkin", "#{current_user.github_username} [打卡](#{checkin.lesson.discourse_checkin_topic_url}) #{checkin.lesson.course.name} - #{checkin.lesson.title} "
       render json: success_msg(checkin.lesson.discourse_checkin_topic_url)
     else
       render_400 checkin.errors
@@ -46,6 +47,7 @@ class CheckinsController < ApplicationController
     begin
       checkin = current_user.checkins.find(params[:id].split('-').last)
       checkin.update!(checkin_params)
+      BearychatMsgSenderJob.perform_later "checkin", "#{current_user.github_username} [打卡](#{checkin.lesson.discourse_checkin_topic_url}) #{checkin.lesson.course.name} - #{checkin.lesson.title} "
       render json: success_msg(checkin.lesson.discourse_checkin_topic_url)
     rescue
       if checkin
