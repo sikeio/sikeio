@@ -7,6 +7,8 @@ class SubscribersController < ApplicationController
       return
     end
 
+    UserMailer.index_welcome(subscriber.email).deliver_later
+
     head :ok
   end
 end

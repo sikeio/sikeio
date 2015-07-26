@@ -23,12 +23,12 @@
 
     .action-panel__row
       label 博客(可选)
-      input.blog-url name='personal_info[blog_url]' value='#{@enrollment.personal_info["blog_url"]}'
+      input.blog-url name='personal_info[blog_url]' value='#{@enrollment.user.personal_info["blog_url"]}'
 
     .action-panel__row
       label 性别
       .radio
-        - if @enrollment.personal_info["gender"] == "汉子"
+        - if @enrollment.user.personal_info["gender"] == "汉子"
           input.radio__input type='radio' id='gender_radio1' name='personal_info[gender]' value="汉子" checked="checked"
         - else
           input.radio__input type='radio' id='gender_radio1' name='personal_info[gender]' value="汉子"
@@ -36,7 +36,7 @@
           span.radio__label__span
           | 汉子
       .radio
-        - if @enrollment.personal_info["gender"] == "妹子"
+        - if @enrollment.user.personal_info["gender"] == "妹子"
           input.radio__input type='radio' id='gender_radio2' name='personal_info[gender]' value="妹子" checked="checked"
         - else
           input.radio__input type='radio' id='gender_radio2' name='personal_info[gender]' value="妹子"
@@ -44,7 +44,7 @@
           span.radio__label__span
           | 妹子
       .radio
-        - if @enrollment.personal_info["gender"] == "不清楚"
+        - if @enrollment.user.personal_info["gender"] == "不清楚"
           input.radio__input type='radio' id='gender_radio3' name='personal_info[gender]' value="不清楚" checked="checked"
         - else
           input.radio__input type='radio' id='gender_radio3' name='personal_info[gender]' value="不清楚"
@@ -55,7 +55,7 @@
     .action-panel__row
       label 职业
       .radio
-        - if @enrollment.personal_info["occupation"] == "在职"
+        - if @enrollment.user.personal_info["occupation"] == "在职"
           input.radio__input type='radio' id='radio1' name='personal_info[occupation]' value="在职" checked="checked"
         - else
           input.radio__input type='radio' id='radio1' name='personal_info[occupation]' value="在职"
@@ -63,7 +63,7 @@
           span.radio__label__span
           | 在职
       .radio
-        - if @enrollment.personal_info["occupation"] == "学生"
+        - if @enrollment.user.personal_info["occupation"] == "学生"
           input.radio__input type='radio' id='radio2' name='personal_info[occupation]' value="学生" checked="checked"
         - else
           input.radio__input type='radio' id='radio2' name='personal_info[occupation]' value="学生"
@@ -71,7 +71,7 @@
           span.radio__label__span
           | 学生
       .radio
-        - if @enrollment.personal_info["occupation"] == "无业游民"
+        - if @enrollment.user.personal_info["occupation"] == "无业游民"
           input.radio__input type='radio' id='radio3' name='personal_info[occupation]' value="无业游民" checked="checked"
         - else
           input.radio__input type='radio' id='radio3' name='personal_info[occupation]' value="无业游民"
