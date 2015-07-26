@@ -6,7 +6,7 @@ class SubscribersController < ApplicationController
       render_400 "邮件订阅失败", subscriber.errors
       return
     end
-    BearychatMsgSenderJob.perform_later "subscribe", "#{subscriber.email} 发出了迷你课程订阅申请，谁是管事的快处理一下！"
+    BearychatMsgSenderJob.send_msg_to_staff "#{subscriber.email} 发出了迷你课程订阅申请，谁是管事的快处理一下！"
     head :ok
   end
 end

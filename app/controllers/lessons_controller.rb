@@ -27,7 +27,7 @@ class LessonsController < ApplicationController
   end
 
   def ask 
-    BearychatMsgSenderJob.perform_later "question", "#{current_user.github_username} 对 #{lesson.course.name} 的 #{lesson.title} 进行了[提问](lesson.discourse_qa_topic_id)"
+    BearychatMsgSenderJob.send_msg_to_all "#{current_user.github_username} 对 #{lesson.course.name} 的 #{lesson.title} 进行了[提问](lesson.discourse_qa_topic_id)"
     redirect_to lesson.discourse_qa_topic_url
   end
 
