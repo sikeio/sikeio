@@ -8,24 +8,23 @@
     p
       | 很欢迎你加入我们一起学习！
 
-    p = @course.desc
 
-  h1.action-panel__title 1. 绑定 Github 账号
+  h1.action-panel__title 1. 绑定 GitHub 账号
 
   // .u-bg-lightblue.u-padding-15
   .action-panel
     p
-      | 训练营使用 Github 做技术交流。
+      | 训练营使用 GitHub 做技术交流。
     span.github-tip
-      | 没有 Github 账号的请先去
+      | 没有 GitHub 账号的请先去
       a.u-color-red href="https://github.com/" 注册
       | 。
 
     - if @user && @user.has_binded_github
       p.js-bind-success
-        | Github 绑定账号:  #{@user.github_username}
+        | GitHub 绑定账号:  #{@user.github_username}
       .message
-        | Github 已经绑定
+        | GitHub 已经绑定
     - else
       - if @course_invite
         - callback_url = enroll_enrollment_path(@course_invite.token)
@@ -36,7 +35,7 @@
         a.btn.btn--normal.js-bind-github(
           href="/auth/github?back_path=#{callback_url}&github_binding=true"
           data-disable-with="<i class='fa fa-spinner fa-spin'></i> Loading...")
-          | Github 绑定
+          | GitHub 绑定
 
 
 

@@ -31,6 +31,9 @@ Rails.application.routes.draw do
   get '/@:github_username/:checkin' => 'users#note', as: :user_note
   post '/@:github_username' => 'users#update_personal_info', as: :update_user
 
+  post '/users/autosave' => 'users#autosave', as: :autosave
+  patch '/users/update' => 'users#introduce_update', as: :update_introduce
+
   resources :users,only:[:show] do
     member do
       get '/activation' => 'users#activation'
@@ -54,6 +57,7 @@ Rails.application.routes.draw do
       get 'pay'
       post 'finish'
       patch 'info_update'
+      get 'apply'
     end
   end
 

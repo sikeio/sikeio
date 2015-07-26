@@ -1,0 +1,31 @@
+= form_for enrollment.user, url: update_introduce_path, method: :patch, html: {class: "action-panel"} do |f|
+
+  = hidden_field_tag "token", enrollment.token
+  .action-panel__row
+    = f.label :name, "姓名"
+    = f.text_field :name
+
+  .action-panel__row
+    = f.label :introduce, "自我介绍"
+    - if !update
+      p.apply-tips
+        |多说几句话介绍自己呗~
+      - text = "1. 你的工作/专业是什么？\n\n2. 你看过哪些有意思的技术书籍？\n\n3. 你解决最难的技术问题是什么?\n\n4. 为什么想加入思客学习？\n\n5. 其它你想让大家知道的？"  #92 个字符
+      - if !enrollment.user.introduce.blank?
+        - text = enrollment.user.introduce
+
+      = f.text_area :introduce, value: text, rows: 15, placeholder: text
+    - else
+      = f.text_area :introduce, rows: 15
+
+  .action-panel__row
+    .action-panel__actions
+      ul
+        li
+          button.btn.btn--middle type="submit"
+            - if update
+              |修改自我介绍
+            - else
+              |提交申请
+        li id="autosave-tips"
+

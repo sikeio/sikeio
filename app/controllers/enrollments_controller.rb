@@ -24,17 +24,25 @@ class EnrollmentsController < ApplicationController
     if !enrollment.save
       flash[:error] = enrollment.errors.values.flatten.to_s
       render_400 "申请失败", enrollment.errors
+      return
+    end
+
+    if user.activated?
+      UserMailer.invite(enrollment).deliver_later
+      enrollment.update(invitation_sent_time: Time.now)
     else
       UserMailer.welcome(enrollment).deliver_later
-      head :ok
-
-      if cookies.signed[:distinct_id]
-        mixpanel_alias(enrollment.id, cookies.signed[:distinct_id])
-        cookies.delete :distinct_id
-      end
-
-      mixpanel_track(enrollment.id, "Created Enrollment", {"Course" => enrollment.course.name})
+      user.update(sent_welcome_email: Time.now.beginning_of_day)
     end
+
+    head :ok
+
+    if cookies.signed[:distinct_id]
+      mixpanel_alias(enrollment.id, cookies.signed[:distinct_id])
+      cookies.delete :distinct_id
+    end
+
+    mixpanel_track(enrollment.id, "Created Enrollment", {"Course" => enrollment.course.name})
   end
 
   def enroll
@@ -79,14 +87,44 @@ class EnrollmentsController < ApplicationController
     render 'invite'
   end
 
-  def invite
-    if current_user && enrollment.user != current_user
-      enrollment.update_attribute :user, current_user
+  def apply
+    enrollment
+    @course = enrollment.course
+
+    synchronize_user
+
+    if current_user && current_user.activated?
+      if !enrollment.invitation_sent_time # 对于已经激活的用户，进入本界面的邮件就算是邀请邮件
+        enrollment.update(invitation_sent_time: Time.now)
+      end
+      redirect_to invite_enrollment_path(enrollment)
     end
+
+    if current_user && enrollment.user.introduce_submit? &&enrollment.user.introduce_submit_enrollment != enrollment.token
+      #处理用户申请课程后，正在等待审核的过程中，用户在此期间申请其他课程。
+      send_time = rand(30..60).minutes
+      AutoActivatedJob.set(wait: send_time).perform_later(enrollment)
+
+    end
+  end
+
+  def invite
+    synchronize_user
 
     if enrollment.activated?
       redirect_to course_path(enrollment.course)
       return
+    end
+
+    enrollment.update(start_time: Time.now.beginning_of_day)
+
+    if current_user && current_user.personal_info &&user_info_completed?  #登陆之后, enrollment 的 user 才是真实的
+      if enrollment.course.free?
+        enrollment.activate!
+        redirect_to course_path(enrollment.course)
+      else
+        redirect_to pay_enrollment_path(enrollment)
+      end
     end
 
     @course = enrollment.course
@@ -125,7 +163,7 @@ class EnrollmentsController < ApplicationController
       end
     end
 
-    enrollment.update_attribute :personal_info, params.require(:personal_info).permit(:blog_url, :occupation, :gender)
+    enrollment.user.update_attribute :personal_info, params.require(:personal_info).permit(:blog_url, :occupation, :gender)
 
     if !user_info_completed?
       flash[:error] = "请输入完整信息~"
@@ -167,7 +205,7 @@ class EnrollmentsController < ApplicationController
     enrollment.save
     activate_course
 
-    charge = enrollment.personal_info["occupation"] == "学生" ? 490 : 790
+    charge = enrollment.user.personal_info["occupation"] == "学生" ? 490 : 790
     mixpanel_track(enrollment.id, "Finished Payment", {"Charge" => charge,
                                                        "Course" => enrollment.course.name})
   end
@@ -181,7 +219,8 @@ class EnrollmentsController < ApplicationController
       render json: {success: false, message: "个性地址不能为空~"}
       return
     end
-    enrollment.update(partnership_account: params[:partnership_account], personal_info: params.require(:personal_info).permit(:blog_url, :occupation, :gender))
+    enrollment.update(partnership_account: params[:partnership_account])
+    enrollment.user.update(personal_info: params.require(:personal_info).permit(:blog_url, :occupation, :gender))
     render json: {success: true, url: course_path(enrollment.course)}
   end
 
@@ -191,6 +230,18 @@ class EnrollmentsController < ApplicationController
   class InvalidEnrollmentTokenError < RuntimeError ; end
   class InvalidPersonalInfoError < RuntimeError ; end
 
+  def synchronize_user
+    if current_user && enrollment.user != current_user
+      old_user = enrollment.user
+      enrollment.update_attribute :user, current_user
+
+      #update introduce
+      if current_user.introduce.blank? || current_user.introduce.length < old_user.introduce.length
+        current_user.update(introduce: old_user.introduce)
+      end
+    end
+  end
+
   def activate_course
     enrollment.activate!
     login_as enrollment.user
@@ -198,7 +249,7 @@ class EnrollmentsController < ApplicationController
   end
 
   def user_info_completed?
-    enrollment.user.has_binded_github && (!enrollment.personal_info["occupation"].blank?) && (!enrollment.personal_info["gender"].blank?)
+    enrollment.user.has_binded_github && (!enrollment.user.personal_info["occupation"].blank?) && (!enrollment.user.personal_info["gender"].blank?)
   end
 
   def redirect_to_invite

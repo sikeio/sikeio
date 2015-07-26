@@ -21,7 +21,7 @@
         p.u-center-text
           | 支付金额:&nbsp;&nbsp;
           span.tuition
-            span.origin =( @enrollment.personal_info["occupation"] == '学生' ? 490 : 790 )
+            span.origin =( @enrollment.user.personal_info["occupation"] == '学生' ? 490 : 790 )
             | &nbsp;
             span.new
               | &nbsp;大洋

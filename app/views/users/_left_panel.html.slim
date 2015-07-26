@@ -6,7 +6,7 @@
   ul.socials
     - number = @user.personal_info.nil? ? 1 : 3
     li style="width:#{100.0 / number}%"
-      a href=@user.github.info["info"]["urls"]["GitHub"] target="_blank" Github
+      a href=@user.github.info["info"]["urls"]["GitHub"] target="_blank" GitHub
     - if !@user.personal_info.nil?
       li style="width:#{100.0 / number}%"
         a href="https://twitter.com/#{@user.personal_info["twitter"]}" target="_blank" Twitter

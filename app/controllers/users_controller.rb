@@ -8,6 +8,35 @@ class UsersController < ApplicationController
      @send_day = Time.now.beginning_of_day.to_f * 1000 # convert to milliseconds for js
   end
 
+  def introduce_update
+    enrollment = Enrollment.find_by_token(params[:token])
+    render_404 if !enrollment
+    enrollment.user.update!(user_params)
+
+
+    if !enrollment.user.introduce_submit? && enrollment.user.introduce.length > (92 + 10)
+      send_time = rand(30..60).minutes
+      AutoActivatedJob.set(wait: send_time).perform_later(enrollment)
+    end
+
+    if !enrollment.user.introduce_submit?
+      enrollment.user.update(introduce_submit: true)
+      enrollment.user.update(introduce_submit_enrollment: enrollment.token)
+    end
+
+    redirect_to apply_enrollment_path(enrollment)
+  end
+
+  def autosave
+    enrollment = Enrollment.find_by_token(params[:token])
+    if !enrollment
+      render json: {msg: "注册信息不存在"}, status: :bad_request
+    else
+      enrollment.user.update!(user_params)
+      head :ok
+    end
+  end
+
   def note
     get_user
     @checkin = @user.checkins.find params[:checkin].last
@@ -20,6 +49,11 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def user_params
+    params.require(:user).permit(:name, :introduce)
+  end
+
   def get_user
     return @user if defined? @user
     @user = User.find_by_github_username(params[:github_username])
