@@ -19,7 +19,7 @@ class CheckinsController < ApplicationController
     if checkin.save
 
       mixpanel_track(checkin.enrollment.id, "Create Checkin")
-      BearychatMsgSenderJob.send_msg_to_all "checkin", "#{current_user.github_username} [打卡](#{checkin.lesson.discourse_checkin_topic_url}) #{checkin.lesson.course.name} - #{checkin.lesson.title} "
+      BearychatMsgSenderJob.send_msg_to_all "#{current_user.github_username} [打卡](#{checkin.lesson.discourse_checkin_topic_url}) #{checkin.lesson.course.name} - #{checkin.lesson.title} "
       render json: success_msg(checkin.lesson.discourse_checkin_topic_url)
     else
       render_400 checkin.errors
