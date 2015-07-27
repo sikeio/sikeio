@@ -3,9 +3,29 @@
   background-color: #F8FBFF
   padding: 0.555556em 1.111111em
 
+.action-panel--white
+  background-color: white
+
+
 .action-panel__row
   width: 100%
   margin: 1em 0.8em
+
+  & > button#file-upload
+    position: relative
+    overflow: hidden
+    background-color: #D8D8D8
+    & > input[type=file]
+      position: absolute
+      top: 0
+      right: 0
+      margin: 0
+      padding: 0
+      font-size: 20px
+      cursor: pointer
+      opacity: 0
+      filter: alpha(opacity=0)
+
 
   & > label
     display: block
@@ -30,6 +50,20 @@
 
     & > select
       width: 25%
+
+.action-panel__row--inline
+  & > label
+    display: inline-block
+    margin-right: 20px
+    width: 15%
+    text-align: right
+
+  & > textarea
+
+  & > input
+    display: inline-block
+    width: 80%
+
 
 .action-panel__tips
   width: 90.74%

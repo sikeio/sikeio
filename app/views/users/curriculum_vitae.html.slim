@@ -1,0 +1,79 @@
+= javascript_include_tag 'upload/resume'
+section.course-info__section.course-info__section--large-padding
+  .container
+    section
+      h1
+        | 废话少说，放码过来！
+      p
+        |上了北大青鸟太 low，找工作不敢说？
+      p
+        |国内培训机构的水平大家都是心知肚明的。收到简历看到某鸟也就呵呵两声，然后就没然后了。思客教学以远程工作的方式来教你写代码。在思客学习完成后你不会不敢说，你会很有成就感，为自己的成果感到骄傲。
+
+    section
+      h1
+        |面向精英技术团队
+      p
+        |今天，思客的教学模式也有了同行的认可。不管你是名校出身还是野生程序员，你在思客写的代码可以更直观地证明你的能力。只要你完成 pro 课程，就可以通过内推面试精英技术团队。
+      p
+        |思客内推的公司都是逼格破表，高贵冷艳的 Hacker 团队。他们有 YCombinator 学成回国的公司，有著名天使投资人徐小平投的公司，也有中国本土领先的远程工作团队。在大公司你只是一个小齿轮，但在这些小而精的团队你可以承当更多的责任，对用户和产品有非常直接的影响。
+
+
+    section
+      ul.partner_slogan
+        li
+          .partner_slogan__logo
+            = image_tag("partner/caicheng.png")
+          p.partner_slogan__slogan
+            |植根用户体验，设计创新软件
+        li
+          .partner_slogan__logo
+            = image_tag("partner/strikingly.png")
+          p.partner_slogan__slogan.partner_slogan__slogan--strikingly
+            |移动时代最出色的在线建站工具
+        li
+          .partner_slogan__logo
+            = image_tag("partner/liuli.png")
+            span.liuli
+              | 流利说
+          p.partner_slogan__slogan
+            |你随身的英语私教
+        li
+          .partner_slogan__logo
+            = image_tag("partner/shouTV.png")
+            span.shouTV
+              | Shou.TV
+          p.partner_slogan__slogan
+            |最流行的手游直播平台
+
+    section
+      - if !current_user.company.blank? && !current_user.curriculum_vitae_url.blank?
+        .message
+          |我们已经收到了你的简历，和内推公司沟通后 7 天内会联系你
+          a href="#{current_user.curriculum_vitae_url}" style="margin-left: 20px"
+            |查看简历
+      = form_for current_user, url: update_curriculum_vitae_path , html: {class: "action-panel action-panel--white" } do |f|
+        .action-panel__row.action-panel__row--inline
+          = f.label :company, "内推公司"
+          = f.text_field :company
+        .action-panel__row.action-panel__row--inline
+          = f.label :curriculum_vitae_url, "简历 URL"
+          = f.text_field :curriculum_vitae_url
+        .action-panel__row
+          = button_tag id: "file-upload"
+            = file_field_tag 'curriculum_vitae_file', id: "choosefiles"
+            span
+              |选择文件
+          span style="margin: 0 20px"
+            | .pdf, .doc 皆可
+          .progress-container
+
+        .action-panel__row
+          .action-panel__actions
+            ul
+              li
+                - btn_text = "上传简历"
+                - if current_user.company && current_user.curriculum_vitae_url
+                  - btn_text = "更新简历"
+                = f.submit btn_text, class: "btn btn--middle"
+
+

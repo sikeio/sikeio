@@ -1,11 +1,36 @@
 class UsersController < ApplicationController
+  layout "home", only: [:curriculum_vitae]
 
-  before_action :require_login, only: [:update_personal_info]
+  before_action :require_login, only: [:update_personal_info, :update_curriculum_vitae]
   before_action :require_correct_user, only: [:update_personal_info]
 
   def notes
     get_user
      @send_day = Time.now.beginning_of_day.to_f * 1000 # convert to milliseconds for js
+  end
+
+  def update_curriculum_vitae
+    company = params[:user][:company]
+    curriculum_vitae_url = params[:user][:curriculum_vitae_url]
+    if company.blank?
+      flash[:error] = "请填写你希望内推的公司~"
+      redirect_to curriculum_vitae_path
+      return
+    else
+      current_user.update(company: company)
+    end
+    if curriculum_vitae_url.blank?
+      flash[:error] = "请上传您的简历或填写您简历所在的网址~"
+      redirect_to curriculum_vitae_path
+      return
+    else
+      current_user.update(curriculum_vitae_url: curriculum_vitae_url)
+    end
+    redirect_to curriculum_vitae_path
+  end
+
+  def curriculum_vitae
+    @course_show = "job"
   end
 
   def introduce_update
@@ -49,6 +74,10 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def curriculum_vitae_params
+    params.require(:user).permit(:company, :curriculum_vitae_url)
+  end
 
   def user_params
     params.require(:user).permit(:name, :introduce)
