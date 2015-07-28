@@ -30,7 +30,11 @@ class UsersController < ApplicationController
   end
 
   def curriculum_vitae
-    @course_show = "job"
+    @show_info = {
+      background:  "job.jpg",
+      job: true,
+      title: "思客 Pro 就业直通车"
+    }
   end
 
   def introduce_update
