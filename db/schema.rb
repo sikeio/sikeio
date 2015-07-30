@@ -132,7 +132,7 @@ ActiveRecord::Schema.define(version: 20150726020959) do
     t.boolean  "introduce_submit"
     t.string   "introduce_submit_enrollment"
     t.string   "company"
-    t.string   "curriculum_vitae_url"
+    t.string   "resume_url"
   end
 
 end
