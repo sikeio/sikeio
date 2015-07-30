@@ -2,11 +2,13 @@ $ ->
   uploader = Qiniu.uploader
     runtimes: 'html5,flash,html4',
     browse_button: 'choosefiles',
-    max_file_size: '4mb',
+    max_file_size: '10mb',
     flash_swf_url: '/plupload/Moxie.swf',
-    uptoken_url: "/qiniu/resume-uptoken",
-    domain: "http://7xknzl.com1.z0.glb.clouddn.com/",
-    save_key: true,
+    uptoken_url: "/qiniu/uptoken",
+    domain: "http://7xjfes.com1.z0.glb.clouddn.com/",
+    chunk_size: '4mb',
+    save_key: false,
+    unique_names: false,
     auto_start: true,
     init:
       'BeforeUpload': (up, file)->
@@ -24,7 +26,7 @@ $ ->
         FileURL = domain + res.key;
 
         markdownImg = "#{FileURL}"
-        doc = $('input#user_curriculum_vitae_url')
+        doc = $('input#user_resume_url')
 
         doc.val "#{markdownImg}"
 
@@ -38,4 +40,8 @@ $ ->
           type: 'error'
           title: "文件上传出错误！"
           text: errTip
+
+      'Key': (up, file) ->
+        key = 'resume/' + file.id + '.' + file.name.substr(file.name.lastIndexOf('.') + 1)
+        return key
 

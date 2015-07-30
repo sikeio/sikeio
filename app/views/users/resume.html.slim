@@ -46,21 +46,21 @@ section.course-info__section.course-info__section--large-padding
             |最流行的手游直播平台
 
     section
-      - if !current_user.company.blank? && !current_user.curriculum_vitae_url.blank?
+      - if !current_user.company.blank? && !current_user.resume_url.blank?
         .message
           |我们已经收到了你的简历，和内推公司沟通后 7 天内会联系你
-          a href="#{current_user.curriculum_vitae_url}" style="margin-left: 20px"
+          a href="#{current_user.resume_url}" style="margin-left: 20px"
             |查看简历
-      = form_for current_user, url: update_curriculum_vitae_path , html: {class: "action-panel action-panel--white" } do |f|
+      = form_for current_user, url: update_resume_path , html: {class: "action-panel action-panel--white" } do |f|
         .action-panel__row.action-panel__row--inline
           = f.label :company, "内推公司"
           = f.text_field :company
         .action-panel__row.action-panel__row--inline
-          = f.label :curriculum_vitae_url, "简历 URL"
-          = f.text_field :curriculum_vitae_url
+          = f.label :resume_url, "简历 URL"
+          = f.text_field :resume_url
         .action-panel__row
           = button_tag id: "file-upload"
-            = file_field_tag 'curriculum_vitae_file', id: "choosefiles"
+            = file_field_tag 'resume_file', id: "choosefiles"
             span
               |选择文件
           span style="margin: 0 20px"
@@ -72,7 +72,7 @@ section.course-info__section.course-info__section--large-padding
             ul
               li
                 - btn_text = "上传简历"
-                - if current_user.company && current_user.curriculum_vitae_url
+                - if current_user.company && current_user.resume_url
                   - btn_text = "更新简历"
                 = f.submit btn_text, class: "btn btn--middle"
 

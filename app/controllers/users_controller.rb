@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  layout "home", only: [:curriculum_vitae]
+  layout "home", only: [:resume]
 
-  before_action :require_login, only: [:update_personal_info, :update_curriculum_vitae]
+  before_action :require_login, only: [:update_personal_info, :update_resume]
   before_action :require_correct_user, only: [:update_personal_info]
 
   def notes
@@ -9,27 +9,27 @@ class UsersController < ApplicationController
      @send_day = Time.now.beginning_of_day.to_f * 1000 # convert to milliseconds for js
   end
 
-  def update_curriculum_vitae
+  def update_resume
     company = params[:user][:company]
-    curriculum_vitae_url = params[:user][:curriculum_vitae_url]
+    resume_url = params[:user][:resume_url]
     if company.blank?
       flash[:error] = "请填写你希望内推的公司~"
-      redirect_to curriculum_vitae_path
+      redirect_to resume_path
       return
     else
       current_user.update(company: company)
     end
-    if curriculum_vitae_url.blank?
+    if resume_url.blank?
       flash[:error] = "请上传您的简历或填写您简历所在的网址~"
-      redirect_to curriculum_vitae_path
+      redirect_to resume_path
       return
     else
-      current_user.update(curriculum_vitae_url: curriculum_vitae_url)
+      current_user.update(resume_url: resume_url)
     end
-    redirect_to curriculum_vitae_path
+    redirect_to resume_path
   end
 
-  def curriculum_vitae
+  def resume
     @show_info = {
       background:  "job.jpg",
       job: true,
@@ -79,9 +79,6 @@ class UsersController < ApplicationController
 
   private
 
-  def curriculum_vitae_params
-    params.require(:user).permit(:company, :curriculum_vitae_url)
-  end
 
   def user_params
     params.require(:user).permit(:name, :introduce)

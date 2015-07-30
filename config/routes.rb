@@ -31,8 +31,8 @@ Rails.application.routes.draw do
   post '/@:github_username' => 'users#update_personal_info', as: :update_user
 
   post '/users/autosave' => 'users#autosave', as: :autosave
-  patch '/users/curriculum' => 'users#update_curriculum_vitae', as: :update_curriculum_vitae
-  get '/users/curriculum' => 'users#curriculum_vitae', as: :curriculum_vitae
+  patch '/users/resume' => 'users#update_resume', as: :update_resume
+  get '/users/resume' => 'users#resume', as: :resume
   patch '/users/update' => 'users#introduce_update', as: :update_introduce
 
   resources :users,only:[:show] do
@@ -69,8 +69,7 @@ Rails.application.routes.draw do
   end
 
   scope 'qiniu',format: :json do
-    get 'sike-uptoken' => 'qiniu#sike_uptoken'
-    get 'resume-uptoken' => 'qiniu#resume_uptoken'
+    get 'uptoken' => 'qiniu#uptoken'
   end
 
 
