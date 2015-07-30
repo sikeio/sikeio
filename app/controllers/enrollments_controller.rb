@@ -236,7 +236,7 @@ class EnrollmentsController < ApplicationController
       enrollment.update_attribute :user, current_user
 
       #update introduce
-      if current_user.introduce.blank? || current_user.introduce.length < old_user.introduce.length
+      if current_user.introduce.blank? || old_user.introduce.blank? ||current_user.introduce.length < old_user.introduce.length
         current_user.update(introduce: old_user.introduce)
       end
     end

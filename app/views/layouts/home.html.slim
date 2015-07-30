@@ -13,13 +13,10 @@ body id=page_identifier class="sike-global"
     - [:success, :error, :info].each do |type|
       - if flash[type]
         .flash-message class="flash-message--#{type}" = flash[type]
-  - background = {"home" => "#32425C", "design101" => "courses/design/design.jpg", "css0to1" => "courses/css/css.jpg", "ios" => "courses/ios/ios.jpg", "nodejs" => "courses/nodejs/nodejs.jpg"}
 
-  - title = {"home" => "满足您的技术情怀", "design101" => "用 Sketch 做出逼格破表的设计", "css0to1" => "你也可以写出简洁优美的 CSS", "nodejs" => "NodeJS 高速道路", "ios" => "iOS 攀爬第一个高峰"}
-
-  header id="header-home-layout" style="background-image: url(#{asset_path(background[@course_show])})"
+  header id="header-home-layout" style="background-image: url(#{asset_path(@show_info[:background])})"
     .header-home-layout__nav
-      - if @course_show != "home"
+      - if !@show_info[:home_index]
         a.header-home-layout__nav__back href="/"
           i.fa.fa-angle-left.fa-3x
           |&nbsp;&nbsp;返回主页
@@ -36,100 +33,86 @@ body id=page_identifier class="sike-global"
             |登入
 
     = image_tag "logo.png" , class: "header-home-layout__logo"
-    .header-home-layout__title-wrap
-      - title_class = "header-home-layout__title "
-      - if @course_show != "home"
-        - title_class += "header-home-layout__title--course"
-      h1 class="#{title_class}"
-        |#{title[@course_show]}
-        - if @course_show == "home"
-          p 专注 IT 领域远程学徒式
+    - if @show_info[:job]
+      .header-home-layout__title-wrap style="margin-bottom: 300px"
+        - title_class = "header-home-layout__title header-home-layout__title--course"
+        h1 class="#{title_class}"
+          |#{@show_info[:title]}
+    - else
+      .header-home-layout__title-wrap
+        - title_class = "header-home-layout__title "
+        - if !@show_info[:home_index]
+          - title_class += "header-home-layout__title--course"
+        h1 class="#{title_class}"
+          |#{@show_info[:title]}
+          - if @show_info[:home_index]
+            p 专注 IT 领域远程学徒式
 
-    = render partial: "enroll_form", locals: {course_permalink: @course_show, extra_class: 'header-home-layout__enroll'}
+    - if !@show_info[:job]
+      = render partial: "enroll_form", locals: {course_permalink: @show_info[:enroll_permalink], extra_class: 'header-home-layout__enroll'}
 
     ul.header-home-layout__navbar
-      li
-        - if @course_show == "css0to1"
-          a style="text-decoration: underline;"
-            |前端
-        - else
-          a href="#{root_path(course: "css0to1")}"
-            |前端
-      li
-        - if @course_show == "ios"
-          a style="text-decoration: underline;"
-            | iOS
-        - else
-          a href="#{root_path(course: "ios")}"
-            |iOS
-      li
-        - if @course_show == "design101"
-          a style="text-decoration: underline;"
-            |设计
-        - else
-          a href="#{root_path(course: "design101")}"
-            |设计
-      li
-        - if @course_show == "nodejs"
-          a style="text-decoration: underline;"
-            |NodeJS
-        - else
-          a href="#{root_path(course: "nodejs")}"
-            |NodeJS
+      - course = {"design101" => "设计", "css0to1" => "前端", "ios" => "iOS", "nodejs" => "NodeJS"}
+      - course.each do |key, value|
+        li
+          - if @show_info[:page_at] == key
+            a style="text-decoration: underline;"
+              |#{value}
+          - else
+            a href="#{root_path(course: key)}"
+              |#{value}
 
 
   == yield
 
+  - if !@show_info[:job]
 
-  - if @course_show == "home"
-    = render partial: "slogan", locals: {background: false}
-  - else
-    = render partial: "slogan", locals: {background: true}
+    - if @show_info[:home_index]
+      = render partial: "slogan", locals: {background: false}
+    - else
+      = render partial: "slogan", locals: {background: true}
 
 
-  div id="footer-home-layout__intro"
-    .footer-home-layout__intro
-      .footer-home-layout__avatar
-        = image_tag("howard-yeh.jpg", alt: "avatar")
-      .footer-home-layout__content
-        h2 导师介绍
-        p
-          | 我叫 Howard，台湾同胞一枚。
-          | 小时候随家人移民加拿大。
-          | 2011 年远程工作，边旅行边赚钱。
-          | 那一年第一次来到了天朝。
-          | 我写了篇有关这个经历的博文
-          a href="http://metacircus.com/writings/2011/09/19/from-the-office-to-travelling-the-world.html" From The Office to Travelling The World
-          |  。
-          | 2012 年觉得生活太安逸，决定来中国发展，发现难度瞬间提升为 Hard。
-          | 在深圳和朋友创立了
-          a href="http://www.puffant.com" 小象网
-          |  ，做创意纸品，婚纱相册之类的产品。
-          | 现在已盈利，处稳定发展状态。
-          | 2013 夏，搬到成都和女朋友在一起。
-        p GitHub: http://github.com/hayeah
-        p Blog: http://metacircus.com
+    div id="footer-home-layout__intro"
+      .footer-home-layout__intro
+        .footer-home-layout__avatar
+          = image_tag("howard-yeh.jpg", alt: "avatar")
+        .footer-home-layout__content
+          h2 导师介绍
+          p
+            | 我叫 Howard，台湾同胞一枚。
+            | 小时候随家人移民加拿大。
+            | 2011 年远程工作，边旅行边赚钱。
+            | 那一年第一次来到了天朝。
+            | 我写了篇有关这个经历的博文
+            a href="http://metacircus.com/writings/2011/09/19/from-the-office-to-travelling-the-world.html" From The Office to Travelling The World
+            |  。
+            | 2012 年觉得生活太安逸，决定来中国发展，发现难度瞬间提升为 Hard。
+            | 在深圳和朋友创立了
+            a href="http://www.puffant.com" 小象网
+            |  ，做创意纸品，婚纱相册之类的产品。
+            | 现在已盈利，处稳定发展状态。
+            | 2013 夏，搬到成都和女朋友在一起。
+          p GitHub: http://github.com/hayeah
+          p Blog: http://metacircus.com
 
-  div id="footer-home-layout__enroll"
-    h2 如果你对远程学徒教学有兴趣，欢迎订阅我们的免费课程：
+    div id="footer-home-layout__enroll"
+      h2 如果你对远程学徒教学有兴趣，欢迎订阅我们的免费课程：
 
-    = render partial: "enroll_form", locals: {course_permalink: @course_show, extra_class: ""}
+      = render partial: "enroll_form", locals: {course_permalink: @show_info[:enroll_permalink], extra_class: ""}
 
-    p.notice 我们绝不泄露你的邮箱，你可以随时取消订阅
+      p.notice 我们绝不泄露你的邮箱，你可以随时取消订阅
 
-  footer id="footer-home-layout__footer"
-    .footer-home-layout__footer
-      .footer-logo
-        a href="#"
-          img src=image_path("footer-logo.png") width="59" alt="思客"
-      .copyright ©2015 思客
-      nav.contact
-        ul
-          li
-            a href="mailto:contact@besike.com" 联系我们
-          li
-            a href="http://bbs.sike.io" 交流论坛
-  - title = "迷你课程"
-  - if !@course.blank?
-    - title = @course.title
-  = render partial: "success_panel", locals: {title: title}
+    footer id="footer-home-layout__footer"
+      .footer-home-layout__footer
+        .footer-logo
+          a href="#"
+            img src=image_path("footer-logo.png") width="59" alt="思客"
+        .copyright ©2015 思客
+        nav.contact
+          ul
+            li
+              a href="mailto:contact@besike.com" 联系我们
+            li
+              a href="http://bbs.sike.io" 交流论坛
+    = render partial: "success_panel", locals: {title: @show_info[:course_name]}

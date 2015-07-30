@@ -19,6 +19,10 @@ body id=page_identifier class="sike-global"
       a href="#{course_path(@enrollment.course)}" class="logined-layout-header__title"
         | #{@enrollment.course.title}
       .logined-layout-header__personal-info
+        a.job href="#{resume_path}"
+          | 就业直通车
+          span
+            | pro
         a href="#{user_notes_path(current_user.github_username)}" id="logined-layout-header-user-name"
           = image_tag current_user.avatar
           span

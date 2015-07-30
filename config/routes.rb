@@ -31,6 +31,8 @@ Rails.application.routes.draw do
   post '/@:github_username' => 'users#update_personal_info', as: :update_user
 
   post '/users/autosave' => 'users#autosave', as: :autosave
+  patch '/users/resume' => 'users#update_resume', as: :update_resume
+  get '/users/resume' => 'users#resume', as: :resume
   patch '/users/update' => 'users#introduce_update', as: :update_introduce
 
   resources :users,only:[:show] do
