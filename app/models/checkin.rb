@@ -37,6 +37,14 @@ class Checkin < ActiveRecord::Base
     end
   end
 
+  def self.total_number
+    all.size
+  end
+
+  def self.total_number_of_this_week
+    Checkin.where(:created_at => Date.today.beginning_of_week..Date.today).size
+  end
+
   def publish
     discourse_poster.publish
   end

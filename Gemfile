@@ -8,6 +8,7 @@ gem 'omniauth-github'
 
 gem 'slim-rails'
 gem 'sidekiq'
+gem 'sidekiq-cron', '~> 0.3.0'
 gem 'sinatra', :require => nil
 
 gem 'rest-client', :require => "restclient"
@@ -63,6 +64,8 @@ gem 'qiniu'
 gem 'redcarpet', '>= 3.3.0'
 
 gem 'mixpanel-ruby', require: true
+
+gem 'mechanize'
 
 group :production do
   gem 'newrelic_rpm'

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get '/sso/succeed'
 
   require 'sidekiq/web'
+  require 'sidekiq/cron/web'
   mount Sidekiq::Web => '/admin/sidekiq', :constraints => AdminConstraint.new
 
   root 'home#index'
@@ -47,6 +48,8 @@ Rails.application.routes.draw do
   end
 
   get "/courses/:course_id/:id" => "lessons#show", as: :lesson
+
+  get "/courses/:course_id/:id/ask" => "lessons#ask", as: :lesson_ask
 
 
   resources :enrollments, only: [:create,:update, :new, :show] do

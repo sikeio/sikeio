@@ -26,6 +26,11 @@ class LessonsController < ApplicationController
     mixpanel_track(enrollment.id, "Visited Lesson Show Page", { "Course" => enrollment.course.name })
   end
 
+  def ask 
+    BearychatMsgSenderJob.send_msg_to_all "#{current_user.github_username} 对 #{lesson.course.name} 的 #{lesson.title} 进行了[提问](lesson.discourse_qa_topic_id)"
+    redirect_to lesson.discourse_qa_topic_url
+  end
+
   private
 
   def lesson
