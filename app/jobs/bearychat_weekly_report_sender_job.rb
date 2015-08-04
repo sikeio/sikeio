@@ -1,5 +1,3 @@
-require 'mechanize'
-
 class BearychatWeeklyReportSenderJob < BearychatMsgSenderJob
   def perform
     text = "本周打卡数: #{Checkin.total_number}, 累计打卡数: #{Checkin.total_number_of_this_week}"
