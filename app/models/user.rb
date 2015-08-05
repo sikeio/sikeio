@@ -93,9 +93,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.total_resume_number
+    User.where.not(resume_url: nil).size
+  end
+
   def to_param
     self.github_username
   end
+
 
   private
 
