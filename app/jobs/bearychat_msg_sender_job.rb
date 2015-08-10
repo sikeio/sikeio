@@ -1,4 +1,4 @@
-require 'mechanize'
+require 'rest-client'
 
 # 从后台向bearychat发送消息Job
 class BearychatMsgSenderJob < ActiveJob::Base
@@ -23,10 +23,7 @@ class BearychatMsgSenderJob < ActiveJob::Base
   end
 
   def send_message url, json_data
-    agent.post url, json_data, {'Content-Type' => 'application/json'}
+    RestClient.post url, json_data, :content_type => :json
   end
 
-  def agent
-    @agent ||= Mechanize.new
-  end
 end

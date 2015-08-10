@@ -65,8 +65,6 @@ gem 'redcarpet', '>= 3.3.0'
 
 gem 'mixpanel-ruby', require: true
 
-gem 'mechanize'
-
 group :production do
   gem 'newrelic_rpm'
 end

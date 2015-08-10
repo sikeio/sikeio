@@ -26,6 +26,7 @@ class UsersController < ApplicationController
     else
       current_user.update(resume_url: resume_url)
     end
+    BearychatMsgSenderJob.send_msg_to_all "#{current_user.github_username} [更新简历](#{resume_url}), 当前简历总数为#{User.total_resume_number}"
     redirect_to resume_path
   end
 
