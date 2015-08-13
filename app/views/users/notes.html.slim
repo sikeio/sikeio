@@ -11,7 +11,7 @@
     - if @user == current_user
       - enrollments = @user.enrollments
       - uncompletes = enrollments.find_all do |e|
-        - e.activated? && e.schedule.any_released? && !e.schedule.all_completed?
+        - e.activated? && e.schedule.any_released? && !e.schedule.all_completed? && !!e.schedule.current_lesson
 
       - if !uncompletes.blank?
         .mission-show
