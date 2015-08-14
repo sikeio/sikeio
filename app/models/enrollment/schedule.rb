@@ -1,6 +1,6 @@
 class Enrollment::Schedule
 
-  attr_reader :content, :course, :enrollment
+  attr_reader :content, :course, :enrollment, :checkins
 
   def self.memoize(*method_syms)
     for sym in method_syms
@@ -24,6 +24,7 @@ class Enrollment::Schedule
     @content = Course::Content.new(enrollment.course, enrollment.version)
     @course = enrollment.course
     @enrollment = enrollment
+    @checkins = enrollment.checkins
   end
 
   def lessons
@@ -59,6 +60,7 @@ class Enrollment::Schedule
   end
 
   def lesson_number(lesson)
+    return nil if !lesson
     result = lessons.find_index { |l| l == lesson }
     result += 1 if result
   end
@@ -109,13 +111,17 @@ class Enrollment::Schedule
   end
 
   def all_completed?
-    lessons.all? do |lesson|
-      Checkin.checkin?(enrollment, lesson)
-    end
+    return false if checkins.blank?
+    lesson_ids = lessons.map {|l| l.id}.sort
+    checkin_lesson_ids = checkins.map { |c| c.lesson_id }.uniq.sort
+    lesson_ids == checkin_lesson_ids
   end
 
   def is_completed?(lesson)
-    Checkin.checkin?(enrollment, lesson)
+    return false if !lesson
+    checkins.any? do |c|
+      c.lesson_id == lesson.id
+    end
   end
 
   def is_released?(lesson)
@@ -136,7 +142,9 @@ class Enrollment::Schedule
   end
 
   def completed_lessons_num
-    enrollment.checkins.count
+    checkins.map do |c|
+      c.lesson_id
+    end.uniq.count
   end
 
   def most_recently_completed_lesson
@@ -147,6 +155,9 @@ class Enrollment::Schedule
 
   def current_lesson
     return @current_lesson if  @current_lesson
+    if !any_released? || all_completed?
+      return nil
+    end
     lesson = next_lesson(most_recently_completed_lesson)
     if !is_released?(lesson)
       lesson = nil
