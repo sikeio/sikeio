@@ -10,11 +10,8 @@ class CheckinsController < ApplicationController
       raise "course not exist or not enroll"
     end
 
-    checkin_info = checkin_params
-    checkin_info[:enrollment_id] = enrollment.id
-    checkin_info[:lesson_id] = lesson.id
-
-    checkin = Checkin.new(checkin_info)
+    checkin = Checkin.find_or_initialize_by(enrollment_id: enrollment.id, lesson_id: lesson.id)
+    checkin.assign_attributes(checkin_params)
 
     if checkin.save
 
