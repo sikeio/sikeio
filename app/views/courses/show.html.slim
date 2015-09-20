@@ -23,6 +23,8 @@
           .uncomplete-mission__content
             a href=lesson_path(course, current_lesson)
               |#{num}. #{current_lesson.title}
+            a href="#{lesson_path(course, current_lesson)}?lang=cn"
+              | &nbsp; 中文
           .uncomplete-mission__time.js-time-left
             = hidden_field_tag "#{course.permalink}" , @enrollment.schedule.current_lesson_day_left, {class: "current_lesson_day_left"}
             p.time-show
