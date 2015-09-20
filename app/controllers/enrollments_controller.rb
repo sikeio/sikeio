@@ -205,7 +205,7 @@ class EnrollmentsController < ApplicationController
     enrollment.save
     activate_course
 
-    charge = enrollment.user.personal_info["occupation"] == "学生" ? 490 : 790
+    charge = enrollment.user.personal_info["occupation"] == "学生" ? 590 : 890
     mixpanel_track(enrollment.id, "Finished Payment", {"Charge" => charge,
                                                        "Course" => enrollment.course.name})
   end
