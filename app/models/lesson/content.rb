@@ -12,9 +12,9 @@ class Lesson::Content
     @version = course.current_version
   end
 
-  def html_page
+  def html_page(lang=nil)
     html_content = ""
-    xml = xml_content
+    xml = xml_content(lang)
     xml.children.each do |node|
       if node.name != "exercise"
           html_content << node.to_xhtml
@@ -23,6 +23,11 @@ class Lesson::Content
       end
     end
     set_assets_src(html_content)
+  end
+
+  # does it have cn translation?
+  def has_cn?
+    !cn_xml_dom.nil?
   end
 
   private
@@ -117,8 +122,16 @@ class Lesson::Content
     THERE
   end
 
+  def xml_content(lang=nil)
+    if lang == "cn"
+      cn_xml_content
+    else
+      course.content.page_dom(lesson_name)
+    end
 
-  def xml_content
-    course.content.page_dom(lesson_name)
+  end
+
+  def cn_xml_content
+    course.content.cnpage_dom(lesson_name)
   end
 end

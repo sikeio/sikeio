@@ -92,7 +92,7 @@ class Course < ActiveRecord::Base
   end
 
   def content
-    Course::Content.new(self)
+    @content ||= Course::Content.new(self)
   end
 
   def compiled?

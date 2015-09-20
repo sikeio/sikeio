@@ -36,6 +36,10 @@ class Course::Content
     xml_dom.css("page[name=#{name}]")[0]
   end
 
+  def cnpage_dom(name)
+    xml_dom.css("cnpage[name=#{name}]").first
+  end
+
   #{:desc =>"desc", :title => "title"}
   def course_info
     {
@@ -80,6 +84,7 @@ class Course::Content
     info[:old_name] = node["old-name"]
     info[:name] = node["name"]
     info[:project] = node["project"]
+    info[:hascn] = !xml_dom.css("cnpage[name=#{name}]").empty?
     return info
   end
 
