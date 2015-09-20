@@ -3,6 +3,6 @@
     |#{week_info[:title]}
   - if released
     .course-missions__week__overview
-       = sanitize week_info[:overview]
+       = raw week_info[:overview]
   - week_lessons.each do |lesson|
     = render partial: 'courses/course_show/lesson', locals: {lesson: lesson, enrollment: enrollment}

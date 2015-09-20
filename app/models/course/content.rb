@@ -84,7 +84,7 @@ class Course::Content
     info[:old_name] = node["old-name"]
     info[:name] = node["name"]
     info[:project] = node["project"]
-    info[:hascn] = !xml_dom.css("cnpage[name=#{name}]").empty?
+    # info[:hascn] = !xml_dom.css("cnpage[name=#{name}]").empty?
     return info
   end
 

@@ -27,7 +27,7 @@ class Lesson::Content
 
   # does it have cn translation?
   def has_cn?
-    !cn_xml_dom.nil?
+    !cn_xml_content.nil?
   end
 
   private
