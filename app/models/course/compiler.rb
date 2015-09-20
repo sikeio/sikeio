@@ -35,11 +35,20 @@ class Course::Compiler
   # Translates dir/index.{md,xmd} to DOM, relative to repo dir.
   # @param {String} dir Name of a directory from which to read an index document.
   # @return {Nokogiri::XML} DOM of a page index.
-  def dom_for(dir)
+  def dom_for(dir,lang=nil)
     dir = repo_dir + dir
 
     %w(md xmd).each do |ext|
       file = (dir + "index.#{ext}").to_s
+
+      # add language extension
+      if !lang.nil?
+        file = file + ".#{lang}"
+
+      end
+
+      puts "read dom: #{file}"
+
       if File.exists?(file)
         case ext
         when "xmd"
@@ -68,6 +77,7 @@ class Course::Compiler
   end
 
   def course_title
+    puts "find course title"
     @course_title ||= dom_for_index.css(COURSE_TITLE_HEADER)[0].text
   end
 
@@ -76,8 +86,10 @@ class Course::Compiler
   end
 
   def overview_xml
+    puts "overview_xml"
     node = dom_for_index.css(COURSE_TITLE_HEADER)[0].next_sibling
     course_overview = nil
+    puts node.to_xhtml
     while node
       if node.name == WEEK_HEADER
         break
@@ -91,6 +103,7 @@ class Course::Compiler
   end
 
   def index_xml
+    puts "index_xml"
     <<-THERE
     <index>
       #{weeks_xml}
@@ -155,13 +168,29 @@ class Course::Compiler
   def pages_xml
     pages = []
     list_of_pages.each do |page_name|
+      puts "compiling #{page_name}"
       dom = dom_for(page_name)
       xml = <<-THERE
 <page name="#{page_name}">
   #{dom.children.to_xhtml}
 </page>
 THERE
+
       pages.push xml
+
+      # try to find translation file
+      dom = dom_for(page_name,"cn")
+      if !dom.nil?
+        puts "compile cn version"
+        xml = <<-THERE
+<cnpage name="#{page_name}">
+  #{dom.children.to_xhtml}
+</cnpage>
+THERE
+        pages.push xml
+      end
+
+
     end
 
     pages.join "\n"

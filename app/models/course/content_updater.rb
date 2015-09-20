@@ -16,14 +16,22 @@ class Course::ContentUpdater
   def update
     cleanup
 
+    puts "clone repo"
+
     course.repo.update
+
+    puts "compile course xml"
 
     xml = course.compiler.course_xml
     write_to_xml_repo(xml)
 
+    puts "update database lessons"
+
     update_database
 
     course.update_attributes current_commit: course.repo.current_commit
+
+    puts "copy course assets"
 
     sync_assets
 
