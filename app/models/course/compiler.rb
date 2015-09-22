@@ -61,7 +61,9 @@ class Course::Compiler
       end
     end
 
-    raise "Cannot find index{.md,.xmd} file for: #{dir}"
+    return nil
+
+    # raise "Cannot find index{.md,.xmd} file for: #{dir}"
   end
 
   def course_xml
