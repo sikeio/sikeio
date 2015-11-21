@@ -1,0 +1,35 @@
+$line-height: 32px;
+
+.input-box {
+  text-align: center;
+}
+
+.input-box__text {
+  position: relative;
+  right: -0.55556em;
+  display: inline-block;
+  color: #afb6c0;
+  padding: 0.5714em;
+  border: 1px solid #cf616f;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  line-height: $line-height;
+}
+
+.input-box__button {
+  position: relative;
+  z-index: 999;
+  color: white;
+  padding: 0.5714em;
+  font-weight: bold;
+  background-color: #cf616f;
+  border: 1px solid #cf616f;
+  border-radius: 6px;
+  line-height: $line-height;
+}
+
+@media (max-width: 480px) {
+  .input-box__text {
+    width: 200px;
+  }
+}

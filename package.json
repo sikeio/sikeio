@@ -20,7 +20,18 @@
   },
   "homepage": "https://github.com/hayeah/sike",
   "dependencies": {
+    "extract-text-webpack-plugin": "^0.9.1",
     "marked": "^0.3.3",
+    "normalize.css": "^3.0.3",
+    "scrollmagic": "^2.0.5",
+    "webpack": "^1.12.8",
     "xmd": "0.0.4"
+  },
+  "devDependencies": {
+    "css-loader": "^0.23.0",
+    "node-sass": "^3.4.2",
+    "postcss-loader": "^0.8.0",
+    "sass-loader": "^3.1.1",
+    "style-loader": "^0.13.0"
   }
 }

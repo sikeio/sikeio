@@ -31,6 +31,7 @@ class Checkin::DiscourseAPI
       }
     }
     result = JSON.parse(r.body)
+    # this piece of crap API could return error message with code 200.
     result["user_id"]
   end
 

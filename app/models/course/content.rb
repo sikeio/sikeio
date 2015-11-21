@@ -188,6 +188,7 @@ class Course::Content
   end
 
   def lesson_title(lesson_name)
+    puts "lesson title for: #{lesson_name}"
     page_dom(lesson_name).css("h1").first.text
   end
 
