@@ -22,6 +22,12 @@ module.exports = {
                 test: /\.scss$/,
                 loader: ExtractTextPlugin.extract("style-loader", "css-loader!sass-loader")
             },
+
+            {
+                test: /\.jsx?$/,
+                loader: "babel-loader?stage=0",
+                exclude: /node_modules/,
+            },
             // Optionally extract less files
             // or any other compile-to-css language
             // {
