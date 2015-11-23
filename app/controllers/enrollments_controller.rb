@@ -1,5 +1,28 @@
 class EnrollmentsController < ApplicationController
-  layout "enrollment", except: [:show]
+  layout "enrollment", except: [:show,:create]
+
+  skip_before_filter :verify_authenticity_token
+
+  before_filter :cors_preflight_check
+  after_filter :cors_set_access_control_headers
+
+  def cors_set_access_control_headers
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS'
+    headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept, Authorization, Token'
+    headers['Access-Control-Max-Age'] = "1728000"
+  end
+
+  def cors_preflight_check
+    if request.method == 'OPTIONS'
+      headers['Access-Control-Allow-Origin'] = '*'
+      headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS'
+      headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version, Token'
+      headers['Access-Control-Max-Age'] = '1728000'
+
+      render :text => '', :content_type => 'text/plain'
+    end
+  end
 
   def create
     if params[:email].blank?
@@ -16,7 +39,10 @@ class EnrollmentsController < ApplicationController
     @enrollment = Enrollment.find_or_initialize_by user_id: user.id, course_id: course.id
     # already enrolled
     if !enrollment.new_record?
-      head :ok
+      # head :ok
+      render
+
+      # render text: "已经提交过申请"
       return
     end
 
@@ -35,14 +61,16 @@ class EnrollmentsController < ApplicationController
       user.update(sent_welcome_email: Time.now.beginning_of_day)
     end
 
-    head :ok
+    render
 
-    if cookies.signed[:distinct_id]
-      mixpanel_alias(enrollment.id, cookies.signed[:distinct_id])
-      cookies.delete :distinct_id
-    end
+    # render text: "申请成功"
 
-    mixpanel_track(enrollment.id, "Created Enrollment", {"Course" => enrollment.course.name})
+    # if cookies.signed[:distinct_id]
+    #   mixpanel_alias(enrollment.id, cookies.signed[:distinct_id])
+    #   cookies.delete :distinct_id
+    # end
+
+    # mixpanel_track(enrollment.id, "Created Enrollment", {"Course" => enrollment.course.name})
   end
 
   def enroll

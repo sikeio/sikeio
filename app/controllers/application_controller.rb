@@ -63,18 +63,20 @@ class ApplicationController < ActionController::Base
 
   # @params [String] msg
   # @params [ActiveModel::Errors | (Hash => String|Array<String>)] errors
-  def render_400(msg,errors=nil)
+  def render_400(msg,errors={})
     if errors.is_a?(ActiveModel::Errors)
       errors = errors.to_hash
     end
 
     if request.xhr?
+
+
       render json: {
         msg: msg,
         errors: errors
       }, status: :bad_request
     else
-      render text: msg
+      render text: msg + "\n" + errors.values.join("\n")
     end
   end
 
