@@ -95,6 +95,8 @@ class ApplicationController < ActionController::Base
   end
 
   def mixpanel_register(properties)
+    return if !Rails.env.production?
+
     if cookies.signed[:properties]
       origin_properties = JSON.parse(cookies.signed[:properties])
       new_properties = origin_properties.merge(properties)
@@ -105,6 +107,8 @@ class ApplicationController < ActionController::Base
   end
 
   def mixpanel_track(distinct_id, event, properties = nil)
+    return if !Rails.env.production?
+
     if properties
       new_properties = get_properties.merge(properties)
       MixpanelTrackJob.perform_later(distinct_id, event, new_properties)

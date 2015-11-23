@@ -1,4 +1,3 @@
-.PHONY: migrate
-migrate:
-	rake db:migrate
-	annotate app/models/*.rb
+.PHONY: dev
+dev:
+	webpack -d --progress --watch
