@@ -13,13 +13,14 @@ class Subscriber < ActiveRecord::Base
   before_create :downcase_email!
 
   validates :email, {
-    presence: { message:'地址不能为空~' },
-    format: { with: /@/, message: '格式不正确~' },
+    presence: { message:'地址不能为空' },
+    format: { with: /@/, message: '格式不正确' },
     uniqueness: true
   }
 
 
   private
+
   def downcase_email!
     self.email.downcase!
   end
