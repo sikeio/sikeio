@@ -12,6 +12,6 @@ class SubscribersController < ApplicationController
     # BearychatMsgSenderJob.send_msg_to_staff "#{subscriber.email} 发出了迷你课程订阅申请，谁是管事的快处理一下！"
     UserMailer.index_welcome(subscriber.email).deliver_later
 
-    render text: "订阅成功"
+    # render text: "订阅成功"
   end
 end
