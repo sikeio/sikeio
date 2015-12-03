@@ -81,10 +81,10 @@ end
 
 group :development do
   # for livereload
-  gem 'guard', require: false
-  gem 'guard-livereload', require: false
-  gem 'rb-fsevent', require: false
-  gem 'rack-livereload'
+  # gem 'guard', require: false
+  # gem 'guard-livereload', require: false
+  # gem 'rb-fsevent', require: false
+  # gem 'rack-livereload'
 
 end
 
