@@ -15,6 +15,11 @@ module SessionsHelper
   def login_as(user)
     session[:user_id] = user.id
     cookies.permanent.signed[:user_id] = user.id
+    cookies[:github_id] = {
+      value: user.github_username,
+      expires: 3.months.from_now,
+      domain: ENV["ROOT_DOMAIN"],
+    }
   end
 
   def login?

@@ -2,6 +2,9 @@
 # Rails configurations
 ########################################################################
 
+# Used to set shared cookies
+ROOT_DOMAIN: sike.dev
+
 # Secrect key for config/secrets.yml
 RAILS_SECRET_KEY_BASE: 52a38766d6f8677e0b62836a4818a8dcb1a52e35673ffa96d29165630e1ad65a5111070f201753bd429c189dd8aa1db32b9c84cbb94846400b6fda5432f3c34c
 
