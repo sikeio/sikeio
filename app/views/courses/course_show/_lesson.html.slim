@@ -9,6 +9,10 @@
     span.li-bbs
       a target="_blank" href="#{lesson.discourse_qa_topic_url}"
         span.icon-discuss
+    - if lesson.content.has_cn?
+      a href="#{lesson_url}?lang=cn"
+        | &nbsp; -> 中文翻译
+
   - latest_released_lesson = enrollment.schedule.latest_released_lesson
   - if lesson == latest_released_lesson
     = hidden_field_tag 'next_lesson_day_left', enrollment.schedule.day_util_next_lesson_released
@@ -24,7 +28,7 @@
 
     - if lesson.content.has_cn?
       a href="#{lesson_url}?lang=cn"
-        | &nbsp; 中文
+        | &nbsp; -> 中文翻译
 
 
   - latest_released_lesson = enrollment.schedule.latest_released_lesson
