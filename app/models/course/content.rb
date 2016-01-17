@@ -189,7 +189,8 @@ class Course::Content
 
   def lesson_title(lesson_name)
     puts "lesson title for: #{lesson_name}"
-    page_dom(lesson_name).css("h1").first.text
+    h1 = page_dom(lesson_name).css("h1").first
+    h1.text || lesson_name
   end
 
   def index_dom
