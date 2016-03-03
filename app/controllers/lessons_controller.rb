@@ -16,16 +16,23 @@ class LessonsController < ApplicationController
       return
     end
 
-    lang = params[:lang]
+    permalink = params[:id]
 
-    content = lesson.content
-    # TODO should cache this
-    @lesson_html = content.html_page(lang)
-    @is_extra_lesson = !enrollment.schedule.is_course_lesson?(lesson)
-    @is_checkout = Checkin.checkin?(enrollment, lesson)
-    enrollment.update!(last_visit_time: Time.now)
+    uri = URI("http://localhost:8000/#{permalink}/")
+    res = Net::HTTP.get_response(uri)
 
-    mixpanel_track(enrollment.id, "Visited Lesson Show Page", { "Course" => enrollment.course.name })
+    render html: res.body.html_safe
+
+    # lang = params[:lang]
+
+    # content = lesson.content
+    # # TODO should cache this
+    # @lesson_html = content.html_page(lang)
+    # @is_extra_lesson = !enrollment.schedule.is_course_lesson?(lesson)
+    # @is_checkout = Checkin.checkin?(enrollment, lesson)
+    # enrollment.update!(last_visit_time: Time.now)
+
+    # mixpanel_track(enrollment.id, "Visited Lesson Show Page", { "Course" => enrollment.course.name })
   end
 
   def ask
