@@ -10,7 +10,12 @@ class Admin::SessionsController < Admin::ApplicationController
   def create
     if params[:password] == ADMIN_PASSWORD
       session[:is_admin] = true
+      # render text: "ok"
+
+      # redirect_to "/admin"
       redirect_to_back_or_default
+    else
+      render text: "login failed"
     end
   end
 
