@@ -5,6 +5,8 @@ class LessonsController < ApplicationController
 
   before_action :ensure_trailing_slash, :only => [:show]
 
+  COURSEWARE_HOST = ENV["COURSEWARE_HOST"]
+
   def show
     # schedule = @enrollment.schedule
     # @lesson = schedule.course_lesson(params[:lesson_permalink])
@@ -16,10 +18,10 @@ class LessonsController < ApplicationController
       return
     end
 
-    permalink = params[:id]
+    courseware_api_url = "http://#{COURSEWARE_HOST}/#{course.permalink}/#{lesson.permalink}/?enrollment_id=#{@enrollment.id}"
 
-    uri = URI("http://localhost:8000/#{permalink}/")
-    res = Net::HTTP.get_response(uri)
+    puts "get course page: #{courseware_api_url}"
+    res = Net::HTTP.get_response(URI(courseware_api_url))
 
     render html: res.body.html_safe
 

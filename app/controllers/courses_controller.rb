@@ -7,11 +7,14 @@ class CoursesController < ApplicationController
 #  before_action :require_take_part_in,only:[:show]
   before_action :ensure_trailing_slash, only:[:show]
 
+  COURSEWARE_HOST = ENV["COURSEWARE_HOST"]
+
   def show
     @enrollment = current_user.enrollments.find_by(course: course)
 
-    uri = URI("http://localhost:8000")
-    res = Net::HTTP.get_response(uri)
+    courseware_api_url = "http://#{COURSEWARE_HOST}/#{course.permalink}/?enrollment_id=#{@enrollment.id}"
+    puts "get course index: #{courseware_api_url}"
+    res = Net::HTTP.get_response(URI(courseware_api_url))
 
     render html: res.body.html_safe
 
