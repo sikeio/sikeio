@@ -1,0 +1,11 @@
+<% @enrollments.each do |e| %>
+
+<p>
+  <%= e['enrollment_id'] %>
+  <%= e['count'] %> -
+  <%= e['email'] %> -
+  <%= e['title'] %> -
+  <%= link_to "通灵", admin_login_as_user_path(:user_id => e['user_id']), :method => :post %>
+</p>
+
+<% end %>

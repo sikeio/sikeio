@@ -80,6 +80,16 @@ Rails.application.routes.draw do
     get '/' => "dashboard#index", as: :dashboard
     get "status" => "dashboard#status"
 
+    get "/recent_enrollments" => "dashboard#recent_enrollments"
+
+    post "login_as_user/:user_id" => "dashboard#login_as_user", as: :login_as_user
+
+    # controller :dashboard do
+
+
+    # end
+    # post "/login_as_user/:user_id" => "dashboard#login_as_user", as: :login_as_user
+
     get '/login' => "sessions#new"
     post '/login' => "sessions#create"
     delete '/logout' => 'sessions#destroy'
