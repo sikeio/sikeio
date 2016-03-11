@@ -49,6 +49,8 @@ Rails.application.routes.draw do
 
   get "/courses/:course_id/:id" => "lessons#show", as: :lesson
 
+  get "/courses/:course_id/:id/checkin" => "checkins#show"
+
   get "/courses/:course_id/:id/ask" => "lessons#ask", as: :lesson_ask
 
 
