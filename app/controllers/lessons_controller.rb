@@ -20,6 +20,10 @@ class LessonsController < ApplicationController
 
     courseware_api_url = "http://#{COURSEWARE_HOST}/#{course.permalink}/#{lesson.permalink}/?enrollment_id=#{@enrollment.id}"
 
+    if lang = params[:lang]
+      courseware_api_url += "&lang=#{lang}"
+    end
+
     puts "get course page: #{courseware_api_url}"
     res = Net::HTTP.get_response(URI(courseware_api_url))
 
