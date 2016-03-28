@@ -78,11 +78,11 @@ class CheckinsController < ApplicationController
   end
 
   def lesson
-    @lesson ||= Lesson.find_by_permalink(params[:id])
+    @lesson ||= course.lessons.find_by_permalink(params[:id])
   end
 
   def course
-    @course ||= lesson.course
+    @course ||= Course.find_by_name(params[:course_id])
   end
 
   def checkin_params
