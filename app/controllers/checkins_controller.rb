@@ -33,6 +33,7 @@ class CheckinsController < ApplicationController
       @url_path = checkin_path(@lesson)
       @html_method = :post
       @checkin = Checkin.new
+      @course = course
     else
       @checkin = enrollment.checkins.find_by(lesson_id: @lesson.id)
       @url_path = checkin_update_path(@checkin)

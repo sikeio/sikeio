@@ -52,5 +52,5 @@
       = f.label :degree_of_difficulty, "难度"
       = f.select :degree_of_difficulty, options_for_select([["太简单", 0], ["容易", 1], ["适中", 2], ["难", 3], ["太难", 4]], @checkin.degree_of_difficulty), include_blank: true
 
-
+    = hidden_field_tag "course_id", @course.name
     = f.submit "打卡", class: "submit btn btn--normal"
