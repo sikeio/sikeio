@@ -22,16 +22,21 @@ select
 
 checkin_counts.count,
 users.email,
+discourse_username,
 users.id as user_id,
 courses.title,
 enrollments.created_at,
-enrollment_id
+enrollment_id,
+authentications.info->'info'->'nickname' as github_user
 
 from checkin_counts
 inner join enrollments on checkin_counts.enrollment_id = enrollments.id
 inner join users on enrollments.user_id = users.id
 inner join courses on enrollments.course_id = courses.id
+inner join authentications on users.id =  authentications.user_id
+order by enrollment_id desc
 HERE
+    # select info->'info'->'nickname' as github_user from authentications limit 10;
 
     @enrollments = ActiveRecord::Base.connection.execute(sql)
 
